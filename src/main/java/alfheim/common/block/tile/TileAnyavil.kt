@@ -116,16 +116,16 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 		return item
 	}
 	
-	override fun decrStackSize(slot: Int, ammount: Int): ItemStack? {
+	override fun decrStackSize(slot: Int, amount: Int): ItemStack? {
 		if (getStackInSlot(slot) != null) {
 			val itemstack: ItemStack?
 			
-			return if (getStackInSlot(slot)!!.stackSize <= ammount) {
+			return if (getStackInSlot(slot)!!.stackSize <= amount) {
 				itemstack = getStackInSlot(slot)
 				setInventorySlotContents(slot, null)
 				itemstack
 			} else {
-				itemstack = getStackInSlot(slot)!!.splitStack(ammount)
+				itemstack = getStackInSlot(slot)!!.splitStack(amount)
 				if (getStackInSlot(slot)!!.stackSize == 0) setInventorySlotContents(slot, null)
 				itemstack
 			}

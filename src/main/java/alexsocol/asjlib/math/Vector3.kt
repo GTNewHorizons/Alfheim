@@ -35,7 +35,7 @@ class Vector3: Serializable {
 	val isAxial: Boolean
 		get() = if (x == 0.0) y == 0.0 || z == 0.0 else y == 0.0 && z == 0.0
 	
-	constructor(d: Number = 0.0, d1: Number = d, d2: Number = d) {
+	constructor(d: Number = 0, d1: Number = d, d2: Number = d) {
 		x = d.D
 		y = d1.D
 		z = d2.D
@@ -53,7 +53,7 @@ class Vector3: Serializable {
 	
 	fun copy() = Vector3(this)
 	
-	fun discard() = set(0.0, 0.0, 0.0)
+	fun discard() = set(0, 0, 0)
 	
 	fun set(d: Number, d1: Number = d, d2: Number = d): Vector3 {
 		x = d.D
@@ -243,6 +243,7 @@ class Vector3: Serializable {
 		return this
 	}
 	
+	/** in RAD */
 	fun angle(vec: Vector3) = acos(copy().normalize().dotProduct(vec.copy().normalize()))
 	
 	fun isInside(aabb: AxisAlignedBB) = x >= aabb.minX && y >= aabb.maxY && z >= aabb.minZ && x < aabb.maxX && y < aabb.maxY && z < aabb.maxZ
@@ -254,7 +255,7 @@ class Vector3: Serializable {
 	fun vector4f() = Vector4f(x.F, y.F, z.F, 1f)
 	
 	@SideOnly(Side.CLIENT)
-	fun glVertex(xOff: Number = 0.0, yOff: Number = 0.0, zOff: Number = 0.0): Vector3 {
+	fun glVertex(xOff: Number = 0, yOff: Number = 0, zOff: Number = 0): Vector3 {
 		org.lwjgl.opengl.GL11.glVertex3d(x + xOff.D, y + yOff.D, z + zOff.D)
 		return this
 	}
@@ -274,7 +275,7 @@ class Vector3: Serializable {
 	fun project(b: Vector3): Vector3 {
 		val l = b.lengthSquared()
 		if (l == 0.0) {
-			set(0.0, 0.0, 0.0)
+			set(0, 0, 0)
 			return this
 		}
 		
@@ -306,19 +307,19 @@ class Vector3: Serializable {
 		private const val serialVersionUID = 84148136481306L
 		
 		@Transient
-		val fallback = Vector3(-1.0, -1.0, -1.0)
+		val fallback = Vector3(-1, -1, -1)
 		@Transient
 		val zero = Vector3()
 		@Transient
-		val one = Vector3(1.0, 1.0, 1.0)
+		val one = Vector3(1, 1, 1)
 		@Transient
 		val center = Vector3(0.5, 0.5, 0.5)
 		@Transient
-		val oX = Vector3(1.0, 0.0, 0.0)
+		val oX = Vector3(1, 0, 0)
 		@Transient
-		val oY = Vector3(0.0, 1.0, 0.0)
+		val oY = Vector3(0, 1, 0)
 		@Transient
-		val oZ = Vector3(0.0, 0.0, 1.0)
+		val oZ = Vector3(0, 0, 1)
 		
 		fun fromEntity(e: Entity) = Vector3(e.posX, e.posYp, e.posZ)
 		
@@ -328,15 +329,15 @@ class Vector3: Serializable {
 		
 		fun fromTileEntityCenter(e: TileEntity) = Vector3(e.xCoord + 0.5, e.yCoord + 0.5, e.zCoord + 0.5)
 		
-		fun vecDistance(v1: Vector3, v2: Vector3) = sqrt((v1.x - v2.x).pow(2.0) + (v1.y - v2.y).pow(2.0) + (v1.z - v2.z).pow(2.0))
+		fun vecDistance(v1: Vector3, v2: Vector3) = sqrt((v1.x - v2.x).pow(2) + (v1.y - v2.y).pow(2) + (v1.z - v2.z).pow(2))
 		
-		fun vecEntityDistance(v: Vector3, e: Entity) = sqrt((v.x - e.posX).pow(2.0) + (v.y - e.posYp).pow(2.0) + (v.z - e.posZ).pow(2.0))
+		fun vecEntityDistance(v: Vector3, e: Entity) = sqrt((v.x - e.posX).pow(2) + (v.y - e.posYp).pow(2) + (v.z - e.posZ).pow(2))
 		
-		fun vecTileDistance(v: Vector3, te: TileEntity) = sqrt((v.x - te.xCoord).pow(2.0) + (v.y - te.yCoord).pow(2.0) + (v.z - te.zCoord).pow(2.0))
+		fun vecTileDistance(v: Vector3, te: TileEntity) = sqrt((v.x - te.xCoord).pow(2) + (v.y - te.yCoord).pow(2) + (v.z - te.zCoord).pow(2))
 		
-		fun entityTileDistance(e: Entity, te: TileEntity) = sqrt((e.posX - te.xCoord).pow(2.0) + (e.posYp - te.yCoord).pow(2.0) + (e.posZ - te.zCoord).pow(2.0))
+		fun entityTileDistance(e: Entity, te: TileEntity) = sqrt((e.posX - te.xCoord).pow(2) + (e.posYp - te.yCoord).pow(2) + (e.posZ - te.zCoord).pow(2))
 		
-		fun entityDistance(e1: Entity, e2: Entity) = sqrt((e1.posX - e2.posX).pow(2.0) + (e1.posYp - e2.posYp).pow(2.0) + (e1.posZ - e2.posZ).pow(2.0))
+		fun entityDistance(e1: Entity, e2: Entity) = sqrt((e1.posX - e2.posX).pow(2) + (e1.posYp - e2.posYp).pow(2) + (e1.posZ - e2.posZ).pow(2))
 		
 		fun entityDistancePlane(e1: Entity, e2: Entity) = hypot(e1.posX - e2.posX, e1.posZ - e2.posZ)
 		

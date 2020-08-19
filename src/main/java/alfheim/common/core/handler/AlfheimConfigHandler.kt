@@ -110,6 +110,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var triquetrumBlackList		= emptyArray<String>()
 	var triquetrumMaxDiagonal	= -1.0
 	var triquetrumTiles			= true
+	var uberBlaster				= true
 	var uberSpreaderCapacity	= 24000
 	var uberSpreaderSpeed		= 2400
 	var voidCreepBiomeBlackList	= intArrayOf(8, 9, 14, 15)
@@ -268,6 +269,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		triquetrumBlackList = loadProp(CATEGORY_GENERAL, "triquetrumBlackList", triquetrumBlackList, false, "Blacklist for blocks that triquetrum can't swap [modid:name]", false)
 		triquetrumMaxDiagonal = loadProp(CATEGORY_GENERAL, "triquetrumMaxDiagonal", triquetrumMaxDiagonal, false, "Change this to limit triquetrum area")
 		triquetrumTiles = loadProp(CATEGORY_GENERAL, "triquetrumTiles", triquetrumTiles, false, "Set this to false to forbid triquetrum to move tiles")
+		uberBlaster = loadProp(CATEGORY_GENERAL, "uberBlaster", uberBlaster, false, "Set this to false to nerf blasters")
 		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, false, "Mauftrium Spreader max mana cap")
 		uberSpreaderSpeed = loadProp(CATEGORY_GENERAL, "uberSpreaderSpeed", uberSpreaderSpeed, false, "Mauftrium Spreader mana per shot")
 		voidCreepBiomeBlackList = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBlackList", voidCreepBiomeBlackList, true, "Biome blacklist for Manaseal Creepers", false)
@@ -286,7 +288,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
 		thaumTreeSuffusion = loadProp(CATEGORY_INT_TC, "TC.treeCrafting", thaumTreeSuffusion, true, "[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
 		
-		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Redstring, Manastring materials respectively")
+		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Livingrock, Redstring, Manastring materials respectively")
 		modifierIDs = loadProp(CATEGORY_INT_TiC, "TiC.modifierIDs", modifierIDs, true, "[TiC] IDs for ManaCore modifiers respectively")
 		
 		potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")

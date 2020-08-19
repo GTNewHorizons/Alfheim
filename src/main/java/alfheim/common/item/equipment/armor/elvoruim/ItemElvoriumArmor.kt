@@ -132,5 +132,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 	companion object {
 		
 		internal var armorset: Array<ItemStack>? = null
+		
+		fun hasSet(player: EntityPlayer?) = (AlfheimItems.elvoriumChestplate as ItemElvoriumArmor).hasArmorSet(player)
 	}
 }

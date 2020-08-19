@@ -1,17 +1,18 @@
 package alfheim.common.integration.travellersgear
 
 import alfheim.AlfheimCore
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
+import travellersgear.api.ITravellersGear
 import vazkii.botania.client.core.helper.RenderHelper
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 object TravellerBaubleTooltipHandler {
 	
-	fun addHiddenTooltip(bauble: ItemBauble, stack: ItemStack, player: EntityPlayer, tooltip: MutableList<Any?>, adv: Boolean) {
+	fun addHiddenTooltip(bauble: ItemBauble, stack: ItemStack, tooltip: MutableList<Any?>) {
 		if (AlfheimCore.TravellersGearLoaded) {
-			addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip)
+			bauble as ITravellersGear
+			addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg." + bauble.getSlot(stack)), tooltip)
 			val key = RenderHelper.getKeyDisplayString("TG.keybind.openInv")
 			if (key != null)
 				addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replace("%key%".toRegex(), key), tooltip)

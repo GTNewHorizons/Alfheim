@@ -5,6 +5,7 @@ import alfheim.common.item.AlfheimItems
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import net.minecraft.entity.EntityAgeable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
@@ -30,12 +31,13 @@ class ItemSifRing: ItemRelicBauble("SifRing") {
 		
 		reviveCacti(ring, player)
 		supplyVineballs(ring, player)
+		growAnimals(ring, player)
 	}
 	
 	val list = ArrayList<ChunkCoordinates>()
 	
 	fun reviveCacti(stack: ItemStack, player: EntityPlayer) {
-		if (!ManaItemHandler.requestManaExact(stack, player, 20, false)) return
+		if (!ManaItemHandler.requestManaExact(stack, player, 20, true)) return
 		
 		val world = player.worldObj
 		
@@ -56,6 +58,17 @@ class ItemSifRing: ItemRelicBauble("SifRing") {
 	fun supplyVineballs(stack: ItemStack, player: EntityPlayer) {
 		if (player.inventory.hasItem(ModItems.slingshot) && !player.inventory.hasItem(ModItems.vineBall) && ManaItemHandler.requestManaExact(stack, player, 50, true)) {
 			player.inventory.addItemStackToInventory(ItemStack(ModItems.vineBall))
+		}
+	}
+	
+	fun growAnimals(stack: ItemStack, player: EntityPlayer) {
+		val list = player.worldObj.getEntitiesWithinAABB(EntityAgeable::class.java, player.boundingBox(8)) as MutableList<EntityAgeable>
+		
+		for (e in list) {
+			if (!ManaItemHandler.requestManaExact(stack, player, 1, true))
+				return
+			
+			e.growingAge++
 		}
 	}
 	

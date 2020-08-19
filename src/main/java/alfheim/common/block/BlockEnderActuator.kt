@@ -40,7 +40,7 @@ class BlockEnderActuator: BlockContainerMod(Material.iron) {
 				val x1 = (x + Math.random())
 				val y1 = (y + Math.random())
 				val z1 = (z + Math.random())
-				Botania.proxy.wispFX(world, x1, y1, z1, 0.25f + Math.random().F * 0.25f, 0f, 1f, Math.random().toFloat() * 0.5f, -0.05f + Math.random().toFloat() * 0.05f)
+				Botania.proxy.wispFX(world, x1, y1, z1, 0.25f + Math.random().F * 0.25f, 0f, 1f, Math.random().F * 0.5f, -0.05f + Math.random().F * 0.05f)
 			}
 		} else {
 			ASJUtilities.say(player, "alfheimmisc.actuated")

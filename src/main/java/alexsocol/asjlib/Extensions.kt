@@ -118,9 +118,13 @@ fun Entity.setMotion(x: Double, y: Double = x, z: Double = y) {
 	motionZ = z
 }
 
-operator fun ChunkCoordinates.component1() = this.posX
-operator fun ChunkCoordinates.component2() = this.posY
-operator fun ChunkCoordinates.component3() = this.posZ
+operator fun ChunkCoordinates.component1() = posX
+operator fun ChunkCoordinates.component2() = posY
+operator fun ChunkCoordinates.component3() = posZ
+
+operator fun Vec3.component1() = xCoord
+operator fun Vec3.component2() = yCoord
+operator fun Vec3.component3() = zCoord
 
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
 

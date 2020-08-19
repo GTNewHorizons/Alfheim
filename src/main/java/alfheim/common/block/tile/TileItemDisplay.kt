@@ -17,7 +17,7 @@ class TileItemDisplay: TileMod(), ISidedInventory {
  
 	override fun getStackInSlot(par1: Int) = inventory[par1]
 	
-	override fun decrStackSize(slot: Int, par2: Int): ItemStack? {
+	override fun decrStackSize(slot: Int, size: Int): ItemStack? {
 		if (inventory[slot] != null) {
 			
 			if (!worldObj.isRemote) {
@@ -26,13 +26,13 @@ class TileItemDisplay: TileMod(), ISidedInventory {
 			
 			val itemstack: ItemStack
             
-            return if (inventory[slot]!!.stackSize <= par2) {
+            return if (inventory[slot]!!.stackSize <= size) {
                 itemstack = inventory[slot]!!
                 inventory[slot] = null
                 markDirty()
                 itemstack
             } else {
-                itemstack = inventory[slot]!!.splitStack(par2)
+                itemstack = inventory[slot]!!.splitStack(size)
                 if (inventory[slot]!!.stackSize == 0) {
                     inventory[slot] = null
                 }

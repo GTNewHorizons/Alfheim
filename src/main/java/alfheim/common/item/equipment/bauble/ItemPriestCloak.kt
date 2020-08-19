@@ -64,7 +64,7 @@ class ItemPriestCloak: ItemBaubleCloak("priestCloak"), IManaUsingItem {
 	
 	override fun usesMana(stack: ItemStack) = true
 	
-	override fun getBaubleType(arg0: ItemStack) =
+	override fun getBaubleType(stack: ItemStack) =
 		if (AlfheimCore.TravellersGearLoaded) null else BaubleType.BELT
 	
 	override fun onEquippedOrLoadedIntoWorld(stack: ItemStack, player: EntityLivingBase) {

@@ -8,7 +8,7 @@ import alfheim.api.AlfheimAPI.registerSpell
 import alfheim.api.ModInfo
 import alfheim.common.block.*
 import alfheim.common.block.tile.*
-import alfheim.common.block.tile.corporea.TileCorporeaAutocrafter
+import alfheim.common.block.tile.corporea.*
 import alfheim.common.block.tile.sub.anomaly.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.*
@@ -77,7 +77,7 @@ object AlfheimRegistry {
 	fun registerPotions() {
 		PotionBerserk()
 		PotionBleeding()
-		PotionAlfheim(AlfheimConfigHandler.potionIDButterShield, "butterShield", false, 0x00FFFF)
+		PotionButterShield()
 		PotionDeathMark()
 		PotionAlfheim(AlfheimConfigHandler.potionIDDecay, "decay", true, 0x553355)
 		PotionEternity()
@@ -151,6 +151,7 @@ object AlfheimRegistry {
 		registerTile(TileAnyavil::class.java, "Anyavil")
 		registerTile(TileBarrel::class.java, "Barrel")
 		registerTile(TileCorporeaAutocrafter::class.java, "CorporeaAutocrafter")
+		registerTile(TileCorporeaInjector::class.java, "CorporeaInjector")
 		registerTile(TileEnderActuator::class.java, "EnderActuator")
 		registerTile(TileHeadFlugel::class.java, "HeadFlugel")
 		registerTile(TileHeadMiku::class.java, "HeadMiku")

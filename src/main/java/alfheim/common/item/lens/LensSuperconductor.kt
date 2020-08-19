@@ -1,6 +1,8 @@
 package alfheim.common.item.lens
 
 import alexsocol.asjlib.*
+import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.item.equipment.armor.elvoruim.ItemElvoriumArmor
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
@@ -14,8 +16,8 @@ class LensSuperconductor: Lens() {
 	
 	override fun apply(stack: ItemStack, props: BurstProperties) {
 		props.maxMana *= 8
-		props.motionModifier *= 1.5F
-		props.manaLossPerTick *= 16F
+		props.motionModifier *= 1.5f
+		props.manaLossPerTick *= 16f
 		props.ticksBeforeManaLoss = (props.ticksBeforeManaLoss * 0.8).I
 	}
 	
@@ -26,7 +28,7 @@ class LensSuperconductor: Lens() {
 		val list = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as MutableList<EntityLivingBase>
 		
 		for (e in list)
-			e.attackEntityFrom(SUPERCONDUCTOR, if (e is EntityPlayer) 25F else 8F)
+			e.attackEntityFrom(SUPERCONDUCTOR, if (e is EntityPlayer) if (ItemElvoriumArmor.hasSet(e) || !AlfheimConfigHandler.uberBlaster) 12f.also { if (AlfheimConfigHandler.uberBlaster) e.inventory.damageArmor(13f) } else 25f else 8f)
 	}
 	
 	val SUPERCONDUCTOR = DamageSource("magic").setDamageBypassesArmor().setMagicDamage().setDamageIsAbsolute().setDifficultyScaled()

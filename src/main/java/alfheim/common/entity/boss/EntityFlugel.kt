@@ -138,6 +138,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		if ((source.damageType == "player" || source is DamageSourceSpell) && isTruePlayer(e) && !isEntityInvulnerable) {
 			val player = e as EntityPlayer
 			
+			if (!player.capabilities.isCreativeMode && player.capabilities.disableDamage) return false
+			
 			val crit = player.fallDistance > 0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
 			
 			maxHit = if (player.capabilities.isCreativeMode) Float.MAX_VALUE else if (crit) 60f else 40f
@@ -435,6 +437,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 				else
 					player.removePotionEffect(it.potionID)
 			}
+			
+			// no GOD-mode allowed
+			if (!player.capabilities.isCreativeMode)
+				player.capabilities.disableDamage = false
 			
 			// remove player
 			val baubles = PlayerHandler.getPlayerBaubles(player)

@@ -38,11 +38,7 @@ class SubTileOrechidEndium: SubTileOrechid() {
 	
 	override fun getCost() = COST
 	
-	val colors = intArrayOf(
-		0xFFE354, 0xFF1FBB, 0xB533FF
-	)
-	
-	override fun getColor() = colors.random()
+	override fun getColor() = 0xB533FF
 	
 	override fun getEntry(): LexiconEntry? {
 		return null // OrechidEndiumAPI.orechidEndiumLexiconEntry TODO

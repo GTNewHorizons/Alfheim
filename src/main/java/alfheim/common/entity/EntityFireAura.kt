@@ -42,7 +42,7 @@ class EntityFireAura: EntityThrowableCopy {
 			
 			if (pos.entityHit != null || pos.entityHit !== thrower) {
 				if (pos.entityHit is EntityLivingBase) {
-					val dmg = (4 + attack).toFloat()
+					val dmg = (4 + attack).F
 					(pos.entityHit as EntityLivingBase).attackEntityFrom(DamageSource.causePlayerDamage(player), dmg)
 					player.absorptionAmount = min(10f, player.absorptionAmount + 1f)
 					setDead()

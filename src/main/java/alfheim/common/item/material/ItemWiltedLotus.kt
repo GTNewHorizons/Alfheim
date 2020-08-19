@@ -1,6 +1,6 @@
 package alfheim.common.item.material
 
-import alexsocol.asjlib.meta
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.item.ItemMod
 import net.minecraft.creativetab.CreativeTabs
@@ -52,15 +52,15 @@ class ItemWiltedLotus: ItemMod("wiltedLotus"), IManaDissolvable {
 		}
 		
 		for (i in 0..49) {
-			val r = Math.random().toFloat() * 0.25f
+			val r = Math.random().F * 0.25f
 			val g = 0f
-			val b = Math.random().toFloat() * 0.25f
-			val s = 0.45f * Math.random().toFloat() * 0.25f
+			val b = Math.random().F * 0.25f
+			val s = 0.45f * Math.random().F * 0.25f
 			val m = 0.045f
-			val mx = (Math.random().toFloat() - 0.5f) * m
-			val my = Math.random().toFloat() * m
-			val mz = (Math.random().toFloat() - 0.5f) * m
-			Botania.proxy.wispFX(item.worldObj, item.posX, tile.yCoord + 0.5f.toDouble(), item.posZ, r, g, b, s, mx, my, mz)
+			val mx = (Math.random().F - 0.5f) * m
+			val my = Math.random().F * m
+			val mz = (Math.random().F - 0.5f) * m
+			Botania.proxy.wispFX(item.worldObj, item.posX, tile.yCoord + 0.5, item.posZ, r, g, b, s, mx, my, mz)
 		}
 		
 		item.worldObj.playSoundAtEntity(item, "botania:blackLotus", 0.5f, if (t2) 0.1f else 1f)

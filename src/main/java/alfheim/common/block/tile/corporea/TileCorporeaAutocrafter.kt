@@ -2,10 +2,9 @@ package alfheim.common.block.tile.corporea
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.ASJTile
-import alfheim.common.core.helper.CorporeaAdvancedHelper
 import alfheim.common.core.helper.CorporeaAdvancedHelper.getFilters
+import alfheim.common.core.helper.CorporeaAdvancedHelper.putOrDrop
 import alfheim.common.core.helper.CorporeaAdvancedHelper.requestMatches
-import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
@@ -38,7 +37,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 	override fun interceptRequestLast(request: Any?, count: Int, thisSpark: ICorporeaSpark?, requestorSpark: ICorporeaSpark, allFoundStacks: MutableList<ItemStack>, allScannedInventories: MutableList<IInventory>?, doIt: Boolean) {
 		if (worldObj.isRemote) return
 		
-		val filters = getFilters()
+		val filters = getFilters(this)
 		
 		for (filter in filters)
 			if (requestMatches(request, filter)) {
@@ -126,7 +125,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 				waitingForIngredient = true
 				awaitedIngredient = pattern.copy().also { it.stackSize -= gotSize }
 				
-				got.forEach { putOrDrop(spark, it ?: return@forEach) }
+				got.forEach { putOrDrop(this, spark, it) }
 				return
 			}
 			
@@ -148,7 +147,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 				InventoryHelper.insertItemIntoInventory(down, ret, ForgeDirection.UP, i, true, true)
 			
 			if (ret.stackSize > 0)
-				putOrDrop(spark, ret)
+				putOrDrop(this, spark, ret)
 		}
 		
 		--leftToCraft
@@ -188,7 +187,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		
 		val spark = spark
 		
-		buffer.forEach { putOrDrop(spark, it ?: return@forEach) }
+		buffer.forEach { putOrDrop(this, spark, it) }
 		buffer.fill(null)
 		
 		updateBufferSize()
@@ -216,23 +215,19 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		val inv: IInventory? = InventoryHelper.getInventory(worldObj, xCoord, yCoord + 1, zCoord)
 		
 		if (inv == null) {
-			buffer.forEach { putOrDrop(spark, it ?: return@forEach) }
+			buffer.forEach { putOrDrop(this, spark, it) }
 			buffer = emptyArray()
 			return null
 		}
 		
 		buffer = if (inv.sizeInventory < buffer.size) {
-			buffer.sliceArray(inv.sizeInventory until buffer.size).forEach { putOrDrop(spark, it ?: return@forEach) }
+			buffer.sliceArray(inv.sizeInventory until buffer.size).forEach { putOrDrop(this, spark, it) }
 			buffer.sliceArray(0 until inv.sizeInventory)
 		} else {
 			buffer.ensureCapacity(inv.sizeInventory)
 		}
 		
 		return inv
-	}
-	
-	fun putOrDrop(spark: ICorporeaSpark?, stack: ItemStack) {
-		worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 2.5, zCoord + 0.5, if (spark != null) CorporeaAdvancedHelper.putToNetwork(spark, stack) ?: return else stack).also { item -> item.setMotion(0.0) })
 	}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
@@ -332,8 +327,9 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 	// UNUSED
 	
 	override fun interceptRequest(request: Any?, count: Int, thisSpark: ICorporeaSpark?, requestorSpark: ICorporeaSpark?, currentlyFoundStacks: MutableList<ItemStack>?, currentlyScannedInventories: MutableList<IInventory>?, doIt: Boolean) = Unit
+	
 	override fun getStackInSlot(slot: Int) = null
-	override fun decrStackSize(slot: Int, side: Int) = null
+	override fun decrStackSize(slot: Int, size: Int) = null
 	override fun getSizeInventory() = 0
 	override fun getStackInSlotOnClosing(slot: Int) = null
 	override fun hasCustomInventoryName() = false

@@ -68,6 +68,7 @@ object AlfheimItems {
 	val flugelHead: Item
 	val flugelHead2: Item
 	val flugelSoul: Item
+	val gleipnir: Item
 	val gungnir: Item
 	val hyperBucket: Item
 	val invisibilityCloak: Item
@@ -163,6 +164,7 @@ object AlfheimItems {
 		flugelHead = ItemHeadFlugel()
 		flugelHead2 = ItemHeadMiku()
 		flugelSoul = ItemFlugelSoul()
+		gleipnir = ItemGleipnir()
 		gungnir = ItemGungnir()
 		hyperBucket = ItemHyperBucket()
 		invisibilityCloak = ItemInvisibilityCloak()

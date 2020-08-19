@@ -930,7 +930,7 @@ object CardinalSystem {
 		
 		class TimeStopArea(caster: EntityLivingBase): Serializable {
 			val pos = Vector3.fromEntity(caster)
-			val uuid = caster.entityUniqueID!!
+			val uuid = caster.uniqueID!!
 			@Transient
 			val id: Int
 			var life = SpellTimeStop.duration

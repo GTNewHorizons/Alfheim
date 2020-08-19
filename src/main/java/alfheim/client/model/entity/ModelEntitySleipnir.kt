@@ -1,5 +1,6 @@
 package alfheim.client.model.entity
 
+import alexsocol.asjlib.F
 import alfheim.common.entity.EntityLolicorn
 import net.minecraft.client.model.*
 import net.minecraft.entity.*
@@ -285,7 +286,7 @@ class ModelEntitySleipnir: ModelBase() {
 		val f4 = updateHorseRotation(living.prevRotationYawHead, living.rotationYawHead, ticks)
 		val f5 = living.prevRotationPitch + (living.rotationPitch - living.prevRotationPitch) * ticks
 		var f6 = f4 - f3
-		var f7 = f5 / (180f / Math.PI.toFloat())
+		var f7 = f5 / (180f / Math.PI.F)
 		if (f6 > 20.0f) {
 			f6 = 20.0f
 		}
@@ -297,8 +298,8 @@ class ModelEntitySleipnir: ModelBase() {
 		}
 		val entityhorse = living as EntityLolicorn
 		val flag2 = entityhorse.riddenByEntity != null
-		val f12 = living.ticksExisted.toFloat() + ticks
-		val f13 = MathHelper.cos(hui * 0.6662f + Math.PI.toFloat())
+		val f12 = living.ticksExisted.F + ticks
+		val f13 = MathHelper.cos(hui * 0.6662f + Math.PI.F)
 		val f14 = f13 * 0.8f * knows
 		head.rotationPointY = 4.0f
 		head.rotationPointZ = -10.0f
@@ -306,14 +307,14 @@ class ModelEntitySleipnir: ModelBase() {
 		tailMiddle.rotationPointZ = 14.0f
 		body.rotateAngleX = 0.0f
 		head.rotateAngleX = 0.5235988f + f7
-		head.rotateAngleY = f6 / (180f / Math.PI.toFloat())
+		head.rotateAngleY = f6 / (180f / Math.PI.F)
 		head.rotateAngleX = 0f * (0.2617994f + f7) + 0f * 2.18166f + (1.0f - max(0f, 0f)) * head.rotateAngleX
-		head.rotateAngleY = 0f * (f6 / (180f / Math.PI.toFloat())) + (1.0f - max(0f, 0f)) * head.rotateAngleY
+		head.rotateAngleY = 0f * (f6 / (180f / Math.PI.F)) + (1.0f - max(0f, 0f)) * head.rotateAngleY
 		head.rotationPointY = 0f * -6.0f + 0f * 11.0f + (1.0f - max(0f, 0f)) * head.rotationPointY
 		head.rotationPointZ = 0f * -1.0f + 0f * -10.0f + (1.0f - max(0f, 0f)) * head.rotationPointZ
 		tailBase.rotationPointY = 0f * 9.0f + 1f * tailBase.rotationPointY
 		tailMiddle.rotationPointZ = 0f * 18.0f + 1f * tailMiddle.rotationPointZ
-		body.rotateAngleX = 0f * -(Math.PI.toFloat() / 4f) + 1f * body.rotateAngleX
+		body.rotateAngleX = 0f * -(Math.PI.F / 4f) + 1f * body.rotateAngleX
 		horseLeftEar.rotationPointY = head.rotationPointY
 		horseRightEar.rotationPointY = head.rotationPointY
 		neck.rotationPointY = head.rotationPointY
@@ -339,21 +340,21 @@ class ModelEntitySleipnir: ModelBase() {
 //		this.mouthBottom.rotateAngleY = 0.0f
 		mane.rotateAngleY = head.rotateAngleY
 		val f18 = 0.2617994f * 0f
-		val f19 = MathHelper.cos(f12 * 0.6f + Math.PI.toFloat())
+		val f19 = MathHelper.cos(f12 * 0.6f + Math.PI.F)
 		frontLeftLeg.rotationPointY = -2.0f * 0f + 9.0f * 1f
 		frontLeftLeg.rotationPointZ = -2.0f * 0f + -8.0f * 1f + 2f
 		frontRightLeg.rotationPointY = frontLeftLeg.rotationPointY
 		frontRightLeg.rotationPointZ = frontLeftLeg.rotationPointZ
-		backLeftShin.rotationPointY = backLeftLeg.rotationPointY + MathHelper.sin(Math.PI.toFloat() / 2f + f18 + 1f * -f13 * 0.5f * knows) * 7.0f
-		backLeftShin.rotationPointZ = backLeftLeg.rotationPointZ + MathHelper.cos(Math.PI.toFloat() * 3f / 2f + f18 + 1f * -f13 * 0.5f * knows) * 7.0f
-		backRightShin.rotationPointY = backRightLeg.rotationPointY + MathHelper.sin(Math.PI.toFloat() / 2f + f18 + 1f * f13 * 0.5f * knows) * 7.0f
-		backRightShin.rotationPointZ = backRightLeg.rotationPointZ + MathHelper.cos(Math.PI.toFloat() * 3f / 2f + f18 + 1f * f13 * 0.5f * knows) * 7.0f
+		backLeftShin.rotationPointY = backLeftLeg.rotationPointY + MathHelper.sin(Math.PI.F / 2f + f18 + 1f * -f13 * 0.5f * knows) * 7.0f
+		backLeftShin.rotationPointZ = backLeftLeg.rotationPointZ + MathHelper.cos(Math.PI.F * 3f / 2f + f18 + 1f * -f13 * 0.5f * knows) * 7.0f
+		backRightShin.rotationPointY = backRightLeg.rotationPointY + MathHelper.sin(Math.PI.F / 2f + f18 + 1f * f13 * 0.5f * knows) * 7.0f
+		backRightShin.rotationPointZ = backRightLeg.rotationPointZ + MathHelper.cos(Math.PI.F * 3f / 2f + f18 + 1f * f13 * 0.5f * knows) * 7.0f
 		val f20 = (-1.0471976f + f19) * 0f + f14 * 1f
 		val f21 = (-1.0471976f + -f19) * 0f + -f14 * 1f
-		frontLeftShin.rotationPointY = frontLeftLeg.rotationPointY + MathHelper.sin(Math.PI.toFloat() / 2f + f20) * 7.0f
-		frontLeftShin.rotationPointZ = frontLeftLeg.rotationPointZ + MathHelper.cos(Math.PI.toFloat() * 3f / 2f + f20) * 7.0f
-		frontRightShin.rotationPointY = frontRightLeg.rotationPointY + MathHelper.sin(Math.PI.toFloat() / 2f + f21) * 7.0f
-		frontRightShin.rotationPointZ = frontRightLeg.rotationPointZ + MathHelper.cos(Math.PI.toFloat() * 3f / 2f + f21) * 7.0f
+		frontLeftShin.rotationPointY = frontLeftLeg.rotationPointY + MathHelper.sin(Math.PI.F / 2f + f20) * 7.0f
+		frontLeftShin.rotationPointZ = frontLeftLeg.rotationPointZ + MathHelper.cos(Math.PI.F * 3f / 2f + f20) * 7.0f
+		frontRightShin.rotationPointY = frontRightLeg.rotationPointY + MathHelper.sin(Math.PI.F / 2f + f21) * 7.0f
+		frontRightShin.rotationPointZ = frontRightLeg.rotationPointZ + MathHelper.cos(Math.PI.F * 3f / 2f + f21) * 7.0f
 		
 		
 		backLeftLeg.rotateAngleX = f18 + -f13 * 0.5f * knows * 1f
@@ -377,21 +378,21 @@ class ModelEntitySleipnir: ModelBase() {
 		
 		
 		frontLeftLeg.rotateAngleX = f20
-		frontLeftShin.rotateAngleX = (frontLeftLeg.rotateAngleX + Math.PI.toFloat() * max(0.0f, 0.2f + f19 * 0.2f)) * 0f + (f14 + max(0.0f, f13 * 0.5f * knows)) * 1f
+		frontLeftShin.rotateAngleX = (frontLeftLeg.rotateAngleX + Math.PI.F * max(0.0f, 0.2f + f19 * 0.2f)) * 0f + (f14 + max(0.0f, f13 * 0.5f * knows)) * 1f
 		frontLeftHoof.rotateAngleX = frontLeftShin.rotateAngleX
 		
 		frontRightMiddleLeg.rotateAngleX = f20
-		frontRightMiddleShin.rotateAngleX = (frontLeftLeg.rotateAngleX + Math.PI.toFloat() * max(0.0f, 0.2f + f19 * 0.2f)) * 0f + (f14 + max(0.0f, f13 * 0.5f * knows)) * 1f
+		frontRightMiddleShin.rotateAngleX = (frontLeftLeg.rotateAngleX + Math.PI.F * max(0.0f, 0.2f + f19 * 0.2f)) * 0f + (f14 + max(0.0f, f13 * 0.5f * knows)) * 1f
 		frontRightMiddleHoof.rotateAngleX = frontLeftShin.rotateAngleX
 		
 		
 		
 		frontRightLeg.rotateAngleX = f21
-		frontRightShin.rotateAngleX = (frontRightLeg.rotateAngleX + Math.PI.toFloat() * max(0.0f, 0.2f - f19 * 0.2f)) * 0f + (-f14 + max(0.0f, -f13 * 0.5f * knows)) * 1f
+		frontRightShin.rotateAngleX = (frontRightLeg.rotateAngleX + Math.PI.F * max(0.0f, 0.2f - f19 * 0.2f)) * 0f + (-f14 + max(0.0f, -f13 * 0.5f * knows)) * 1f
 		frontRightHoof.rotateAngleX = frontRightShin.rotateAngleX
 		
 		frontLeftMiddleLeg.rotateAngleX = f21
-		frontLeftMiddleShin.rotateAngleX = (frontRightLeg.rotateAngleX + Math.PI.toFloat() * max(0.0f, 0.2f - f19 * 0.2f)) * 0f + (-f14 + max(0.0f, -f13 * 0.5f * knows)) * 1f
+		frontLeftMiddleShin.rotateAngleX = (frontRightLeg.rotateAngleX + Math.PI.F * max(0.0f, 0.2f - f19 * 0.2f)) * 0f + (-f14 + max(0.0f, -f13 * 0.5f * knows)) * 1f
 		frontLeftMiddleHoof.rotateAngleX = frontRightShin.rotateAngleX
 		
 		

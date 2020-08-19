@@ -51,9 +51,9 @@ object AlfheimSkyRenderer: IRenderHandler() {
 				tessellator.addVertex((j + b2).D, f, (k + b2).D)
 				tessellator.addVertex((j + 0).D, f, (k + b2).D)
 				tessellator.draw()
-				k += b2.toInt()
+				k += b2.I
 			}
-			j += b2.toInt()
+			j += b2.I
 		}
 		
 		glEndList()

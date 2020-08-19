@@ -34,6 +34,7 @@ import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
 import alfheim.common.block.AlfheimBlocks.corporeaAutocrafter
+import alfheim.common.block.AlfheimBlocks.corporeaInjector
 import alfheim.common.block.AlfheimBlocks.dreamSapling
 import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
@@ -178,6 +179,7 @@ import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.flugelDisc
 import alfheim.common.item.AlfheimItems.flugelHead
 import alfheim.common.item.AlfheimItems.flugelSoul
+import alfheim.common.item.AlfheimItems.gleipnir
 import alfheim.common.item.AlfheimItems.gungnir
 import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.invisibilityCloak
@@ -259,11 +261,12 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addBlock(manaInfuser)
 		addBlock(corporeaAutocrafter)
+		addBlock(corporeaInjector)
+		addBlock(enderActuator)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
 		addBlock(Blocks.furnace, 8)
 		addBlock(ModBlocks.spreader, 4)
-		addBlock(enderActuator)
 		// addBlock(anomalyHarvester) // BACK
 		addBlock(anyavil)
 		addBlock(alfheimPylon)
@@ -373,6 +376,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (excaliber)
 		addItem (subspaceSpear)
 		addItem (gungnir)
+		addItem (gleipnir)
 		addItem (moonlightBow)
 		addItem (mask)
 		addItem (flugelSoul)

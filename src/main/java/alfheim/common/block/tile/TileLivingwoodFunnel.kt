@@ -151,7 +151,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 			val aint = inventory.getAccessibleSlotsFromSide(side)
 			
 			for (l in aint.indices) {
-				val itemstack1 = inventory.get(aint[l])
+				val itemstack1 = inventory[aint[l]]
 				
 				if (itemstack1 == null || itemstack1.stackSize != itemstack1.maxStackSize) {
 					return false
@@ -161,7 +161,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 			val j = inventory.sizeInventory
 			
 			for (k in 0 until j) {
-				val itemstack = inventory.get(k)
+				val itemstack = inventory[k]
 				
 				if (itemstack == null || itemstack.stackSize != itemstack.maxStackSize) {
 					return false
@@ -234,7 +234,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	
 	private fun pushToInventory(inventory: IInventory, item: ItemStack?, slot: Int, side: Int): ItemStack? {
 		var stack = item
-		val itemstack1 = inventory.get(slot)
+		val itemstack1 = inventory[slot]
 		
 		if (stack != null && canInsertItem(inventory, stack, slot, side)) {
 			var flag = false
@@ -242,10 +242,10 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 			if (itemstack1 == null) {
 				val max = min(stack.maxStackSize, inventory.inventoryStackLimit)
 				if (max >= stack.stackSize) {
-					inventory.set(slot, stack)
+					inventory[slot] = stack
 					stack = null
 				} else {
-					inventory.set(slot, stack.splitStack(max))
+					inventory[slot] = stack.splitStack(max)
 				}
 				flag = true
 			} else if (canAddToStack(itemstack1, stack)) {
@@ -301,7 +301,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	}
 	
 	private fun pullItemIn(hopper: IHopper, inventory: IInventory, slot: Int, side: Int): Boolean {
-		val itemstack = inventory.get(slot)
+		val itemstack = inventory[slot]
 		
 		if (itemstack != null && canPullItem(inventory, itemstack, slot, side)) {
 			if (itemstack.itemInFrames()) {
@@ -314,7 +314,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 					return true
 				}
 				
-				inventory.set(slot, itemstack1)
+				inventory[slot] = itemstack1
 			}
 		}
 		
@@ -343,13 +343,13 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	private fun inventoryEmpty(inventory: IInventory, side: Int): Boolean {
 		if (inventory is ISidedInventory && side > -1) {
 			for (l in inventory.getAccessibleSlotsFromSide(side)) {
-				if (inventory.get(l) != null) {
+				if (inventory[l] != null) {
 					return false
 				}
 			}
 		} else {
 			for (k in 0 until inventory.sizeInventory) {
-				if (inventory.get(k) != null) {
+				if (inventory[k] != null) {
 					return false
 				}
 			}
@@ -372,7 +372,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 		}
 	}
 	
-	override fun decrStackSize(slot: Int, par2: Int): ItemStack? {
+	override fun decrStackSize(slot: Int, size: Int): ItemStack? {
 		if (inventory[slot] != null) {
 			
 			if (!worldObj.isRemote) {
@@ -381,13 +381,13 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 			
 			val itemstack: ItemStack
 			
-			if (inventory[slot]!!.stackSize <= par2) {
+			if (inventory[slot]!!.stackSize <= size) {
 				itemstack = inventory[slot]!!
 				inventory[slot] = null
 				markDirty()
 				return itemstack
 			}
-			itemstack = inventory[slot]!!.splitStack(par2)
+			itemstack = inventory[slot]!!.splitStack(size)
 			if (inventory[slot]!!.stackSize == 0) {
 				inventory[slot] = null
 			}

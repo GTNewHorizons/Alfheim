@@ -8,7 +8,7 @@ import alfheim.common.block.alt.*
 import alfheim.common.block.base.*
 import alfheim.common.block.colored.*
 import alfheim.common.block.colored.rainbow.*
-import alfheim.common.block.corporea.BlockCorporeaAutocrafter
+import alfheim.common.block.corporea.*
 import alfheim.common.block.magtrees.calico.*
 import alfheim.common.block.magtrees.circuit.*
 import alfheim.common.block.magtrees.lightning.*
@@ -54,7 +54,7 @@ object AlfheimBlocks {
 	val barrel: Block
 	val barrier: Block
 	val corporeaAutocrafter: Block
-//	val corporeaInjector: Block
+	val corporeaInjector: Block
 	val dreamSapling: Block
 	val elvenOre: Block
 	val elvenSand: Block
@@ -197,7 +197,7 @@ object AlfheimBlocks {
 		barrel = BlockBarrel()
 		barrier = BlockBarrier()
 		corporeaAutocrafter = BlockCorporeaAutocrafter()
-//		corporeaInjector = BlockCorporeaInjector()
+		corporeaInjector = BlockCorporeaInjector()
 		dreamSapling = BlockDreamSapling()
 		elvenOre = BlockElvenOre()
 		elvenSand = object: BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen) {

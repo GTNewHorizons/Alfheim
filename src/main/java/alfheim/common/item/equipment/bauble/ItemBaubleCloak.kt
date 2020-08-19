@@ -29,9 +29,8 @@ abstract class ItemBaubleCloak(name: String): ItemBauble(name), ITravellersGearS
 		creativeTab = AlfheimTab
 	}
 	
-	override fun getBaubleType(arg0: ItemStack) =
+	override fun getBaubleType(stack: ItemStack) =
 		if (AlfheimCore.TravellersGearLoaded) null else BaubleType.BELT
-	
 	
 	override fun getSlot(stack: ItemStack) = 0
 	
@@ -50,7 +49,7 @@ abstract class ItemBaubleCloak(name: String): ItemBauble(name), ITravellersGearS
 	}
 	
 	override fun addHiddenTooltip(stack: ItemStack, player: EntityPlayer, tooltip: MutableList<Any?>, adv: Boolean) {
-		TravellerBaubleTooltipHandler.addHiddenTooltip(this, stack, player, tooltip, adv)
+		TravellerBaubleTooltipHandler.addHiddenTooltip(this, stack, tooltip)
 	}
 	
 	abstract fun getCloakTexture(stack: ItemStack): ResourceLocation

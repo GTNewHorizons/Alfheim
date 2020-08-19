@@ -11,7 +11,6 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraftforge.common.MinecraftForge
-import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.tile.TileAltar
 
 object SpellLiquification: SpellBase("liquification", EnumRace.UNDINE, 2000, 100, 5) {
@@ -37,7 +36,7 @@ object SpellLiquification: SpellBase("liquification", EnumRace.UNDINE, 2000, 100
 		
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
 		
-		val cost = getManaCost() * if (race == caster.race) 1 else AlfheimConfigHandler.raceManaMult.toInt()
+		val cost = getManaCost() * if (race == caster.race) 1 else AlfheimConfigHandler.raceManaMult.I
 		if (!consumeMana(caster, cost, false)) return SpellCastResult.NOMANA
 		
 		if (te != null) {

@@ -598,8 +598,12 @@ class AlfheimClassTransformer: IClassTransformer {
 			super.visit(version, access, name, signature, superName, arrayOf("alfheim/api/boss/IBotaniaBossWithShaderAndName"))
 		}
 		
-		override// Just because!
-		fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			
+			// ################################################################################################################
+			// # NO IT CAN'T BE SO EASILY DONE OTHERWISE !!! STOP DELETING THIS BEFORE YOU ACTUALLY MADE A BETTER VERSION !!! #
+			// ###############################################################################################################
+			
 			if (name == "attackEntityFrom" || name == "a" && desc == "(Lro;F)Z") {
 				println("Visiting EntityDoppleganger#attackEntityFrom: $name$desc")
 				val mv = cv.visitMethod(ACC_PUBLIC, if (OBF) "a" else "attackEntityFrom", if (OBF) "(Lro;F)Z" else "(Lnet/minecraft/util/DamageSource;F)Z", null, null)

@@ -172,7 +172,7 @@ object RenderEntityItemImmortal: Render() {
 	/**
 	 * Renders a dropped item
 	 */
-	fun renderDroppedItem(entity: EntityItemImmortal, dIcon: IIcon?, p_77020_3_: Int, p_77020_4_: Float, p_77020_5_: Float, p_77020_6_: Float, p_77020_7_: Float, pass: Int = 0) {
+	fun renderDroppedItem(entity: EntityItemImmortal, dIcon: IIcon?, itemCount: Int, hower: Float, red: Float, green: Float, blue: Float, pass: Int = 0) {
 		val tessellator = Tessellator.instance
 		
 		val icon: IIcon = dIcon ?: (mc.textureManager.getTexture(getEntityTexture(entity)) as TextureMap).getAtlasSprite("missingno")
@@ -182,13 +182,13 @@ object RenderEntityItemImmortal: Render() {
 		val f4 = icon.minV
 		val f5 = icon.maxV
 		val f6 = 1f
-		val f7 = 0.5f
-		val f8 = 0.25f
+		val f7 = 0.5
+		val f8 = 0.25
 		var f10: Float
 		
 		if (renderManager.options.fancyGraphics) {
 			GL11.glPushMatrix()
-			GL11.glRotatef(((entity.age.F + p_77020_4_) / 20f + entity.hoverStart) * (180f / Math.PI.F), 0f, 1f, 0f)
+			GL11.glRotatef(((entity.age.F + hower) / 20f + entity.hoverStart) * (180f / Math.PI.F), 0f, 1f, 0f)
 			val f9 = 0.0625f
 			f10 = 0.021875f
 			val stack = entity.stack
@@ -201,7 +201,7 @@ object RenderEntityItemImmortal: Render() {
 				else   -> 4
 			}
 			
-			GL11.glTranslatef(-f7, -f8, -((f9 + f10) * b0.F / 2f))
+			GL11.glTranslated(-f7, -f8, -((f9 + f10) * b0.D / 2))
 			for (k in 0 until b0) {
 				if (k > 0) {
 					val x = (random.nextFloat() * 2f - 1f) * 0.3f / 0.5f
@@ -216,7 +216,7 @@ object RenderEntityItemImmortal: Render() {
 				} else {
 					bindTexture(TextureMap.locationItemsTexture)
 				}
-				GL11.glColor4f(p_77020_5_, p_77020_6_, p_77020_7_, 1f)
+				GL11.glColor4f(red, green, blue, 1f)
 				ItemRenderer.renderItemIn2D(tessellator, f15, f4, f14, f5, icon.iconWidth, icon.iconHeight, f9)
 				if (stack?.hasEffect(pass) == true) {
 					GL11.glDepthFunc(GL11.GL_EQUAL)
@@ -250,7 +250,7 @@ object RenderEntityItemImmortal: Render() {
 			}
 			GL11.glPopMatrix()
 		} else {
-			for (l in 0 until p_77020_3_) {
+			for (l in 0 until itemCount) {
 				GL11.glPushMatrix()
 				if (l > 0) {
 					f10 = (random.nextFloat() * 2f - 1f) * 0.3f
@@ -259,13 +259,13 @@ object RenderEntityItemImmortal: Render() {
 					GL11.glTranslatef(f10, f16, f17)
 				}
 				GL11.glRotatef(180f - renderManager.playerViewY, 0f, 1f, 0f)
-				GL11.glColor4f(p_77020_5_, p_77020_6_, p_77020_7_, 1f)
+				GL11.glColor4f(red, green, blue, 1f)
 				tessellator.startDrawingQuads()
 				tessellator.setNormal(0f, 1f, 0f)
-				tessellator.addVertexWithUV((0f - f7).toDouble(), (0f - f8).toDouble(), 0.0, f14.toDouble(), f5.toDouble())
-				tessellator.addVertexWithUV((f6 - f7).toDouble(), (0f - f8).toDouble(), 0.0, f15.toDouble(), f5.toDouble())
-				tessellator.addVertexWithUV((f6 - f7).toDouble(), (1f - f8).toDouble(), 0.0, f15.toDouble(), f4.toDouble())
-				tessellator.addVertexWithUV((0f - f7).toDouble(), (1f - f8).toDouble(), 0.0, f14.toDouble(), f4.toDouble())
+				tessellator.addVertexWithUV(-f7, -f8, 0.0, f14.D, f5.D)
+				tessellator.addVertexWithUV(f6 - f7, -f8, 0.0, f15.D, f5.D)
+				tessellator.addVertexWithUV(f6 - f7, 1 - f8, 0.0, f15.D, f4.D)
+				tessellator.addVertexWithUV(-f7, 1 - f8, 0.0, f14.D, f4.D)
 				tessellator.draw()
 				GL11.glPopMatrix()
 			}
