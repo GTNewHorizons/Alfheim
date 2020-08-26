@@ -11,8 +11,8 @@ object TravellerBaubleTooltipHandler {
 	
 	fun addHiddenTooltip(bauble: ItemBauble, stack: ItemStack, tooltip: MutableList<Any?>) {
 		if (AlfheimCore.TravellersGearLoaded) {
-			bauble as ITravellersGear
-			addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg." + bauble.getSlot(stack)), tooltip)
+			val slot = (bauble as? ITravellersGear)?.getSlot(stack) ?: 0
+			addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.$slot"), tooltip)
 			val key = RenderHelper.getKeyDisplayString("TG.keybind.openInv")
 			if (key != null)
 				addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replace("%key%".toRegex(), key), tooltip)

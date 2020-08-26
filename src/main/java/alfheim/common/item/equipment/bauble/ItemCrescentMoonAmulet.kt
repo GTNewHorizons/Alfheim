@@ -30,7 +30,7 @@ class ItemCrescentMoonAmulet: ItemPendant("CrescentMoonAmulet"), IManaUsingItem 
 		if (!e.source.isDamageAbsolute && e.entityLiving is EntityPlayer) {
 			val player = e.entityLiving as EntityPlayer
 			val bbls = PlayerHandler.getPlayerBaubles(player)
-			if (bbls?.get(0)?.item is ItemCrescentMoonAmulet)
+			if (bbls[0]?.item is ItemCrescentMoonAmulet)
 				if (e.source.isMagicDamage) {
 					if (ItemNBTHelper.getInt(bbls[0], TAG_COOLDOWN, 0) <= 0) {
 						ItemNBTHelper.setInt(bbls[0], TAG_COOLDOWN, 100)

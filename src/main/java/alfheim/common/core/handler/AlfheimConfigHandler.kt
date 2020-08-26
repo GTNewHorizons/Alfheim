@@ -105,6 +105,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var searchTabBotania		= true
 	var schemaArray				= IntArray(17) { -1 + it }
 	var schemaMaxSize			= 64
+	var soulSwordMaxLvl			= Int.MAX_VALUE
 	var storyLines				= 4
 	var tradePortalRate			= 1200
 	var triquetrumBlackList		= emptyArray<String>()
@@ -264,6 +265,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, false, "Which schemas are allowed to be generated", false)
 		schemaMaxSize = loadProp(CATEGORY_GENERAL, "schemaMaxSize", schemaMaxSize, false, "Max schema cuboid side length")
+		soulSwordMaxLvl = loadProp(CATEGORY_GENERAL, "soulSwordMaxLvl", soulSwordMaxLvl, false, "Soul Sword max level")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
 		triquetrumBlackList = loadProp(CATEGORY_GENERAL, "triquetrumBlackList", triquetrumBlackList, false, "Blacklist for blocks that triquetrum can't swap [modid:name]", false)

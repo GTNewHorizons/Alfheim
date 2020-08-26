@@ -10,6 +10,7 @@ import alexsocol.asjlib.render.ASJRenderHelper.setTwoside
 import alfheim.api.event.RenderEntityPostEvent
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.EntityGleipnir
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -44,6 +45,15 @@ class ItemGleipnir: ItemRelic("Gleipnir") {
 			if (target.leashedToEntity === player)
 				target.clearLeashed(true, true)
 		} else {
+			// elite memes start
+			// unbindable
+			if (ContributorsPrivacyHelper.isCorrect(target.commandSenderName, "AlexSocol")) return false
+			// only by socol
+			if (ContributorsPrivacyHelper.isCorrect(target.commandSenderName, "KAIIIAK") && !ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "AlexSocol")) return false
+			// only by cat and socol
+			if (ContributorsPrivacyHelper.isCorrect(target.commandSenderName, "GedeonGrays") && !ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "AlexSocol") && !ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "KAIIIAK")) return false
+			// elite memes end
+			
 			target.setLeashedToEntity(player, true)
 			leashes.add(target.uniqueID)
 			stack.cooldown = 50

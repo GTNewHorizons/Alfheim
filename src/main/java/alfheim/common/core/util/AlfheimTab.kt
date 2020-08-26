@@ -187,6 +187,7 @@ import alfheim.common.item.AlfheimItems.invisibleFlameLens
 import alfheim.common.item.AlfheimItems.irisSeeds
 import alfheim.common.item.AlfheimItems.livingrockPickaxe
 import alfheim.common.item.AlfheimItems.lootInterceptor
+import alfheim.common.item.AlfheimItems.manaGlove
 import alfheim.common.item.AlfheimItems.manaMirrorImba
 import alfheim.common.item.AlfheimItems.manaRingElven
 import alfheim.common.item.AlfheimItems.manaRingGod
@@ -222,6 +223,7 @@ import alfheim.common.item.AlfheimItems.rodPortal
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.royalStaff
 import alfheim.common.item.AlfheimItems.soulHorn
+import alfheim.common.item.AlfheimItems.soulSword
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer
@@ -303,6 +305,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (auraRingElven)
 		addItem (manaRingGod)
 		addItem (auraRingGod)
+		addItem (manaGlove)
 		addItem (dodgeRing)
 		addItem (ringSpider)
 		addItem (ringFeedFlower)
@@ -368,6 +371,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (elvoriumLeggings)
 		addItem (elvoriumBoots)
 		
+		addItem (soulSword)
 		addItem (realitySword)
 		
 		//addItem (storyToken)

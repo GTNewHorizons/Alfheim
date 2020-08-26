@@ -52,7 +52,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 	
 	override fun getDamage(stack: ItemStack): Int {
 		val mana = getMana(stack).F
-		return MathHelper.clamp_int(1000 - (mana / TilePool.MAX_MANA * 1000).I, 0, maxDamage)
+		return MathHelper.clamp_int(1000 - (mana / TilePool.MAX_MANA * 1000).I, 0, getMaxDamage(stack))
 	}
 	
 	override fun getDisplayDamage(stack: ItemStack) = getDamage(stack)

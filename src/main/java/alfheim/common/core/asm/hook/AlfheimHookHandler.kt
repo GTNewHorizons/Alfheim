@@ -33,7 +33,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.*
-import net.minecraft.client.renderer.texture.TextureManager
+import net.minecraft.client.renderer.texture.*
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
@@ -67,6 +67,7 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.*
+import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.client.core.proxy.ClientProxy
 import vazkii.botania.client.fx.FXWisp
 import vazkii.botania.client.lib.LibResources
@@ -267,15 +268,15 @@ object AlfheimHookHandler {
 	 */
 	@JvmStatic
 	fun getBaublesDiscountForTools(player: EntityPlayer): Float {
-		val baubles = PlayerHandler.getPlayerBaubles(player) ?: return 0f
+		val baubles = PlayerHandler.getPlayerBaubles(player)
 		return (0 until baubles.sizeInventory).sumByDouble { i -> (baubles[i]?.let { (it.item as? IManaDiscountBauble)?.getDiscount(it, i, player) } ?: 0f).D }.F
 	}
 	
 	@JvmStatic
 	fun getTravellersDiscountForTools(player: EntityPlayer): Float {
 		if (!AlfheimCore.TravellersGearLoaded) return 0f
-		val baubles = TravellersGearAPI.getExtendedInventory(player)
-		return baubles.indices.sumByDouble { i -> (baubles[i]?.let { (it.item as? IManaDiscountBauble)?.getDiscount(it, i, player) } ?: 0f).D }.F
+		val gear = TravellersGearAPI.getExtendedInventory(player)
+		return gear.indices.sumByDouble { i -> (gear[i]?.let { (it.item as? IManaDiscountBauble)?.getDiscount(it, i, player) } ?: 0f).D }.F
 	}
 	
 	var stoneHook = false
@@ -609,6 +610,29 @@ object AlfheimHookHandler {
 	fun updateTick(grass: BlockIce, world: World, x: Int, y: Int, z: Int, random: Random) {
 		if (!AlfheimCore.winter && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.rand.nextInt(20) == 0 && !world.isRemote)
 			world.setBlock(x, y, z, Blocks.flowing_water)
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun getSubItems(target: ItemAncientWill, item: Item?, tab: CreativeTabs?, list: MutableList<Any?>) {
+		list.add(ItemStack(item, 1, 6))
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun registerIcons(target: ItemAncientWill, reg: IIconRegister?) {
+		target.icons += IconHelper.forItem(reg, target, 6)
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun addInformation(target: ItemAncientWill, stack: ItemStack, player: EntityPlayer?, list: List<String>, adv: Boolean): Boolean {
+		if (stack.meta != 6) return false
+		
+		target.addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.craftToAddWill"), list)
+		target.addStringToTooltip(StatCollector.translateToLocal("botania.armorset.will" + stack.getItemDamage() + ".shortDesc"), list)
+		
+		return true
 	}
 	
 	@JvmStatic
@@ -974,7 +998,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getDamage(item: ItemManaMirror, stack: ItemStack, @ReturnValue result: Int) = result.clamp(0, item.maxDamage)
+	fun getDamage(item: ItemManaMirror, stack: ItemStack, @ReturnValue result: Int) = result.clamp(0, item.getMaxDamage(stack))
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)

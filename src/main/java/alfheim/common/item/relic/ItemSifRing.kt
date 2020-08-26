@@ -77,9 +77,9 @@ class ItemSifRing: ItemRelicBauble("SifRing") {
 	companion object {
 		
 		fun getSifRing(player: EntityPlayer): ItemStack? {
-			val baubles = PlayerHandler.getPlayerBaubles(player) ?: return null
-			val stack1 = baubles.get(1)
-			val stack2 = baubles.get(2)
+			val baubles = PlayerHandler.getPlayerBaubles(player)
+			val stack1 = baubles[1]
+			val stack2 = baubles[2]
 			return if (isSifRing(stack1)) stack1 else if (isSifRing(stack2)) stack2 else null
 		}
 		

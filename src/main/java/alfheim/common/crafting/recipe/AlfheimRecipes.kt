@@ -113,6 +113,7 @@ import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.invisibilityCloak
 import alfheim.common.item.AlfheimItems.livingrockPickaxe
 import alfheim.common.item.AlfheimItems.lootInterceptor
+import alfheim.common.item.AlfheimItems.manaGlove
 import alfheim.common.item.AlfheimItems.manaMirrorImba
 import alfheim.common.item.AlfheimItems.manaRingElven
 import alfheim.common.item.AlfheimItems.manaRingGod
@@ -250,6 +251,7 @@ object AlfheimRecipes {
 	lateinit var recipeManaRingElven: IRecipe
 	lateinit var recipeManaRingGod: IRecipe
 	lateinit var recipeManasteelHoe: IRecipe
+	lateinit var recipeManaweaveGlove: IRecipe
 	lateinit var recipeMultibauble: IRecipe
 	lateinit var recipeMuspelheimPendant: IRecipe
 	lateinit var recipeMuspelheimPowerIngot: IRecipe
@@ -663,6 +665,12 @@ object AlfheimRecipes {
 						 'S', MANA_STEEL,
 						 'T', LIVINGWOOD_TWIG)
 		recipeManasteelHoe = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(manaGlove),
+						 "MM ", "MPM", " M ",
+						 'M', MANAWEAVE_CLOTH,
+						 'P', MANA_PEARL)
+		recipeManaweaveGlove = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(multibauble),
 						 "QT ", "T E", " E ",

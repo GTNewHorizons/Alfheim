@@ -81,7 +81,7 @@ class ItemNjordRing: ItemRelicBauble("NjordRing") {
 		const val TAG_WAS_IN_WATER = "wasInWater"
 		
 		fun getNjordRing(player: EntityPlayer): ItemStack? {
-			val baubles = PlayerHandler.getPlayerBaubles(player) ?: return null
+			val baubles = PlayerHandler.getPlayerBaubles(player)
 			val stack1 = baubles[1]
 			val stack2 = baubles[2]
 			return if (isNjordRing(stack1)) stack1 else if (isNjordRing(stack2)) stack2 else null

@@ -44,9 +44,9 @@ repositories {
 	mavenCentral()
 }
 
-version = mainMod ? "BETA-pre37.3" : "11"
+version = mainMod ? "BETA-pre37.4" : "12"
 group = "main"
-archivesBaseName = mainMod ? "Alfheim" : "Alfheim-Modular"
+archivesBaseName = mainMod ? "Alfheim" : "AlfheimModular"
 
 minecraft {
 	version = "1.7.10-10.13.4.1614-1.7.10"

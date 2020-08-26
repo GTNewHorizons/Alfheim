@@ -32,9 +32,9 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 	@SideOnly(Side.CLIENT)
 	fun onKeyDown(event: KeyInputEvent) {
 		val baublesInv = PlayerHandler.getPlayerBaubles(mc.thePlayer)
-		var ringStack: ItemStack? = baublesInv.get(1)
+		var ringStack = baublesInv[1]
 		if (ringStack == null || ringStack.item !is ItemDodgeRing) {
-			ringStack = baublesInv.get(2)
+			ringStack = baublesInv[2]
 			if (ringStack == null || ringStack.item !is ItemDodgeRing)
 				return
 		}

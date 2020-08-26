@@ -60,7 +60,8 @@ class ItemRodElemental(name: String, private val barrier: () -> Block): ItemMod(
 								cd = cd or place(stack, player, world, i, j, k, 0, 0.5f, 0.5f, 0.5f, barrier(), if (player.capabilities.isCreativeMode) 0 else 150, c.red.F, c.green.F, c.blue.F)
 							}
 						}
-			if (cd) stack.meta = maxDamage
+			if (cd)
+				stack.meta = getMaxDamage(stack)
 		}
 		return stack
 	}
