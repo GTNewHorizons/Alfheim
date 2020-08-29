@@ -1,6 +1,5 @@
 package alfheim.common.entity
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.handler.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -24,6 +23,8 @@ class EntityGleipnir: Entity {
 		super.onUpdate()
 		val thrower = thrower
 		
+		if (worldObj.isRemote) return
+		
 		if (thrower == null || !thrower.isEntityAlive || ticksExisted > 300) {
 			setDead()
 			return
@@ -32,7 +33,7 @@ class EntityGleipnir: Entity {
 		val targets = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>
 		targets.remove(thrower)
 		
-		if (AlfheimConfigHandler.enableMMO && ASJUtilities.isServer) {
+		if (AlfheimConfigHandler.enableMMO) {
 			val pt = CardinalSystem.PartySystem.getParty(thrower)
 			targets.removeAll { pt.isMember(it) }
 		}

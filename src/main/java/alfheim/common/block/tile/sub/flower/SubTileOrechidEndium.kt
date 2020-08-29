@@ -3,11 +3,11 @@ package alfheim.common.block.tile.sub.flower
 import alfheim.api.AlfheimAPI
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.init.Blocks
 import net.minecraft.util.IIcon
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.common.block.subtile.functional.SubTileOrechid
 
 class SubTileOrechidEndium: SubTileOrechid() {
@@ -40,9 +40,7 @@ class SubTileOrechidEndium: SubTileOrechid() {
 	
 	override fun getColor() = 0xB533FF
 	
-	override fun getEntry(): LexiconEntry? {
-		return null // OrechidEndiumAPI.orechidEndiumLexiconEntry TODO
-	}
+	override fun getEntry() = AlfheimLexiconData.flowerEnderchid
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("orechidEndium").getIconForStack(null)
 	

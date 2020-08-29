@@ -2,12 +2,12 @@ package alfheim.common.block.tile.sub.flower
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.entity.FakeLightning
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.entity.Entity
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.IIcon
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.api.subtile.signature.PassiveFlower
 import vazkii.botania.common.block.subtile.generating.SubTilePassiveGenerating
 
@@ -58,9 +58,7 @@ class SubTileStormFlower: SubTilePassiveGenerating() {
 		cooldown = nbt.getInteger(TAG_COOLDOWN)
 	}
 	
-	override fun getEntry(): LexiconEntry? {
-		return null // TODO entry
-	}
+	override fun getEntry() = AlfheimLexiconData.flowerStorm
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("stormFlower").getIconForStack(null)
 	

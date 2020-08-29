@@ -31,7 +31,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		renderDistanceWeight = SpellFenrirStorm.radius / 2
 	}
 	
-	constructor(world: World, caster: EntityLivingBase): this(world) {
+	constructor(world: World, caster: EntityLivingBase, mjolnir: Boolean = false): this(world) {
 		this.caster = caster
 		val l = Vector3(caster.lookVec).mul(0.1)
 		setPositionAndRotation(caster.posX + l.x, caster.posY + caster.eyeHeight.D + l.y, caster.posZ + l.z, caster.rotationYaw, caster.rotationPitch)
@@ -42,6 +42,8 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		
 		val v = Vector3(caster.lookVec).mul(SpellFenrirStorm.radius + 0.5)
 		area.translate(v.x, v.y, v.z)
+		
+		this.mjolnir = mjolnir
 	}
 	
 	override fun onEntityUpdate() {

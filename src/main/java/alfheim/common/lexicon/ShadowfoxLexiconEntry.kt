@@ -17,7 +17,7 @@ open class ShadowfoxLexiconEntry: LexiconEntry, IAddonEntry {
     
     constructor(unlocalizedName: String, category: LexiconCategory, item: Item): this(unlocalizedName, category, ItemStack(item))
     
-    constructor(unlocalizedName: String, category: LexiconCategory): this(unlocalizedName, category, null as ItemStack?)
+    constructor(unlocalizedName: String, category: LexiconCategory): this(unlocalizedName, category, null)
     
     override fun setLexiconPages(vararg pages: LexiconPage): LexiconEntry {
 		for (page in pages) {

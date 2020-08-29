@@ -56,7 +56,7 @@ class ItemSifRing: ItemRelicBauble("SifRing") {
 	}
 	
 	fun supplyVineballs(stack: ItemStack, player: EntityPlayer) {
-		if (player.inventory.hasItem(ModItems.slingshot) && !player.inventory.hasItem(ModItems.vineBall) && ManaItemHandler.requestManaExact(stack, player, 50, true)) {
+		if (player.heldItem?.item === ModItems.slingshot && !player.inventory.hasItem(ModItems.vineBall) && ManaItemHandler.requestManaExact(stack, player, 50, true)) {
 			player.inventory.addItemStackToInventory(ItemStack(ModItems.vineBall))
 		}
 	}

@@ -160,7 +160,6 @@ object AlfheimRegistry {
 		registerTile(TilePowerStone::class.java, "PowerStone")
 		registerTile(TileRaceSelector::class.java, "RaceSelector")
 		registerTile(TileTradePortal::class.java, "TradePortal")
-		//registerTileEntity(TileTransferer.class, "Transferer"); BACK
 		
 		registerAnomalies()
 		

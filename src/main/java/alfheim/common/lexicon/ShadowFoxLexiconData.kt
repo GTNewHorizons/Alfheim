@@ -25,17 +25,12 @@ object ShadowFoxLexiconData {
 	val aurora: LexiconEntry
 	val coloredDirt: LexiconEntry
 	val irisSapling: LexiconEntry
-	val technicolor: LexiconEntry
-	val lightningRod: LexiconEntry
-	val flameRod: LexiconEntry
 	val prismaticRod: LexiconEntry
-	val interdictionRod: LexiconEntry
 	val pastoralSeeds: LexiconEntry
 	val coatOfArms: LexiconEntry
 	val colorOverride: LexiconEntry
 	val treeCrafting: LexiconEntry
 	val dendrology: ShadowFoxLexiconCategory
-	val attribution: LexiconEntry
 	val sealCreepers: LexiconEntry
 	val kindling: LexiconEntry
 	val itemDisplay: LexiconEntry
@@ -80,24 +75,6 @@ object ShadowFoxLexiconData {
 							   PageCraftingRecipe("4", ShadowFoxRecipes.recipeAuroraSlabs),
 							   PageCraftingRecipe("5", ShadowFoxRecipes.recipeAuroraSlabsToPlanks))
 		
-		technicolor = ShadowfoxLexiconEntry("rodTechnicolor", AlfheimLexiconData.categoryAlfheim, ItemStack(AlfheimItems.rodColorfulSkyDirt, 1, 16))
-		technicolor.setLexiconPages(PageText("0"),
-									PageCraftingRecipe("1", ShadowFoxRecipes.recipesColoredSkyDirtRod),
-									PageText("2"),
-									PageCraftingRecipe("3", ShadowFoxRecipes.recipesPriestOfSif))
-		
-		lightningRod = ShadowfoxLexiconEntry("rodLightning", AlfheimLexiconData.categoryAlfheim, AlfheimItems.rodLightning)
-		lightningRod.setLexiconPages(PageText("0"),
-									 PageCraftingRecipe("1", ShadowFoxRecipes.recipesLightningRod),
-									 PageText("2"),
-									 PageCraftingRecipe("3", ShadowFoxRecipes.recipesPriestOfThor))
-		
-		flameRod = ShadowfoxLexiconEntry("rodFlameStar", AlfheimLexiconData.categoryAlfheim, AlfheimItems.rodFlameStar)
-		flameRod.setLexiconPages(PageText("0"),
-								 PageCraftingRecipe("1", ShadowFoxRecipes.recipesFlameRod),
-								 PageText("2"),
-								 PageCraftingRecipe("3", ShadowFoxRecipes.recipesPriestOfLoki))
-		
 		prismaticRod = ShadowfoxLexiconEntry("rodPrismatic", AlfheimLexiconData.categoryAlfheim, AlfheimItems.rodPrismatic)
 		prismaticRod.setLexiconPages(PageText("0"),
 									 PageCraftingRecipe("1", ShadowFoxRecipes.recipesRainbowRod))
@@ -123,20 +100,10 @@ object ShadowFoxLexiconData {
 		colorOverride.setLexiconPages(PageText("0"),
 									  PageCraftingRecipe("1", ShadowFoxRecipes.recipesColorOverride))
 		
-		interdictionRod = ShadowfoxLexiconEntry("rodInterdiction", AlfheimLexiconData.categoryAlfheim, AlfheimItems.rodInterdiction)
-		interdictionRod.setLexiconPages(PageText("0"),
-										PageCraftingRecipe("1", ShadowFoxRecipes.recipesInterdictionRod),
-										PageText("2"),
-										PageCraftingRecipe("3", ShadowFoxRecipes.recipesPriestOfNjord))
-		
 		treeCrafting = ShadowfoxLexiconEntry("treeCrafting", dendrology, AlfheimBlocks.treeCrafterBlockRB)
 		treeCrafting.setPriority().setLexiconPages(PageText("0"),
 												   PageText("1"),
 												   PageMultiblock("2", treeCrafter))
-		
-		attribution = ShadowfoxLexiconEntry("attribution", AlfheimLexiconData.categoryAlfheim, AlfheimItems.attributionBauble)
-		attribution.setLexiconPages(PageText("0"),
-									PageCraftingRecipe("1", ShadowFoxRecipes.recipesAttribution))
 		
 		sealCreepers = ShadowfoxLexiconEntry("sealCreepers", AlfheimLexiconData.categoryAlfheim, AlfheimItems.wiltedLotus)
 		if (AlfheimConfigHandler.blackLotusDropRate > 0.0)
@@ -260,18 +227,12 @@ object ShadowFoxLexiconData {
 				memes = entry
 		
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.irisSapling), irisSapling, 0)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.rodLightning), lightningRod, 1)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.rodInterdiction), interdictionRod, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.rodPrismatic), prismaticRod, 1)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.priestEmblem, 1, 0), lightningRod, 3)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.priestEmblem, 1, 1), technicolor, 3)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.priestEmblem, 1, 2), interdictionRod, 3)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.colorOverride), colorOverride, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.irisLamp), lamp, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.wireAxe), specialAxe, 0)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.trisDagger), dagger, 0)
 		
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.attributionBauble, 1, 0), attribution, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.attributionBauble, 1, 1), memes, 1)
 		
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.wiltedLotus, 1, 0), sealCreepers, 1)
@@ -357,7 +318,6 @@ object ShadowFoxLexiconData {
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.rainbowGrass, 1, i), pastoralSeeds, 0)
 		
 		for (i in 0..16) {
-			LexiconRecipeMappings.map(ItemStack(AlfheimItems.rodColorfulSkyDirt, 1, i), technicolor, 1)
 			LexiconRecipeMappings.map(ItemStack(AlfheimItems.irisSeeds, 1, i), pastoralSeeds, 2)
 			LexiconRecipeMappings.map(ItemStack(AlfheimItems.coatOfArms, 1, i), coatOfArms, 1)
 		}
@@ -380,10 +340,6 @@ object ShadowFoxLexiconData {
 	}
 	
 	fun setKnowledgeTypes(kt: KnowledgeType) {
-		technicolor.knowledgeType = kt
-		lightningRod.knowledgeType = kt
-		flameRod.knowledgeType = kt
-		interdictionRod.knowledgeType = kt
 		colorOverride.knowledgeType = kt
 		prismaticRod.knowledgeType = kt
 		//toolbelt.knowledgeType = kt

@@ -5,14 +5,17 @@ import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileEnderActuator
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.common.Botania
 
-class BlockEnderActuator: BlockContainerMod(Material.iron) {
+class BlockEnderActuator: BlockContainerMod(Material.iron), ILexiconable {
 	
 	lateinit var iconSide: IIcon
 	
@@ -50,4 +53,6 @@ class BlockEnderActuator: BlockContainerMod(Material.iron) {
 	}
 	
 	override fun createNewTileEntity(world: World?, meta: Int) = TileEnderActuator()
+	
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.endAct
 }

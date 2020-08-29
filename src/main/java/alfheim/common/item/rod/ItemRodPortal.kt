@@ -41,8 +41,11 @@ class ItemRodPortal: ItemMod("rodPortal") {
 		return false
 	}
 	
-	// (block marker to dimID) to check? Odin emblem
-	val pairs = arrayOf(Blocks.grass to 0 to false, Blocks.netherrack to -1 to false, Blocks.end_stone to 1 to true, ModBlocks.livingrock to AlfheimConfigHandler.dimensionIDAlfheim to false)
+	// [block marker] to [dimID] with [if to check Odin emblem]
+	val pairs = arrayOf(Blocks.stone to 0 with false,
+						Blocks.netherrack to -1 with false,
+						Blocks.end_stone to 1 with true,
+						ModBlocks.livingrock to AlfheimConfigHandler.dimensionIDAlfheim with false)
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (player.dimension == 1) return stack // no escape for the end
@@ -127,16 +130,16 @@ class ItemRodPortal: ItemMod("rodPortal") {
 				
 				player.removePotionEffect(AlfheimConfigHandler.potionIDEternity)
 				
-				CommandDimTP.instance.processCommand(player, arrayOf(pair.first.second.toString()))
+				CommandDimTP.instance.processCommand(player, arrayOf(pair.second.toString()))
 				break
 			}
 		
 		return stack
 	}
 	
-	private fun Pair<Pair<Block, Int>, Boolean>.check(player: EntityPlayer, block: Block): Boolean {
-		var flag = block === first.first && player.dimension != first.second
-		if (second && ItemPriestEmblem.getEmblem(5, player) == null) flag = false
+	private fun Triple<Block, Int, Boolean>.check(player: EntityPlayer, block: Block): Boolean {
+		var flag = block === first && player.dimension != second
+		if (third && ItemPriestEmblem.getEmblem(5, player) == null) flag = false
 		return flag
 	}
 	

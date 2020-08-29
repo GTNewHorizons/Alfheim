@@ -32,6 +32,7 @@ import alfheim.common.block.AlfheimBlocks.animatedTorch
 import alfheim.common.block.AlfheimBlocks.anyavil
 import alfheim.common.block.AlfheimBlocks.barrel
 import alfheim.common.block.AlfheimBlocks.corporeaAutocrafter
+import alfheim.common.block.AlfheimBlocks.corporeaInjector
 import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
 import alfheim.common.block.AlfheimBlocks.enderActuator
@@ -233,6 +234,7 @@ object AlfheimRecipes {
 	lateinit var recipeGreenRod: IRecipe
 	lateinit var recipeHyperBucket: IRecipe
 	lateinit var recipeInvisibilityCloak: IRecipe
+	lateinit var recipeInjector: IRecipe
 	lateinit var recipeItemHolder: IRecipe
 	lateinit var recipeJug: IRecipe
 	lateinit var recipeLembas: IRecipe
@@ -402,11 +404,11 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(corporeaAutocrafter),
 						 " H ", "RSI", " F ",
-						 'H', hopper,
+						 'H', corporeaInterceptor,
 						 'R', corporeaRetainer,
 						 'I', corporeaInterceptor,
 						 'F', corporeaFunnel,
-						 'S', corporeaSpark)
+						 'S', ItemStack(corporeaSpark, 1, 1))
 		recipeAutocrafter = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(crescentMoonAmulet),
@@ -1204,6 +1206,9 @@ object AlfheimRecipes {
 			val enh: Any = if (i < 3) MAUFTRIUM_INGOT else ItemStack(alfStorage, 1, 1)
 			addShapelessOreDictRecipe(ItemStack(hyperBucket, 1, i + 1), ItemStack(hyperBucket, 1, i), enh)
 		}
+		
+		addShapelessOreDictRecipe(ItemStack(corporeaInjector), hopper, corporeaSpark)
+		recipeInjector = BotaniaAPI.getLatestAddedRecipe()
 		
 		addShapelessOreDictRecipe(ItemStack(lens, 1, 23), ItemStack(lens, 1, 0), tripwire_hook, ELEMENTIUM)
 		recipeLensTripwire = BotaniaAPI.getLatestAddedRecipe()

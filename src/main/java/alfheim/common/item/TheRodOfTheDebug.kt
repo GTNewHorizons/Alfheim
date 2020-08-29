@@ -3,6 +3,7 @@ package alfheim.common.item
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.api.entity.*
+import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry

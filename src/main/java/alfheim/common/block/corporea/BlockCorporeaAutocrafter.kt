@@ -4,6 +4,7 @@ import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.corporea.TileCorporeaAutocrafter
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
@@ -16,10 +17,11 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.*
 import org.lwjgl.opengl.*
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.*
 import kotlin.math.max
 
-class BlockCorporeaAutocrafter: BlockContainerMod(Material.iron), IWandable, IWandHUD {
+class BlockCorporeaAutocrafter: BlockContainerMod(Material.iron), ILexiconable, IWandable, IWandHUD {
 	
 	lateinit var iconSide: IIcon
 	
@@ -180,4 +182,6 @@ class BlockCorporeaAutocrafter: BlockContainerMod(Material.iron), IWandable, IWa
 			}
 		}
 	}
+	
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.corpSeq
 }

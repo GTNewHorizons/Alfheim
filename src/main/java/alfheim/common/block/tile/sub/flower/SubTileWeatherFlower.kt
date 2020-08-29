@@ -1,10 +1,10 @@
 package alfheim.common.block.tile.sub.flower
 
 import alexsocol.asjlib.I
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.api.subtile.signature.PassiveFlower
 import vazkii.botania.common.block.subtile.generating.SubTilePassiveGenerating
 
@@ -23,8 +23,6 @@ abstract class SubTileWeatherFlower: SubTilePassiveGenerating() {
 	}
 	
 	abstract fun canGenerate(world: World, x: Int, y: Int, z: Int): Boolean
-	
-	abstract override fun getEntry(): LexiconEntry?
 }
 
 @PassiveFlower
@@ -34,9 +32,7 @@ class SubTileRainFlower: SubTileWeatherFlower() {
 		return world.canLightningStrikeAt(x, y, z)
 	}
 	
-	override fun getEntry(): LexiconEntry? {
-		return null // TODO entry
-	}
+	override fun getEntry() = AlfheimLexiconData.flowerRain
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("rainFlower").getIconForStack(null)
 }
@@ -48,9 +44,7 @@ class SubTileSnowFlower: SubTileWeatherFlower() {
 		return world.isRaining && world.func_147478_e(x, y, z, false) && world.canBlockSeeTheSky(x, y, z)
 	}
 	
-	override fun getEntry(): LexiconEntry? {
-		return null // TODO entry
-	}
+	override fun getEntry() = AlfheimLexiconData.flowerSnow
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("snowFlower").getIconForStack(null)
 }
@@ -74,9 +68,7 @@ class SubTileWindFlower: SubTileWeatherFlower() {
 	
 	override fun getMaxMana() = 300
 	
-	override fun getEntry(): LexiconEntry? {
-		return null // TODO entry
-	}
+	override fun getEntry() = AlfheimLexiconData.flowerWind
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("windFlower").getIconForStack(null)
 }

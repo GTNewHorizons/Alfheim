@@ -177,15 +177,6 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"vazkii.botania.common.item.relic.ItemRelic"                    -> {
-				println("Transforming $transformedName")
-				val cr = ClassReader(basicClass)
-				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
-				val ct = `ItemRelic$ClassVisitor`(cw)
-				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				cw.toByteArray()
-			}
-			
 			"vazkii.botania.common.item.rod.ItemTerraformRod"               -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
@@ -900,37 +891,6 @@ class AlfheimClassTransformer: IClassTransformer {
 				}
 				
 				super.visitVarInsn(opcode, `var`)
-			}
-		}
-	}
-	
-	internal class `ItemRelic$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
-		
-		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
-			if (name == "addBindInfo") {
-				println("Visiting ItemRelic#addBindInfo: $name$desc")
-				return `ItemRelic$addBindInfo$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
-			}
-			return super.visitMethod(access, name, desc, signature, exceptions)
-		}
-		
-		internal class `ItemRelic$addBindInfo$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
-			
-			private var perform = false
-			
-			override fun visitJumpInsn(opcode: Int, label: Label) {
-				if (opcode == IF_ACMPNE) {
-					if (!perform) {
-						perform = true
-						super.visitJumpInsn(opcode, label)
-					} else {
-						visitInsn(POP2)
-						visitInsn(ICONST_1)
-						super.visitJumpInsn(IFEQ, label)
-					}
-				} else {
-					super.visitJumpInsn(opcode, label)
-				}
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileBarrel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.*
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -18,8 +19,9 @@ import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.*
 import net.minecraftforge.event.entity.living.LivingFallEvent
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent
+import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockBarrel: BlockContainerMod(Material.wood) {
+class BlockBarrel: BlockContainerMod(Material.wood), ILexiconable {
 	
 	init {
 		setBlockName("barrel")
@@ -141,6 +143,8 @@ class BlockBarrel: BlockContainerMod(Material.wood) {
 		setBlockBounds(0f, 0f, 1 - f, 1f, 1f, 1f)
 		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity)
 	}
+	
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.winery
 	
 	companion object {
 		

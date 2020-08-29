@@ -37,7 +37,7 @@ object SpellLiquification: SpellBase("liquification", EnumRace.UNDINE, 2000, 100
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
 		
 		val cost = getManaCost() * if (race == caster.race) 1 else AlfheimConfigHandler.raceManaMult.I
-		if (!consumeMana(caster, cost, false)) return SpellCastResult.NOMANA
+		if (!consumeMana(caster, cost, false, this)) return SpellCastResult.NOMANA
 		
 		if (te != null) {
 			te.hasWater = true
@@ -49,7 +49,7 @@ object SpellLiquification: SpellBase("liquification", EnumRace.UNDINE, 2000, 100
 		stackToPlace.tryPlaceItemIntoWorld(caster, caster.worldObj, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, mop.hitVec.xCoord.F, mop.hitVec.yCoord.F, mop.hitVec.zCoord.F)
 		
 		if (stackToPlace.stackSize == 0) {
-			consumeMana(caster, cost, true)
+			consumeMana(caster, cost, true, this)
 			return SpellCastResult.OK
 		}
 		

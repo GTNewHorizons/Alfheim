@@ -32,7 +32,7 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 	@SubscribeEvent
 	fun onWornTick(e: LivingEvent.LivingUpdateEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
-		val ring = getHeimdallRing(player) ?: return
+		getHeimdallRing(player) ?: return
 		
 		leadToDungeon(player)
 	}

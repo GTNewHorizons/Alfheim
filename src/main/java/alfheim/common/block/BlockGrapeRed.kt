@@ -5,6 +5,7 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemBlockGrapeRed
 import alfheim.common.item.material.*
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
@@ -12,9 +13,10 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
+import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable {
+class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable, ILexiconable {
 	
 	init {
 		setBlockName("RedGrape${stage+1}")
@@ -73,4 +75,6 @@ class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable {
 	override fun getRenderColor(meta: Int) = 0xFFFFFF
 	@SideOnly(Side.CLIENT)
 	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = 0xFFFFFF
+	
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.winery
 }

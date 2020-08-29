@@ -87,7 +87,7 @@ import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.LensFirework
-import vazkii.botania.common.item.relic.ItemFlugelEye
+import vazkii.botania.common.item.relic.*
 import vazkii.botania.common.item.rod.ItemRainbowRod
 import vazkii.botania.common.lib.LibBlockNames
 import java.awt.Color
@@ -818,6 +818,34 @@ object AlfheimHookHandler {
 	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
 		// Stupid Et Futurum
 		if (player.isSneaking) EntityFlugel.spawn(player, stack, world, x, y, z, false, false) else false
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun addBindInfo(static: ItemRelic?, list: List<String>, stack: ItemStack, player: EntityPlayer?) {
+		if (GuiScreen.isShiftKeyDown()) {
+			val bind = ItemRelic.getSoulbindUsernameS(stack)
+			
+			if (bind.isEmpty())
+				ItemRelic.addStringToTooltip(StatCollector.translateToLocal("botaniamisc.relicUnbound"), list)
+			else {
+				ItemRelic.addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.relicSoulbound"), bind), list)
+				
+				if (!ItemRelic.isRightPlayer(player, stack))
+					ItemRelic.addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.notYourSagittarius"), bind), list)
+			}
+			
+			if (stack.item === ModItems.aesirRing)
+				ItemRelic.addStringToTooltip(StatCollector.translateToLocal("botaniamisc.dropIkea"), list)
+			
+			val name = stack.unlocalizedName + ".poem"
+			if (StatCollector.canTranslate("${name}0")) {
+				ItemRelic.addStringToTooltip("", list)
+				
+				for (i in 0..3)
+					ItemRelic.addStringToTooltip(EnumChatFormatting.ITALIC.toString() + StatCollector.translateToLocal(name + i), list)
+			}
+		} else ItemRelic.addStringToTooltip(StatCollector.translateToLocal("botaniamisc.shiftinfo"), list)
+	}
 	
 	@JvmStatic
 	@Hook(createMethod = true)

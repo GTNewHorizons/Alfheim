@@ -50,6 +50,11 @@ fun <T> Array<T?>.ensureCapacity(min: Int): Array<T?> {
 	return new
 }
 
+/**
+ * Creates a tuple of type [Triple] from elements of this pair adding [third].
+ */
+infix fun <A, B, C> Pair<A, B>.with(third: C): Triple<A, B, C> = Triple(first, second, third)
+
 fun String.substringEnding(lastNChars: Int): String = this.substring(0, length - lastNChars)
 
 val Number.D get() = this.toDouble()
