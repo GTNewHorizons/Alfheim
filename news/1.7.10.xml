@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-36</val>
+		<val>BETA-37</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -104,5 +104,8 @@
 	</version>
 	<version id="BETA-35">
 		<val>Endless loops fix</val>
+	</version>
+	<version id="BETA-36">
+		<val>Lexicon documentations and some fixes, yay :D</val>
 	</version>
 </news>
