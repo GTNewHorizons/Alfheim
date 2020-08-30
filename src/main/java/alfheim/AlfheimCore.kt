@@ -12,6 +12,7 @@ import alfheim.common.integration.thaumcraft.*
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig
 import alfheim.common.integration.waila.WAILAAlfheimConfig
+import alfheim.common.item.relic.ItemGleipnir
 import alfheim.common.network.*
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.Mod.*
@@ -116,6 +117,7 @@ class AlfheimCore {
 	fun starting(e: FMLServerStartingEvent) {
 		save = e.server.entityWorld.saveHandler.worldDirectory.absolutePath
 		if (AlfheimConfigHandler.enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
+		ItemGleipnir.loadLeases(save)
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
 		e.registerServerCommand(CommandAlfheim())
@@ -126,6 +128,7 @@ class AlfheimCore {
 	@EventHandler
 	fun stopping(e: FMLServerStoppingEvent) {
 		CardinalSystem.save(save)
+		ItemGleipnir.saveLeases(save)
 	}
 	
 	fun registerPackets() {

@@ -11,7 +11,7 @@ class PotionBerserk: PotionAlfheim(AlfheimConfigHandler.potionIDBerserk, "berser
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase, map: BaseAttributeMap, mod: Int) {
 		super.applyAttributesModifiersToEntity(target, map, mod)
-		val m = AttributeModifier(uuid, "berserk", -0.2, 2)
+		val m = AttributeModifier(uuid, name, -0.2, 2)
 		target.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(m)
 		target.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(m)
 		target.health = target.health.coerceAtMost(target.maxHealth)
@@ -19,7 +19,6 @@ class PotionBerserk: PotionAlfheim(AlfheimConfigHandler.potionIDBerserk, "berser
 	
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase, map: BaseAttributeMap, mod: Int) {
 		super.removeAttributesModifiersFromEntity(target, map, mod)
-		val m = target.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(uuid)
-		if (m != null) target.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(m)
+		target.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(target.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(uuid) ?: return)
 	}
 }

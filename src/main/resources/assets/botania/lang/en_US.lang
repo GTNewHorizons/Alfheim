@@ -1,4 +1,5 @@
 botania.category.Alfheim=Alfheim
+botania.category.Divinity=Divinity
 
 botania.entry.alfheim=Alfheim
 botania.tagline.alfheim=New Horizons!
@@ -67,6 +68,36 @@ botania.tagline.shrines=Praise the Sun!
 botania.page.shrines0=Traveling around the Alfheim, one can notice different small-scaled ruins, looking like specific temples. Those are called Shrines of Power. In every shrine there is a place to pray to ancient gods - &1Stones of Power&0. Using such stones, one can gain some temporal paired-effect buffs at a cost of some &4Mana&0, to increase one skill by decreasing another. Those are not combinable.
 botania.page.shrines1=&4Berserk&0 - gain attack damage, lose health points.<br>&4Overmage&0 - gain magic attack damage, lose mana.<br>&4Ninja&0 - gain speed, lose attack damage.<br>&4Tank&0 - gain protection, lose speed
 
+botania.entry.flowerEnderchid=Orechid Endium
+botania.tagline.flowerEnderchid=Creates End ores from End Stone
+botania.page.flowerEnderchid0=The &1Orechid&0 is a great flower. The ability to create raw ores with &4Mana&0 can be a great boon to any sedentary botanist's life. It, however, can't create ores from the &4End&0. Getting that sorted out is easy, by switching the petals a bit, it'll create &4End&0 ores in &1End Stone&0 instead. The flower must be in &4The End&0 to function.
+botania.page.flowerEnderchid1=&oRevelationary Ore&r.
+
+botania.entry.flowerPetronia=Petronia
+botania.tagline.flowerPetronia=Mana from Liquid Fuel
+botania.page.flowerPetronia0=The &1Petronia&0 is an intermediate generating flower. It draws combustible liquid fuels up through it's roots, from containers one block below and all around it, and burns them to generate mana.
+botania.page.flowerPetronia1=Oil that is, black gold, Texas tea.
+
+botania.entry.flowerRain=Rainaria
+botania.tagline.flowerRain=Produces mana from rain
+botania.page.flowerRain0=&1Rainaria&0 produces &4Mana&0 while it's raining. Note: This flower doesn't produce anything in snow environment.
+botania.page.flowerRain1=Don't get it too wet!
+
+botania.entry.flowerSnow=Scurrocallis
+botania.tagline.flowerSnow=Produces mana from snow
+botania.page.flowerSnow0=&1Scurrocallis&0 is an alternative to &4Rainaria&0 but for snow biomes. You know why this is a thing....
+botania.page.flowerSnow1=Cold to the touch!
+
+botania.entry.flowerStorm=Thunderbloom
+botania.tagline.flowerStorm=Produces mana from lightning
+botania.page.flowerStorm0=&1Thunderbloom&0 is another weather-dependent flower except this one isn't a passive one. It generates mana when a lightning strickes it. Afterwards generates a lot of mana. This process heats the flower and it needs &4roughly a minute&0 to cool down.
+botania.page.flowerStorm1=Essentially an energy converter!
+
+botania.entry.flowerWind=Windifolia
+botania.tagline.flowerWind=Produces mana from wind
+botania.page.flowerWind0=When placed in the open, the &1Windifolia&0 creates &4Mana&0 from wind. The higher it is, the more mana it produces. More mana can be get under rain. Since it is a passive flower, it will decay.
+botania.page.flowerWind1=Only the storms can knock down the trees.
+
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
 botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful... Stunning metal!
@@ -98,10 +129,28 @@ botania.tagline.greenRod=Greening!
 botania.page.greenRod0=Sometimes waiting for natural greening may seem painfully long. But not more! &1Rod of the Green Hills&0 will replace all &1earth&0, &1mycelium&0 and &1podzol&0 on the air with &1grass&0 in exchange for some &4Mana&0. If those blocks are underground, process will cost a little bit more.
 botania.page.greenRod1=Green green green green green
 
+botania.entry.rodClick=Rod of the High Will
+botania.tagline.rodClick=Artificial interaction wand
+botania.page.rodClick0=The &1Rod of the High Will&0 was created to simulate the LMB and RMB clicks that the player makes when interacting with any devices and creatures. The wand does not have any functionality that could be used directly by the player, so a &1Livingwood Avatar&0 is required for its work.
+botania.page.rodClick1=An avatar can interact with anything through the block in front of him and to the block below. To interact with items, the avatar needs any block underneath that is an inventory. To simulate the pressed Shift key, any block must be placed above the avatar.
+botania.page.rodClick2=The delay between uses is inversely proportional to the level of the redstone signal applied to it - the higher the signal level, the lower the delay. Of course, for each of its actions, the avatar consumes a certain amount of &4mana&0.
+botania.page.rodClick3=Everything is in his hands
+
 botania.entry.lootInt=Loot Interceptor
 botania.tagline.lootInt=No more littered inventories!
 botania.page.lootInt0=By upgrading &1Black Hole Talisman&0 with some &1Iffesal Dust&0 one can create a sort of handy trashcan, which can consume not only block, but items from your inventory and shatter them into some amount of &4Mana&0. Put unwanted items in crafting grid alongside with &1Interceptor&0 to setup destroy filter (only &4ID&0 and &4Metadata&0 sensitive). Put it to empty grid to clear filter.
 botania.page.lootInt1=Creating &1Interceptor&0
+
+botania.entry.manaLamp=Mana Lamp
+botania.tagline.manaLamp=Will illuminate your dark adventures
+botania.page.manaLamp0=The &1Mana Lamp&0 is a great alternative to hundreds of torches in your pockets. For a small amount of &4mana&0, the lamp is able to independently illuminate the dark areas around the owner, leaving bright memories of adventures in the dungeons.
+botania.page.manaLamp1=No dynamic lights!
+
+botania.entry.lembas=Elven Lembas
+botania.tagline.lembas=Elven ration
+botania.page.lembas0=It would seem, what else is needed when there is such a wonderful drink as wine? A decent snack, of course.
+botania.page.lembas1=As a new use for sweet nectar, something similar was invented by elven travelers. On long journeys and when crossing mountain peaks, every seasoned adventurer must take with him a nutritious sweet bread - &1Elven Lembas&0. It is very easy to prepare and thanks to its grape leaves it never spoils.
+botania.page.lembas2=Sam, did you eat it all?
 
 botania.entry.anomaRing=Ring of Spatiotemporal Stabilization
 botania.tagline.anomaRing=Protect yourself from anomalies
@@ -113,6 +162,23 @@ botania.tagline.triquetrum=Just take and move
 botania.page.triquetrum0=&1Worldshaper's Triquetrum&0 - a novelty created by Midgard craftsmen for unsuccessful architects. This tool is designed to transfer your buildings from place to place for a certain amount of &4Mana&0.<br>To select a portable area, select two blocks that denote two diametrically opposite angles of the cuboid.
 botania.page.triquetrum1=Next, select the area in which your building will be located, a marker in the world will tell you the direction in which your structure will spread. You can rotate it by rightclick. Sneak to enable "Safe Mode", which will not carry the block if the target position is not air.<br>&l&4WARNING&r&0! Areas must not overlap
 botania.page.triquetrum2=Creating &1Triquetrum&0
+
+botania.entry.corpSeq=Corporea Sequencer
+botania.tagline.corpSeq=Requests the creation of items when needed
+botania.page.corpSeq0=The &1Corporea Sequencer&0 is designed to move items from one inventory to another, which opens up many useful applications.
+botania.page.corpSeq1=First of all, the Sequencer must be connected to the &4Corporea network&0 using the &1Corporea spark&0. The request template is placed in the inventory above the Sequencer, and the requested item is placed in a frame on the Sequencer as a filter. Items from the template are placed in the inventory located two blocks below the Sequencer.
+botania.page.corpSeq2=For use in crafting automation, the number of items created per request is configured by clicking LMB and Shift-LMB. Pressing RMB with the staff of the forest on the Sequencer will reset the current request, and giving a redstone pulse will repeat the request for the expected item.
+botania.page.corpSeq3=Keep the order!
+
+botania.entry.corpInj=Corporea Injector
+botania.tagline.corpInj=Places items in the material system
+botania.page.corpInj0=The &1Corporea Injector&0 is designed for one simple purpose - automating the injection and sorting of your belongings in a &4Corporea Network&0. He will try to put the item first in a partially filled slot, and then in an empty one. If there are none, it will throw the item below.
+botania.page.corpInj1=Finally, sorting!
+
+botania.entry.endAct=Ender Actuator
+botania.tagline.endAct=Expanded access to the Ender Chest
+botania.page.endAct0=The &1Ender Actuator&0 allows you to place and remove items from a bound &1Ender chest&0. Binding is done by touching the actuator.
+botania.page.endAct1=Fixed wormhole
 
 botania.entry.infuser=Infusion
 botania.tagline.infuser=Almost like Thaumcraft
@@ -271,12 +337,173 @@ botania.page.stories1=He managed to negotiate with the elven elders on mutually 
 botania.page.stories2=Everything is simpler than it might seem at first glance. Elves have always sought to rise above other sentient beings, and the straight road to this is knowledge, not only their own, but also foreign to them before. So, through the centuries, there was an exchange of accumulated knowledge between the worlds of humans and elves.
 botania.page.stories3=Until something unimaginable happened on one rather ordinary day: a student of &6Tywin&0 betrayed his mentor, distributing &1Tokens of banter&0 over &4Midgard&0. As a result of this foolish act they were all lost over time.
 
+botania.entry.winery=Winery
+botania.tagline.winery=Drink to every home
+botania.page.winery0=Since ancient times, the craftsmen of Midgard have known the method of producing good wine, but no one of them dares to be proud of this fact, one has only to taste the results of labor and magic of the elves.
+botania.page.winery1=Of course, being a rather cunning and resourceful race, humans were able to negotiate with the elven winemakers about mutually beneficial instruction of their disciples, but the terms of this agreement remain a mystery to most races. It is only known that on the first day of training, the masters tell their students a story...
+botania.page.winery2=Just a story, but, as the students themselves say after returning home, this is enough to make wine of the highest quality by the standards of Midgard. Of course, if the student listened attentively and did not ask stupid questions like: “Why is white wine made from green grapes?”, the answer is very simple...
+botania.page.winery3=Mastray learned this story, though not firsthand, so it is available to people only in the following form:
+botania.page.winery4=&oOnce, a dwarf meadbrewer was wandering across the expanses of the eastern plains in search of new plants for its mead. He was tired of mead from herbs and flowers, whose bitterness was softened only by a solid piece of freshly cooked beef. And the dwarf decided to try something new in his craft.&0
+botania.page.winery5=&oHe has long laid eyes on the grape bushes growing here - under old trees, or there - on the water surfaces of rivers, sparkling under the rays of the sun with red and green tints. But no matter how hard the dwarf meadbrewer tried, nothing worthwhile came out of it...&0
+botania.page.winery6=&oThe mead was either too sour or too bland. Something sugary was missing that would dilute the drink with new colors... Not a single month was spent by the dwarf in vain attempts to find the coveted ingredient.&0
+botania.page.winery7=&oUntil one day his most zealous student brought a drop of nectar that butterflies carry from flower to flower in the vast expanses of Alfheim, making its taste so multifaceted, but at the same time making it difficult to dissolve in water.&0
+botania.page.winery8=&oThe dwarf, imbued with the desire of his student, decided to try an unconventional way of preparing the drink. He put together a barrel from the oldest oak, which has acquired a dark wood color over the centuries, filled the barrel with a dozen bunches of grapes, instructed the student to jump a little in the barrel to squeeze out all the juice from the berries...&0
+botania.page.winery9=&oThen he added a drop of nectar and sealed the barrel for a while in his cellar. Amazingly, the very first experiment of the unsuccessful meadbrewer ended in success - the resulting drink had a noble sweet taste and unusual flavor.&0
+botania.page.winery10=&oSince the new drink and the method of its preparation were completely different from mead, the dwarf gave it a new name, which in one of the forgotten languages means "Divine gift". And the only thought that did not leave the dwarf head was the preoccupation with the appropriate vessel for such a wonderful drink, but there was nothing better than wooden mugs at hand.&0
+botania.page.winery11=Now, thanks to the artisans of Midgard, jugs made of baked clay are used to store wine.
+botania.page.winery12=Creating &1Barrel&0
+botania.page.winery13=Creating &1Jug&0
+
+################################################################ DIVINITY ################################################################
+
+botania.entry.divinity_intro=Divine Faith
+botania.tagline.divinity_intro=Kneel before the gods
+botania.page.divinity_intro0=Traces of divine work are evident in this world. &4Mana&0, for one. The stuff of magic isn't possibly made by mortal hand. It is only a question of how to connect with these gods.
+botania.page.divinity_intro1=The &1Holy Symbol&0 is the needed artifact for this connection, with what seems to be a wild storm of unrealized potential. Although crafted of simple materials, it has a ready acceptance of other magic. This is the gate to the &3Divine&0, and can be used to forge direct connections in the form of a &1Priestly Emblem&0. Wearing one will grant you more knowledge in this section.
+botania.page.divinity_intro2=A key to the zodiac
+botania.page.divinity_intro3=The connection the &1Priestly Emblems&0 give you are strong, but don't contain the full power you can harness. Additional set of items containing &1Priestly Cloak&0, special Rod, God's Ring and a relic is required to get maximum output for connection. More items you have - more power you get.
+botania.page.divinity_intro4=Lastly, there is a way to channel with all gods at the same time by creating aspects of &4Æsir&0 - Cloak, Emblem and Ring. But you still need to take all the rods and relics with you.
+
+botania.entry.thor=Faith in Thor
+botania.tagline.thor=Thunder, strength, and wrath
+botania.page.thor0=The &4Æsir&0 god of the sky, &3Thor&0, seems like a powerful god to ally with. Wielding his aspect of the &3Divine&0 makes your body swift, similar to the &1Soujourner's Sash&0. When using axes, the closest thing you could find to a hammer, &3Thor&0 will add force to your hit, slowing down whatever poor mob is stricken.
+botania.page.thor1=In anger smite the earth
+
+botania.entry.garb_thor=Priestly Fashion - Thor
+botania.tagline.garb_thor=Smashy smashy
+botania.page.garb_thor0=No priest would be caught dead without a ceremonial robe, although robes aren't actually required to pay allegiance to a divinity.<br>These robes, beyond being fashionable, provide a tangible benefit. Thor's robes shield their wearer from the brunt of fall damage, instead spreading it to anything around. If you health falls below 50% you also gain a shield of lightning.
+botania.page.garb_thor1=Superhero landing!
+
+botania.page.thorRing0n=One of the six mythic rings of the &4Aesir&0, the &1Ring of Thor&0, when worn, bestows upon the wearer the might of the Thunder God &4Thor&0. This power drastically increases the strength of area of effect mining with a &1Terra Shatterer&0.<br>This ring can be combined with the other five rings of the &4Aesir&0 in a crafting table to create the ultimate ring.
+
+botania.entry.rod_thor=Rod of the Thundering Peaks
+botania.tagline.rod_thor=Stike fear and thunder into your foes
+botania.page.rod_thor0=The &1Rod of the Thundering Peaks&0, much like its sword cousin, the &1Thundercaller&0, can summon lightning to strike your enemies. It will leap from enemy to enemy, killing them all in turn.<br>A &1Livingwood Avatar&0 can also wield this rod.
+botania.page.rod_thor1=The experimental results are shocking
+botania.page.rod_thor2=It appears that connecting your soul to the ancient god of lightning, &4Thor&0, can increase your proficiency with the power of thunder. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.<br>There appear to be even further power trapped within the rod, but it would take a god to get it out.
+
+botania.entry.mjolnir=Mjolnir
+botania.tagline.mjolnir=Thunderstruck
+botania.page.mjolnir0=The hammer of the lightning god Thor, &1Mjölnir&0, is believed to be one of the most fearsome weapons in existence. Wielding this sign of power, one can summon lightning on every hit while sneaking or strike multiple targets with chain lightning. When used on ground, it can create a shockwave, damaging everyone standing within it's range. Or just be thrown at enemy.
+
+botania.entry.sif=Faith in Sif
+botania.tagline.sif=Life, spring, and immortality
+botania.page.sif0=The &4Æsir&0 god of the living elements, &3Sif&0, seems like a good choice to declare yourself for. Wielding her aspect of the &3Divine&0 makes your body naturally catalytic to the growth of trees, giving saplings around you an effect similar to &1Bonemeal&0. You can manually apply this affect by sneak-clicking with an empty hand on a plant or on grass to grow a &1Mystical Flower&0.
+botania.page.sif1=Welcome now, and take the crystal cup
+
+botania.entry.garb_sif=Priestly Fashion - Sif
+botania.tagline.garb_sif=Head on or backstab
+botania.page.garb_sif0=No priest would be caught dead without a ceremonial robe, although robes aren't actually required to pay allegiance to a divinity.<br>These robes, beyond being fashionable, provide a tangible benefit. Sif's robes protect their wearer from attacks to the side, making all viable combat head on.
+botania.page.garb_sif1=Bring it on! I &olive&0 for this!
+
+botania.entry.ring_sif=Ring of Sif
+botania.tagline.ring_sif=Staying alive
+botania.page.ring_sif0=One of the six mythic rings of the &4Aesir&0, the &1Ring of Sif&0 expands the area of &1Terra Truncator&0, &1Rod of the Terra Firma&0, &1Rod of Green Hills&0 and of all of &1Iridescent Seeds&0. It also keeps one vineball in your inventory if you hold &1Livingwood Slingshot&0. Finally, your life-giving aura revives dead bushes, turning them into cacti. Used to craft ultimate ring.
+
+botania.entry.rod_sif=Rod of the Vibrant Plains
+botania.tagline.rod_sif=Rainbow dirt made from thin air space
+botania.page.rod_sif0=The &1Rod of the Vibrant Plains&0, like the &1Rod of the Highlands&0, can place &1Iridescent Dirt&0 in the air at the cost of mana. Unlike its less colorful counterpart, sneaking and clicking in the air will shift the rod between the various colors of &4Iridescense&0.<br>This rod can be given to a &1Livingwood Avatar&0.
+botania.page.rod_sif1=Simply drowning in colors
+botania.page.rod_sif2=It appears that connecting your soul to the ancient god of earth, &4Sif&0, can increase your ability to use the &1Rod of the Vibrant Plains&0 and extend your range beyond this rod's normal limits. Wearing the &1Ring of Far Reach&0 will increase your range further with the Emblem's power.
+
+botania.entry.njord=Faith in Njord
+botania.tagline.njord=Wind, sea, and sky
+botania.page.njord0=The &4Vanir&0 god of the fluid elements, &3Njord&0, seems like a worthy choice for your faith. Wielding his aspect of the &3Divine&0 makes your body hydrophobic, rising above any kind of fluid. You also gain attacks with the force of the wind, barreling your foes back with your every hit. Rightclick on the air to step on wind and move a little bit forward. You can also biuld on water.
+botania.page.njord1=At the doom of men he will come back
+
+botania.entry.garb_njord=Priestly Fashion - Njord
+botania.tagline.garb_njord=Feather Fall
+botania.page.garb_njord0=No priest would be caught dead without a ceremonial robe, although robes aren't actually required to pay allegiance to a divinity.<br>These robes, beyond being fashionable, provide a tangible benefit. Njord's robes allow the user to float softly to the ground while falling.
+botania.page.garb_njord1=Worked for Belkar
+
+botania.entry.ring_njord=Ring of Njord
+botania.tagline.ring_njord=Expert Navigation
+botania.page.ring_njord0=One of the six mythic rings of the &4Aesir&0, the &1Ring of Njord&0 allows you to become truly affine with water. Your movement speed is noticeably increased, both on your own and in boat, which now won't crash on collision. Your regeneration while you in water is also increased. Final increase is to luck on your fishing rod. Used to craft ultimate ring.
+
+botania.entry.rod_njord=Rod of the Stormy Sea
+botania.tagline.rod_njord=Push enemies out of your persona
+botania.page.rod_njord0=The &1Rod of the Stormy Sea&0 is one for those who don't like people in their personal space. Using it will seal the area around you, creating a sphere of force where other living beings cannot tread, and projectiles cannot pass. Whenever something tries to break this seal, &4Mana&0 is consumed to repel it.
+botania.page.rod_njord1=Really not feelin up to it right now
+botania.page.rod_njord2=It appears that connecting your soul to the ancient god of wind, &4Njord&0, can increase your proficiency with the power of air and the force you exert with this rod will become much greater. It seems that &4Manatide Prowess&0 has a similar, but weaker effect upon the rod.
+
+botania.entry.loki=Faith in Loki
+botania.tagline.loki=Tricks, traps, and fire
+botania.page.loki0=The &4Jötun&0 god of flame, &3Loki&0, seems like a &owonderful&0 god to channel. Wielding his aspect of the &3Divine&0 makes your body resistant to fire, absorbing it into your body. When holding a &1Fire Charge&0, you can fling it like a ghast's breath. Creating fire stream with bare hands is less powerful, but requires no additional resources.
+botania.page.loki1=He was fortunate in his deceit
+
+botania.entry.garb_loki=Priestly Fashion - Loki
+botania.tagline.garb_loki=Sneaking past your defenses
+botania.page.garb_loki0=No priest would be caught dead without a ceremonial robe, although robes aren't actually required to pay allegiance to a divinity.<br>These robes, beyond being fashionable, provide a tangible benefit. Loki's robes make their wearer unable to be tricked with Loki's typical tricks, like fire and explosives. In addition you gain +10% buff to agility to dodge an attack.
+botania.page.garb_loki1=Made with quality dwarven rocks
+
+botania.page.lokiRing0n=One of the six mythic rings of the &4Aesir&0, the &1Ring of Loki&0 allows for the wearer to tap upon the Trickster God &4Loki&0 to effectively be in multiple places at once.<br>The setup for this ability requires, first and foremost, an empty hand. Shift-right clicking on a block with said empty hand while having the &1Ring of Loki&0 equipped begins the procedure.
+botania.page.lokiRing3n=Such a power does not come for free of course. Utilizing this ability costs &4Mana&0 from the user's inventory per each block placed. It's to note that the more blocks that are selected, the more expensive &4each placed block&0 becomes.<br>Lastly, this ring can be combined with the other five rings of the &4Aesir&0 in a crafting table to create the ultimate ring.
+
+botania.entry.rod_loki=Rod of the Tricky Flame
+botania.tagline.rod_loki=Pinpoint flamethrower
+botania.page.rod_loki0=The ability of the &1Rod of the Tricky Flame&0 is to set fire to anyone it is pointed at. Also it will deal a small amount of fire damage to anyone in the area of effect, centered in the fire star.
+botania.page.rod_loki1=Hot Shots
+botania.page.rod_loki2=It appears that connecting your soul to the ancient god of fire, &4Loki&0, can increase your proficiency with the power of flames. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.
+
+botania.entry.gleipnir=Gleipnir
+botania.tagline.gleipnir=I can't breathe!
+botania.page.gleipnir0=Made of six impossible things, thin as a silken ribbon, &1Gleipnir&0 is strongest binding in the world, impossible to break and capable to hold anyone. Using it on any living being will bind it to you same as a lead. Wrap it around you with sneak-rightclick to protect yourself from attacks or just point on ground to summon dozens of chains to temporarily contain someone.
+
+botania.entry.heimdall=Faith in Heimdall
+botania.tagline.heimdall=Fate, travel, and color
+botania.page.heimdall0=The &4Æsir&0 god of the Bifrost, &3Heimdall&0, seems like an interesting god to channel. Wielding his aspect of the &3Divine&0 makes your eyes see more vibrantly, seeing light even in the shadow. When carrying a &1Rod of the Bifrost&0, you leave a trail of rainbow &4Bifrost&0 below you, allowing you to run in the sky. With his all-seeing eyes you also can detect target's weak spots.
+botania.page.heimdall1=The warder of heaven
+
+botania.entry.garb_heimdall=Priestly Fashion - Heimdall
+botania.tagline.garb_heimdall=A different way to move
+botania.page.garb_heimdall0=No priest would be caught dead without a ceremonial robe, although robes aren't actually required to pay allegiance to a divinity.<br>These robes, beyond being fashionable, provide a tangible benefit. Heimdall's robes make their wearer blink towards their vision whenever they jump while sprinting, giving them a different type of motion.
+botania.page.garb_heimdall1=Ever get that feeling of déjà vu?
+
+botania.entry.ring_heimdall=Ring of Heimdall
+botania.tagline.ring_heimdall=The end of the rainbow
+botania.page.ring_heimdall0=One of the six mythic rings of the &4Aesir&0, the &1Ring of Heimdall&0 grants you ability to spot position of every living being around you, even is they are behind walls or in caves - no more sudden creepers or endermans, bacause their teleportation is also blocked near you. Holding ender eye in your hand will show you the way to the nearest dungeon. Used to craft ultimate ring.
+
+botania.entry.odin=Faith in Odin
+botania.tagline.odin=Wisdom, power and sorcery
+botania.page.odin0=The &4Æsir&0 highest god, &3Odin&0, seems like the wisest god to be allied with. Wielding his aspect of the &3Divine&0 reduces the player's need for food for four times. The less health the player has, the more powerful his strikes would be.
+botania.page.odin1=Open your second wind
+
+botania.entry.garb_odin=Priestly Fashion - Odin
+botania.tagline.garb_odin=Out of sight...
+botania.page.garb_odin0=No priest would be caught dead without a ceremonial robe, although robes aren't actually required to pay allegiance to a divinity.<br>These robes, beyond being fashionable, provide a tangible benefit. Odin's robes make their wearer invisible for almost every mob, grants knockback resistance and disintegrates all potions thrown by enemy.
+botania.page.garb_odin1=More useful than the Invisibility Cloak
+
+botania.page.odinRing0n=One of the six mythic rings of the &4Aesir&0, the &1Ring of Odin&0 grants its wearer the vitality and resistance of the Elder God &4Odin&0. As well as the addition of ten extra hearts of health, the &1Ring of Odin&0 protects the wearer from various kinds of elemental damage such as drowning, suffocation, fire or starvation. The ring can also be combined with the other five rings of the &4Aesir&0 in a crafting table to create the ultimate ring.
+
+botania.entry.rod_odin=Rod of the Einstein-Rosen bridge
+botania.tagline.rod_odin=Rod for interdimensional travel
+botania.page.rod_odin0=Moving between worlds is not always easy... Sometimes you have to spend more than one hour in search of a special portal, at other times - to fight with a strong god-like creature. One way or another, each option comes with difficulties or wasted time.
+botania.page.rod_odin1=The &1Rod of the Einstein-Rosen bridge&0 is created for inter-world travel. It is enough to tune in to a certain dimension, standing atop of the most frequently encountered material of the selected world, acquire good mana reserves so as not to get stuck somewhere between the worlds, and now all the power of the great wormholes is in your hands.
+botania.page.rod_odin2=It's actually the Rainbow Bridge
+botania.page.rod_odin3=It appears that connecting your soul to the ancient highest god, &4Odin&0, can increase your proficiency with the power of wormholes, allowing you to travel to the End. But it is still not enough to escape from there.
+
+botania.entry.gungnir=Gungnir
+botania.tagline.gungnir=I am gar for Lancer
+botania.page.gungnir0=Unbreakable, unstopable, unmissable - three &oun&0 to describe the great Odin's spear &1Gungnir&0. Just rightclick on any target no matter how far it is and it will be stricken with enormous amount of piercing damage. You can also throw it forward to drill through enemy crowds.
+
 ################################################################ BACKPORT ################################################################
 
 botania.page.cosmeticBaubles34=Really makes you think
 
 botania.page.lens38=The &1Messenger Lens&0 massively decreases the amount of &4Mana&0 a &4Mana Burst&0 carries, and also drastically increases the burst's speed and maximum distance.<br>This can be very useful for interactions with blocks such as the &1Mana Detector&0, &1Drum of the Wild&0, &1Animated Torch&0, among others.
 botania.page.lens39=Messenger Lens
+
+botania.page.lens40=&1Push Lens&0 will enable Mana Burst to force the first entity it collide to move with it.
+botania.page.lens41=Push Lens
+
+botania.page.lens42=&1Smelt Lens&0 is like a furnace, it will enable Mana Burst to smelt the block ti collide.
+botania.page.lens43=Smelt Lens
+
+botania.page.lens44=&1Superconductor Lens&0 can make mana transfer become much more efficient, while making the mana beam become really dangerous to players.<br>The mana beam will deal high damage to only players.
+botania.page.lens45=Superconductor Lens
+
+botania.page.lens46=&1Track Lens&0 will enable Mana Burst to locate the first entity within 3 meters and keep tracking until either is dead.
+botania.page.lens47=Track Lens
 
 botania.page.elvenLenses11=The &1Tripwire Lens&0 is another &4Control Lens&0.<br>A spreader that has it attached will only be allowed to fire if there is one or more mobs, or players, in the path described by the &4mana burst&0 that the spreader would shoot.
 botania.page.elvenLenses12=Tripwire Lens
@@ -290,6 +517,11 @@ botania.entry.amulNimb=Nimbus Amulet
 botania.tagline.amulNimb=Gives you triple jump
 botania.page.amulNimb0=The &1Nimbus Amulet&0 is an upgraded version of the &1Cirrus Amulet&0, infused with the power of &1Gaia Spirits&0, it allows the wearer to &4triple jump&0.
 botania.page.amulNimb1=Magic > physics
+
+botania.entry.mitten=Manaweave Mitten
+botania.tagline.mitten=Even more discount on rods!
+botania.page.mitten0=For those who are always low on mana, the best solution is to use mittens, which will slightly improve your magical abilities, lowering the mana cost of tools and rods.
+botania.page.mitten1=Only today discounts on mana up to 50%!
 
 botania.entry.aniTorch=Animated Torch
 botania.tagline.aniTorch=Compact systems with a floating redstone torch
@@ -313,6 +545,26 @@ botania.entry.dodgRing=Ring of Dexterous Motion
 botania.tagline.dodgRing=Sweep to the side to dodge attacks
 botania.page.dodgRing0=The &1Ring of Dexterous Motion&0 is a handy bauble to help prevent damage during combat. While worn, one can press their &4left/right&0 keys (which are &4A and D&0, respectively, by default) to quickly sweep to the side and dodge incoming attacks or mobs.<br>The dodge ability goes through a short cooldown before it can be used again, and uses up some of the user's hunger bar.
 botania.page.dodgRing1=Dexterity bonus
+
+botania.entry.spider=Ring of Spider
+botania.tagline.spider=Will help overcome any obstacle
+botania.page.spider0=The &1Ring of Spider&0 gives the wearer the grip of the spider, allowing it to climb steep walls, and also protects against falls from any height. Now you can forget about the worn out amulet.
+botania.page.spider1=Look out! There comes the spider man!
+
+botania.entry.manaDrive=Ring of Mana Drive
+botania.tagline.manaDrive=Supplies nearby flowers with mana
+botania.page.manaDrive0=Perhaps you were faced with the need to urgently supply some functional flowers with mana for a short period of time, but for some reason you are not satisfied with the mana pools... Well, the &1Ring of Mana drive&0 can help in such situations, converting mana from your rings and tablets into the air flow absorbed by the functional flora.
+botania.page.manaDrive1=Sometimes it helps
+
+botania.entry.iceberg=Iceberg Pendant
+botania.tagline.iceberg=Freezing gaze hurts
+botania.page.iceberg0=The &1Iceberg Pendant&0 is an improved version of the &1Snowflake Pendant&0 infused with the power of &1Niflheim Essence&0. The wearer of this pendant slows down and weakens any creatures with his gaze, chilling deadly frost energy to the bone.
+botania.page.iceberg1=Frozen 
+
+botania.entry.ration=Traveller's Ration Belt
+botania.tagline.ration=A second mouth
+botania.page.ration0=Having plunged headlong into amazing magical experiments or being in the heat of battle, it is difficult to maintain your satiety at the proper level, especially if any unnecessary movement threatens your life. It is good that elf masters have long invented a &1Traveller's Ration Belt&0 capable of feeding its owner with food lying in hotbar.
+botania.page.ration1=Strength before weakness
 
 botania.page.judgementCloaks1n=The &1Cloak of Virtue&0 will, when active, block the full extent of a piece of damage taken.<br>The &1Cloak of Sin&0 will damage all nearby hostile mobs for the same amount of damage that was taken.<br>The &1Cloak of Balance&0 will evenly split the damage between the attacker and the target. It also prevents the target from dying.
 botania.page.judgementCloaks4=Pain split
@@ -443,37 +695,27 @@ lexicon.mana=Mana:
 
 alfheim.entry.rainbowFlora=Bifrost Flora
 alfheim.tagline.rainbowFlora=Gifts of Heimdall
-alfheim.entry.coloredDirt=Iridescent Dirt [IRI]
+alfheim.entry.coloredDirt=Iridescent Dirt
 alfheim.tagline.coloredDirt=Rainbow dirt for your decoration needs
 alfheim.entry.aurora=Aurora Dirt
 alfheim.tagline.aurora=One dirt, lots of colors
-alfheim.entry.rodTechnicolor=Rod of the Vibrant Plains [IRI]
-alfheim.tagline.rodTechnicolor=Rainbow dirt made from thin air
-alfheim.entry.rodLightning=Rod of the Thundering Peaks [IRI]
-alfheim.tagline.rodLightning=Stike fear and thunder into your foes
-alfheim.entry.rodFlameStar=Rod of the Tricky Flame [IRI]
-alfheim.tagline.rodFlameStar=Pinpoint flamethrower
-alfheim.entry.rodInterdiction=Rod of the Stormy Sea [IRI]
-alfheim.tagline.rodInterdiction=Push enemies out of your personal space
-alfheim.entry.rodPrismatic=Rod of the Prismatic Lake [IRI]
+alfheim.entry.rodPrismatic=Rod of the Prismatic Lake
 alfheim.tagline.rodPrismatic=Rainbow lights
 alfheim.entry.irisSapling=Iridescent Trees
 alfheim.tagline.irisSapling=Grow trees with all the colors of the wind
 alfheim.entry.treeCrafting=Tree Suffusion
 alfheim.tagline.treeCrafting=Infusing trees with mana and material
-alfheim.entry.irisSeeds=Iridescent Grass [IRI]
+alfheim.entry.irisSeeds=Iridescent Grass
 alfheim.tagline.irisSeeds=Rainbow grass for your colorful landscapes
-alfheim.entry.coatOfArms=Coats of Arms [IRI]
+alfheim.entry.coatOfArms=Coats of Arms
 alfheim.tagline.coatOfArms=Declare your allegiance
-alfheim.entry.colorOverride=Clerical Colorization [IRI]
+alfheim.entry.colorOverride=Clerical Colorization
 alfheim.tagline.colorOverride=Colorful magic
-alfheim.entry.attribution=Holy Symbols [IRI]
-alfheim.tagline.attribution=Keys to something greater
-alfheim.entry.sealCreepers=Manaseal Creepers [IRI]
+alfheim.entry.sealCreepers=Manaseal Creepers
 alfheim.tagline.sealCreepers=A storm in the Manatide
-alfheim.entry.kindling=Blaze Kindling [IRI]
+alfheim.entry.kindling=Blaze Kindling
 alfheim.tagline.kindling=Quickened firespread
-alfheim.entry.itemDisplay=Item Platforms [IRI]
+alfheim.entry.itemDisplay=Item Platforms
 alfheim.tagline.itemDisplay=Display items without letting them despawn
 alfheim.entry.lightningSapling=Thunderous Oak
 alfheim.tagline.lightningSapling=A lightning-absorbing tree
@@ -483,29 +725,29 @@ alfheim.entry.circuitSapling=Circuitree
 alfheim.tagline.circuitSapling=A redstone emitter
 alfheim.entry.calicoSapling=Calico Tree
 alfheim.tagline.calicoSapling=An explosion absorber
-alfheim.entry.livingwoodFunnel=Livingwood Funnel [IRI]
+alfheim.entry.livingwoodFunnel=Livingwood Funnel
 alfheim.tagline.livingwoodFunnel=A filterable hopper that only carries one item
-alfheim.entry.toolbelt=Botanist's Toolbelt [IRI]
+alfheim.entry.toolbelt=Botanist's Toolbelt
 alfheim.tagline.toolbelt=12 stacks of at-the-ready storage
-alfheim.entry.lamp=Iridescent Lamp [IRI]
+alfheim.entry.lamp=Iridescent Lamp
 alfheim.tagline.lamp=A signal-strength tester
 alfheim.entry.tctrees=Thaumic Suffusion
 alfheim.tagline.tctrees=Life from the void
 alfheim.entry.silencer=Sealing Oak
 alfheim.tagline.silencer=Softer sounds
-alfheim.entry.amplifier=Sonic Amplifier [IRI]
+alfheim.entry.amplifier=Sonic Amplifier
 alfheim.tagline.amplifier=Louder sounds
-alfheim.entry.crysanthermum=Crysanthermum [IRI]
+alfheim.entry.crysanthermum=Crysanthermum
 alfheim.tagline.crysanthermum=Mana from temperature
-alfheim.entry.andmyaxe=Holy Blade Revelation [IRI]
+alfheim.entry.andmyaxe=Holy Blade Revelation
 alfheim.tagline.andmyaxe=The weapon of the First Godslayer
-alfheim.entry.starBlock=Frozen Stars [IRI]
+alfheim.entry.starBlock=Frozen Stars
 alfheim.tagline.starBlock=An ender light source
-alfheim.entry.dagger=Dagger of the Perfect Soul [IRI]
+alfheim.entry.dagger=Dagger of the Perfect Soul
 alfheim.tagline.dagger=The weapon of the Gaterender
-alfheim.entry.shimmer=Shimmerquartz [IRI]
+alfheim.entry.shimmer=Shimmerquartz
 alfheim.tagline.shimmer=Quartz but rainbow
-alfheim.entry.throwablePotions=Throwable Potions [IRI]
+alfheim.entry.throwablePotions=Throwable Potions
 alfheim.tagline.throwablePotions=Distant support
 
 alfheim.category.dendrology=Dendrology
@@ -524,26 +766,6 @@ alfheim.page.aurora2=Planks
 alfheim.page.aurora3=Stairs
 alfheim.page.aurora4=Slabs
 alfheim.page.aurora5=And back again
-
-alfheim.page.rodTechnicolor0=The &1Rod of the Vibrant Plains&0, like the &1Rod of the Highlands&0, can place &1Iridescent Dirt&0 in the air at the cost of mana. Unlike its less colorful counterpart, sneaking and clicking in the air will shift the rod between the various colors of &4Iridescense&0.<br>This rod can be given to a &1Livingwood Avatar&0.
-alfheim.page.rodTechnicolor1=Simply drowning in colors
-alfheim.page.rodTechnicolor2=It appears that connecting your soul to the ancient god of earth, &4Sif&0, can increase your ability to use the &1Rod of the Vibrant Plains&0. By donning the &1Priestly Emblem: Sif&0, your range extends beyond this rod's normal limits. Wearing the &1Ring of Far Reach&0 will increase your range further with the Emblem's power.
-alfheim.page.rodTechnicolor3=Welcome now, and take the crystal cup
-
-alfheim.page.rodLightning0=The &1Rod of the Thundering Peaks&0, much like its sword cousin, the &1Thundercaller&0, can summon lightning to strike your enemies. It will leap from enemy to enemy, killing them all in turn.<br>A &1Livingwood Avatar&0 can also wield this rod.
-alfheim.page.rodLightning1=The experimental results are shocking
-alfheim.page.rodLightning2=It appears that connecting your soul to the ancient god of lightning, &4Thor&0, can increase your proficiency with the power of thunder. By donning the &1Priestly Emblem: Thor&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.<br>There appear to be even further power trapped within the rod, but it would take a god to get it out.
-alfheim.page.rodLightning3=In anger smite the earth
-
-alfheim.page.rodFlameStar0=The ability of the &1Rod of the Tricky Flame&0 is to set fire to anyone it is pointed at. Also it will deal a small amount of fire damage to anyone in the area of effect, centered in the fire star.
-alfheim.page.rodFlameStar1=Hot Shots
-alfheim.page.rodFlameStar2=It appears that connecting your soul to the ancient god of fire, &4Loki&0, can increase your proficiency with the power of flames. By donning the &1Priestly Emblem: Loki&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.
-alfheim.page.rodFlameStar3=Sneaking past your defenses
-
-alfheim.page.rodInterdiction0=The &1Rod of the Stormy Sea&0 is one for those who don't like people in their personal space. Using it will seal the area around you, creating a sphere of force where other living beings cannot tread, and projectiles cannot pass. Whenever something tries to break this seal, &4Mana&0 is consumed to repel it.
-alfheim.page.rodInterdiction1=Really not feelin up to it right now
-alfheim.page.rodInterdiction2=It appears that connecting your soul to the ancient god of wind, &4Njord&0, can increase your proficiency with the power of air. By donning the &1Priestly Emblem: Njord&0, the force you exert with this rod will become much greater. It seems that &4Manatide Prowess&0 has a similar, but weaker effect upon the rod.
-alfheim.page.rodInterdiction3=At the doom of men he will come back
 
 alfheim.page.rodPrismatic0=One particularly frustrating property of the &1Mana Lens: Flash&0 is its tendency to lock the color of a &1Mana Flash&0 immidiately upon making it. Even if you want to make a rainbow &1Flash&0, you'll get one color. By using the power of the &1Rod of the Prismatic Lake&0, you can make the rainbow you've been searching for.<br>It can be tinged with &1Phantom Ink&0.
 alfheim.page.rodPrismatic1=All the colors of the wind
@@ -568,9 +790,6 @@ alfheim.page.coatOfArms1=Papers, please
 
 alfheim.page.colorOverride0=The &1Clerical Colorizer&0, the &4Ring&0 form of the &1Paintslinger's Lens&0 can change even the color of magic. Wearing one will affect any clerically aligned abilities, changing their color. These can be crafted alongside another &4Bauble&0 much like &4Cosmetic Overrides&0. They can by dyed much like leather with &1Floral Powder&0, and cleared by simply putting one in a crafting table.
 alfheim.page.colorOverride1=Beware of the dark clerics
-
-alfheim.page.attribution0=The &1Holy Symbol&0 is an artifact with what seems to be a wild storm of unrealized potential. Although crafted of simple materials, it has a ready acceptance of other materials.<br>There seems to be no overworldly way of fully combining them, however, and the &4Nether&0 and the &4End&0 have given no clues. Perhaps you must look in &2other places&0.
-alfheim.page.attribution1=Priestly fashion
 
 alfheim.page.sealCreepers0=The &4Manatide&0 flows throughout the world, but as with a river, there are always bumps and rapids. The &4Manaseal Creeper&0 is a walking rift in the flow of &4Mana&0. Should it explode near you, you'll find yourself stricken with a &4Manatide Storm&0, which will eat away at your mana, taking away what could be hours of generation. It's recommended to stay away from them at all costs.
 alfheim.page.sealCreepers1Drop=However, they do have one interesting property. They crystallize their mana inside, occasionally resulting in a &1Black Lotus&0 found on their corpse. Their storming energy, combined with this crystallized mana, can react with fully-formed &1Loti&0. When a &4Manatide Storm&0 comes into contact with a &1Black Lotus&0, it will break their harmony and result in a &1Wilted Lotus&0, a powerful magical resource.

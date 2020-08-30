@@ -9,6 +9,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.tech.SpellGravityTrap
+import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -24,6 +25,13 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 	init {
 		setPosition(x, y, z)
 		setSize(SpellGravityTrap.radius.F * 2, 0.01f)
+	}
+	
+	@SideOnly(Side.CLIENT)
+	override fun setPositionAndRotation2(x: Double, y: Double, z: Double, yaw: Float, pitch: Float, nope: Int) {
+		setPosition(x, y, z)
+		setRotation(yaw, pitch)
+		// fuck you "push out of blocks"!
 	}
 	
 	override fun onEntityUpdate() {

@@ -4,7 +4,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
@@ -146,7 +145,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 					return@el
 				}
 				
-				chaseForgottenRelics()
+				chase()
 			}
 			
 			for (i in 0..4) {
@@ -159,6 +158,45 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 				Botania.proxy.wispFX(worldObj, posX, posY - 0.25, posZ, gs, gs, gs, 2f, -0.15f)
 			}
 		}
+	}
+	
+	// code from Forgotten Relics
+	fun chase() {
+		val targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, this.boundingBox(0.5)) as List<EntityLivingBase>
+		
+		if (targetList.contains(target)) {
+			for (i in 0..6) {
+				val r = 1.0f
+				val g = 1.0f
+				val b = 1.0f
+				val s = 0.1f + Math.random().F * 0.1f
+				val m = 0.15f
+				val xm = (Math.random().F - 0.5f) * m
+				val ym = (Math.random().F - 0.5f) * m
+				val zm = (Math.random().F - 0.5f) * m
+				Botania.proxy.wispFX(worldObj, posX + width / 2, posY + height / 2, posZ + width / 2, r, g, b, s, xm, ym, zm)
+			}
+			
+			return onImpact(MovingObjectPosition(target))
+		}
+		
+		posX += motionX
+		posY += motionY
+		posZ += motionZ
+		
+		val d: Double = getDistanceSqToEntity(target)
+		val dx: Double = target!!.posX - posX
+		val dy: Double = target!!.boundingBox.minY + target!!.height * 0.6 - posY
+		val dz: Double = target!!.posZ - posZ
+		val d2 = SpellFireball.efficiency * 10
+		motionX += dx / d * d2
+		motionY += dy / d * d2
+		motionZ += dz / d * d2
+		motionX = MathHelper.clamp_double(motionX, -d2, d2)
+		motionY = MathHelper.clamp_double(motionY, -d2, d2)
+		motionZ = MathHelper.clamp_double(motionZ, -d2, d2)
+		
+		setPosition(posX, posY, posZ)
 	}
 	
 	override fun canBeCollidedWith() = true
@@ -180,42 +218,4 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	public override fun writeEntityToNBT(nbt: NBTTagCompound) {
 		if (caster is EntityPlayer) nbt.setString("castername", caster!!.commandSenderName)
 	}
-}
-
-fun EntitySpellFireball.chaseForgottenRelics() {
-	val targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, this.boundingBox(0.5)) as List<EntityLivingBase>
-	
-	if (targetList.contains(target)) {
-		for (i in 0..6) {
-			val r = 1.0f
-			val g = 1.0f
-			val b = 1.0f
-			val s = 0.1f + Math.random().F * 0.1f
-			val m = 0.15f
-			val xm = (Math.random().F - 0.5f) * m
-			val ym = (Math.random().F - 0.5f) * m
-			val zm = (Math.random().F - 0.5f) * m
-			Botania.proxy.wispFX(worldObj, posX + width / 2, posY + height / 2, posZ + width / 2, r, g, b, s, xm, ym, zm)
-		}
-		
-		return onImpact(MovingObjectPosition(target))
-	}
-	
-	posX += motionX
-	posY += motionY
-	posZ += motionZ
-	
-	val d: Double = getDistanceSqToEntity(target)
-	val dx: Double = target!!.posX - posX
-	val dy: Double = target!!.boundingBox.minY + target!!.height * 0.6 - posY
-	val dz: Double = target!!.posZ - posZ
-	val d2 = SpellFireball.efficiency * 10
-	motionX += dx / d * d2
-	motionY += dy / d * d2
-	motionZ += dz / d * d2
-	motionX = MathHelper.clamp_double(motionX, -d2, d2)
-	motionY = MathHelper.clamp_double(motionY, -d2, d2)
-	motionZ = MathHelper.clamp_double(motionZ, -d2, d2)
-	
-	setPosition(posX, posY, posZ)
 }

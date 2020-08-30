@@ -58,6 +58,6 @@ object TGHandlerBotaniaAdapterHooks {
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true, isMandatory = true)
 	fun addHiddenTooltip(cloak: ItemHolyCloak, stack: ItemStack, player: EntityPlayer, tooltip: MutableList<Any?>, adv: Boolean) {
-		TravellerBaubleTooltipHandler.addHiddenTooltip(cloak, stack, player, tooltip, adv)
+		TravellerBaubleTooltipHandler.addHiddenTooltip(cloak, stack, tooltip)
 	}
 }

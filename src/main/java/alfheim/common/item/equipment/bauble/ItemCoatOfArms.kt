@@ -24,17 +24,6 @@ import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOverride, IFlowerComponent {
 	
-	val TYPES = 19
-	lateinit var icons: Array<IIcon>
-	
-	val colorMap = intArrayOf(
-		0x00137F, 0x0043FF, 0xFF0037, 0xFFD800,
-		0x002EFF, 0x001A8E, 0x009944, 0x003BFF,
-		0x00FF3B, 0xFF003B, 0x603A20, 0xFFFF00,
-		0xFF0015, 0x0048FF, 0xFFD400, 0xFFFFFF,
-		0xFFFFFF, 0xDD0000, 0xFF0037
-	)
-	
 	init {
 		creativeTab = AlfheimTab
 		setHasSubtypes(true)
@@ -116,5 +105,20 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 	fun renderIcon(i: Int) {
 		val icon = icons.safeGet(i)
 		ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1F / 16F)
+	}
+	
+	companion object {
+		
+		const val TYPES = 19
+		
+		lateinit var icons: Array<IIcon>
+		
+		val colorMap = intArrayOf(
+			0x00137F, 0x0043FF, 0xFF0037, 0xFFD800,
+			0x002EFF, 0x001A8E, 0x009944, 0x003BFF,
+			0x00FF3B, 0xFF003B, 0x603A20, 0xFFFF00,
+			0xFF0015, 0x0048FF, 0xFFD400, 0xFFFFFF,
+			0xFFFFFF, 0xDD0000, 0xFF0037
+		)
 	}
 }

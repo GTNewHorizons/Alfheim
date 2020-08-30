@@ -15,7 +15,6 @@ object LibRenderIDs {
 	val idPowerStone = RenderingRegistry.getNextAvailableRenderId()
 	val idPylon = RenderingRegistry.getNextAvailableRenderId()
 	val idShrinePanel = RenderingRegistry.getNextAvailableRenderId()
-	val idTransferer = RenderingRegistry.getNextAvailableRenderId()
 	
 	// Iridescence
 	val idDoubleFlower = RenderingRegistry.getNextAvailableRenderId()

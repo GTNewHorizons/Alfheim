@@ -66,7 +66,7 @@ object RenderEntityLeftHand {
 	
 	private fun renderShield(e: RenderPlayerEvent.Specials.Pre) {
 		val meta = ContributorsPrivacyHelper.shields[e.entityPlayer.commandSenderName] ?: return
-		val shield = ItemStack(AlfheimItems.coatOfArms, 1, meta)
+		val shield = ItemStack(AlfheimItems.coatOfArms, 1, meta and 0b1111)
 		
 		glPushMatrix()
 		glRotatef(100f, 1f, 0f, 1f)

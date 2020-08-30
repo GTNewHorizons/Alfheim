@@ -138,6 +138,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		if ((source.damageType == "player" || source is DamageSourceSpell) && isTruePlayer(e) && !isEntityInvulnerable) {
 			val player = e as EntityPlayer
 			
+			if (!player.capabilities.isCreativeMode && player.capabilities.disableDamage) return false
+			
 			val crit = player.fallDistance > 0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
 			
 			maxHit = if (player.capabilities.isCreativeMode) Float.MAX_VALUE else if (crit) 60f else 40f
@@ -436,9 +438,13 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					player.removePotionEffect(it.potionID)
 			}
 			
+			// no GOD-mode allowed
+			if (!player.capabilities.isCreativeMode)
+				player.capabilities.disableDamage = false
+			
 			// remove player
 			val baubles = PlayerHandler.getPlayerBaubles(player)
-			val tiara = baubles.get(0)
+			val tiara = baubles[0]
 			if (tiara != null && tiara.item == ModItems.flightTiara && tiara.meta == 1)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200)
 			else if (!player.capabilities.isCreativeMode) {
@@ -1004,7 +1010,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		
 		val FAKE_PLAYER_PATTERN: Pattern = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$")
 		
-		fun isTruePlayer(e: Entity): Boolean {
+		fun isTruePlayer(e: Entity?): Boolean {
 			if (e !is EntityPlayer) return false
 			
 			val name = e.commandSenderName

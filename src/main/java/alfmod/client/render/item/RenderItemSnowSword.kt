@@ -16,12 +16,12 @@ import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemIcePendant
 
-val katana = ResourceLocation(AlfheimModularCore.MODID, "textures/model/item/Katana.png")
-
 object RenderItemSnowSword: IItemRenderer {
 	
 	val model = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(AlfheimModularCore.MODID, "model/Katana.obj"))
+	
 	val texture = ResourceLocation(AlfheimModularCore.MODID, "textures/model/item/SnowKatana.png")
+	val katana = ResourceLocation(AlfheimModularCore.MODID, "textures/model/item/Katana.png")
 	
 	override fun renderItem(type: ItemRenderType, stack: ItemStack, vararg data: Any?) {
 		if (model == null) return // renderer won't be registered at all

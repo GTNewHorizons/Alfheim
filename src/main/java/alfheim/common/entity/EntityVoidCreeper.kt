@@ -30,14 +30,14 @@ class EntityVoidCreeper(world: World): EntityCreeper(world) {
 			tag.setBoolean("powered", true)
 		}
 		
-		tag.setShort("Fuse", this.fuseTime.toShort())
+		tag.setInteger("Fuse", fuseTime)
 		tag.setBoolean("ignited", func_146078_ca())
 	}
 	
 	override fun readEntityFromNBT(tag: NBTTagCompound) {
 		super.readEntityFromNBT(tag)
 		dataWatcher.updateObject(17, java.lang.Byte.valueOf((if (tag.getBoolean("powered")) 1 else 0).toByte()))
-		if (tag.hasKey("Fuse", 99)) fuseTime = tag.getShort("Fuse").I
+		if (tag.hasKey("Fuse")) fuseTime = tag.getInteger("Fuse")
 		if (tag.getBoolean("ignited")) func_146079_cb()
 	}
 	

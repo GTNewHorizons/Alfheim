@@ -2,6 +2,7 @@ package alfheim.common.item.rod
 
 import alexsocol.asjlib.mfloor
 import alfheim.common.item.ItemMod
+import alfheim.common.item.relic.ItemSifRing
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -34,7 +35,8 @@ class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
 	}
 	
 	fun terraform(stack: ItemStack?, world: World, player: EntityPlayer) {
-		val range = if (IManaProficiencyArmor.Helper.hasProficiency(player)) 22 else 16
+		var range = if (IManaProficiencyArmor.Helper.hasProficiency(player)) 22 else 16
+		if (ItemSifRing.getSifRing(player) != null) range += 8
 		
 		val x = player.posX.mfloor()
 		val y = (player.posY - if (world.isRemote) 2 else 1).mfloor()

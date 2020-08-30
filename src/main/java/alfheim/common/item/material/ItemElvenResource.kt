@@ -195,7 +195,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	
 	companion object {
 		
-		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed", "Jug", "GrapeLeaf" /*, "Transferer" BACK*/)
+		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed", "Jug", "GrapeLeaf")
 		
 		lateinit var amulet: IIcon
 		lateinit var candy: IIcon
@@ -207,32 +207,6 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 		
 		lateinit var weed1: IIcon
 	}
-	
-	/*@Override
-	public void apply(ItemStack stack, BurstProperties props) {}
-	
-	@Override
-	public boolean collideBurst(IManaBurst burst, MovingObjectPosition pos, boolean isManaBlock, boolean dead, ItemStack stack) {
-		if (stack.getItemDamage() != ElvenResourcesMetas.Transferer) return true;
-		
-		EntityManaBurst entity = (EntityManaBurst) burst;
-		if (!entity.worldObj.isRemote && pos.typeOfHit == MovingObjectType.BLOCK && entity.worldObj.getBlock(pos.blockX, pos.blockY, pos.blockZ) == Blocks.sponge) {
-			EntityItem item = new EntityItem(entity.worldObj, pos.blockX, pos.blockY, pos.blockZ, TileTransferer.getStack(entity).copy());
-			entity.worldObj.spawnEntityInWorld(item);
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public void updateBurst(IManaBurst burst, ItemStack stack) {
-		if (stack.getItemDamage() != ElvenResourcesMetas.Transferer) ((EntityThrowable) burst).setDead();
-	}
-	
-	@Override
-	public boolean doParticles(IManaBurst burst, ItemStack stack) {
-		return stack.getItemDamage() == ElvenResourcesMetas.Transferer;
-	}BACK*/
 }
 
 object ElvenResourcesMetas {
@@ -264,7 +238,6 @@ object ElvenResourcesMetas {
 	val ElvenWeed: Int
 	val Jug: Int
 	val GrapeLeaf: Int
-	//val Transferer: Int BACK
 	
 	val displayBlackList: Array<Int>
 	
@@ -297,7 +270,6 @@ object ElvenResourcesMetas {
 		ElvenWeed = items.indexOf("ElvenWeed")
 		Jug = items.indexOf("Jug")
 		GrapeLeaf = items.indexOf("GrapeLeaf")
-		//Transferer = items.indexOf("Transferer"); BACK
 		
 		displayBlackList = arrayOf(ElvenWeed)
 	}

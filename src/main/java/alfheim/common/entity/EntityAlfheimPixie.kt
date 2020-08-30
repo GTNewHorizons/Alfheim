@@ -70,7 +70,7 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 		}
 		
 		if (Vector3.entityDistance(this, player) > 16.0) player = null
-		if (player != null && PlayerHandler.getPlayerBaubles(player).get(0)?.item === AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(PlayerHandler.getPlayerBaubles(player).get(0), player, 1, true)) {
+		if (player != null && PlayerHandler.getPlayerBaubles(player)[0]?.item === AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(PlayerHandler.getPlayerBaubles(player)[0], player, 1, true)) {
 			val vec = player.getLook(1f)
 			motionX = (player.posX + vec.xCoord - posX) / 8f
 			motionY = (player.posY + vec.yCoord + 1.5 - posY) / 8f

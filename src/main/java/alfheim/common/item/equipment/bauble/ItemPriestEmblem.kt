@@ -40,7 +40,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		
 		fun getEmblem(meta: Int, player: EntityPlayer?): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player)
-			val stack = baubles.get(0)
+			val stack = baubles[0]
 			return if (stack != null && ((stack.item === AlfheimItems.priestEmblem && stack.meta == meta) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
 		}
 		

@@ -32,7 +32,7 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 	@SubscribeEvent
 	fun onWornTick(e: LivingEvent.LivingUpdateEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
-		val ring = getHeimdallRing(player) ?: return
+		getHeimdallRing(player) ?: return
 		
 		leadToDungeon(player)
 	}
@@ -79,9 +79,9 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 	companion object {
 		
 		fun getHeimdallRing(player: EntityPlayer): ItemStack? {
-			val baubles = PlayerHandler.getPlayerBaubles(player) ?: return null
-			val stack1 = baubles.get(1)
-			val stack2 = baubles.get(2)
+			val baubles = PlayerHandler.getPlayerBaubles(player)
+			val stack1 = baubles[1]
+			val stack2 = baubles[2]
 			return if (isHeimdallRing(stack1)) stack1 else if (isHeimdallRing(stack2)) stack2 else null
 		}
 		

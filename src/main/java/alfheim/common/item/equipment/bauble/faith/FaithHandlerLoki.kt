@@ -77,7 +77,7 @@ object FaithHandlerLoki: IFaithHandler {
 		
 		ghastBall.field_92057_e = if (awakened) 2 else 1
 		ghastBall.posX = player.posX + look.xCoord
-		ghastBall.posY = player.posY + (player.height / 2.0f).toDouble() + 0.5
+		ghastBall.posY = player.posY + (player.height / 2.0f) + 0.5
 		ghastBall.posZ = player.posZ + look.zCoord
 		ghastBall.motionX = look.xCoord * c
 		ghastBall.motionY = look.yCoord * c
@@ -118,6 +118,7 @@ object FaithHandlerLoki: IFaithHandler {
 	override fun getGodPowerLevel(player: EntityPlayer): Int {
 		var lvl = 0
 		
+		if (player.inventory.hasItemStack(ItemStack(AlfheimItems.gleipnir))) lvl += 4
 		if (ItemPriestCloak.getCloak(3, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(3, player) != null) lvl += 2
 		if (ItemLokiRing.getLokiRing(player) != null) lvl += 1

@@ -1,7 +1,8 @@
 package alfheim.common.core.helper
 
 import alexsocol.asjlib.*
-import net.minecraft.entity.item.EntityItemFrame
+import alfheim.common.block.tile.corporea.TileCorporeaInjector
+import net.minecraft.entity.item.*
 import net.minecraft.inventory.*
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
@@ -17,8 +18,7 @@ object CorporeaAdvancedHelper {
 	 * @param stack Stack to put to connected network
 	 */
 	fun putToNetwork(spark: ICorporeaSpark, stack: ItemStack): ItemStack? {
-		val inventories = CorporeaHelper.getInventoriesOnNetwork(spark)
-		
+		val inventories = CorporeaHelper.getInventoriesOnNetwork(spark).filter { it !is TileCorporeaInjector }
 		if (inventories.isEmpty()) return stack
 		
 		for (inv in inventories) {
@@ -80,13 +80,18 @@ object CorporeaAdvancedHelper {
 		return inv !is ISidedInventory || slot in inv.getAccessibleSlotsFromSide(ForgeDirection.UP.ordinal) && inv.canInsertItem(slot, inv[slot], ForgeDirection.UP.ordinal)
 	}
 	
-	fun TileEntity.getFilters(): List<ItemStack> {
+	fun putOrDrop(tile: TileEntity, spark: ICorporeaSpark?, stack: ItemStack?, yOff: Int = 2) {
+		stack ?: return
+		tile.worldObj.spawnEntityInWorld(EntityItem(tile.worldObj, tile.xCoord + 0.5, tile.yCoord + 0.5 + yOff, tile.zCoord + 0.5, if (spark != null) putToNetwork(spark, stack) ?: return else stack).also { item -> item.setMotion(0.0) })
+	}
+	
+	fun getFilters(tile: TileEntity): List<ItemStack> {
 		val filter = ArrayList<ItemStack>()
 		
 		val orientationToDir = intArrayOf(3, 4, 2, 5)
 		
 		for (dir in LibMisc.CARDINAL_DIRECTIONS) {
-			val frames = worldObj.getEntitiesWithinAABB(EntityItemFrame::class.java, boundingBox().offset(dir.offsetX.D, dir.offsetY.D, dir.offsetZ.D)) as MutableList<EntityItemFrame>
+			val frames = tile.worldObj.getEntitiesWithinAABB(EntityItemFrame::class.java, tile.boundingBox().offset(dir.offsetX.D, dir.offsetY.D, dir.offsetZ.D)) as MutableList<EntityItemFrame>
 			for (frame in frames) {
 				val orientation = frame.hangingDirection
 				if (orientationToDir[orientation] == dir.ordinal)

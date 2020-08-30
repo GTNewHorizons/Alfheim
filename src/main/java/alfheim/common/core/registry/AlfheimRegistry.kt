@@ -8,11 +8,12 @@ import alfheim.api.AlfheimAPI.registerSpell
 import alfheim.api.ModInfo
 import alfheim.common.block.*
 import alfheim.common.block.tile.*
-import alfheim.common.block.tile.corporea.TileCorporeaAutocrafter
+import alfheim.common.block.tile.corporea.*
 import alfheim.common.block.tile.sub.anomaly.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
+import alfheim.common.entity.item.*
 import alfheim.common.entity.spell.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -76,7 +77,7 @@ object AlfheimRegistry {
 	fun registerPotions() {
 		PotionBerserk()
 		PotionBleeding()
-		PotionAlfheim(AlfheimConfigHandler.potionIDButterShield, "butterShield", false, 0x00FFFF)
+		PotionButterShield()
 		PotionDeathMark()
 		PotionAlfheim(AlfheimConfigHandler.potionIDDecay, "decay", true, 0x553355)
 		PotionEternity()
@@ -104,14 +105,16 @@ object AlfheimRegistry {
 		get() = field.also { field++ }
 	
 	private fun registerEntities() {
+		registerEntity(EntityAlfheimPixie::class.java, "Pixie", AlfheimCore.instance, id)
 		registerEntity(EntityButterfly::class.java, "Butterfly", AlfheimCore.instance, id)
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
 		registerEntity(EntityElf::class.java, "Elf", AlfheimCore.instance, id)
 		registerEntity(EntityFireAura::class.java, "FireAura", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
+		registerEntity(EntityItemImmortal::class.java, "ImmortalItem", AlfheimCore.instance, id)
+		registerEntity(EntityItemImmortalRelic::class.java, "ImmortalRelicItem", AlfheimCore.instance, id)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)
 		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance, id)
-		registerEntity(EntityAlfheimPixie::class.java, "Pixie", AlfheimCore.instance, id)
 		registerEntity(EntityRook::class.java, "Rook", AlfheimCore.instance, id)
 		
 		registerEntity(EntityGrieferCreeper::class.java, "GrieferCreeper", AlfheimCore.instance, id)
@@ -120,11 +123,13 @@ object AlfheimRegistry {
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance, id)
 		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance, id)
 		
+		registerEntity(EntityGleipnir::class.java, "Gleipnir", AlfheimCore.instance, id)
 		registerEntity(EntityMjolnir::class.java, "Mjolnir", AlfheimCore.instance, id)
 		
 		registerEntity(EntityMagicArrow::class.java, "MagicArrow", AlfheimCore.instance, id)
 		registerEntity(EntitySubspace::class.java, "Subspace", AlfheimCore.instance, id)
 		registerEntity(EntitySubspaceSpear::class.java, "SubspaceSpear", AlfheimCore.instance, id)
+		registerEntity(FakeLightning::class.java, "FakeLightning", AlfheimCore.instance, id)
 		
 		registerEntity(EntitySpellAcidMyst::class.java, "SpellAcidMyst", AlfheimCore.instance, id)
 		registerEntity(EntitySpellAquaStream::class.java, "SpellAquaStream", AlfheimCore.instance, id)
@@ -148,6 +153,7 @@ object AlfheimRegistry {
 		registerTile(TileAnyavil::class.java, "Anyavil")
 		registerTile(TileBarrel::class.java, "Barrel")
 		registerTile(TileCorporeaAutocrafter::class.java, "CorporeaAutocrafter")
+		registerTile(TileCorporeaInjector::class.java, "CorporeaInjector")
 		registerTile(TileEnderActuator::class.java, "EnderActuator")
 		registerTile(TileHeadFlugel::class.java, "HeadFlugel")
 		registerTile(TileHeadMiku::class.java, "HeadMiku")
@@ -156,7 +162,6 @@ object AlfheimRegistry {
 		registerTile(TilePowerStone::class.java, "PowerStone")
 		registerTile(TileRaceSelector::class.java, "RaceSelector")
 		registerTile(TileTradePortal::class.java, "TradePortal")
-		//registerTileEntity(TileTransferer.class, "Transferer"); BACK
 		
 		registerAnomalies()
 		

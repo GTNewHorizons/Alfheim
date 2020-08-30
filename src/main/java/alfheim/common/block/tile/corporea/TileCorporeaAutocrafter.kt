@@ -2,10 +2,9 @@ package alfheim.common.block.tile.corporea
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.ASJTile
-import alfheim.common.core.helper.CorporeaAdvancedHelper
 import alfheim.common.core.helper.CorporeaAdvancedHelper.getFilters
+import alfheim.common.core.helper.CorporeaAdvancedHelper.putOrDrop
 import alfheim.common.core.helper.CorporeaAdvancedHelper.requestMatches
-import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
@@ -22,7 +21,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 	var pendingRequest = false
 	
 	var request: Any? = null
-	var requestCount = 0
+	var leftToCraft = 0
 	var requestMissing = 0
 	var requestX = 0
 	var requestY = -1
@@ -38,7 +37,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 	override fun interceptRequestLast(request: Any?, count: Int, thisSpark: ICorporeaSpark?, requestorSpark: ICorporeaSpark, allFoundStacks: MutableList<ItemStack>, allScannedInventories: MutableList<IInventory>?, doIt: Boolean) {
 		if (worldObj.isRemote) return
 		
-		val filters = getFilters()
+		val filters = getFilters(this)
 		
 		for (filter in filters)
 			if (requestMatches(request, filter)) {
@@ -49,73 +48,89 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 				if (missing > 0) {
 					val requestor = requestorSpark.inventory as TileEntity
 					
-					setPendingRequest(requestor.xCoord, requestor.yCoord, requestor.zCoord, request, count, missing)
+					setPendingRequest(requestor.xCoord, requestor.yCoord, requestor.zCoord, request, missing)
 					
 					return
 				}
 			}
 	}
 	
-	fun setPendingRequest(x: Int, y: Int, z: Int, req: Any?, count: Int, missing: Int) {
+	fun setPendingRequest(x: Int, y: Int, z: Int, req: Any?, missing: Int) {
 		if (pendingRequest) return
 		
 		pendingRequest = true
 		
 		request = req
-		requestCount = count
-		requestMissing = MathHelper.ceiling_float_int(missing / craftResult.F)
+		requestMissing = missing
+		leftToCraft = MathHelper.ceiling_float_int(missing / craftResult.F)
 		
 		requestX = x
 		requestY = y
 		requestZ = z
 		
 		worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
+
+		ASJUtilities.dispatchTEToNearbyPlayers(this)
 		
 //		ASJUtilities.chatLog("CAC at ${Vector3.fromTileEntity(this)} got request $count of $req (missing $missing) from $x $y $z. Need to craft $requestMissing times.")
 	}
 	
 	override fun updateEntity() {
+		if (worldObj.isRemote) return
+		
 		checkRedstone()
 		
 		if (!pendingRequest) return
 		
-		if (requestMissing > 0)
-			return doAutocraft()
+		if (leftToCraft > 0)
+			return doAutocraft().also {
+				ASJUtilities.dispatchTEToNearbyPlayers(this)
+			}
+		
+		val spark = spark
+		if (spark == null || spark.master == null) return
 		
 		val stacks = CorporeaHelper.requestItem(request, -1, spark, request is ItemStack, false)
 		val count = stacks.sumBy { it.stackSize }
 		
-		if (count >= requestCount) {
+		if (count >= requestMissing) {
 			fulfillRequest()
+			ASJUtilities.dispatchTEToNearbyPlayers(this)
 		}
 	}
 	
 	var buffer = arrayOfNulls<ItemStack?>(27)
 	var waitingForIngredient = false
 	
+	/** Used for HUD only */
+	var awaitedIngredient: ItemStack? = null
+	
 	fun doAutocraft() {
 		if (waitingForIngredient) return
 		
-		val patterns = InventoryHelper.getInventory(worldObj, xCoord, yCoord + 1, zCoord) ?: return
+		val spark = spark
 		
-		val ourSpark = spark
+		val patterns = updateBufferSize() ?: return
 		
-		buffer = buffer.ensureCapacity(patterns.sizeInventory)
 		for (i in 0 until patterns.sizeInventory) {
 			val pattern = patterns[i] ?: continue
 			
 			if (buffer[i] != null) continue
 			
-			val got = CorporeaHelper.requestItem(pattern, pattern.stackSize, ourSpark, true, true)
+			val got = CorporeaHelper.requestItem(pattern, pattern.stackSize, spark, true, true)
+			val gotSize = got.sumBy { it.stackSize }
 			
 			// not enough
-			if (got == null || got.sumBy { it.stackSize } < pattern.stackSize) {
+			if (gotSize < pattern.stackSize) {
 				waitingForIngredient = true
+				awaitedIngredient = pattern.copy().also { it.stackSize -= gotSize }
+				
+				got.forEach { putOrDrop(this, spark, it) }
 				return
 			}
 			
 			// else all fine
-			buffer[i] = got[0].copy().apply { stackSize = got.sumBy { it.stackSize } }
+			buffer[i] = got[0].copy().apply { stackSize = gotSize }
 		}
 		
 		// buffer is filled and everything can be passed to crafter
@@ -128,16 +143,14 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 			val ret = buffer.getOrNull(i) ?: continue
 			buffer[i] = null
 			
-			if (down !is TileCorporeaFunnel && ret.stackSize == InventoryHelper.testInventoryInsertion(down, ret, ForgeDirection.UP)) {
-				// FIXME puts in the first slot instead of indexed
-				InventoryHelper.insertItemIntoInventory(down, ret)
-			} else {
-				ourSpark?.also { CorporeaAdvancedHelper.putToNetwork(it, ret) } ?: continue
-				worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 2.5, zCoord + 0.5, ret).also { item -> item.setMotion(0.0) })
-			}
+			if (down !is TileCorporeaFunnel)
+				InventoryHelper.insertItemIntoInventory(down, ret, ForgeDirection.UP, i, true, true)
+			
+			if (ret.stackSize > 0)
+				putOrDrop(this, spark, ret)
 		}
 		
-		--requestMissing
+		--leftToCraft
 	}
 	
 	fun fulfillRequest() {
@@ -149,33 +162,36 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 			val inv = spark.inventory
 			
 			if (inv is ICorporeaRequestor) {
-				inv.doCorporeaRequest(request, requestCount, spark)
+				inv.doCorporeaRequest(request, requestMissing, spark)
 				worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
-			} else if (inv is TileCorporeaAutocrafter)
+			} else if (inv is TileCorporeaAutocrafter) {
 				inv.waitingForIngredient = false
+				inv.awaitedIngredient = null
+			}
 		}
 		
-		pendingRequest = false
 		onWanded()
 	}
 	
 	fun onWanded(): Boolean {
 		pendingRequest = false
 		request = null
-		requestCount = 0
 		requestMissing = 0
+		leftToCraft = 0
 		requestX = 0
 		requestY = -1
 		requestZ = 0
+		
 		waitingForIngredient = false
+		awaitedIngredient = null
 		
-		val spark = spark ?: return true
+		val spark = spark
 		
-		buffer.forEach {
-			if (it == null) return@forEach
-			val drop = CorporeaAdvancedHelper.putToNetwork(spark, it) ?: return@forEach
-			worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 2.5, zCoord + 0.5, drop).also { item -> item.setMotion(0.0) })
-		}
+		buffer.forEach { putOrDrop(this, spark, it) }
+		buffer.fill(null)
+		
+		updateBufferSize()
+		ASJUtilities.dispatchTEToNearbyPlayers(this)
 		
 		return true
 	}
@@ -186,10 +202,32 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		for (dir in ForgeDirection.VALID_DIRECTIONS)
 			redstone = redstone || worldObj.getIndirectPowerLevelTo(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ, dir.ordinal) > 0
 		
-		if (!prevRedstone && redstone)
+		if (!prevRedstone && redstone) {
 			waitingForIngredient = false
+			awaitedIngredient = null
+		}
 		
 		prevRedstone = redstone
+	}
+	
+	fun updateBufferSize(): IInventory? {
+		val spark = spark
+		val inv: IInventory? = InventoryHelper.getInventory(worldObj, xCoord, yCoord + 1, zCoord)
+		
+		if (inv == null) {
+			buffer.forEach { putOrDrop(this, spark, it) }
+			buffer = emptyArray()
+			return null
+		}
+		
+		buffer = if (inv.sizeInventory < buffer.size) {
+			buffer.sliceArray(inv.sizeInventory until buffer.size).forEach { putOrDrop(this, spark, it) }
+			buffer.sliceArray(0 until inv.sizeInventory)
+		} else {
+			buffer.ensureCapacity(inv.sizeInventory)
+		}
+		
+		return inv
 	}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
@@ -213,14 +251,17 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 			}
 		}
 		
-		nbt.setInteger(TAG_REQUEST_COUNT, requestCount)
-		nbt.setInteger(TAG_REQUEST_MISSING, requestMissing)
+		nbt.setInteger(TAG_REQUEST_COUNT, requestMissing)
+		nbt.setInteger(TAG_LEFT_TO_CRAFT, leftToCraft)
 		
 		nbt.setInteger(TAG_REQUEST_X, requestX)
 		nbt.setInteger(TAG_REQUEST_Y, requestY)
 		nbt.setInteger(TAG_REQUEST_Z, requestZ)
 		
 		nbt.setBoolean(TAG_IS_WAITING, waitingForIngredient)
+		
+		val awaitData = NBTTagCompound()
+		nbt.setTag(TAG_AWAITED_CONTENT, awaitedIngredient?.writeToNBT(awaitData) ?: awaitData)
 		
 		val invNbt = NBTTagCompound()
 		invNbt.setInteger("TAG_COUNT", buffer.size)
@@ -245,14 +286,15 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 			else              -> null
 		}
 		
-		requestCount = nbt.getInteger(TAG_REQUEST_COUNT)
-		requestMissing = nbt.getInteger(TAG_REQUEST_MISSING)
+		requestMissing = nbt.getInteger(TAG_REQUEST_COUNT)
+		leftToCraft = nbt.getInteger(TAG_LEFT_TO_CRAFT)
 		
 		requestX = nbt.getInteger(TAG_REQUEST_X)
 		requestY = nbt.getInteger(TAG_REQUEST_Y)
 		requestZ = nbt.getInteger(TAG_REQUEST_Z)
 		
 		waitingForIngredient = nbt.getBoolean(TAG_IS_WAITING)
+		awaitedIngredient = ItemStack.loadItemStackFromNBT(nbt.getTag(TAG_AWAITED_CONTENT) as NBTTagCompound)
 		
 		val invNbt = nbt.getTag("TAG_INVENTORY") as NBTTagCompound
 		
@@ -268,13 +310,14 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		const val TAG_REQUEST_TYPE = "requestType"
 		const val TAG_REQUEST_CONTENTS = "requestContents"
 		const val TAG_REQUEST_COUNT = "requestCount"
-		const val TAG_REQUEST_MISSING = "requestMissing"
+		const val TAG_LEFT_TO_CRAFT = "leftToCraft"
 		const val TAG_REQUEST_X = "requestX"
 		const val TAG_REQUEST_Y = "requestY"
 		const val TAG_REQUEST_Z = "requestZ"
 		
 		const val TAG_REDSTONE = "redstone"
-		const val TAG_IS_WAITING = "waiting"
+		const val TAG_IS_WAITING = "isWaiting"
+		const val TAG_AWAITED_CONTENT = "waitingFor"
 		
 		const val REQUEST_NULL = 0
 		const val REQUEST_ITEMSTACK = 1
@@ -284,8 +327,9 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 	// UNUSED
 	
 	override fun interceptRequest(request: Any?, count: Int, thisSpark: ICorporeaSpark?, requestorSpark: ICorporeaSpark?, currentlyFoundStacks: MutableList<ItemStack>?, currentlyScannedInventories: MutableList<IInventory>?, doIt: Boolean) = Unit
+	
 	override fun getStackInSlot(slot: Int) = null
-	override fun decrStackSize(slot: Int, side: Int) = null
+	override fun decrStackSize(slot: Int, size: Int) = null
 	override fun getSizeInventory() = 0
 	override fun getStackInSlotOnClosing(slot: Int) = null
 	override fun hasCustomInventoryName() = false

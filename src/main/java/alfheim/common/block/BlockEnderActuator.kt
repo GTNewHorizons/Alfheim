@@ -5,14 +5,17 @@ import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileEnderActuator
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.common.Botania
 
-class BlockEnderActuator: BlockContainerMod(Material.iron) {
+class BlockEnderActuator: BlockContainerMod(Material.iron), ILexiconable {
 	
 	lateinit var iconSide: IIcon
 	
@@ -40,7 +43,7 @@ class BlockEnderActuator: BlockContainerMod(Material.iron) {
 				val x1 = (x + Math.random())
 				val y1 = (y + Math.random())
 				val z1 = (z + Math.random())
-				Botania.proxy.wispFX(world, x1, y1, z1, 0.25f + Math.random().F * 0.25f, 0f, 1f, Math.random().toFloat() * 0.5f, -0.05f + Math.random().toFloat() * 0.05f)
+				Botania.proxy.wispFX(world, x1, y1, z1, 0.25f + Math.random().F * 0.25f, 0f, 1f, Math.random().F * 0.5f, -0.05f + Math.random().F * 0.05f)
 			}
 		} else {
 			ASJUtilities.say(player, "alfheimmisc.actuated")
@@ -50,4 +53,6 @@ class BlockEnderActuator: BlockContainerMod(Material.iron) {
 	}
 	
 	override fun createNewTileEntity(world: World?, meta: Int) = TileEnderActuator()
+	
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.endAct
 }

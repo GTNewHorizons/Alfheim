@@ -64,6 +64,7 @@ class ItemGungnir: ItemRelic("Gungnir") {
 			it.damage = 20f
 			it.life = 200
 			it.type = 1
+			it.noClip = true
 			it.pitch = -player.rotationPitch
 			it.rotationYaw = player.rotationYaw
 			it.rotation = MathHelper.wrapAngleTo180_float(-player.rotationYaw + 180)

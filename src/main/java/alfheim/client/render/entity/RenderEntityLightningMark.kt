@@ -14,7 +14,7 @@ import kotlin.math.min
 
 object RenderEntityLightningMark: Render() {
 	
-	internal val rand = Random()
+	private val rand = Random()
 	
 	init {
 		shadowSize = 0f
@@ -27,14 +27,11 @@ object RenderEntityLightningMark: Render() {
 		glPushMatrix()
 		glTranslated(x, y + 0.01, z)
 		
-		val live = mark.timer / 2f
-		val charge = min(10f, live + partialTick)
-		val chargeMul = charge / 10f
-		
-		
 		rand.setSeed(mark.uniqueID.mostSignificantBits)
 		
-		var s = chargeMul
+		val live = mark.ticksExisted / 2f
+		val charge = min(10f, live + partialTick)
+		var s = charge / 10f
 		s += min(1f, (live + partialTick) * 0.2f)
 		s /= 2f
 		glScalef(s)

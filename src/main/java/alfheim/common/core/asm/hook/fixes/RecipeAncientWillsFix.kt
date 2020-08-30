@@ -12,7 +12,7 @@ import vazkii.botania.common.item.ModItems
 @Suppress("UNUSED_PARAMETER")
 object RecipeAncientWillsFix {
 	
-	val foundWill = arrayOf(false, false, false, false, false, false)
+	val foundWill = Array(7) { false }
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
@@ -25,7 +25,7 @@ object RecipeAncientWillsFix {
 			if (stack != null) {
 				if (stack.item === ModItems.ancientWill) {
 					val meta = stack.meta
-					if (meta !in 0..5) return false
+					if (meta !in foundWill.indices) return false
 						if (foundWill[meta]) return false else foundWill[meta] = true
 					
 				} else if (!foundItem) {
@@ -62,7 +62,7 @@ object RecipeAncientWillsFix {
 		
 		val container = item!!.item as IAncientWillContainer
 		stack = item.copy()
-		for (i in 0..5) {
+		for (i in foundWill.indices) {
 			if (foundWill[i]) {
 				if (container.hasAncientWill(item, i)) return null
 				container.addAncientWill(stack, i)

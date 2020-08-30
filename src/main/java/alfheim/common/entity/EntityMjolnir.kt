@@ -14,8 +14,8 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
-import java.awt.Color
 import vazkii.botania.common.core.helper.Vector3 as Bector3
+import java.awt.Color
 
 class EntityMjolnir: EntityThrowable {
 	
@@ -29,6 +29,7 @@ class EntityMjolnir: EntityThrowable {
 	
 	constructor(world: World?, e: EntityLivingBase?, stack: ItemStack): super(world, e) {
 		this.stack = stack
+		
 	}
 	
 	override fun entityInit() {
@@ -61,7 +62,7 @@ class EntityMjolnir: EntityThrowable {
 						val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mjolnir, thrower.inventory)
 						
 						if (slot != -1)
-							thrower.inventory.get(slot)?.let { if (it.item === AlfheimItems.mjolnir) ItemNBTHelper.setInt(it, ItemMjolnir.TAG_COOLDOWN, 0) }
+							thrower.inventory[slot]?.let { if (it.item === AlfheimItems.mjolnir) ItemNBTHelper.setInt(it, ItemMjolnir.TAG_COOLDOWN, 0) }
 					}
 					setDead()
 				}
@@ -73,16 +74,6 @@ class EntityMjolnir: EntityThrowable {
 				motionZ = mz
 			}
 			bounced = false
-		}
-		
-//		motionX = 0.0
-//		motionY = 0.0
-//		motionZ = 0.0
-	}
-	
-	private fun dropAndKill() {
-		if (!worldObj.isRemote) {
-			setDead()
 		}
 	}
 	
@@ -130,7 +121,7 @@ class EntityMjolnir: EntityThrowable {
 		}
 	
 	companion object {
-		private const val MAX_BOUNCES = 2
+		private const val MAX_BOUNCES = 16
 		
 		val color = Color(0x0079C4).rgb
 		val colorB = Color(0x0079C4).brighter().brighter().rgb

@@ -6,9 +6,11 @@ import alfheim.common.block.AlfheimBlocks
 import alfmod.common.block.AlfheimModularBlocks.airyVirus
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.item.material.EventResourcesMetas
-import net.minecraft.item.ItemStack
+import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.item.*
 import net.minecraft.item.crafting.IRecipe
 import vazkii.botania.api.BotaniaAPI
+import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
 
@@ -106,5 +108,13 @@ object AlfheimModularRecipes {
 						 'M', AlfheimModularItems.volcanoMace,
 						 'U', ItemStack(AlfheimBlocks.alfStorage, 1, 1),
 						 'B', ItemStack(AlfheimBlocks.alfStorage, 1, 2))
+		
+		
+		
+		if (Botania.thaumcraftLoaded) {
+			val goggles = Item.itemRegistry.getObject("Thaumcraft:ItemGoggles") as Item
+			GameRegistry.addShapelessRecipe(ItemStack(AlfheimModularItems.snowHelmetRevealing), ItemStack(AlfheimModularItems.snowHelmet), goggles)
+			GameRegistry.addShapelessRecipe(ItemStack(AlfheimModularItems.volcanoHelmetRevealing), ItemStack(AlfheimModularItems.volcanoHelmet), goggles)
+		}
 	}
 }

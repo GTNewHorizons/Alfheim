@@ -68,6 +68,7 @@ object AlfheimItems {
 	val flugelHead: Item
 	val flugelHead2: Item
 	val flugelSoul: Item
+	val gleipnir: Item
 	val gungnir: Item
 	val hyperBucket: Item
 	val invisibilityCloak: Item
@@ -75,6 +76,7 @@ object AlfheimItems {
 	val irisSeeds: Item
 	val livingrockPickaxe: Item
 	val lootInterceptor: Item
+	val manaGlove: Item
 	val manaMirrorImba: Item
 	val manaRingElven: Item
 	val manaRingGod: Item
@@ -109,6 +111,7 @@ object AlfheimItems {
 	val rodPortal: Item
 	val rodPrismatic: Item
 	val soulHorn: Item
+	val soulSword: Item
 	val spatiotemporalRing: Item
 	val splashPotion: Item
 	val starPlacer: Item
@@ -163,6 +166,7 @@ object AlfheimItems {
 		flugelHead = ItemHeadFlugel()
 		flugelHead2 = ItemHeadMiku()
 		flugelSoul = ItemFlugelSoul()
+		gleipnir = ItemGleipnir()
 		gungnir = ItemGungnir()
 		hyperBucket = ItemHyperBucket()
 		invisibilityCloak = ItemInvisibilityCloak()
@@ -170,6 +174,7 @@ object AlfheimItems {
 		irisSeeds = ItemColorSeeds()
 		livingrockPickaxe = ItemLivingrockPickaxe()
 		lootInterceptor = ItemLootInterceptor()
+		manaGlove = ItemManaweaveGlove()
 		manaMirrorImba = ItemManaMirrorImba()
 		manasteelHoe = ItemManasteelHoe()
 		manaRingElven = ItemManaStorageRing("ManaRingElven", 5.0)
@@ -204,6 +209,7 @@ object AlfheimItems {
 		rodPrismatic = ItemRodPrismatic()
 		rodGrass = ItemRodGrass()
 		soulHorn = ItemSoulHorn()
+		soulSword = ItemSoulSword().WIP()
 		spatiotemporalRing = ItemSpatiotemporalRing()
 		splashPotion = ItemSplashPotion()
 		starPlacer = ItemStarPlacer()

@@ -19,7 +19,7 @@ import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
-import net.minecraft.potion.*
+import net.minecraft.potion.Potion
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
@@ -100,26 +100,31 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	override fun isFull3D() = true
 	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, inUseTicks: Int) {
-		if (!ManaItemHandler.requestManaExact(stack, player, 1, false)) return
+		if (!ManaItemHandler.requestManaExact(stack, player, 100, false)) return
+		
 		val range = min(getMaxItemUseDuration(stack) - inUseTicks, 200) / 20 + 1
 		val entities = world.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range))
 		if (!player.capabilities.isCreativeMode) stack.damageStack(1, player)
+		
 		var count = 0
 		for (entity in entities) {
 			if (entity is EntityPlayer && ManaItemHandler.requestManaExact(stack, entity, 1, false)) {
 				if (entity.attackEntityFrom(DamageSource.causePlayerDamage(player), 0.001f)) {
 					count++
 					if (!world.isRemote) entity.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
-					entity.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDManaVoid, 10, 0, true))
+//					entity.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDManaVoid, 10, 0, true))
+					ManaItemHandler.dispatchMana(stack, player, ManaItemHandler.requestMana(stack, entity, 1000, true), true)
 				}
 			}
 		}
+		
 		if (count > 0) {
 			world.playSoundAtEntity(player, "botania:enchanterEnchant", 1f, 1f)
 			if (!world.isRemote) player.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
 			stack.damageStack(5, player)
 			if (!world.isRemote) VisualEffectHandler.sendPacket(VisualEffects.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.D, 0.0, 0.0)
-			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDManaVoid, 2 * count, 0, true))
+//			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDManaVoid, 2 * count, 0, true))
+			ManaItemHandler.requestManaExact(stack, player, 100, true)
 		}
 	}
 	

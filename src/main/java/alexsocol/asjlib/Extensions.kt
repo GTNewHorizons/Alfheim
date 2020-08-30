@@ -50,6 +50,11 @@ fun <T> Array<T?>.ensureCapacity(min: Int): Array<T?> {
 	return new
 }
 
+/**
+ * Creates a tuple of type [Triple] from elements of this pair adding [third].
+ */
+infix fun <A, B, C> Pair<A, B>.with(third: C): Triple<A, B, C> = Triple(first, second, third)
+
 fun String.substringEnding(lastNChars: Int): String = this.substring(0, length - lastNChars)
 
 val Number.D get() = this.toDouble()
@@ -118,9 +123,13 @@ fun Entity.setMotion(x: Double, y: Double = x, z: Double = y) {
 	motionZ = z
 }
 
-operator fun ChunkCoordinates.component1() = this.posX
-operator fun ChunkCoordinates.component2() = this.posY
-operator fun ChunkCoordinates.component3() = this.posZ
+operator fun ChunkCoordinates.component1() = posX
+operator fun ChunkCoordinates.component2() = posY
+operator fun ChunkCoordinates.component3() = posZ
+
+operator fun Vec3.component1() = xCoord
+operator fun Vec3.component2() = yCoord
+operator fun Vec3.component3() = zCoord
 
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
 
@@ -182,21 +191,21 @@ fun <T> T.eventFML(): T {
 fun World.isBlockDirectlyGettingPowered(x: Int, y: Int, z: Int) = getBlockPowerInput(x, y, z) > 0
 
 fun World.getBlock(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): Block {
-	val (i, j, k) = Vector3.fromEntity(e)
-	return getBlock(i.I + x, j.I + y, k.I + z)
+	val (i, j, k) = Vector3.fromEntity(e).mf()
+	return getBlock(i + x, j + y, k + z)
 }
 
 fun World.getBlockMeta(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): Int {
-	val (i, j, k) = Vector3.fromEntity(e)
-	return getBlockMetadata(i.I + x, j.I + y, k.I + z)
+	val (i, j, k) = Vector3.fromEntity(e).mf()
+	return getBlockMetadata(i + x, j + y, k + z)
 }
 
 fun World.getTileEntity(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): TileEntity? {
-	val (i, j, k) = Vector3.fromEntity(e)
-	return getTileEntity(i.I + x, j.I + y, k.I + z)
+	val (i, j, k) = Vector3.fromEntity(e).mf()
+	return getTileEntity(i + x, j + y, k + z)
 }
 
 fun World.setBlock(e: Entity, block: Block, x: Int = 0, y: Int = 0, z: Int = 0, meta: Int = 0): Boolean {
-	val (i, j, k) = Vector3.fromEntity(e)
-	return setBlock(i.I + x, j.I + y, k.I + z, block, meta, 3)
+	val (i, j, k) = Vector3.fromEntity(e).mf()
+	return setBlock(i + x, j + y, k + z, block, meta, 3)
 }

@@ -21,7 +21,7 @@ class EntityGrieferCreeper(world: World): EntityCreeper(world) {
 			tag.setBoolean("powered", true)
 		}
 		
-		tag.setShort("Fuse", this.fuseTime.toShort())
+		tag.setInteger("Fuse", fuseTime)
 		tag.setBoolean("ignited", func_146078_ca())
 	}
 	
@@ -33,7 +33,7 @@ class EntityGrieferCreeper(world: World): EntityCreeper(world) {
 		dataWatcher.updateObject(17, java.lang.Byte.valueOf((if (tag.getBoolean("powered")) 1 else 0).toByte()))
 		
 		if (tag.hasKey("Fuse", 99)) {
-			this.fuseTime = tag.getShort("Fuse").I
+			fuseTime = tag.getInteger("Fuse")
 		}
 		
 		if (tag.getBoolean("ignited")) {

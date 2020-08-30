@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.armor.elvoruim
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.render.ASJRenderHelper
+import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
@@ -53,39 +53,43 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 	@SideOnly(Side.CLIENT)
 	override fun addArmorSetDescription(stack: ItemStack?, list: List<String>) {
 		super.addArmorSetDescription(stack, list)
-		for (i in 0..5)
+		
+		for (i in 0..6)
 			if (hasAncientWill(stack, i))
 				addStringToTooltip(StatCollector.translateToLocal("botania.armorset.will$i.desc"), list)
 	}
 	
 	@SubscribeEvent
 	fun onEntityAttacked(event: LivingHurtEvent) {
-		val attacker = event.source.entity
-		if (attacker is EntityPlayer) {
-			if (hasArmorSet(attacker)) {
-				val crit = attacker.fallDistance > 0f && !attacker.onGround && !attacker.isOnLadder && !attacker.isInWater && !attacker.isPotionActive(Potion.blindness) && attacker.ridingEntity == null
-				val stack = attacker.inventory.armorItemInSlot(3)
-				if (crit && stack != null && stack.item is ItemElvoriumHelmet) {
-					val ahrim = hasAncientWill(stack, 0)
-					val dharok = hasAncientWill(stack, 1)
-					val guthan = hasAncientWill(stack, 2)
-					val torag = hasAncientWill(stack, 3)
-					val verac = hasAncientWill(stack, 4)
-					val karil = hasAncientWill(stack, 5)
-					
-					if (ahrim)
-						event.entityLiving.addPotionEffect(PotionEffect(Potion.weakness.id, 20, 1))
-					if (dharok)
-						event.ammount *= 1f + (1f - attacker.health / attacker.maxHealth) * 0.5f
-					if (guthan)
-						attacker.heal(event.ammount * 0.25f)
-					if (torag)
-						event.entityLiving.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 60, 1))
-					if (verac)
-						event.source.setDamageBypassesArmor()
-					if (karil)
-						event.entityLiving.addPotionEffect(PotionEffect(Potion.wither.id, 60, 1))
-				}
+		val attacker = event.source.entity as? EntityPlayer ?: return
+		
+		if (!hasArmorSet(attacker)) return
+		
+		val stack = attacker.inventory.armorItemInSlot(3) ?: return
+		val crit = attacker.fallDistance > 0f && !attacker.onGround && !attacker.isOnLadder && !attacker.isInWater && !attacker.isPotionActive(Potion.blindness) && attacker.ridingEntity == null
+		
+		if (crit && stack.item is ItemElvoriumHelmet) {
+			if (hasAncientWill(stack, 0))
+				event.entityLiving.addPotionEffect(PotionEffect(Potion.weakness.id, 20, 1))
+			
+			if (hasAncientWill(stack, 1))
+				event.ammount *= 1f + (1f - attacker.health / attacker.maxHealth) * 0.5f
+			
+			if (hasAncientWill(stack, 2))
+				attacker.heal(event.ammount * 0.25f)
+			
+			if (hasAncientWill(stack, 3))
+				event.entityLiving.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 60, 1))
+			
+			if (hasAncientWill(stack, 4))
+				event.source.setDamageBypassesArmor()
+			
+			if (hasAncientWill(stack, 5))
+				event.entityLiving.addPotionEffect(PotionEffect(Potion.wither.id, 60, 1))
+			
+			if (hasAncientWill(stack, 6)) {
+				event.entityLiving.addPotionEffect(PotionEffect(Potion.blindness.id, 60, 1))
+				event.entityLiving.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 60, 1))
 			}
 		}
 	}
@@ -124,7 +128,7 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 		}
 		
 		fun hasAnyWill(stack: ItemStack): Boolean {
-			for (i in 0..5)
+			for (i in 0..6)
 				if (hasAncientWill_(stack, i))
 					return true
 			
@@ -141,8 +145,8 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 				val f3 = willIcon.maxV
 				vazkii.botania.api.item.IBaubleRender.Helper.translateToHeadLevel(event.entityPlayer)
 				mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
-				glRotated(90.0, 0.0, 1.0, 0.0)
-				glRotated(180.0, 1.0, 0.0, 0.0)
+				glRotatef(90f, 0f, 1f, 0f)
+				glRotatef(180f, 1f, 0f, 0f)
 				glTranslated(-0.26, 0.15, -0.32)
 				glScaled(0.5)
 				ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, willIcon.iconWidth, willIcon.iconHeight, 1f / 16f)

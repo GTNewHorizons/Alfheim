@@ -29,7 +29,7 @@ import java.util.*
 import kotlin.math.*
 import vazkii.botania.common.core.helper.Vector3 as Bector3
 
-class 	ItemMjolnir: ItemRelic("Mjolnir") {
+class ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	init {
 		setHasSubtypes(true)
@@ -40,6 +40,7 @@ class 	ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	fun isWorthy(player: EntityLivingBase): Boolean {
 		if (player !is EntityPlayer) return false
+		if (player.capabilities.isCreativeMode) return true
 		return ItemPriestCloak.getCloak(0, player) != null && ItemPriestEmblem.getEmblem(0, player) != null && ItemThorRing.getThorRing(player) != null
 	}
 	
@@ -47,7 +48,7 @@ class 	ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	override fun onEntitySwing(entity: EntityLivingBase, stack: ItemStack?): Boolean {
 		if (entity.isSneaking && isWorthy(entity))
-			entity.worldObj.spawnEntityInWorld(EntitySpellFenrirStorm(entity.worldObj, entity).also { it.mjolnir = true })
+			entity.worldObj.spawnEntityInWorld(EntitySpellFenrirStorm(entity.worldObj, entity, true))
 		
 		return super.onEntitySwing(entity, stack)
 	}

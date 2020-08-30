@@ -1,13 +1,15 @@
 package alfmod.common.core.util
 
+import alexsocol.asjlib.toItem
 import alfmod.common.item.AlfheimModularItems
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
+import vazkii.botania.common.block.ModBlocks
 
 object AlfheimModularTab: CreativeTabs("AlfheimModular") {
 	
-	override fun getTabIconItem() = AlfheimModularItems.snowSword
+	override fun getTabIconItem() = ModBlocks.hourglass.toItem()
 	
 	lateinit var list: MutableList<Any?>
 	

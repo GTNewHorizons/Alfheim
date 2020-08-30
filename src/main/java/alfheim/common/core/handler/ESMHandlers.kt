@@ -91,7 +91,7 @@ object ESMHandler {
 			val bowl = ItemStack(ModItems.waterBowl)
 			
 			if (equipped.stackSize <= 0)
-				player.inventory.set(player.inventory.currentItem, bowl)
+				player.inventory[player.inventory.currentItem] = bowl
 			else {
 				if (!player.inventory.addItemStackToInventory(bowl))
 					player.dropPlayerItemWithRandomChoice(bowl, false)
@@ -111,18 +111,18 @@ object ESMHandler {
 			if (!event.world.isAirBlock(i, j, k)) return@run
 			
 			--equipped.stackSize
-			ASJUtilities.consumeItemStack(player.inventory, ItemStack(ModItems.waterBowl, 3))
+			ASJUtilities.consumeItemStack(player.inventory, ItemStack(ModItems.waterBowl, 4))
 			
 			event.world.setBlock(i, j, k, Blocks.flowing_water)
 			
 			val bowl = ItemStack(Items.bowl, 4)
 			
-			if (equipped.stackSize <= 0)
-				player.inventory.set(player.inventory.currentItem, bowl)
-			else {
-				if (!player.inventory.addItemStackToInventory(bowl))
+//			if (equipped.stackSize <= 0)
+//				player.inventory[player.inventory.currentItem] = bowl
+//			else {
+//				if (!player.inventory.addItemStackToInventory(bowl))
 					player.dropPlayerItemWithRandomChoice(bowl, false)
-			}
+//			}
 		}
 	}
 	

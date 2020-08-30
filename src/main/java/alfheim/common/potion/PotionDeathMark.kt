@@ -1,6 +1,5 @@
 package alfheim.common.potion
 
-import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.spell.darkness.SpellDeathMark

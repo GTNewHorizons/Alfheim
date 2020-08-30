@@ -13,7 +13,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
+import net.minecraft.util.DamageSource
 import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.event.entity.player.AttackEntityEvent
@@ -99,8 +99,8 @@ object FaithHandlerNjord: IFaithHandler {
 			
 			player.motionY += increase.D
 			val speed = min(0.12f * 200 + 1.1f, 1.825f)
-			player.motionX = (-MathHelper.sin(player.rotationYaw / 180.0f * Math.PI.F) * MathHelper.cos(player.rotationPitch / 180.0f * Math.PI.F) * speed).toDouble()
-			player.motionZ = (MathHelper.cos(player.rotationYaw / 180.0f * Math.PI.F) * MathHelper.cos(player.rotationPitch / 180.0f * Math.PI.F) * speed).toDouble()
+			player.motionX = (-sin(player.rotationYaw * Math.PI / 180) * cos(player.rotationPitch * Math.PI / 180) * speed)
+			player.motionZ = (cos(player.rotationYaw * Math.PI / 180) * cos(player.rotationPitch * Math.PI / 180) * speed)
 		}
 	}
 	
@@ -116,8 +116,8 @@ object FaithHandlerNjord: IFaithHandler {
 				
 				for (i in 0..(if (getGodPowerLevel(player) >= 6) 1 else 0))
 					entity.knockBack(e.entityPlayer, -1f,
-									 MathHelper.sin(e.entityPlayer.rotationYaw * Math.PI.F / 180).toDouble(),
-									 -MathHelper.cos(e.entityPlayer.rotationYaw * Math.PI.F / 180).toDouble())
+									 sin(e.entityPlayer.rotationYaw * Math.PI / 180),
+									 -cos(e.entityPlayer.rotationYaw * Math.PI / 180))
 			}
 	}
 	
@@ -157,7 +157,7 @@ object FaithHandlerNjord: IFaithHandler {
 				
 				val (x, y, z) = Vector3.fromEntity(player)
 				
-				Botania.proxy.sparkleFX(mc.theWorld, x + vec.x, y + vec.y, z + vec.z, r, g, b, 1f, 5)
+				Botania.proxy.sparkleFX(mc.theWorld, x + vec.x, y + vec.y + 1.62, z + vec.z, r, g, b, 1f, 5)
 			}
 		}
 	}

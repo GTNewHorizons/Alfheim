@@ -102,7 +102,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 				r = or + (Math.random().F - 0.5f) * rn
 				g = og + (Math.random().F - 0.5f) * rn
 				b = ob + (Math.random().F - 0.5f) * rn
-				size = osize + (Math.random().F - 0.5f) * 0.065f + sin(Random(entityUniqueID.mostSignificantBits).nextInt(9001).D).F * 0.4f
+				size = osize + (Math.random().F - 0.5f) * 0.065f + sin(Random(uniqueID.mostSignificantBits).nextInt(9001).D).F * 0.4f
 				Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.2f * size, (-motionX).F * 0.01f, (-motionY).F * 0.01f, (-motionZ).F * 0.01f, life)
 				this.posX += diffVecNorm.x * distance
 				this.posY += diffVecNorm.y * distance

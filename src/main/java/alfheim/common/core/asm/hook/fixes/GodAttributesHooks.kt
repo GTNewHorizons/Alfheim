@@ -98,8 +98,8 @@ object GodAttributesHooks {
 	 */
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, injectOnExit = true)
-	fun func_151386_g(helper: EnchantmentHelper?, entity: EntityLivingBase, @Hook.ReturnValue ret: Int): Int {
-		return ret + if ((entity as? EntityPlayer)?.let { ItemNjordRing.getNjordRing(entity) != null } == true) 20 else 0
+	fun func_151386_g(static: EnchantmentHelper?, entity: EntityLivingBase, @Hook.ReturnValue ret: Int): Int {
+		return ret + if (ItemNjordRing.getNjordRing(entity as? EntityPlayer ?: return ret) != null) 20 else 0
 	}
 	
 	// Make boat unbreakable if rider is with Njord Ring

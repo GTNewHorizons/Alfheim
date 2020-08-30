@@ -91,8 +91,8 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 		fun over(caster: EntityLivingBase?, was: Double) =
 			(if (caster?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true) was * 1.2 else was).F
 		
-		fun consumeMana(player: EntityPlayer, mana: Int, req: Boolean) =
-			ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), player, mana, req)
+		fun consumeMana(player: EntityPlayer, mana: Int, req: Boolean, forSpell: SpellBase? = null) =
+			(if (forSpell?.hard == true) ManaItemHandler::requestManaExact else ManaItemHandler::requestManaExactForTool) (ItemStack(Blocks.stone), player, mana, req)
 		
 		fun say(caster: EntityPlayerMP, spell: SpellBase) {
 			val l = caster.worldObj.getEntitiesWithinAABB(EntityPlayerMP::class.java, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY, caster.posZ, caster.posX, caster.posY, caster.posZ).expand(40.0, 40.0, 40.0)) as List<EntityPlayerMP>

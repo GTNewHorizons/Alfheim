@@ -7,6 +7,7 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemBlockGrapeWhite
 import alfheim.common.item.material.ElvenFoodMetas
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
@@ -19,9 +20,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
+import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockGrapeWhite: BlockBush(), IGrowable {
+class BlockGrapeWhite: BlockBush(), IGrowable, ILexiconable {
 	
 	lateinit var iconsBush: Array<IIcon>
 	
@@ -90,4 +92,6 @@ class BlockGrapeWhite: BlockBush(), IGrowable {
 	override fun func_149853_b(world: World, random: Random?, x: Int, y: Int, z: Int) {
 		world.setBlockMetadataWithNotify(x, y, z, world.getBlockMetadata(x, y, z) + 1, 3)
 	}
+	
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.winery
 }

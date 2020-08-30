@@ -34,6 +34,7 @@ import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
 import alfheim.common.block.AlfheimBlocks.corporeaAutocrafter
+import alfheim.common.block.AlfheimBlocks.corporeaInjector
 import alfheim.common.block.AlfheimBlocks.dreamSapling
 import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
@@ -178,6 +179,7 @@ import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.flugelDisc
 import alfheim.common.item.AlfheimItems.flugelHead
 import alfheim.common.item.AlfheimItems.flugelSoul
+import alfheim.common.item.AlfheimItems.gleipnir
 import alfheim.common.item.AlfheimItems.gungnir
 import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.invisibilityCloak
@@ -185,6 +187,7 @@ import alfheim.common.item.AlfheimItems.invisibleFlameLens
 import alfheim.common.item.AlfheimItems.irisSeeds
 import alfheim.common.item.AlfheimItems.livingrockPickaxe
 import alfheim.common.item.AlfheimItems.lootInterceptor
+import alfheim.common.item.AlfheimItems.manaGlove
 import alfheim.common.item.AlfheimItems.manaMirrorImba
 import alfheim.common.item.AlfheimItems.manaRingElven
 import alfheim.common.item.AlfheimItems.manaRingGod
@@ -220,6 +223,7 @@ import alfheim.common.item.AlfheimItems.rodPortal
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.royalStaff
 import alfheim.common.item.AlfheimItems.soulHorn
+import alfheim.common.item.AlfheimItems.soulSword
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer
@@ -259,11 +263,12 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addBlock(manaInfuser)
 		addBlock(corporeaAutocrafter)
+		addBlock(corporeaInjector)
+		addBlock(enderActuator)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
 		addBlock(Blocks.furnace, 8)
 		addBlock(ModBlocks.spreader, 4)
-		addBlock(enderActuator)
 		// addBlock(anomalyHarvester) // BACK
 		addBlock(anyavil)
 		addBlock(alfheimPylon)
@@ -300,6 +305,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (auraRingElven)
 		addItem (manaRingGod)
 		addItem (auraRingGod)
+		addItem (manaGlove)
 		addItem (dodgeRing)
 		addItem (ringSpider)
 		addItem (ringFeedFlower)
@@ -365,6 +371,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (elvoriumLeggings)
 		addItem (elvoriumBoots)
 		
+		addItem (soulSword)
 		addItem (realitySword)
 		
 		//addItem (storyToken)
@@ -373,6 +380,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (excaliber)
 		addItem (subspaceSpear)
 		addItem (gungnir)
+		addItem (gleipnir)
 		addItem (moonlightBow)
 		addItem (mask)
 		addItem (flugelSoul)

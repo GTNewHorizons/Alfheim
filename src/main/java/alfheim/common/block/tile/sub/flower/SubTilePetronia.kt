@@ -1,13 +1,13 @@
 package alfheim.common.block.tile.sub.flower
 
 import alfheim.api.AlfheimAPI
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.*
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.api.subtile.*
 import vazkii.botania.api.subtile.RadiusDescriptor.Square
 import java.awt.Color
@@ -103,9 +103,7 @@ class SubTilePetronia: SubTileGenerating() {
 		powerPerTick = cmp.getInteger(TAG_POWER)
 	}
 	
-	override fun getEntry(): LexiconEntry? {
-		return null // LexiconPages.petroPetunia TODO
-	}
+	override fun getEntry() = AlfheimLexiconData.flowerPetronia
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("petronia").getIconForStack(null)
 	

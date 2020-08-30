@@ -5,6 +5,7 @@ import alexsocol.asjlib.extendables.block.BlockModFence
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenFoodMetas
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -16,10 +17,11 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.*
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.util.ForgeDirection
+import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 import kotlin.math.*
 
-class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null), IGrowable {
+class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null), IGrowable, ILexiconable {
 	
 	init {
 		setBlockName("GrapeRedPlanted")
@@ -128,4 +130,6 @@ class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null), IG
 	override fun func_149853_b(world: World, random: Random?, x: Int, y: Int, z: Int) {
 		world.setBlockMetadataWithNotify(x, y, z, world.getBlockMetadata(x, y, z) + 1, 3)
 	}
+	
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.winery
 }

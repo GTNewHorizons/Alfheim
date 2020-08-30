@@ -10,6 +10,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.*
+import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 

@@ -40,7 +40,7 @@ object SpellIgnition: SpellBase("ignition", EnumRace.SALAMANDER, 2000, 100, 5) {
 		}
 		
 		val cost = getManaCost() * if (race == caster.race) 1 else AlfheimConfigHandler.raceManaMult
-		if (!consumeMana(caster, cost, false)) return SpellCastResult.NOMANA
+		if (!consumeMana(caster, cost, false, this)) return SpellCastResult.NOMANA
 		
 		val mop = ASJUtilities.getSelectedBlock(caster, radius, false)
 		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1) return SpellCastResult.WRONGTGT
@@ -61,7 +61,7 @@ object SpellIgnition: SpellBase("ignition", EnumRace.SALAMANDER, 2000, 100, 5) {
 		stackToPlace.tryPlaceItemIntoWorld(caster, caster.worldObj, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, mop.hitVec.xCoord.F, mop.hitVec.yCoord.F, mop.hitVec.zCoord.F)
 		
 		if (stackToPlace.stackSize == 0) {
-			consumeMana(caster, cost, true)
+			consumeMana(caster, cost, true, this)
 			return SpellCastResult.OK
 		}
 		

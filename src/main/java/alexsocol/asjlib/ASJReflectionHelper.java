@@ -356,7 +356,7 @@ public class ASJReflectionHelper {
 		return getValue(f, instance);
 	}
 	
-	public static <T, R> R getValue(Field field, Object instance) {
+	public static <T> T getValue(Field field, Object instance) {
 		return getValue(field, instance, true);
 	}
 	

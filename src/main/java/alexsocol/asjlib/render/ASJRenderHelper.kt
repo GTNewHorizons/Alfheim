@@ -1,7 +1,7 @@
 package alexsocol.asjlib.render
 
 import alexsocol.asjlib.*
-import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.*
 import net.minecraft.entity.Entity
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11.*
@@ -89,7 +89,7 @@ object ASJRenderHelper {
 	 * Interpolates values, e.g. for smoother render
 	 */
 	@JvmStatic
-	fun interpolate(last: Double, now: Double) = last + (now - last) * mc.timer.renderPartialTicks
+	fun interpolate(prev: Double, current: Double) = prev + (current - prev) * mc.timer.renderPartialTicks
 	
 	/**
 	 * Translates matrix to follow player (if something is bound to world's zero coords)
@@ -138,6 +138,16 @@ object ASJRenderHelper {
 	}
 	
 	@JvmStatic
+	fun drawRect(radius: Double = 1.0) {
+		Tessellator.instance.startDrawingQuads()
+		Tessellator.instance.addVertexWithUV(-radius, -radius, 0.0, 0.0, 0.0)
+		Tessellator.instance.addVertexWithUV(-radius, +radius, 0.0, 0.0, 1.0)
+		Tessellator.instance.addVertexWithUV(+radius, +radius, 0.0, 1.0, 1.0)
+		Tessellator.instance.addVertexWithUV(+radius, -radius, 0.0, 1.0, 0.0)
+		Tessellator.instance.draw()
+	}
+	
+	@JvmStatic
 	fun drawTexturedModalRect(x: Int, y: Int, z: Int, u: Int, v: Int, w: Int, h: Int) {
 		val f = 0.00390625
 		val f1 = 0.00390625
@@ -149,4 +159,58 @@ object ASJRenderHelper {
 		tessellator.addVertexWithUV(x.D, y.D, z.D, u * f, v * f1)
 		tessellator.draw()
 	}
+	
+	private var prevX = 0f
+	private var prevY = 0f
+	
+	private var glow = false
+	private var cull = false
+	private var alfa = false
+	
+	@JvmStatic
+	fun setGlow() {
+		glDisable(GL_LIGHTING)
+		prevX = OpenGlHelper.lastBrightnessX
+		prevY = OpenGlHelper.lastBrightnessY
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
+		glow = true
+	}
+	
+	@JvmStatic
+	fun setTwoside() {
+		glDisable(GL_CULL_FACE)
+		cull = true
+	}
+	
+	@JvmStatic
+	fun setBlend() {
+		glEnable(GL_BLEND)
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		alfa = true
+	}
+	
+	@JvmStatic
+	fun discard() {
+		if (glow) {
+			glEnable(GL_LIGHTING)
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, prevX, prevY)
+		}
+		if (cull) glEnable (GL_CULL_FACE)
+		if (alfa) glDisable (GL_BLEND)
+	}
+	
+	@JvmStatic
+	fun interpolateColor(color1: Int, color2: Int, fraction: Double): Color {
+		val c1 = Color(color1, true)
+		val c2 = Color(color2, true)
+		return Color(
+			interpolateChannel(c1.red, c2.red, fraction),
+			interpolateChannel(c1.green, c2.green, fraction),
+			interpolateChannel(c1.blue, c2.blue, fraction),
+			interpolateChannel(c1.alpha, c2.alpha, fraction)
+		)
+	}
+	
+	@JvmStatic
+	fun interpolateChannel(channel1: Int, channel2: Int, fraction: Double) = ((channel2 - channel1) * fraction + channel1).I
 }
