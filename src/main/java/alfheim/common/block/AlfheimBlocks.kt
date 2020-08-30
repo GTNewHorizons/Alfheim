@@ -23,14 +23,16 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
-import net.minecraft.world.IBlockAccess
+import net.minecraft.world.*
 import net.minecraftforge.common.*
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.OreDictionary.registerOre
 import vazkii.botania.api.BotaniaAPI
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.common.block.*
 
@@ -176,8 +178,15 @@ object AlfheimBlocks {
 	init {
 		alfheimPortal = BlockAlfheimPortal()
 		alfheimPylon = BlockAlfheimPylon()
-		alfStorage = object: BlockModMeta(Material.iron, 4, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f) {
+		alfStorage = object: BlockModMeta(Material.iron, 4, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f), ILexiconable {
 			override fun isBeaconBase(worldObj: IBlockAccess?, x: Int, y: Int, z: Int, beaconX: Int, beaconY: Int, beaconZ: Int) = true
+			
+			override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) =
+				when (world.getBlockMetadata(x, y, z)) {
+					0       -> AlfheimLexiconData.elvorium
+					in 1..3 -> AlfheimLexiconData.essences
+					else    -> null
+				}
 		}
 		amplifier = BlockAmplifier()
 		animatedTorch = BlockAnimatedTorch()
@@ -202,8 +211,8 @@ object AlfheimBlocks {
 		elvenSand = object: BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen) {
 			override fun canSustainPlant(world: IBlockAccess, x: Int, y: Int, z: Int, direction: ForgeDirection?, plantable: IPlantable) = when (plantable.getPlantType(world, x, y, z)) {
 				EnumPlantType.Desert -> true
-				EnumPlantType.Beach -> world.getBlock(x - 1, y, z).material === Material.water || world.getBlock(x + 1, y, z).material === Material.water || world.getBlock(x, y, z - 1).material === Material.water || world.getBlock(x, y, z + 1).material === Material.water
-				else -> super.canSustainPlant(world, x, y, z, direction, plantable)
+				EnumPlantType.Beach  -> world.getBlock(x - 1, y, z).material === Material.water || world.getBlock(x + 1, y, z).material === Material.water || world.getBlock(x, y, z - 1).material === Material.water || world.getBlock(x, y, z + 1).material === Material.water
+				else                 -> super.canSustainPlant(world, x, y, z, direction, plantable)
 			}
 		}
 		enderActuator = BlockEnderActuator()
@@ -488,7 +497,7 @@ object AlfheimBlocks {
 			
 			t = ItemStack(altWood1, 1, i)
 			if (i != BlockAltLeaves.yggMeta)
-			registerOre("logWood", t)
+				registerOre("logWood", t)
 			
 			t = ItemStack(irisLeaves0, 1, i)
 			registerOre("treeLeaves", t)
@@ -508,7 +517,7 @@ object AlfheimBlocks {
 			
 			t = ItemStack(altLeaves, 1, i)
 			if (i != BlockAltLeaves.yggMeta)
-			registerOre("treeLeaves", t)
+				registerOre("treeLeaves", t)
 			
 			t = ItemStack(irisPlanks, 1, i)
 			registerOre("plankWood", t)

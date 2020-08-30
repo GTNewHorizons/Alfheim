@@ -78,7 +78,7 @@ class ItemGleipnir: ItemRelic("Gleipnir") {
 			
 			// 15000 manacost
 			if (!world.isRemote)
-				world.spawnEntityInWorld(EntityGleipnir(world, player).also { it.setPosition(x.D, y.D, z.D) })
+				world.spawnEntityInWorld(EntityGleipnir(world, player).apply { setPosition(x.D, y.D, z.D) })
 			
 			if (!player.capabilities.isCreativeMode)
 				stack.cooldown = 1500

@@ -2,6 +2,7 @@ package alfheim.common.block.tile.sub.flower
 
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
@@ -115,7 +116,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 	override fun canGeneratePassively() = temp in -7..7
 	override fun getDelayBetweenPassiveGeneration() = 5
 	override fun getColor() = Color.HSBtoRGB(map(temp, -8, 8, 235, 360) / 360f, 1f, 1f)
-	override fun getEntry() = null // ShadowFoxLexiconData.crysanthermum
+	override fun getEntry() = ShadowFoxLexiconData.crysanthermum
 	
 	override fun renderHUD(mc: Minecraft, res: ScaledResolution) {
 		super.renderHUD(mc, res)
@@ -148,6 +149,8 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		for (i in 0..7)
 			lastBlocks[i] = nbt.getInteger("last_$i")
 	}
+	
+	
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("crysanthermum").getIconForStack(null)
 }

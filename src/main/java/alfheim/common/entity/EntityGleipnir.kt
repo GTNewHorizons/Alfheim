@@ -1,6 +1,7 @@
 package alfheim.common.entity
 
 import alfheim.common.core.handler.*
+import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -17,6 +18,13 @@ class EntityGleipnir: Entity {
 	
 	constructor(world: World, player: EntityPlayer): this (world) {
 		thrower = player
+	}
+	
+	@SideOnly(Side.CLIENT)
+	override fun setPositionAndRotation2(x: Double, y: Double, z: Double, yaw: Float, pitch: Float, nope: Int) {
+		setPosition(x, y, z)
+		setRotation(yaw, pitch)
+		// fuck you "push out of blocks"!
 	}
 	
 	override fun onUpdate() {
