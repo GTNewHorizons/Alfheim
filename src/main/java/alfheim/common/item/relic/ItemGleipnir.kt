@@ -77,7 +77,8 @@ class ItemGleipnir: ItemRelic("Gleipnir") {
 			val (x, y, z) = mop.hitVec
 			
 			// 15000 manacost
-			world.spawnEntityInWorld(EntityGleipnir(world, player).also { it.setPosition(x.D, y.D, z.D) })
+			if (!world.isRemote)
+				world.spawnEntityInWorld(EntityGleipnir(world, player).also { it.setPosition(x.D, y.D, z.D) })
 			
 			if (!player.capabilities.isCreativeMode)
 				stack.cooldown = 1500

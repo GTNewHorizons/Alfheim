@@ -404,7 +404,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(corporeaAutocrafter),
 						 " H ", "RSI", " F ",
-						 'H', corporeaInterceptor,
+						 'H', corporeaInjector,
 						 'R', corporeaRetainer,
 						 'I', corporeaInterceptor,
 						 'F', corporeaFunnel,

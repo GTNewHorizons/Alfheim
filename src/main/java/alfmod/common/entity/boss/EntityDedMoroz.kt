@@ -27,8 +27,6 @@ import vazkii.botania.client.core.handler.BossBarHandler
 import java.awt.Rectangle
 import kotlin.math.max
 
-private const val FOLLOW = 20.0
-
 class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 	
 	init {
@@ -52,7 +50,7 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 	override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
 		getEntityAttribute(SharedMonsterAttributes.attackDamage).baseValue = 1.0
-		getEntityAttribute(SharedMonsterAttributes.followRange).baseValue = FOLLOW
+		getEntityAttribute(SharedMonsterAttributes.followRange).baseValue = 20.0
 		getEntityAttribute(SharedMonsterAttributes.knockbackResistance).baseValue = 0.9
 		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.25
 		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 400.0
@@ -136,13 +134,14 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 			}
 			
 			val dist = Vector3.entityDistance(this, attackTarget)
+			val follow = getAttributeMap().getAttributeInstance(SharedMonsterAttributes.followRange).attributeValue
 			
-			if (ticksExisted % 40 == 0 && 4 <= dist && dist <= FOLLOW) {
+			if (ticksExisted % 40 == 0 && 4 <= dist && dist <= follow) {
 				if (!worldObj.isRemote)
 					worldObj.spawnEntityInWorld(EntitySniceBall(worldObj, this))
 			}
 			
-			if (ticksExisted % 600 == 0 && dist <= FOLLOW) {
+			if (ticksExisted % 600 == 0 && dist <= follow) {
 				val v = Vector3()
 				
 				val pe = PotionEffect(Potion.moveSlowdown.id, 20, 4)

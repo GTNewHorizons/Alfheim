@@ -54,7 +54,7 @@ class ItemSoulSword: ItemSword(soul), IManaUsingItem {
 	}
 	
 	override fun getUnlocalizedNameInefficiently(stack: ItemStack?): String? {
-		return super.getUnlocalizedNameInefficiently(stack).replace("item.".toRegex(), "item.${ModInfo.MODID}")
+		return super.getUnlocalizedNameInefficiently(stack).replace("item.".toRegex(), "item.${ModInfo.MODID}:")
 	}
 	
 	@SideOnly(Side.CLIENT)

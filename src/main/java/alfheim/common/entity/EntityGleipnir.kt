@@ -23,12 +23,13 @@ class EntityGleipnir: Entity {
 		super.onUpdate()
 		val thrower = thrower
 		
-		if (worldObj.isRemote) return
-		
-		if (thrower == null || !thrower.isEntityAlive || ticksExisted > 300) {
+		if ((!worldObj.isRemote && (thrower == null || !thrower.isEntityAlive)) || ticksExisted > 300) {
 			setDead()
 			return
 		}
+		
+		thrower ?: return
+		if (worldObj.isRemote) return
 		
 		val targets = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>
 		targets.remove(thrower)

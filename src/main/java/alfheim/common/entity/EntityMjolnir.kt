@@ -12,7 +12,9 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
+import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
+import vazkii.botania.common.core.helper.Vector3 as Bector3
 import java.awt.Color
 
 class EntityMjolnir: EntityThrowable {
@@ -42,7 +44,7 @@ class EntityMjolnir: EntityThrowable {
 		
 		super.onUpdate()
 		
-//		Botania.proxy.lightningFX(worldObj, Bector3.fromEntity(this), Bector3.fromEntity(this).sub(Bector3(mx, my, mz).multiply(1.25)), 1f, color, colorB)
+		Botania.proxy.lightningFX(worldObj, Bector3.fromEntity(this), Bector3.fromEntity(this).sub(Bector3(mx, my, mz).multiply(1.25)), 1f, color, colorB)
 
 		val bounces = timesBounced
 		if (bounces >= MAX_BOUNCES || ticksExisted > 30) {

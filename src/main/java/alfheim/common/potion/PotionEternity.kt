@@ -25,6 +25,8 @@ class PotionEternity: PotionAlfheim(AlfheimConfigHandler.potionIDEternity, "eter
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase, map: BaseAttributeMap, mod: Int) {
 		super.applyAttributesModifiersToEntity(target, map, mod)
+		if (mod == 0) return
+		
 		val m = AttributeModifier(uuid, name, -1.0, 2)
 		target.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(m)
 		target.getEntityAttribute(SharedMonsterAttributes.movementSpeed).applyModifier(m)
@@ -32,6 +34,8 @@ class PotionEternity: PotionAlfheim(AlfheimConfigHandler.potionIDEternity, "eter
 	
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase, map: BaseAttributeMap, mod: Int) {
 		super.removeAttributesModifiersFromEntity(target, map, mod)
+		if (mod == 0) return
+		
 		target.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(target.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(uuid) ?: return)
 	}
 	

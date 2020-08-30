@@ -105,6 +105,7 @@ object AlfheimRegistry {
 		get() = field.also { field++ }
 	
 	private fun registerEntities() {
+		registerEntity(EntityAlfheimPixie::class.java, "Pixie", AlfheimCore.instance, id)
 		registerEntity(EntityButterfly::class.java, "Butterfly", AlfheimCore.instance, id)
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
 		registerEntity(EntityElf::class.java, "Elf", AlfheimCore.instance, id)
@@ -114,7 +115,6 @@ object AlfheimRegistry {
 		registerEntity(EntityItemImmortalRelic::class.java, "ImmortalRelicItem", AlfheimCore.instance, id)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)
 		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance, id)
-		registerEntity(EntityAlfheimPixie::class.java, "Pixie", AlfheimCore.instance, id)
 		registerEntity(EntityRook::class.java, "Rook", AlfheimCore.instance, id)
 		
 		registerEntity(EntityGrieferCreeper::class.java, "GrieferCreeper", AlfheimCore.instance, id)
@@ -123,11 +123,13 @@ object AlfheimRegistry {
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance, id)
 		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance, id)
 		
+		registerEntity(EntityGleipnir::class.java, "Gleipnir", AlfheimCore.instance, id)
 		registerEntity(EntityMjolnir::class.java, "Mjolnir", AlfheimCore.instance, id)
 		
 		registerEntity(EntityMagicArrow::class.java, "MagicArrow", AlfheimCore.instance, id)
 		registerEntity(EntitySubspace::class.java, "Subspace", AlfheimCore.instance, id)
 		registerEntity(EntitySubspaceSpear::class.java, "SubspaceSpear", AlfheimCore.instance, id)
+		registerEntity(FakeLightning::class.java, "FakeLightning", AlfheimCore.instance, id)
 		
 		registerEntity(EntitySpellAcidMyst::class.java, "SpellAcidMyst", AlfheimCore.instance, id)
 		registerEntity(EntitySpellAquaStream::class.java, "SpellAquaStream", AlfheimCore.instance, id)

@@ -35,7 +35,7 @@ object RenderEntityFenrirStorm: Render() {
 			area.translate(v.x, v.y, v.z)
 			area.draw(0)
 		} catch (ignore: Throwable) {}*/
-				val parts = max(1, min(e.ticksExisted * 2, SpellFenrirStorm.radius.I * 2))
+		val parts = max(1, min(e.ticksExisted * 2, SpellFenrirStorm.radius.I * 2))
 		
 		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)

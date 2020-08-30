@@ -125,7 +125,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	override fun isInRangeToRenderDist(distance: Double) = super.isInRangeToRenderDist(distance / 16.0)
 }
 
-object SpriteKillhandler {
+object SpriteKillHandler {
 	
 	val regions = HashMap<Pair<Int, Int>, Int>()
 	
