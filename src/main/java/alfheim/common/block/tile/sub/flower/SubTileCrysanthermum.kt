@@ -2,7 +2,7 @@ package alfheim.common.block.tile.sub.flower
 
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
@@ -116,7 +116,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 	override fun canGeneratePassively() = temp in -7..7
 	override fun getDelayBetweenPassiveGeneration() = 5
 	override fun getColor() = Color.HSBtoRGB(map(temp, -8, 8, 235, 360) / 360f, 1f, 1f)
-	override fun getEntry() = ShadowFoxLexiconData.crysanthermum
+	override fun getEntry() = AlfheimLexiconData.flowerCrysanthermum
 	
 	override fun renderHUD(mc: Minecraft, res: ScaledResolution) {
 		super.renderHUD(mc, res)

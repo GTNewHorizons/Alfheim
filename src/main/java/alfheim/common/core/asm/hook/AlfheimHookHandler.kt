@@ -1,7 +1,6 @@
 package alfheim.common.core.asm.hook
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.IHourglassTrigger
@@ -20,7 +19,6 @@ import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.relic.ItemGleipnir
 import alfheim.common.item.rod.ItemRodClicker
 import alfheim.common.potion.PotionSoulburn
 import baubles.common.lib.PlayerHandler
@@ -32,7 +30,7 @@ import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.*
-import net.minecraft.client.renderer.entity.*
+import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
@@ -63,6 +61,7 @@ import travellersgear.api.TravellersGearAPI
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.api.internal.IManaBurst
+import vazkii.botania.api.lexicon.*
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
@@ -364,69 +363,6 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ON_TRUE)
-	fun clearLeashed(e: EntityLiving, sendPacket: Boolean, dropItem: Boolean): Boolean {
-		if (dropItem && ItemGleipnir.leashes.remove(e.uniqueID)) {
-			e.clearLeashed(sendPacket, false)
-			return true
-		}
-		
-		return false
-	}
-	
-	var hookLeashColor = false
-	
-	@JvmStatic
-	@Hook(targetMethod = "func_110827_b")
-	fun drawLeashPre(render: RenderLiving, entity: EntityLiving, x: Double, y: Double, z: Double, yaw: Float, ticks: Float) {
-		hookLeashColor = entity.uniqueID in ItemGleipnir.leashes
-		
-		if (hookLeashColor)
-			ASJRenderHelper.setGlow()
-	}
-	
-	@JvmStatic
-	@Hook(returnCondition = ALWAYS)
-	fun setColorRGBA_F(tes: Tessellator, r: Float, g: Float, b: Float, a: Float) {
-		if (hookLeashColor) {
-			if (r == 0.5f)
-				tes.setColorRGBA(255, 223, 0, 255)
-			else
-				tes.setColorRGBA(255, 212, 0, 255)
-		} else
-			tes.setColorRGBA((r * 255f).I, (g * 255f).I, (b * 255f).I, (a * 255f).I)
-	}
-	
-	@JvmStatic
-	@Hook(targetMethod = "func_110827_b", injectOnExit = true)
-	fun drawLeashPost(render: RenderLiving, entity: EntityLiving, x: Double, y: Double, z: Double, yaw: Float, ticks: Float) {
-		if (hookLeashColor) {
-			hookLeashColor = false
-			ASJRenderHelper.discard()
-		}
-	}
-	
-	var hookLeashing = false
-	
-	@JvmStatic
-	@Hook
-	fun func_150909_a(static: ItemLead?, player: EntityPlayer?, world: World?, x: Int, y: Int, z: Int): Boolean {
-		hookLeashing = true
-		return false
-	}
-	
-	@JvmStatic
-	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getEntitiesWithinAABB(world: World, clazz: Class<*>?, aabb: AxisAlignedBB?, @ReturnValue list: List<*>?): List<*>? {
-		if (hookLeashing) {
-			hookLeashing = false
-			(list as MutableList).removeAll { it is EntityLiving && it.uniqueID in ItemGleipnir.leashes }
-		}
-		
-		return list
-	}
-	
-	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun updatePotionEffects(e: EntityLivingBase) {
 		try {
@@ -577,6 +513,12 @@ object AlfheimHookHandler {
 			b = bt
 		}
 		Botania.proxy.wispFX(world, x, y, z, r, g, b, size, motionx, motiony, motionz, 1f)
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS, injectOnExit = true)
+	fun getKnowledgeType(entry: LexiconEntry, @ReturnValue type: KnowledgeType): KnowledgeType {
+		return if (type === BotaniaAPI.elvenKnowledge && AlfheimConfigHandler.enableElvenStory) BotaniaAPI.basicKnowledge else type
 	}
 	
 	@JvmStatic

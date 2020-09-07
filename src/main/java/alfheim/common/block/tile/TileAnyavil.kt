@@ -69,7 +69,7 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 		for (i in 0..23) Botania.proxy.wispFX(world, xCoord.D + 0.5 + (worldObj.rand.nextFloat() / 5f - 0.1f).D, yCoord + 1.5, zCoord.D + 0.5 + (worldObj.rand.nextFloat() / 5f - 0.1f).D, col[0], col[1], col[2], 0.25f, 0f, worldObj.rand.nextFloat() * 0.2f - 0.1f, 0f)
 	}
 	
-	fun onWanded(player: EntityPlayer?, wand: ItemStack): Boolean {
+	fun onWanded(player: EntityPlayer?): Boolean {
 		if (player == null) return false
 		
 		if (!worldObj.isRemote) {
@@ -79,7 +79,7 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 			if (player is EntityPlayerMP) player.playerNetServerHandler.sendPacket(S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound))
 		}
 		
-		worldObj.playSoundAtEntity(player, "botania:ding", 0.11f, 1f)
+		player.playSoundAtEntity("botania:ding", 0.11f, 1f)
 		
 		return true
 	}

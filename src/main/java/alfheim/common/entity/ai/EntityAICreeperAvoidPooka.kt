@@ -1,7 +1,6 @@
 package alfheim.common.entity.ai
 
 import alexsocol.asjlib.playSoundAtEntity
-import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.common.core.handler.*
 import net.minecraft.entity.Entity

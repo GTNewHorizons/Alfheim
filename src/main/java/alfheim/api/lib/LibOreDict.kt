@@ -39,7 +39,7 @@ object LibOreDict {
 	val DIRT = Array(COLORS.size) { i -> "$IRIS_DIRT${COLORS[i]}" }
 	val DYES = Array(COLORS.size - 1) { i -> "dye${COLORS[i]}" }
 	const val FLORAL_POWDER = "dyeFloralPowder"
-	const val PETAL = "petalMystic"
+	const val PETAL_ANY = "petalMystic"
 	const val MUSHROOM = "mushroomShimmer"
 	const val RAINBOW_PETAL = "petalRainbow"
 	const val RAINBOW_FLOWER = "mysticFlowerRainbow"

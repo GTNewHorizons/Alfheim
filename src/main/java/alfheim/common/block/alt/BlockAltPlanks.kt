@@ -99,7 +99,7 @@ class BlockAltPlanks: BlockMod(Material.wood), ILexiconable, IFuelHandler {
 		return when (world.getBlockMetadata(x, y, z)) {
 			BlockAltLeaves.yggMeta + 1 -> AlfheimLexiconData.worldgen
 			BlockAltLeaves.yggMeta     -> null
-			else                       -> ShadowFoxLexiconData.irisSapling
+			else                       -> AlfheimLexiconData.irisSapling
 		}
 	}
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 13 / 4 else 300 else 0

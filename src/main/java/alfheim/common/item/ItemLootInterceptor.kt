@@ -76,7 +76,6 @@ class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDi
 		fun setIntArray(stack: ItemStack, tag: String, array: IntArray) = getNBT(stack).setIntArray(tag, array)
 		fun getIDs(stack: ItemStack) = getIntArray(stack, TAG_IDS)
 		fun getMetas(stack: ItemStack) = getIntArray(stack, TAG_METAS)
-		fun getIntArray(stack: ItemStack, tag: String) = getNBT(stack).getIntArray(tag)
 		fun setMana(stack: ItemStack, mana: Int) = setInt(stack, TAG_MANA, mana)
 	}
 }

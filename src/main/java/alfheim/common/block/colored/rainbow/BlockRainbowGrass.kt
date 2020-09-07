@@ -8,7 +8,7 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.*
 import alfheim.common.item.block.ItemRainbowGrassMod
 import alfheim.common.item.material.ElvenResourcesMetas
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -181,8 +181,8 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable, IPickupAchievement {
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, stack: ItemStack?) =
 		when (world.getBlockMetadata(x, y, z)) {
-			GRASS, AURORA  -> ShadowFoxLexiconData.pastoralSeeds
-			FLOWER, BURIED -> ShadowFoxLexiconData.rainbowFlora
+			GRASS, AURORA  -> AlfheimLexiconData.pastoralSeeds
+			FLOWER, BURIED -> AlfheimLexiconData.rainbowFlora
 			GLIMMER        -> LexiconData.shinyFlowers
 			else           -> null
 		}

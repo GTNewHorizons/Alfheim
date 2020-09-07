@@ -1,7 +1,7 @@
 package alfheim.common.block.base
 
 import alfheim.common.block.tile.TileManaFlame
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.Optional
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -13,7 +13,7 @@ import vazkii.botania.api.lexicon.*
 import vazkii.botania.common.lexicon.LexiconData
 import java.util.*
 
-class BlockManaFlame(val name: String, val Tile: Class<out TileManaFlame>) : BlockMod(Material.cloth), ILexiconable {
+class BlockManaFlame(val name: String, val tile: Class<out TileManaFlame>) : BlockMod(Material.cloth), ILexiconable {
 
     init {
         setBlockName(name)
@@ -26,7 +26,7 @@ class BlockManaFlame(val name: String, val Tile: Class<out TileManaFlame>) : Blo
 
     @Optional.Method(modid = "easycoloredlights")
     override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int) =
-        Tile.cast(world.getTileEntity(x, y, z)).getLightColor()
+        tile.cast(world.getTileEntity(x, y, z)).getLightColor()
 
     override fun registerBlockIcons(reg: IIconRegister) = Unit
 
@@ -46,12 +46,12 @@ class BlockManaFlame(val name: String, val Tile: Class<out TileManaFlame>) : Blo
 
     override fun getDrops(world: World, x: Int, y: Int, z: Int, metadata: Int, fortune: Int) = ArrayList<ItemStack>()
 
-    override fun createTileEntity(world: World?, meta: Int) = Tile.newInstance()
+    override fun createTileEntity(world: World?, meta: Int) = tile.newInstance()
 
     override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?): LexiconEntry? {
         return when (name) {
             "invisibleFlame" -> LexiconData.lenses
-            "rainbowFlame" -> ShadowFoxLexiconData.prismaticRod
+            "rainbowFlame" -> AlfheimLexiconData.rodPrismatic
             else -> null
         }
     }

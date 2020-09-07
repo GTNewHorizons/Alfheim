@@ -78,7 +78,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 			val tile = world.getTileEntity(x, y, z)
 			if (tile is IManaPool) {
 				bindPool(stack, tile)
-				world.playSoundAtEntity(player, "botania:ding", 1f, 1f)
+				player.playSoundAtEntity("botania:ding", 1f, 1f)
 				return true
 			}
 		}

@@ -36,7 +36,7 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 			if (event.ammount > player.health)
 				event.ammount = player.health - 1
 			
-			player.worldObj.playSoundAtEntity(player, "botania:holyCloak", 1f, 1f)
+			player.playSoundAtEntity("botania:holyCloak", 1f, 1f)
 			
 			for (i in 0..29) {
 				val x = player.posX + Math.random() * player.width.D * 2.0 - player.width

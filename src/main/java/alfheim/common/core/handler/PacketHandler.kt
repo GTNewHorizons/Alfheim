@@ -1,6 +1,6 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.get
+import alexsocol.asjlib.*
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.network.Message0dS
 import alfheim.common.network.Message0dS.m0ds
@@ -25,7 +25,7 @@ object PacketHandler {
 	private fun DOGIE(sh: NetHandlerPlayServer) {
 		val player = sh.playerEntity
 		
-		player.worldObj.playSoundAtEntity(player, "botania:dash", 1f, 1f)
+		player.playSoundAtEntity("botania:dash", 1f, 1f)
 		
 		val baublesInv = PlayerHandler.getPlayerBaubles(player)
 		var ringStack: ItemStack? = baublesInv[1]

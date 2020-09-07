@@ -102,7 +102,7 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood), IFuelHan
 		return when {
 			set == 1 && meta % 8 == BlockAltLeaves.yggMeta - 4 + 1 -> AlfheimLexiconData.worldgen
 			set == 1 && meta % 8 == BlockAltLeaves.yggMeta - 4     -> null
-			else                                                   -> ShadowFoxLexiconData.irisSapling
+			else                                                   -> AlfheimLexiconData.irisSapling
 		}
 	}
 	

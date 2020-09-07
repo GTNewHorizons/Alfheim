@@ -1,6 +1,5 @@
 package alfmod.common.lexicon
 
-import alfheim.common.lexicon.AlfheimLexiconData
 import alfmod.AlfheimModularCore
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.item.material.EventResourcesMetas
@@ -33,11 +32,11 @@ object AlfheimModularLexiconData {
 		WOTW = AMLexiconEntry("WOTW", categoryModular)
 		
 		HV.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3"), PageText("4"))
-			.setKnowledgeType(AlfheimLexiconData.kt)
+			.setKnowledgeType(BotaniaAPI.elvenKnowledge)
 			.icon = ItemStack(AlfheimModularItems.eventResource, 1, EventResourcesMetas.VolcanoRelic)
 		
 		WOTW.setLexiconPages(PageText("0"), PageText("1"), PageText("2"))
-			.setKnowledgeType(AlfheimLexiconData.kt)
+			.setKnowledgeType(BotaniaAPI.elvenKnowledge)
 			.icon = ItemStack(AlfheimModularItems.eventResource, 1, EventResourcesMetas.SnowRelic)
 	}
 }

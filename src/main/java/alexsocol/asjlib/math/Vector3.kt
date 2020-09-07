@@ -26,8 +26,8 @@ class Vector3: Serializable {
 	operator fun component3() = z
 	
 	fun mf() = arrayOf(x.mfloor(), y.mfloor(), z.mfloor())
-	val I = arrayOf(x.I, y.I, z.I)
-	val F = arrayOf(x.F, y.F, z.F)
+	val I get() = arrayOf(x.I, y.I, z.I)
+	val F get() = arrayOf(x.F, y.F, z.F)
 	
 	val isZero: Boolean
 		get() = x == 0.0 && y == 0.0 && z == 0.0

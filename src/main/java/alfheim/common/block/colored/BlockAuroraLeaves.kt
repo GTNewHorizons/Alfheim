@@ -4,7 +4,7 @@ import alexsocol.asjlib.toItem
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.item.block.ItemBlockAurora
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
@@ -34,5 +34,5 @@ class BlockAuroraLeaves : BlockLeavesMod(), ILexiconable {
 	
 	override fun getItemDropped(p_149650_1_: Int, p_149650_2_: Random?, p_149650_3_: Int) =	AlfheimBlocks.irisSapling.toItem()
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.aurora
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.aurora
 }

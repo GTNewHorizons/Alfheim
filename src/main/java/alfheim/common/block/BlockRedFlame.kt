@@ -21,6 +21,7 @@ import net.minecraft.potion.PotionEffect
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
+import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.ManaItemHandler
 import java.util.*
@@ -85,9 +86,8 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random) {
 		if (world.gameRules.getGameRuleBooleanValue("doFireTick")) {
-			if (!canPlaceBlockAt(world, x, y, z) || world.rand.nextInt(100) == 0)
+			if (!canPlaceBlockAt(world, x, y, z) || (world.rand.nextInt(100) == 0 && !world.getBlock(x, y - 1, z).isFireSource(world, x, y - 1, z, ForgeDirection.UP)))
 				world.setBlockToAir(x, y, z)
-			
 		}
 	}
 	

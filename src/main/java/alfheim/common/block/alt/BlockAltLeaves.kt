@@ -116,7 +116,7 @@ class BlockAltLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 		return when {
 			meta % 8 == yggMeta + 1 -> AlfheimLexiconData.worldgen
 			meta % 8 == yggMeta     -> null
-			else                    -> ShadowFoxLexiconData.irisSapling
+			else                    -> AlfheimLexiconData.irisSapling
 		}
 	}
 	

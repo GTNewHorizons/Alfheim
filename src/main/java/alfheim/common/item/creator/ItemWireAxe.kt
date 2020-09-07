@@ -33,7 +33,7 @@ import kotlin.math.min
 /**
  * seeeeeecrets
  */
-class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMaterial = ShadowFoxAPI.RUNEAXE, val slayerDamage: Double = 6.0): ItemSword(toolMaterial), IManaUsingItem {
+class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMaterial = AlfheimAPI.RUNEAXE, val slayerDamage: Double = 6.0): ItemSword(toolMaterial), IManaUsingItem {
 	
 	companion object {
 		class DamageSourceGodslayer(player: EntityLivingBase, creative: Boolean): EntityDamageSource("player", player) {
@@ -119,7 +119,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		}
 		
 		if (count > 0) {
-			world.playSoundAtEntity(player, "botania:enchanterEnchant", 1f, 1f)
+			player.playSoundAtEntity("botania:enchanterEnchant", 1f, 1f)
 			if (!world.isRemote) player.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
 			stack.damageStack(5, player)
 			if (!world.isRemote) VisualEffectHandler.sendPacket(VisualEffects.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.D, 0.0, 0.0)

@@ -1,6 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.api.item.equipment.bauble.IManaDiscountBauble
@@ -75,19 +76,15 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem,
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		if (type == IBaubleRender.RenderType.BODY) {
 			val player = event.entityPlayer
-			if (player.ticksExisted % 10 == 0) {
-				val shift = IFaithHandler.getHeadOrientation(player)
-				val x = player.posX + shift.x * 0.25
-				val y = player.posY + shift.y * 0.25 + if (mc.thePlayer === player) 0f else 1.62f
-				val z = player.posZ + shift.z * 0.25
-				val xmotion = shift.x.F * 0.025f
-				val ymotion = shift.y.F * 0.025f
-				val zmotion = shift.z.F * 0.025f
+			if (player.ticksExisted % 10 == 0 && !(player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0)) {
+				val shift = IFaithHandler.getHeadOrientation(player).mul(0.25)
+				val (x, y, z) = Vector3.fromEntity(player).add(shift)
+				val (mx, my, mz) = shift.mul(0.1).F
 				val color = Color(ColorOverrideHelper.getColor(player, 0xFFFFFF))
 				val r = color.red.F / 255f
 				val g = color.green.F / 255f
 				val b = color.blue.F / 255f
-				Botania.proxy.wispFX(player.worldObj, x, y, z, r, g, b, Math.random().F * 0.15f + 0.15f, xmotion, ymotion, zmotion)
+				Botania.proxy.wispFX(player.worldObj, x, y + 1.62, z, r, g, b, Math.random().F * 0.15f + 0.15f, mx, my, mz)
 			}
 			
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)

@@ -120,7 +120,7 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 			val entities = world.getEntitiesWithinAABBExcludingEntity(exclude, AxisAlignedBB.getBoundingBox(x - range, y - range, z - range, x + range, y + range, z + range), PLAYER_SELECTOR) as List<Entity>
 			
 			if (pushEntities(x, y, z, range, velocity, player, entities)) {
-				if (count % 3 == 0) world.playSoundAtEntity(player, "${ModInfo.MODID}:wind", 0.4F, 1F)
+				if (count % 3 == 0) player.playSoundAtEntity("${ModInfo.MODID}:wind", 0.4F, 1F)
 				ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
 			}
 		}

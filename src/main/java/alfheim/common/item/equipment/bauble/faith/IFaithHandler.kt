@@ -1,12 +1,12 @@
 package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MathHelper
-import vazkii.botania.common.core.helper.Vector3
 
 interface IFaithHandler {
 	
@@ -26,7 +26,7 @@ interface IFaithHandler {
 			val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.F)
 			val f3 = -MathHelper.cos(-(entity.rotationPitch - 90) * 0.017453292F)
 			val f4 = MathHelper.sin(-(entity.rotationPitch - 90) * 0.017453292F)
-			return Vector3((f2 * f3).D, f4.D, (f1 * f3).D)
+			return Vector3((f2 * f3), f4, (f1 * f3))
 		}
 		
 		fun getFaithHandler(stack: ItemStack) = getFaithHandler(stack.meta)

@@ -127,7 +127,7 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 	}
 	
 	override fun onUsedByWand(player: EntityPlayer?, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
-		return (world.getTileEntity(x, y, z) as? TileAnyavil)?.onWanded(player, stack) == true
+		return (world.getTileEntity(x, y, z) as? TileAnyavil)?.onWanded(player) == true
 	}
 	
 	@SideOnly(Side.CLIENT)

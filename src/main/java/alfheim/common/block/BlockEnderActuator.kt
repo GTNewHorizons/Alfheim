@@ -54,5 +54,5 @@ class BlockEnderActuator: BlockContainerMod(Material.iron), ILexiconable {
 	
 	override fun createNewTileEntity(world: World?, meta: Int) = TileEnderActuator()
 	
-	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.endAct
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.enderAct
 }

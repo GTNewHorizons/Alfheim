@@ -84,7 +84,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect, IImmortalHandledItem
 			if (pos.isValid) {
 				if (!world.isRemote && player is EntityPlayerMP && ManaItemHandler.requestManaExact(stack, player, pos.mana(player), true)) {
 					if (InteractionSecurity.canDoSomethingHere(player, pos.x, pos.y, pos.z, MinecraftServer.getServer().worldServerForDimension(pos.dim))) {
-						world.playSoundAtEntity(player, "mob.endermen.portal", 1f, 1f)
+						player.playSoundAtEntity("mob.endermen.portal", 1f, 1f)
 						ASJUtilities.sendToDimensionWithoutPortal(player, pos.dim, pos.x, pos.y, pos.z)
 					}
 				}

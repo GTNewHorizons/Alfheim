@@ -11,8 +11,8 @@ import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.*
-import net.minecraft.entity.monster.EntityMob
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.AxisAlignedBB
@@ -86,13 +86,13 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 		onEntityWalking(w, x, y, z, e)
 	}
 	
-	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
-		if (world.gameRules.getGameRuleBooleanValue("doFireTick")
-			&& rand!!.nextInt(10) == 0
-			&& world.getEntitiesWithinAABB(EntityMob::class.java, AxisAlignedBB.getBoundingBox(x.D, y.D, z.D, (x + 1).D, (y + 1).D, (z + 1).D).expand(5.0, 5.0, 5.0)).isEmpty()) {
-			world.setBlockToAir(x, y, z)
+	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random) {
+		if (world.gameRules.getGameRuleBooleanValue("doFireTick")) {
+			if (world.getBlock(x, y - 1, z) != Blocks.packed_ice && world.rand.nextInt(100) == 0)
+				world.setBlockToAir(x, y, z)
 		}
 	}
+	
 	
 	override fun tickRate(world: World?) = 1
 	

@@ -6,7 +6,7 @@ import alfheim.client.render.tile.MultipassRenderer
 import alfheim.common.block.base.*
 import alfheim.common.block.tile.TileTreeCrafter
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
@@ -45,7 +45,7 @@ class BlockTreeCrafter(name: String, val block: Block): BlockContainerMod(Materi
 	override fun damageDropped(meta: Int) = meta
 	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z)
 	override fun renderHUD(mc: Minecraft, res: ScaledResolution, world: World, x: Int, y: Int, z: Int) = (world.getTileEntity(x, y, z) as TileTreeCrafter).renderHUD(mc, res)
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.treeCrafting
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.treeCrafting
 	override fun renderAsNormalBlock(): Boolean = false
 	override fun canRenderInPass(pass: Int) = true.also { MultipassRenderer.pass = pass }
 	override fun getRenderBlockPass(): Int = 1

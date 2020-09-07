@@ -1,6 +1,7 @@
 package alfheim.common.block.tile.sub.flower
 
 import alexsocol.asjlib.math.Vector3
+import alfheim.common.block.tile.sub.flower.AlfheimSignature.Companion.isOnSpecialSoil
 import alfheim.common.entity.FakeLightning
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.entity.Entity

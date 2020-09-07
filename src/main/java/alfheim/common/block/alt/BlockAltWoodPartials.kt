@@ -5,7 +5,7 @@ import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.*
 import alfheim.common.item.block.*
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
@@ -41,7 +41,7 @@ class BlockAltWoodSlab(full: Boolean, source: Block = AlfheimBlocks.altPlanks):
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 13 / 8 else if (field_150004_a) 300 else 150 else 0
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) null else ShadowFoxLexiconData.irisSapling
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) null else AlfheimLexiconData.irisSapling
 }
 
 open class BlockAltWoodStairs(meta: Int, source: Block = AlfheimBlocks.altPlanks):
@@ -55,7 +55,7 @@ open class BlockAltWoodStairs(meta: Int, source: Block = AlfheimBlocks.altPlanks
 		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) null else ShadowFoxLexiconData.irisSapling
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) null else AlfheimLexiconData.irisSapling
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 300 else 0
 }

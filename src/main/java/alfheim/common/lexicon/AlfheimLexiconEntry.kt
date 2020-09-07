@@ -6,7 +6,7 @@ import net.minecraft.item.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.*
 
-open class ShadowfoxLexiconEntry: LexiconEntry, IAddonEntry {
+open class AlfheimLexiconEntry: LexiconEntry, IAddonEntry {
 	
 	constructor(unlocalizedName: String, category: LexiconCategory, stack: ItemStack?): super(unlocalizedName, category) {
 		if (stack != null) icon = stack
@@ -34,7 +34,7 @@ open class ShadowfoxLexiconEntry: LexiconEntry, IAddonEntry {
 	
 	override fun getTagline() = "${ModInfo.MODID}.tagline.${super.getUnlocalizedName()}"
 	
-	override fun getSubtitle() = "[Iridescence]"
+	fun getLazyUnlocalizedName() = super.getUnlocalizedName()
 	
-	fun getLazyUnlocalizedName() = super.getUnlocalizedName()!!
+	override fun getSubtitle() = "[Alfheim]"
 }

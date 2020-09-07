@@ -43,7 +43,7 @@ open class RecipeHandlerTreeCrafting: TemplateRecipeHandler() {
 	override fun recipiesPerPage() = 1
 	
 	open val recipes: List<RecipeTreeCrafting>
-		get() = ShadowFoxAPI.treeRecipes
+		get() = AlfheimAPI.treeRecipes
 	
 	open fun getCachedRecipe(recipe: RecipeTreeCrafting) = CachedTreeRecipe(recipe)
 	

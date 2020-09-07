@@ -92,7 +92,7 @@ class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecifi
 			
 			if (block.material !== Material.air) {
 				val soundtype = block.stepSound
-				worldObj.playSoundAtEntity(this, soundtype.stepResourcePath, soundtype.getVolume() * 0.5f, soundtype.pitch * 0.75f)
+				playSoundAtEntity(soundtype.stepResourcePath, soundtype.getVolume() * 0.5f, soundtype.pitch * 0.75f)
 			}
 		}
 	}

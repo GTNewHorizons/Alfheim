@@ -39,9 +39,9 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		lateinit var baubleIcons: Array<IIcon>
 		
 		fun getEmblem(meta: Int, player: EntityPlayer?): ItemStack? {
-			val baubles = PlayerHandler.getPlayerBaubles(player)
-			val stack = baubles[0]
-			return if (stack != null && ((stack.item === AlfheimItems.priestEmblem && stack.meta == meta) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
+			val baubles = PlayerHandler.getPlayerBaubles(player ?: return null)
+			val stack = baubles[0] ?: return null
+			return if (((stack.item === AlfheimItems.priestEmblem && (meta == -1 || stack.meta == meta)) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
 		}
 		
 		fun isActive(stack: ItemStack) = ItemNBTHelper.getBoolean(stack, "active", false)

@@ -73,7 +73,7 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 				if (stack.meta >= 17) stack.meta = 0 else stack.meta++
 				damage = stack.meta
 			} else if (damage >= 17) damage = 0 else damage++
-			world.playSoundAtEntity(player, "botania:ding", 0.1F, 1F)
+			player.playSoundAtEntity("botania:ding", 0.1F, 1F)
 			blockstack = dirtStack(damage)
 			blockstack!!.setStackDisplayName(StatCollector.translateToLocal("misc.${ModInfo.MODID}.color.$damage"))
 			ItemsRemainingRenderHandler.set(blockstack, -2)

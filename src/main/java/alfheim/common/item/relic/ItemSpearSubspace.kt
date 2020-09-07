@@ -1,6 +1,6 @@
 package alfheim.common.item.relic
 
-import alexsocol.asjlib.D
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
@@ -116,7 +116,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					
 					player.worldObj.spawnEntityInWorld(sub)
 					
-					if (i == 1) player.worldObj.playSoundAtEntity(sub, "${ModInfo.MODID}:spearsubspace", 1f, 1f + player.worldObj.rand.nextFloat() * 3f)
+					if (i == 1) sub.playSoundAtEntity("${ModInfo.MODID}:spearsubspace", 1f, 1f + player.worldObj.rand.nextFloat() * 3f)
 				}
 			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 120, 0))
 			

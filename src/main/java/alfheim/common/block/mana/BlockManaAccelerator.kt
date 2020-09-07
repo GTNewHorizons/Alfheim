@@ -94,5 +94,5 @@ class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
 	}
 	
 	override fun createNewTileEntity(world: World, meta: Int) = TileManaAccelerator()
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.manaAcc
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.manaAccelerator
 }

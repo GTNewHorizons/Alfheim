@@ -5,7 +5,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -51,7 +51,7 @@ class BlockShimmerQuartz: BlockSpecialQuartz("Shimmer") {
 	@SideOnly(Side.CLIENT)
 	override fun registerBlockIcons(par1IconRegister: IIconRegister) = Unit
 	
-	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.shimmer
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.shimmer
 }
 
 class BlockShimmerQuartzSlab(val block: BlockShimmerQuartz, val full: Boolean): BlockSpecialQuartzSlab(block, full) {

@@ -7,7 +7,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.crafting.recipe.*
+import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.integration.etfuturum.EtFuturumAlfheimConfig
 import alfheim.common.integration.multipart.MultipartAlfheimConfig
 import alfheim.common.integration.thaumcraft.TCHandlerShadowFoxAspects
@@ -28,16 +28,14 @@ import vazkii.botania.common.item.ModItems
 open class CommonProxy {
 	
 	open fun preInit() {
-		ShadowFoxAPI.RUNEAXE.setRepairItem(ItemStack(ModItems.manaResource, 1, 7)) // Elementium
+		AlfheimAPI.RUNEAXE.setRepairItem(ItemStack(ModItems.manaResource, 1, 7)) // Elementium
 		
 		AlfheimLexiconData.preInit()
 		AlfheimBlocks
 		AlfheimItems
 		AlfheimRegistry.preInit()
 		AlfheimAchievements
-		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInitRelics()
-		ShadowFoxLexiconData
-		ShadowFoxThrowables
+		AlfheimLexiconData
 		BifrostFlowerDispenserHandler
 		ThrownPotionDispenserHandler
 		ThrownItemDispenserHandler
@@ -54,7 +52,6 @@ open class CommonProxy {
 	
 	fun init() {
 		AlfheimRecipes
-		ShadowFoxRecipes
 		AlfheimRegistry.init()
 		ASJUtilities.registerDimension(AlfheimConfigHandler.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
 		AlfheimBlocks.registerBurnables()
@@ -67,7 +64,6 @@ open class CommonProxy {
 		AlfheimBlocks.regOreDict()
 		AlfheimItems.regOreDict()
 		AlfheimRecipes.postInit()
-		ShadowFoxRecipes.postInit()
 		AlfheimLexiconData.init()
 		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.initRelics()
 		//AlfheimLexiconData.postInit()

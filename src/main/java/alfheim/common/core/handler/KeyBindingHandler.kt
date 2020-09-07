@@ -38,9 +38,10 @@ object KeyBindingHandler {
 		val seg = CardinalSystem.forPlayer(player)
 		seg.toggleESMAbility()
 		
-		if (!seg.esmAbility) {
+		if (!seg.esmAbility && !player.capabilities.isCreativeMode) {
 			player.capabilities.isFlying = false
 			player.capabilities.allowFlying = false
+			player.sendPlayerAbilities()
 		}
 	}
 	

@@ -10,6 +10,7 @@ import alfheim.common.item.creator.*
 import alfheim.common.item.equipment.armor.elemental.*
 import alfheim.common.item.equipment.armor.elvoruim.*
 import alfheim.common.item.equipment.bauble.*
+import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import alfheim.common.item.equipment.tool.*
 import alfheim.common.item.equipment.tool.elementuim.ItemElementiumHoe
 import alfheim.common.item.equipment.tool.manasteel.ItemManasteelHoe
@@ -96,18 +97,19 @@ object AlfheimItems {
 	val priestRingHeimdall: Item
 	val priestRingNjord: Item
 	val priestRingSif: Item
+	val ragnarokEmblem: Item
 	val rationBelt: Item
 	val realitySword: Item
 	val ringFeedFlower: Item
 	val ringSpider: Item
 	val rodColorfulSkyDirt: Item
 	val rodClicker: Item
-	val rodFire: Item
 	val rodFlameStar: Item
 	val rodGrass: Item
-	val rodIce: Item
 	val rodInterdiction: Item
 	val rodLightning: Item
+	val rodMuspelheim: Item
+	val rodNiflheim: Item
 	val rodPortal: Item
 	val rodPrismatic: Item
 	val soulHorn: Item
@@ -194,15 +196,16 @@ object AlfheimItems {
 		priestRingHeimdall = ItemHeimdallRing()
 		priestRingNjord = ItemNjordRing()
 		priestRingSif = ItemSifRing()
+		ragnarokEmblem = ItemRagnarokEmblem()
 		rationBelt = ItemRationBelt()
 		realitySword = ItemRealitySword()
 		ringFeedFlower = ItemFeedFlowerRing()
 		ringSpider = ItemSpiderRing()
 		rodColorfulSkyDirt = ItemRodIridescent()
 		rodClicker = ItemRodClicker()
-		rodFire = ItemRodElemental("MuspelheimRod") { AlfheimBlocks.redFlame }
+		rodMuspelheim = ItemRodElemental("MuspelheimRod") { AlfheimBlocks.redFlame }
 		rodFlameStar = ItemRodFlameStar()
-		rodIce = ItemRodElemental("NiflheimRod") { AlfheimBlocks.poisonIce }
+		rodNiflheim = ItemRodElemental("NiflheimRod") { AlfheimBlocks.poisonIce }
 		rodInterdiction = ItemRodInterdiction()
 		rodLightning = ItemRodLightning()
 		rodPortal = ItemRodPortal()
@@ -268,13 +271,13 @@ object AlfheimItems {
 		OreDictionary.registerOre(LibOreDict.FLORAL_POWDER, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowDust))
 		OreDictionary.registerOre(LibOreDict.RAINBOW_PETAL, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowPetal))
 		OreDictionary.registerOre(LibOreDict.RAINBOW_QUARTZ, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowQuartz))
-		OreDictionary.registerOre(LibOreDict.PETAL, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowPetal))
+		OreDictionary.registerOre(LibOreDict.PETAL_ANY, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowPetal))
 		
 		OreDictionary.registerOre(LibOreDict.HOLY_PENDANT, ItemStack(attributionBauble, 1, OreDictionary.WILDCARD_VALUE))
 		
 		OreDictionary.registerOre(LibOreDict.DYES[16], ItemStack(ModBlocks.bifrostPerm))
 		OreDictionary.registerOre(LibOreDict.FLORAL_POWDER, ItemStack(ModItems.dye, 1, OreDictionary.WILDCARD_VALUE))
-		OreDictionary.registerOre(LibOreDict.PETAL, ItemStack(ModItems.petal, 1, OreDictionary.WILDCARD_VALUE))
+		OreDictionary.registerOre(LibOreDict.PETAL_ANY, ItemStack(ModItems.petal, 1, OreDictionary.WILDCARD_VALUE))
 		
 		
 		

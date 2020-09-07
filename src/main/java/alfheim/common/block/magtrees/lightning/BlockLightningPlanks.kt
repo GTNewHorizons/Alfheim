@@ -3,7 +3,7 @@ package alfheim.common.block.magtrees.lightning
 import alexsocol.asjlib.toItem
 import alfheim.common.block.base.BlockMod
 import alfheim.common.item.block.ItemBlockLeavesMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -54,5 +54,5 @@ class BlockLightningPlanks: BlockMod(Material.wood), ILexiconable {
 		return ItemStack(this, 1, meta)
 	}
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.lightningSapling
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.lightningSapling
 }

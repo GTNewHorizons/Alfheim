@@ -112,7 +112,8 @@ object 	FaithHandlerThor: IFaithHandler {
 	override fun doParticles(stack: ItemStack, player: EntityPlayer) {
 		if (player.ticksExisted % 10 == 0) {
 			val playerHead = Bector3.fromEntityCenter(player).add(0.0, 0.75, 0.0)
-			val playerShift = playerHead.copy().add(IFaithHandler.getHeadOrientation(player))
+			val (sx, sy, sz) = IFaithHandler.getHeadOrientation(player)
+			val playerShift = playerHead.copy().add(sx, sy, sz)
 			val color = ColorOverrideHelper.getColor(player, 0x0079C4)
 			
 			Botania.proxy.lightningFX(mc.theWorld, playerHead, playerShift, 2f, color, Color(color).brighter().brighter().rgb)

@@ -3,8 +3,9 @@ package alexsocol.asjlib
 import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.block.Block
+import net.minecraft.client.entity.EntityClientPlayerMP
 import net.minecraft.entity.*
-import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.entity.player.*
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
@@ -14,6 +15,7 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.oredict.OreDictionary
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import kotlin.math.*
 
 fun Int.bidiRange(range: Int) = (this - range)..(this + range)
@@ -110,7 +112,7 @@ fun AxisAlignedBB.expand(d: Number) = this.expand(d.D, d.D, d.D)!!
 fun AxisAlignedBB.offset(d: Number) = this.offset(d.D, d.D, d.D)!!
 
 fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
-	worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
+	worldObj.playSoundAtEntity(this, sound, volume, duration)
 }
 
 fun Entity.setPosition(e: Entity, oX: Double = 0.0, oY: Double = 0.0, oZ: Double = 0.0) = setPosition(e.posX + oX, e.posY + oY, e.posZ + oZ)
@@ -134,6 +136,8 @@ operator fun Vec3.component3() = zCoord
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
 
 fun EntityPlayerMP.hasAchievement(a: Achievement?) = if (a == null) false else func_147099_x().hasAchievementUnlocked(a)
+
+fun EntityPlayer.hasAchievement(a: Achievement?) = if (this is EntityPlayerMP) hasAchievement(a) else if (this is EntityClientPlayerMP) hasAchievement(a) else false
 
 fun ItemStack.itemEquals(ingredient: Any): Boolean {
 	return when (ingredient) {
@@ -161,6 +165,22 @@ fun ItemStack.areItemStackTagsEqual(stack: ItemStack): Boolean {
 		stack.stackTagCompound.hasNoTags() -> stackTagCompound == null || stackTagCompound.hasNoTags()
 		else                               -> stackTagCompound == stack.stackTagCompound
 	}
+}
+
+fun getIntArray(stack: ItemStack?, tag: String?, defaultExpected: IntArray = IntArray(0)): IntArray {
+	return if (ItemNBTHelper.verifyExistance(stack, tag)) ItemNBTHelper.getNBT(stack).getIntArray(tag) else defaultExpected
+}
+
+fun setIntArray(stack: ItemStack?, tag: String?, array: IntArray) {
+	if (ItemNBTHelper.verifyExistance(stack, tag)) ItemNBTHelper.getNBT(stack).setIntArray(tag, array)
+}
+
+fun getByteArray(stack: ItemStack?, tag: String?, defaultExpected: ByteArray = ByteArray(0)): ByteArray {
+	return if (ItemNBTHelper.verifyExistance(stack, tag)) ItemNBTHelper.getNBT(stack).getByteArray(tag) else defaultExpected
+}
+
+fun setByteArray(stack: ItemStack?, tag: String?, array: ByteArray) {
+	if (ItemNBTHelper.verifyExistance(stack, tag)) ItemNBTHelper.getNBT(stack).setByteArray(tag, array)
 }
 
 var ItemStack.meta

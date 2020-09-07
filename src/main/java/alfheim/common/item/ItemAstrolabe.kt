@@ -50,14 +50,14 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ)
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (player.isSneaking) {
 			val size = getSize(stack)
 			val newSize = if (size == 11) 3 else size + 2
 			setSize(stack, newSize)
 			ItemsRemainingRenderHandler[stack] = "${newSize}x$newSize"
 			
-			world!!.playSoundAtEntity(player, "random.orb", 0.1f, 0.5f * ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1.8f))
+			player.playSoundAtEntity("random.orb", 0.1f, 0.5f * ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1.8f))
 		}
 		
 		return stack

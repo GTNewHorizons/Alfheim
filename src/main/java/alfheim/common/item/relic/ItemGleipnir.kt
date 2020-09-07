@@ -4,32 +4,36 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alexsocol.asjlib.render.ASJRenderHelper.discard
+import alexsocol.asjlib.render.ASJRenderHelper.interpolate
 import alexsocol.asjlib.render.ASJRenderHelper.setBlend
 import alexsocol.asjlib.render.ASJRenderHelper.setGlow
 import alexsocol.asjlib.render.ASJRenderHelper.setTwoside
+import alfheim.api.ModInfo
 import alfheim.api.event.RenderEntityPostEvent
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.EntityGleipnir
+import alfheim.common.item.relic.LeashingHandler.isLeashed
+import alfheim.common.item.relic.LeashingHandler.leashedTo
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.culling.ICamera
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionEffect
 import net.minecraft.world.World
-import net.minecraftforge.event.entity.living.LivingAttackEvent
+import net.minecraftforge.client.event.RenderLivingEvent
+import net.minecraftforge.event.entity.living.*
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import vazkii.botania.common.item.relic.ItemRelic
 import java.awt.Color
-import java.io.*
 import java.util.*
-import kotlin.collections.HashSet
 import kotlin.math.*
 
 class ItemGleipnir: ItemRelic("Gleipnir") {
@@ -39,11 +43,11 @@ class ItemGleipnir: ItemRelic("Gleipnir") {
 	}
 	
 	override fun itemInteractionForEntity(stack: ItemStack, player: EntityPlayer, target: EntityLivingBase): Boolean {
-		if (player.isSneaking || target !is EntityLiving) return false
+		if (player.isSneaking) return false
 		
-		if (target.leashed) {
-			if (target.leashedToEntity === player)
-				target.clearLeashed(true, true)
+		if (target.isLeashed) {
+			if (target.leashedTo === player)
+				target.leashedTo = null
 		} else {
 			// elite memes start
 			// unbindable
@@ -54,8 +58,7 @@ class ItemGleipnir: ItemRelic("Gleipnir") {
 			if (ContributorsPrivacyHelper.isCorrect(target.commandSenderName, "GedeonGrays") && !ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "AlexSocol") && !ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "KAIIIAK")) return false
 			// elite memes end
 			
-			target.setLeashedToEntity(player, true)
-			leashes.add(target.uniqueID)
+			target.leashedTo = player
 			stack.cooldown = 50
 		}
 		
@@ -122,11 +125,11 @@ class ItemGleipnir: ItemRelic("Gleipnir") {
 		const val TAG_ENTANGLED = "entangled"
 		const val TAG_RAND_SEED = "randomSeed"
 		
-		val leashes = HashSet<UUID>()
 		val rand = Random()
 		
 		init {
 			eventForge()
+			LeashingHandler
 		}
 		
 		fun isEntangled(entity: Entity?): Boolean {
@@ -215,30 +218,140 @@ class ItemGleipnir: ItemRelic("Gleipnir") {
 			glPopMatrix()
 		}
 		
-		fun loadLeases(save: String) {
-			leashes.clear()
-			
-//			val file = File("$save/data/GleipnirLeashes.dat")
-//			if (!file.exists()) return
-//
-//			try {
-//				val fis = FileInputStream(file)
-//				val oin = ObjectInputStream(fis)
-//				leashes.addAll(oin.readObject() as HashSet<UUID>)
-//				oin.close()
-//			} catch (ignore: Throwable) {}
-		}
-		
-		fun saveLeases(save: String) {
-			val fos = FileOutputStream("$save/data/GleipnirLeashes.dat")
-			val oos = ObjectOutputStream(fos)
-			oos.writeObject(leashes)
-			oos.flush()
-			oos.close()
-		}
-		
 		private var ItemStack.cooldown
 			get() = getInt(this, TAG_COOLDOWN, 0)
 			set(value) = setInt(this, TAG_COOLDOWN, value)
+	}
+}
+
+object LeashingHandler {
+	
+	const val PREFIX = "${ModInfo.MODID}.gleipnir"
+	const val TAG_LEASHED = "$PREFIX.leashedTo"
+	
+	val EntityLivingBase.isLeashed: Boolean
+		get() = entityData.hasKey(TAG_LEASHED)
+	
+	var EntityLivingBase.leashedTo: EntityPlayer?
+		get() =
+			worldObj.getPlayerEntityByName(entityData.getString(TAG_LEASHED))
+		// TODO maybe send packets to client for every change...
+		set(player) {
+			if (player == null)
+				entityData.removeTag(TAG_LEASHED)
+			else
+				entityData.setString(TAG_LEASHED, player.commandSenderName)
+		}
+	
+	init {
+		eventForge()
+	}
+	
+	@SubscribeEvent
+	fun updateLeashedState(e: LivingEvent.LivingUpdateEvent) {
+		val entity = e.entityLiving
+		if (entity.worldObj.isRemote || !entity.isLeashed) return
+		
+		val player = entity.leashedTo
+		if (player == null || !player.isEntityAlive || player.worldObj != entity.worldObj || !entity.isEntityAlive) {
+			entity.leashedTo = null
+			return
+		}
+		
+		val f = entity.getDistanceToEntity(player)
+		
+		if (f < 6) return
+		
+		if (f < 10) {
+			val d0 = (player.posX - entity.posX) / f
+			val d1 = (player.posY - entity.posY) / f
+			val d2 = (player.posZ - entity.posZ) / f
+			entity.motionX += d0 * abs(d0) * 0.4
+			entity.motionY += d1 * abs(d1) * 0.4
+			entity.motionZ += d2 * abs(d2) * 0.4
+		} else {
+			entity.setPosition(player)
+		}
+	}
+	
+	@SubscribeEvent
+	fun renderLeash(e: RenderLivingEvent.Post) {
+		if (!e.entity.isLeashed || !e.entity.isEntityAlive) return
+		
+		val entity = e.entity
+		var x = e.x
+		var y = e.y
+		var z = e.z
+		
+		val player = entity.leashedTo
+		
+		if (player != null) {
+			y -= (1.6 - entity.height) * 0.5
+			val tes = Tessellator.instance
+			val d3 = interpolate(player.prevRotationYaw.D, player.rotationYaw.D, mc.timer.renderPartialTicks * 0.5) * 0.01745329238474369
+			val d4 = interpolate(player.prevRotationPitch.D, player.rotationPitch.D, mc.timer.renderPartialTicks * 0.5) * 0.01745329238474369
+			var d5 = cos(d3)
+			var d6 = sin(d3)
+			val d7 = sin(d4)
+			val d8 = cos(d4)
+			val d9 = interpolate(player.prevPosX, player.posX) - d5 * 0.7 - d6 * 0.5 * d8
+			val d10 = interpolate(player.prevPosY + player.eyeHeight.D * 0.7, player.posY + player.eyeHeight.D * 0.7) - d7 * 0.5 - 0.25
+			val d11 = interpolate(player.prevPosZ, player.posZ) - d6 * 0.7 + d5 * 0.5 * d8
+			val d12 = interpolate(entity.prevRenderYawOffset.D, entity.renderYawOffset.D) * 0.01745329238474369 + Math.PI / 2.0
+			d5 = cos(d12) * entity.width.D * 0.4
+			d6 = sin(d12) * entity.width.D * 0.4
+			val d13 = interpolate(entity.prevPosX, entity.posX) + d5
+			val d14 = interpolate(entity.prevPosY, entity.posY)
+			val d15 = interpolate(entity.prevPosZ, entity.posZ) + d6
+			x += d5
+			z += d6
+			val d16 = d9 - d13
+			val d17 = d10 - d14
+			val d18 = d11 - d15
+			glDisable(GL_TEXTURE_2D)
+			setGlow()
+			setTwoside()
+			tes.startDrawing(5)
+			for (i in 0..24) {
+				if (i % 2 == 0)
+					tes.setColorRGBA(255, 223, 0, 255)
+				else
+					tes.setColorRGBA(255, 212, 0, 255)
+				
+				val d19 = i / 24.0
+				tes.addVertex(x + d16 * d19 + 0.0, y + d17 * (d19 * d19 + d19) * 0.5 + ((24 - i) / 18.0 + 0.125), z + d18 * d19)
+				tes.addVertex(x + d16 * d19 + 0.025, y + d17 * (d19 * d19 + d19) * 0.5 + ((24 - i) / 18.0 + 0.125) + 0.025, z + d18 * d19)
+			}
+			
+			tes.draw()
+			tes.startDrawing(5)
+			for (i in 0..24) {
+				if (i % 2 == 0)
+					tes.setColorRGBA(255, 223, 0, 255)
+				else
+					tes.setColorRGBA(255, 212, 0, 255)
+				
+				val d19 = i / 24.0
+				tes.addVertex(x + d16 * d19 + 0.0, y + d17 * (d19 * d19 + d19).D * 0.5 + ((24 - i) / 18.0 + 0.125) + 0.025, z + d18 * d19)
+				tes.addVertex(x + d16 * d19 + 0.025, y + d17 * (d19 * d19 + d19).D * 0.5 + ((24 - i) / 18.0 + 0.125), z + d18 * d19 + 0.025)
+			}
+			
+			tes.draw()
+			discard()
+			glEnable(GL_TEXTURE_2D)
+		}
+	}
+	
+	fun interpolate(prev: Double, current: Double, ticks: Double) = prev + (current - prev) * ticks
+	
+	// used in transformers
+	fun isBoundInRender(flag: Boolean, entity: Entity, camera: ICamera): Boolean {
+		if (!flag && entity is EntityLivingBase) {
+			if (entity.isLeashed && entity.leashedTo != null) {
+				return camera.isBoundingBoxInFrustum(entity.leashedTo!!.boundingBox)
+			}
+		}
+		
+		return flag
 	}
 }

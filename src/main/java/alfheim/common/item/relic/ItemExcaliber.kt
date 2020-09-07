@@ -51,7 +51,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 				if (!world.isRemote && inHand && player.swingProgress == check && ManaItemHandler.requestManaExact(stack, player, 1, true)) {
 					val burst = getBurst(player, stack!!)
 					world.spawnEntityInWorld(burst)
-					world.playSoundAtEntity(player, "botania:terraBlade", 0.4f, 1.4f)
+					player.playSoundAtEntity("botania:terraBlade", 0.4f, 1.4f)
 				}
 			}
 		}

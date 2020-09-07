@@ -83,7 +83,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 						if (first) {
 							item.setEntityItemStack(ItemStack(result!!.item, max(result!!.stackSize, 1), result!!.meta))
 							item.entityItem.readFromNBT(result!!.writeToNBT(NBTTagCompound()))
-							item.worldObj.playSoundAtEntity(item, "botania:terrasteelCraft", 1f, 1f)
+							item.playSoundAtEntity("botania:terrasteelCraft", 1f, 1f)
 							first = false
 						} else
 							worldObj.removeEntity(item)
@@ -334,7 +334,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 				if (player is EntityPlayerMP)
 					player.playerNetServerHandler.sendPacket(S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbt))
 			}
-			worldObj.playSoundAtEntity(player, "botania:ding", 0.1f, 1f)
+			player.playSoundAtEntity("botania:ding", 0.1f, 1f)
 		}
 	}
 	

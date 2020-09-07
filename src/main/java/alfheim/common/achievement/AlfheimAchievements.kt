@@ -4,12 +4,14 @@ import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimAchievementHandler
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import net.minecraft.block.Block
 import net.minecraft.init.*
 import net.minecraft.item.*
 import net.minecraft.stats.Achievement
 import net.minecraftforge.common.AchievementPage
 import vazkii.botania.api.item.IRelic
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import java.util.*
 
@@ -42,11 +44,14 @@ object AlfheimAchievements {
 	val flugelHardKill: Achievement // 							F
 	val outstander: Achievement // 								O
 	
+	val ragnarok: Achievement
+	val theEND: Achievement
+	
 	val firework: Achievement //								Y
 	
 	// ---------------> X
 	// |    W     H N S
-	// |      I    D C
+	// |      I  r D C
 	// |          B K g
 	// |     A L M J G
 	// |        F U E
@@ -65,6 +70,9 @@ object AlfheimAchievements {
 		flugelHardKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
 		mask = AlfheimAchievement("mask", 4, 0, AlfheimItems.mask, flugelSoul)
 		outstander = AlfheimAchievement("outstander", 4, 3, Items.diamond_chestplate, mask).setSpecial()
+		
+		ragnarok = AlfheimAchievement("ragnarok", 32, 32, AlfheimItems.ragnarokEmblem, null).setSpecial()
+		theEND = AlfheimAchievement("theEND", 34, 32, ItemStack(AlfheimItems.ragnarokEmblem).apply { ItemNBTHelper.setBoolean(this, ItemRagnarokEmblem.TAG_GEM_FLAG, true) }, ragnarok).setSpecial()
 		
 		akashic = AlfheimAchievement("akashic", 7, -1, AlfheimItems.akashicRecords, mask)
 		excaliber = AlfheimAchievement("excaliber", 7, 1, AlfheimItems.excaliber, mask)

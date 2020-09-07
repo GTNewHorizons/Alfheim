@@ -63,7 +63,7 @@ class ItemWiltedLotus: ItemMod("wiltedLotus"), IManaDissolvable {
 			Botania.proxy.wispFX(item.worldObj, item.posX, tile.yCoord + 0.5, item.posZ, r, g, b, s, mx, my, mz)
 		}
 		
-		item.worldObj.playSoundAtEntity(item, "botania:blackLotus", 0.5f, if (t2) 0.1f else 1f)
+		item.playSoundAtEntity("botania:blackLotus", 0.5f, if (t2) 0.1f else 1f)
 	}
 	
 	companion object {

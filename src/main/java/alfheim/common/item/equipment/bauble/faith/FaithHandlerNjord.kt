@@ -149,7 +149,7 @@ object FaithHandlerNjord: IFaithHandler {
 	override fun doParticles(stack: ItemStack, player: EntityPlayer) {
 		if (player.ticksExisted % 10 == 0) {
 			for (i in 0..6) {
-				val vec = IFaithHandler.getHeadOrientation(player).multiply(0.52)
+				val vec = IFaithHandler.getHeadOrientation(player).mul(0.52)
 				val color = Color(ColorOverrideHelper.getColor(player, 0x0101FF))
 				val r = color.red.F / 255F
 				val g = color.green.F / 255F

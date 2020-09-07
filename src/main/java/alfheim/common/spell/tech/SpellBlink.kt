@@ -46,7 +46,7 @@ object SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 				val result = checkCast(caster)
 				if (result != SpellCastResult.OK) return result
 				
-				caster.worldObj.playSoundAtEntity(caster, "random.fizz", 0.5f, 1f)
+				caster.playSoundAtEntity("random.fizz", 0.5f, 1f)
 				caster.posX = x + 0.5
 				caster.posY = (y + caster.yOffset).D
 				caster.posZ = z + 0.5
@@ -62,7 +62,7 @@ object SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 				val result = checkCast(caster)
 				if (result != SpellCastResult.OK) return result
 				
-				caster.worldObj.playSoundAtEntity(caster, "random.fizz", 0.5f, 1f)
+				caster.playSoundAtEntity("random.fizz", 0.5f, 1f)
 				caster.posX = x + 0.5
 				caster.posY = y + caster.yOffset - 1.0
 				caster.posZ = z + 0.5

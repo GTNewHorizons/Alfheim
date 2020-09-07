@@ -201,7 +201,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		
 		super.onDeath(source)
 		
-		worldObj.playSoundAtEntity(this, "random.explode", 20f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
+		playSoundAtEntity("random.explode", 20f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 		worldObj.spawnParticle("hugeexplosion", posX, posY, posZ, 1.0, 0.0, 0.0)
 		
 		if (isHardMode) {
@@ -962,7 +962,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).D
 					e.noClip = true
 					
-					world.playSoundAtEntity(e, "mob.enderdragon.growl", 10f, 0.1f)
+					e.playSoundAtEntity("mob.enderdragon.growl", 10f, 0.1f)
 					world.spawnEntityInWorld(e)
 					return true
 				}

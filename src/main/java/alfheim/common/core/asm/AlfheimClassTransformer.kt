@@ -32,6 +32,15 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
+			"net.minecraft.client.renderer.RenderGlobal"                    -> {
+				println("Transforming $transformedName")
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `RenderGlobal$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
+				cw.toByteArray()
+			}
+			
 			"net.minecraft.entity.EntityTrackerEntry"                       -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
@@ -250,6 +259,37 @@ class AlfheimClassTransformer: IClassTransformer {
 					}
 				} else
 					super.visitIntInsn(opcode, operand)
+			}
+		}
+	}
+	
+	internal class `RenderGlobal$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "renderEntities" || name == "a" && desc == "(Lsv;Lbmv;F)V") {
+				println("Visiting RenderGlobal#renderEntities: $name$desc")
+				return `RenderGlobal$addEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `RenderGlobal$addEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			var inject = true
+			
+			override fun visitVarInsn(opcode: Int, `var`: Int) {
+				super.visitVarInsn(opcode, `var`)
+				
+				if (inject && opcode == ISTORE && `var` == 21) {
+					inject = false
+					
+					mv.visitFieldInsn(GETSTATIC, "alfheim/common/item/relic/LeashingHandler", "INSTANCE", "Lalfheim/common/item/relic/LeashingHandler;")
+					mv.visitVarInsn(ILOAD, 21)
+					mv.visitVarInsn(ALOAD, 20)
+					mv.visitVarInsn(ALOAD, 2)
+					mv.visitMethodInsn(INVOKEVIRTUAL, "alfheim/common/item/relic/LeashingHandler", "isBoundInRender", if (OBF) "(ZLsa;Lbmv;)Z" else "(ZLnet/minecraft/entity/Entity;Lnet/minecraft/client/renderer/culling/ICamera;)Z", false)
+					mv.visitVarInsn(ISTORE, 21)
+				}
 			}
 		}
 	}

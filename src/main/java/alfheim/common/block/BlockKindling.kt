@@ -3,7 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.colored.BlockColoredLamp
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -57,5 +57,5 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, side: ForgeDirection) = side == ForgeDirection.UP
 	
-	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.kindling
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.kindling
 }

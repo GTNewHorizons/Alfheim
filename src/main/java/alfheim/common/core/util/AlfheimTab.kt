@@ -213,10 +213,10 @@ import alfheim.common.item.AlfheimItems.ringFeedFlower
 import alfheim.common.item.AlfheimItems.ringSpider
 import alfheim.common.item.AlfheimItems.rodClicker
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
-import alfheim.common.item.AlfheimItems.rodFire
+import alfheim.common.item.AlfheimItems.rodMuspelheim
 import alfheim.common.item.AlfheimItems.rodFlameStar
 import alfheim.common.item.AlfheimItems.rodGrass
-import alfheim.common.item.AlfheimItems.rodIce
+import alfheim.common.item.AlfheimItems.rodNiflheim
 import alfheim.common.item.AlfheimItems.rodInterdiction
 import alfheim.common.item.AlfheimItems.rodLightning
 import alfheim.common.item.AlfheimItems.rodPortal
@@ -347,8 +347,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (soulHorn)
 		addItem (soulHorn, 1)
 		
-		addItem (rodFire)
-		addItem (rodIce)
+		addItem (rodMuspelheim)
+		addItem (rodNiflheim)
 		addItem (rodLightning)
 		addItem (rodColorfulSkyDirt)
 		addItem (rodInterdiction)

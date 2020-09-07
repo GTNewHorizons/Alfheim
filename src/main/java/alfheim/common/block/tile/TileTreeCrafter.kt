@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
-import alfheim.api.ShadowFoxAPI
+import alfheim.api.*
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.lexicon.MultiblockComponentRainbow
@@ -244,7 +244,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		return stack
 	}
 	
-	fun getRecipe() = getCore()?.let { core -> ShadowFoxAPI.treeRecipes.firstOrNull { it.matches(getRecipeInputs(), core) } }
+	fun getRecipe() = getCore()?.let { core -> AlfheimAPI.treeRecipes.firstOrNull { it.matches(getRecipeInputs(), core) } }
 	
 	fun forRecipe(action: (RecipeTreeCrafting) -> Unit) {
 		val recipe = getRecipe()

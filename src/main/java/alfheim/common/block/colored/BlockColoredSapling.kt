@@ -1,11 +1,11 @@
 package alfheim.common.block.colored
 
 import alexsocol.asjlib.*
-import alfheim.api.ShadowFoxAPI
+import alfheim.api.AlfheimAPI
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.world.gen.SimpleTreeGen
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -137,9 +137,9 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 	 */
 	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, isRemote: Boolean) = canGrowHere(world!!.getBlock(x, y - 1, z))
 	
-	open fun canGrowHere(block: Block) = ShadowFoxAPI.getIridescentSoils().contains(block)
+	open fun canGrowHere(block: Block) = AlfheimAPI.getIridescentSoils().contains(block)
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.irisSapling
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 100 else 0
 	

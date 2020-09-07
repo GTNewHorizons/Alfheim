@@ -3,7 +3,7 @@ package alfheim.common.core.handler
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileItemDisplay
-import alfheim.common.crafting.recipe.ShadowFoxRecipes
+import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -45,7 +45,7 @@ object HilarityHandler {
 		ItemStack(ModItems.dice),                                                           //   Dice of Fate              Chaos
 		ItemStack(ModItems.manaResource, 1, 5),                                             //   Gaia Spirit               Divinity
 		ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ThunderwoodSplinters), //   Thunderous Splinters      Lightning
-		ShadowFoxRecipes.skullStack("Tristaric"),                                           //   Tris's head               Humanity
+		AlfheimRecipes.skullStack("Tristaric"),                                           //   Tris's head               Humanity
 		ItemStack(ModItems.rainbowRod, 1, OreDictionary.WILDCARD_VALUE),                    //   The Rod of the Bifrost    Order
 		ItemStack(ModItems.manaResource, 1, 4)                                              //   Terrasteel                Earth
 	)
@@ -54,7 +54,7 @@ object HilarityHandler {
 		ItemStack(ModItems.dice),                                                           //   Dice of Fate              Chaos
 		ItemStack(ModItems.manaResource, 1, 5),                                             //   Gaia Spirit               Divinity
 		ItemStack(ModItems.rune, 1, 13),                                                    //   Rune of Wrath             Lightning
-		ShadowFoxRecipes.skullStack("yrsegal"),                                             //   Wire's head               Humanity
+		AlfheimRecipes.skullStack("yrsegal"),                                             //   Wire's head               Humanity
 		ItemStack(ModItems.laputaShard, 1, OreDictionary.WILDCARD_VALUE),                   //   The Shard of Laputa       Order
 		ItemStack(ModItems.dirtRod)                                                         //   The Rod of the Lands      Earth
 	)
@@ -80,7 +80,7 @@ object HilarityHandler {
 			if (player.commandSenderName == playerName && msg == AlfheimConfigHandler.chatLimiters.format(cheatyString)) {
 				if (replaceItemInHand(player, resourceItem, outputItem)) {
 					e.component.chatStyle.color = chatColor
-					player.worldObj.playSoundAtEntity(player, "ambient.weather.thunder", 100f, 0.8f + player.worldObj.rand.nextFloat() * 0.2f)
+					player.playSoundAtEntity("ambient.weather.thunder", 100f, 0.8f + player.worldObj.rand.nextFloat() * 0.2f)
 					return true
 				}
 			} else if (msg == AlfheimConfigHandler.chatLimiters.format(normalString)) {
@@ -106,9 +106,9 @@ object HilarityHandler {
 							if (itemPair.flag) {
 								val te = itemPair.pos.getTileAt(player.worldObj, player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor())
 								if (te is TileItemDisplay)
-									te.set(0, null)
+									te[0] = null
 							}
-						player.worldObj.playSoundAtEntity(player, "botania:enchanterEnchant", 1f, 1f)
+						player.playSoundAtEntity("botania:enchanterEnchant", 1f, 1f)
 						return true
 					}
 				}
@@ -146,7 +146,7 @@ object HilarityHandler {
 			for (pos in platformPositions) {
 				val tile = pos.getTileAt(world, x, y, z)
 				if (tile is TileItemDisplay) {
-					val stack = tile.get(0)
+					val stack = tile[0]
 					if (stack != null) items.add(PosPair(pos, stack))
 				}
 			}

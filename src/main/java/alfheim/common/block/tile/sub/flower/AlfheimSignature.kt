@@ -11,7 +11,7 @@ import vazkii.botania.api.subtile.*
 import vazkii.botania.api.subtile.signature.*
 import vazkii.botania.common.block.tile.TileSpecialFlower
 
-class ShadowFoxSignature(val name: String): SubTileSignature() {
+class AlfheimSignature(val name: String): SubTileSignature() {
 	
 	var icon: IIcon? = null
 	
@@ -35,7 +35,9 @@ class ShadowFoxSignature(val name: String): SubTileSignature() {
 		if (SubTileGenerating::class.java.isAssignableFrom(clazz)) return "botania.flowerType.generating"
 		return if (SubTileFunctional::class.java.isAssignableFrom(clazz)) "botania.flowerType.functional" else "botania.flowerType.misc"
 	}
+	
+	companion object {
+		val SubTileEntity.isOnSpecialSoil
+			get() = (supertile as? TileSpecialFlower)?.isOnSpecialSoil == true
+	}
 }
-
-val SubTileEntity.isOnSpecialSoil
-get() = (supertile as? TileSpecialFlower)?.isOnSpecialSoil == true
