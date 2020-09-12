@@ -17,9 +17,10 @@ class TileAnomaly: TileMod() {
 	var compatibilityBit = 0 // not serializing because will be recalculated on load
 	
 	override fun updateEntity() {
-		if (mainSubTile == null || mainSubTile!!.isEmpty() || subTiles[mainSubTile!!] == null) return
+		val main = mainSubTile
+		if (main == null || main.isEmpty() || subTiles[main] == null) return
 		
-		val l = subTiles[mainSubTile!!]!!.targets as MutableList<Any?>
+		val l = subTiles[main]!!.targets as MutableList<Any?>
 		
 		l.removeIf { it is EntityPlayer && ItemSpatiotemporalRing.hasProtection(it) }
 		for (subTile in subTiles.values) subTile.updateEntity(l)

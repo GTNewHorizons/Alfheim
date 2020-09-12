@@ -106,7 +106,7 @@ class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexicon
 			playerPositions.remove(player.uniqueID)
 			if (dwp == here) {
 				val te = world.getTileEntity(x, y, z) as? TileCracklingStar ?: return true
-				te.pos = null
+				te.pos.set(0, -1, 0)
 			} else if (dwp.dim == here.dim) {
 				val otherTe = world.getTileEntity(dwp.x, dwp.y, dwp.z) as? TileCracklingStar ?: return true
 				otherTe.pos = Vector3(x.D, y.D, z.D)

@@ -88,7 +88,8 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random) {
 		if (world.gameRules.getGameRuleBooleanValue("doFireTick")) {
-			if (world.getBlock(x, y - 1, z) != Blocks.packed_ice && world.rand.nextInt(100) == 0)
+			val below = world.getBlock(x, y - 1, z)
+			if ((below != Blocks.packed_ice || below != this) && world.rand.nextInt(100) == 0)
 				world.setBlockToAir(x, y, z)
 		}
 	}

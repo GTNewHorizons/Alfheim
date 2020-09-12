@@ -9,6 +9,7 @@ import alfheim.common.item.block.*
 import alfheim.common.item.creator.*
 import alfheim.common.item.equipment.armor.elemental.*
 import alfheim.common.item.equipment.armor.elvoruim.*
+import alfheim.common.item.equipment.armor.fenrir.*
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import alfheim.common.item.equipment.tool.*
@@ -63,12 +64,20 @@ object AlfheimItems {
 	val elvoriumLeggings: Item
 	val enlighter: Item
 	val excaliber: Item
+	val fenrirBoots: Item
+	val fenrirChestplate: Item
+	val fenrirClaws: Item
+	val fenrirHelmet: Item
+	val fenrirHelmetRevealing: Item?
+	val fenrirLeggings: Item
 	val fireGrenade: Item
 	val flugelDisc: Item
 	val flugelDisc2: Item
 	val flugelHead: Item
 	val flugelHead2: Item
 	val flugelSoul: Item
+	val gaiaSlayer: Item
+	val gjallarhorn: Item
 	val gleipnir: Item
 	val gungnir: Item
 	val hyperBucket: Item
@@ -163,11 +172,19 @@ object AlfheimItems {
 		elvoriumBoots = ItemElvoriumArmor(3, "ElvoriumBoots")
 		enlighter = ItemEnlighter()
 		excaliber = ItemExcaliber()
+		fenrirHelmet = ItemFenrirArmor(0, "FenrirHelmet")
+		fenrirHelmetRevealing = if (Botania.thaumcraftLoaded) ItemFenrirHelmetRevealing() else null
+		fenrirChestplate = ItemFenrirArmor(1, "FenrirChestplate")
+		fenrirLeggings = ItemFenrirArmor(2, "FenrirLeggings")
+		fenrirBoots = ItemFenrirArmor(3, "FenrirBoots")
+		fenrirClaws = ItemFenrirClaws()
 		flugelDisc = ItemModRecord("flugel", "FlugelDisc").setCreativeTab(AlfheimTab)
 		flugelDisc2 = ItemModRecord("miku", "MikuDisc").setCreativeTab(null)
 		flugelHead = ItemHeadFlugel()
 		flugelHead2 = ItemHeadMiku()
 		flugelSoul = ItemFlugelSoul()
+		gaiaSlayer = ItemGaiaSlayer()
+		gjallarhorn = ItemGjallarhorn().WIP()
 		gleipnir = ItemGleipnir()
 		gungnir = ItemGungnir()
 		hyperBucket = ItemHyperBucket()
@@ -196,7 +213,7 @@ object AlfheimItems {
 		priestRingHeimdall = ItemHeimdallRing()
 		priestRingNjord = ItemNjordRing()
 		priestRingSif = ItemSifRing()
-		ragnarokEmblem = ItemRagnarokEmblem()
+		ragnarokEmblem = ItemRagnarokEmblem().WIP()
 		rationBelt = ItemRationBelt()
 		realitySword = ItemRealitySword()
 		ringFeedFlower = ItemFeedFlowerRing()

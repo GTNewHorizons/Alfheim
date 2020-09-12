@@ -4,10 +4,16 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.ModInfo
+import alfheim.api.lib.LibOreDict
 import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.block.tile.*
+import alfheim.common.core.handler.RagnarokStartHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
+import alfheim.common.entity.FakeLightning
+import alfheim.common.entity.item.EntityItemImmortal
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.block.ItemStarPlacer2
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
@@ -16,24 +22,36 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.effect.EntityLightningBolt
+import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
-import net.minecraft.util.IIcon
+import net.minecraft.util.*
+import net.minecraft.world.World
 import net.minecraftforge.client.event.*
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
-import net.minecraftforge.event.entity.player.PlayerDropsEvent
+import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11
 import vazkii.botania.api.item.IBaubleRender
+import vazkii.botania.common.achievement.IPickupAchievement
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
-class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender {
+class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAchievement {
 	
 	lateinit var gemIcons: Array<IIcon>
 	
 	init {
 		creativeTab = AlfheimTab
 		setHasSubtypes(true)
+	}
+	
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+		ASJUtilities.say(player, "Check: ${RagnarokStartHandler.check(player, x, y - 1, z)}")
+		
+		return true
 	}
 	
 	override fun canEquip(stack: ItemStack?, player: EntityLivingBase?) =
@@ -62,6 +80,8 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender {
 		pass == 0 && getBoolean(stack, TAG_BOUND, false)
 	
 	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
+	
+	override fun getAchievementOnPickup(stack: ItemStack?, player: EntityPlayer?, entityItem: EntityItem?) = AlfheimAchievements.ragnarok
 	
 	override fun onPlayerBaubleRender(stack: ItemStack?, event: RenderPlayerEvent, type: IBaubleRender.RenderType?) {
 		if (type == IBaubleRender.RenderType.BODY) {
@@ -104,6 +124,121 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender {
 			eventForge()
 		}
 		
+		// ################################################################
+		// ####################### Crafting Pendant #######################
+		// ################################################################
+		
+		@SubscribeEvent
+		fun spawnLightningForPendant(e: PlayerInteractEvent) {
+			if (e.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) return
+			val player = e.entityPlayer
+			if (player.heldItem?.item !== AlfheimItems.wiltedLotus || player.heldItem.meta != 1) return
+			val tile = e.world.getTileEntity(e.x, e.y, e.z) as? TileAnomaly ?: return
+			if (tile.mainSubTile != "Lightning") return
+			e.world.addWeatherEffect(EntityLightningBolt(e.world, e.x.D, e.y.D, e.z.D))
+		}
+		
+		val ORE_KEYS = arrayOf(4, 2, 0, 3, 1, 5)
+		val AETHER = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Rainbow")]
+		val WATER = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Blue")]
+		val AIR = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Yellow")]
+		val FIRE = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Red")]
+		val EARTH = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Green")]
+		val ORDER = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("White")]
+		val VOID = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Black")]
+		
+		@SubscribeEvent
+		fun craftPendant(e: EntityStruckByLightningEvent) {
+			val entityItem = e.entity
+			if (entityItem !is EntityItem || entityItem.entityItem == null || entityItem.entityItem.item !== AlfheimItems.attributionBauble) return
+			val world = entityItem.worldObj
+			val anomaly = world.getTileEntity(entityItem) as? TileAnomaly ?: return
+			if (anomaly.mainSubTile != "Lightning") return
+			
+			val (x, y, z) = Vector3.fromEntity(entityItem).mf()
+			
+			val poses = mutableListOf<Vector3>()
+			
+			for (i in x.bidiRange(5))
+				for (j in y.bidiRange(5))
+					for (k in z.bidiRange(5)) {
+						if (Vector3.pointDistanceSpace(x, y, z, i, j, k) > 25) continue
+						val star = world.getTileEntity(i, j, k) as? TileCracklingStar ?: continue
+						
+						if (star.color == AETHER)
+							poses.add(Vector3(i, j, k))
+					}
+			
+			mainLoop@ for (pos in poses) {
+				val (path, connections, colors) = walkPath(pos, world, 5)
+				if (path.size != 6) continue
+				if (connections[5] != path[0]) continue
+				if (colors[0] == AETHER &&
+					colors[1] == WATER &&
+					colors[2] == AIR &&
+					colors[3] == FIRE &&
+					colors[4] == EARTH &&
+					colors[5] == ORDER) {
+					for (i in path.indices)
+						(checkItem(path, i, world) ?: continue@mainLoop).setDead()
+					
+					entityItem.setDead()
+					val entity = EntityItemImmortal(world, entityItem.posX, entityItem.posY + 1, entityItem.posZ, ItemStack(AlfheimItems.ragnarokEmblem))
+					entity.motionY = 1.0
+					entity.delayBeforeCanPickup = 30
+					world.spawnEntityInWorld(entity)
+					val fakeBolt = FakeLightning(world, entityItem.posX, entityItem.posY, entityItem.posZ)
+					world.addWeatherEffect(fakeBolt)
+					
+					for (i in 0.bidiRange(3))
+						for (j in 0.bidiRange(3))
+							for (k in 0.bidiRange(3))
+								if (world.getBlock(entityItem, i, j, k) === Blocks.fire)
+									world.setBlock(entityItem, Blocks.air, i, j, k)
+					
+					for (p in path) {
+						val tile = world.getTileEntity(p.x.mfloor(), p.y.mfloor(), p.z.mfloor()) as? TileCracklingStar ?: continue
+						tile.color = VOID
+						tile.pos.set(0, -1, 0)
+						tile.markDirty()
+					}
+					
+					break
+				}
+			}
+		}
+		
+		fun walkPath(pos: Vector3, world: World, max: Int, walked: Array<Vector3> = arrayOf(pos),
+					 walkedConnections: Array<Vector3> = arrayOf((world.getTileEntity(pos.x.mfloor(), pos.y.mfloor(), pos.z.mfloor()) as TileCracklingStar).pos),
+					 walkedColors: IntArray = intArrayOf((world.getTileEntity(pos.x.mfloor(), pos.y.mfloor(), pos.z.mfloor()) as TileCracklingStar).color))
+			: Triple<Array<Vector3>, Array<Vector3>, IntArray> {
+			
+			if (walked.size > max) return Triple(walked, walkedConnections, walkedColors)
+			val tile = world.getTileEntity(pos.x.mfloor(), pos.y.mfloor(), pos.z.mfloor())
+			if (tile is TileCracklingStar) {
+				val link = tile.pos.copy()
+				if (link == Vector3(0, -1, 0)) return Triple(walked, walkedConnections, walkedColors)
+				if (link in walked) return Triple(walked, walkedConnections, walkedColors)
+				val linked = world.getTileEntity(link.x.mfloor(), link.y.mfloor(), link.z.mfloor())
+				if (linked is TileCracklingStar) {
+					val linkPos = linked.pos.copy()
+					if (linkPos != Vector3(0, -1, 0))
+						return walkPath(link, world, max, arrayOf(*walked, link), arrayOf(*walkedConnections, linkPos), intArrayOf(*walkedColors, linked.color))
+				}
+			}
+			return Triple(walked, walkedConnections, walkedColors)
+		}
+		
+		fun checkItem(path: Array<Vector3>, index: Int, world: World): EntityItem? {
+			val (x, y, z) = path[index]
+			val items = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1)) as List<EntityItem>
+			return items.firstOrNull { it.entityItem != null && it.entityItem.item === AlfheimItems.priestEmblem && it.entityItem.meta == ORE_KEYS[index] }
+		}
+		
+		// ################################################################
+		// ######################## Begin Ragnarok ########################
+		// ################################################################
+		
 		fun beginRagnarok(player: EntityPlayer) {
 			if (!player.hasAchievement(AlfheimAchievements.ragnarok)) return
 			val emblem = getEmblem(player) ?: return
@@ -113,6 +248,10 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender {
 			ragnarok = true
 			// TODO the rest
 		}
+		
+		// ################################################################
+		// ################### Consume Priests' emblems ###################
+		// ################################################################
 		
 		@SubscribeEvent(priority = EventPriority.LOWEST) // let it be canceled
 		fun onPlayerDied(e: LivingDeathEvent) {
@@ -152,7 +291,7 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender {
 		// technical stuff
 		
 		@SubscribeEvent(priority = EventPriority.LOWEST) // for Baubles to add it's contents
-		fun notSoEasy(e: PlayerDropsEvent) {
+		fun lockEmblemForever(e: PlayerDropsEvent) {
 			val i = e.drops.indexOfFirst { getBoolean(it.entityItem, TAG_BOUND, false) }
 			if (i == -1) return
 			
@@ -163,7 +302,8 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender {
 		}
 		
 		@SubscribeEvent
-		fun fogColor(e: EntityViewRenderEvent.FogColors) {
+		@SideOnly(Side.CLIENT)
+		fun makeTheHorizonRed(e: EntityViewRenderEvent.FogColors) {
 			if (!ragnarok) return
 			
 			if (e.entity.dimension == 1) return // not sure

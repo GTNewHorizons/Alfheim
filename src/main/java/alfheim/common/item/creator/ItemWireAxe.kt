@@ -156,14 +156,15 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	
 	override fun onLeftClickEntity(stack: ItemStack, player: EntityPlayer, entity: Entity): Boolean {
 		val godslaying = stack.attributeModifiers[godSlayingDamage.attributeUnlocalizedName]
-		if (godslaying != null) {
-			for (attr in godslaying) {
-				if (attr is AttributeModifier)
-					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.wireoverpowered))
-			}
-		}
 		
-		return super.onLeftClickEntity(stack, player, entity)
+		if (godslaying != null)
+			for (attr in godslaying)
+				if (attr is AttributeModifier) {
+					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.wireoverpowered))
+					entity.hurtResistantTime = 0
+				}
+		
+		return false
 	}
 	
 	fun attackEntity(player: EntityLivingBase, entity: Entity, amount: Double, damageSource: DamageSource) {

@@ -112,7 +112,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 		return stack
 	}
 	
-	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, coitemInUseCountunt: Int) {
+	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, itemInUseCountunt: Int) {
 		if (player.worldObj.isRemote) return
 		
 		if (getCharge(stack) < MAX_CHARGE) {

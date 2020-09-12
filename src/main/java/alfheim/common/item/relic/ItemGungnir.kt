@@ -29,8 +29,13 @@ class ItemGungnir: ItemRelic("Gungnir") {
 		super.onUpdate(stack, world, entity, slot, inHand)
 		
 		val player = entity as? EntityPlayer ?: return
-		if (stack.cooldown > 0 && ManaItemHandler.requestManaExact(stack, player, 50, true))
-			stack.cooldown -= 1
+		
+		if (stack.cooldown > 0) {
+			if (player.capabilities.isCreativeMode)
+				stack.cooldown = 0
+			else if (ManaItemHandler.requestManaExact(stack, player, 50, true))
+				stack.cooldown -= 1
+		}
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {

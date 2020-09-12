@@ -3,7 +3,6 @@ package alfheim.common.item.rod
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -133,7 +132,6 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 							chainLightning(stack, target, player, thor, prowess, priest, color, innerColor)
 						}
 					}
-					
 				}
 			}
 		}

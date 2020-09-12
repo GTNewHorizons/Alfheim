@@ -76,6 +76,7 @@ open class CommonProxy {
 		ChestGenHandler
 		HilarityHandler
 		SoulRestructurizationHandler
+		RagnarokStartHandler
 		
 		FMLCommonHandler.instance().bus().register(object {
 			@SubscribeEvent(priority = EventPriority.HIGHEST)

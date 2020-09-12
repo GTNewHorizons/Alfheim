@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.item.ColorOverrideHelper
-import alfheim.common.item.ItemIridescent
+import alfheim.common.item.*
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler.FaithBauble.*
 import alfheim.common.item.relic.ItemHeimdallRing
@@ -124,6 +124,7 @@ object FaithHandlerHeimdall: IFaithHandler {
 	override fun getGodPowerLevel(player: EntityPlayer): Int {
 		var lvl = 0
 		
+		if (player.inventory.hasItemStack(ItemStack(AlfheimItems.gjallarhorn))) lvl += 4
 		if (ItemPriestCloak.getCloak(4, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(4, player) != null) lvl += 2
 		if (ItemHeimdallRing.getHeimdallRing(player) != null) lvl += 1

@@ -179,6 +179,8 @@ import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.flugelDisc
 import alfheim.common.item.AlfheimItems.flugelHead
 import alfheim.common.item.AlfheimItems.flugelSoul
+import alfheim.common.item.AlfheimItems.gaiaSlayer
+import alfheim.common.item.AlfheimItems.gjallarhorn
 import alfheim.common.item.AlfheimItems.gleipnir
 import alfheim.common.item.AlfheimItems.gungnir
 import alfheim.common.item.AlfheimItems.hyperBucket
@@ -213,12 +215,12 @@ import alfheim.common.item.AlfheimItems.ringFeedFlower
 import alfheim.common.item.AlfheimItems.ringSpider
 import alfheim.common.item.AlfheimItems.rodClicker
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
-import alfheim.common.item.AlfheimItems.rodMuspelheim
 import alfheim.common.item.AlfheimItems.rodFlameStar
 import alfheim.common.item.AlfheimItems.rodGrass
-import alfheim.common.item.AlfheimItems.rodNiflheim
 import alfheim.common.item.AlfheimItems.rodInterdiction
 import alfheim.common.item.AlfheimItems.rodLightning
+import alfheim.common.item.AlfheimItems.rodMuspelheim
+import alfheim.common.item.AlfheimItems.rodNiflheim
 import alfheim.common.item.AlfheimItems.rodPortal
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.royalStaff
@@ -384,6 +386,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (moonlightBow)
 		addItem (mask)
 		addItem (flugelSoul)
+		addItem (gjallarhorn)
 		addItem (akashicRecords)
 		addItem (wireAxe)
 		addItem (trisDagger)
@@ -561,6 +564,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 			if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer?.commandSenderName ?: "null", "AlexSocol"))
 				addItem(royalStaff)
 		}
+		
+		addItem(gaiaSlayer)
 		
 		additionalDisplays.forEach { it.invoke() }
 	}

@@ -32,10 +32,10 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 		willIcon = IconHelper.forName(reg, "willFlame")
 	}
 	
-	override fun onArmorTick(world: World, player: EntityPlayer?, stack: ItemStack?) {
+	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
 		super.onArmorTick(world, player, stack)
 		if (hasArmorSet(player)) {
-			val food = player!!.foodStats.foodLevel
+			val food = player.foodStats.foodLevel
 			if (food in 1..17 && player.shouldHeal() && player.ticksExisted % 80 == 0)
 				player.heal(1f)
 			ManaItemHandler.dispatchManaExact(stack, player, 2, true)

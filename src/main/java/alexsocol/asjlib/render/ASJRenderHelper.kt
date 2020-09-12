@@ -194,9 +194,16 @@ object ASJRenderHelper {
 		if (glow) {
 			glEnable(GL_LIGHTING)
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, prevX, prevY)
+			glow = false
 		}
-		if (cull) glEnable (GL_CULL_FACE)
-		if (alfa) glDisable (GL_BLEND)
+		if (cull) {
+			glEnable (GL_CULL_FACE)
+			cull = false
+		}
+		if (alfa) {
+			glDisable (GL_BLEND)
+			alfa = false
+		}
 	}
 	
 	@JvmStatic

@@ -253,7 +253,12 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 										!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
 										!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
 										!player.hasAchievement(AlfheimAchievements.mjolnir)      -> ItemStack(AlfheimItems.mjolnir).also { player.triggerAchievement(AlfheimAchievements.mjolnir) }
+										!player.hasAchievement(AlfheimAchievements.gleipnir)     -> ItemStack(AlfheimItems.gleipnir).also { player.triggerAchievement(AlfheimAchievements.gleipnir) }
+										!player.hasAchievement(AlfheimAchievements.gjallarhorn)  -> ItemStack(AlfheimItems.gjallarhorn).also { player.triggerAchievement(AlfheimAchievements.gjallarhorn) }
 										!player.hasAchievement(AlfheimAchievements.gungnir)      -> ItemStack(AlfheimItems.gungnir).also { player.triggerAchievement(AlfheimAchievements.gungnir) }
+										!player.hasAchievement(AlfheimAchievements.ringSif)      -> ItemStack(AlfheimItems.priestRingSif).also { player.triggerAchievement(AlfheimAchievements.ringSif) }
+										!player.hasAchievement(AlfheimAchievements.ringNjord)    -> ItemStack(AlfheimItems.priestRingNjord).also { player.triggerAchievement(AlfheimAchievements.ringNjord) }
+										!player.hasAchievement(AlfheimAchievements.ringHeimdall) -> ItemStack(AlfheimItems.priestRingHeimdall).also { player.triggerAchievement(AlfheimAchievements.ringHeimdall) }
 										!player.hasAchievement(AlfheimAchievements.akashic)      -> ItemStack(AlfheimItems.akashicRecords).also { player.triggerAchievement(AlfheimAchievements.akashic) }
 										else                                                     -> ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(4, 6, rand), ElvenResourcesMetas.IffesalDust)
 									}
@@ -896,6 +901,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 				if (isTruePlayer(player)) {
 					if (world.difficultySetting == EnumDifficulty.PEACEFUL) {
 						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.peacefulNoob")
+						return false
+					}
+					
+					if ((hard && !player.hasAchievement(AlfheimAchievements.flugelSoul)) || (ultra && !player.hasAchievement(AlfheimAchievements.mask))) {
+						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.tooweak")
 						return false
 					}
 					

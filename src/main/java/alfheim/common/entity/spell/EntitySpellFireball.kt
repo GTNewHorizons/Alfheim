@@ -57,7 +57,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	override fun attackEntityFrom(source: DamageSource?, damage: Float) = false
 	
 	fun onImpact(mop: MovingObjectPosition?) {
-		if (!worldObj.isRemote) {
+		if (!worldObj.isRemote && !isDead) {
 			if (mop?.entityHit === caster) return
 			
 			if (mop?.entityHit is EntityLivingBase) {
@@ -80,6 +80,8 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onUpdate() {
+		if (isDead) return
+		
 		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead/* || !worldObj.blockExists(posX.I, posY.I, posZ.I)*/)) {
 			setDead()
 		} else {

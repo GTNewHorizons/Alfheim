@@ -49,10 +49,10 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 		return material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.ElvoriumIngot || super.getIsRepairable(armor, material)
 	}
 	
-	override fun getAttributeModifiers(stack: ItemStack): Multimap<*, *> {
+	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeModifier> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
 		val uuid = UUID(unlocalizedName.hashCode().toLong(), 0)
-		multimap.put(SharedMonsterAttributes.knockbackResistance.attributeUnlocalizedName, AttributeModifier(uuid, "Terrasteel modifier $type", getArmorDisplay(null, ItemStack(this), type).D / 20, 0))
+		multimap.put(SharedMonsterAttributes.knockbackResistance.attributeUnlocalizedName, AttributeModifier(uuid, "Elvorium modifier $type", getArmorDisplay(null, ItemStack(this), type).D / 20, 0))
 		return multimap
 	}
 	
@@ -99,15 +99,15 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 		addStringToTooltip(StatCollector.translateToLocal("botania.armorset.terrasteel.desc2"), list)    // Passive mana regen
 	}
 	
-	override fun onUpdate(stack: ItemStack?, world: World?, entity: Entity?, slotID: Int, inHand: Boolean) {
+	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slotID: Int, inHand: Boolean) {
 		if (entity is EntityPlayer)
-			onArmorTick(world!!, entity as EntityPlayer?, stack)
+			onArmorTick(world, entity, stack)
 	}
 	
-	override fun onArmorTick(world: World, player: EntityPlayer?, stack: ItemStack?) {
+	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
 		super.onArmorTick(world, player, stack)
-		if (!stack!!.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
-		if (player != null) stack.stackTagCompound.setBoolean("SET", hasArmorSet(player))
+		if (!stack.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
+		stack.stackTagCompound.setBoolean("SET", hasArmorSet(player))
 	}
 	
 	@Optional.Method(modid = "Thaumcraft")

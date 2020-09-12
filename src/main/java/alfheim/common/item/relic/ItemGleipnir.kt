@@ -18,6 +18,7 @@ import alfheim.common.entity.EntityGleipnir
 import alfheim.common.item.relic.LeashingHandler.isLeashed
 import alfheim.common.item.relic.LeashingHandler.leashedTo
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.culling.ICamera
 import net.minecraft.entity.*
@@ -275,6 +276,7 @@ object LeashingHandler {
 	}
 	
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	fun renderLeash(e: RenderLivingEvent.Post) {
 		if (!e.entity.isLeashed || !e.entity.isEntityAlive) return
 		
@@ -342,9 +344,11 @@ object LeashingHandler {
 		}
 	}
 	
+	@SideOnly(Side.CLIENT)
 	fun interpolate(prev: Double, current: Double, ticks: Double) = prev + (current - prev) * ticks
 	
 	// used in transformers
+	@SideOnly(Side.CLIENT)
 	fun isBoundInRender(flag: Boolean, entity: Entity, camera: ICamera): Boolean {
 		if (!flag && entity is EntityLivingBase) {
 			if (entity.isLeashed && entity.leashedTo != null) {

@@ -27,6 +27,7 @@ object AlfheimAchievements {
 	val akashic: Achievement //									K
 	val excaliber: Achievement //								E
 	val flugelSoul: Achievement //								L
+	val gjallarhorn: Achievement //								j
 	val gleipnir: Achievement //								g
 	val gungnir: Achievement //									G
 	val mask: Achievement //									M
@@ -54,7 +55,7 @@ object AlfheimAchievements {
 	// |      I  r D C
 	// |          B K g
 	// |     A L M J G
-	// |        F U E
+	// |        F U E j
 	// |           R
 	// |  Y      O
 	// Y
@@ -76,6 +77,7 @@ object AlfheimAchievements {
 		
 		akashic = AlfheimAchievement("akashic", 7, -1, AlfheimItems.akashicRecords, mask)
 		excaliber = AlfheimAchievement("excaliber", 7, 1, AlfheimItems.excaliber, mask)
+		gjallarhorn = AlfheimAchievement("gjallarhorn", 7, 3, AlfheimItems.gjallarhorn, mask)
 		gleipnir = AlfheimAchievement("gleipnir", 9, -1, AlfheimItems.gleipnir, mask)
 		gungnir = AlfheimAchievement("gungnir", 8, 0, AlfheimItems.gungnir, mask)
 		mjolnir = AlfheimAchievement("mjolnir", 6, 0, AlfheimItems.mjolnir, mask)

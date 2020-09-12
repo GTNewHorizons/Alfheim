@@ -32,6 +32,7 @@ import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.*
+import net.minecraft.command.server.CommandSummon
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
@@ -118,6 +119,12 @@ object AlfheimHookHandler {
 		if (!AlfheimConfigHandler.enableElvenStory) return false
 		
 		return true
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun func_147182_d(c: CommandSummon): Array<String> {
+		return (EntityList.stringToClassMapping.keys as Set<String>).toTypedArray()
 	}
 	
 	@JvmStatic
@@ -350,6 +357,30 @@ object AlfheimHookHandler {
 		return if (stack != null && color == 0) {
 			if (stack.item === AlfheimBlocks.elvenSand.toItem()) 0xf7f5d9 else 0
 		} else color
+	}
+	
+	const val TAG_COCOONED = "Botania-CocoonSpawned"
+	var cocooned = false
+	
+	@JvmStatic
+	@Hook(targetMethod = "hatch")
+	fun hatchPre(tile: TileCocoon) {
+		cocooned = true
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun spawnEntityInWorld(world: World, entity: Entity?, @ReturnValue result: Boolean): Boolean {
+		if (result && entity != null)
+			entity.entityData.setBoolean(TAG_COCOONED, true)
+		
+		return result
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "hatch")
+	fun hatchPost(tile: TileCocoon) {
+		cocooned = false
 	}
 	
 	@JvmStatic

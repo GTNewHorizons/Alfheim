@@ -36,6 +36,7 @@ object LibResourceLocations {
 	var elvenPylonOld = ResourceLocation("botania:textures/model/pylonOld2.png")
 	val elvoriumArmor = ResourceLocation(ModInfo.MODID, "textures/model/armor/ElvoriumArmor.png")
 	val explosion = ResourceLocation(ModInfo.MODID, "textures/misc/explosion.png")
+	val fenrir = ResourceLocation(ModInfo.MODID, "textures/model/entity/fenrir.png")
 	val gaiaPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/GaiaPylon.png")
 	val gaiaPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/GaiaPylonOld.png")
 	val gleipnir0 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Gleipnir0.png")

@@ -63,6 +63,7 @@ class ClientProxy: CommonProxy() {
 		
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.akashicRecords, RenderItemAkashicRecords)
 		MinecraftForgeClient.registerItemRenderer(AlfheimBlocks.anomaly.toItem(), RenderItemAnomaly)
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.fenrirClaws, RenderItemFenrirClaws)
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff)
 		
 		if (!AlfheimConfigHandler.minimalGraphics)
@@ -95,6 +96,7 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie::class.java, RenderEntityAlfheimPixie)
 		RenderingRegistry.registerEntityRenderingHandler(EntityButterfly::class.java, RenderEntityButterfly)
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf::class.java, RenderEntityElf)
+		RenderingRegistry.registerEntityRenderingHandler(EntityFenrir::class.java, RenderEntityFenrir)
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel::class.java, RenderEntityFlugel)
 		RenderingRegistry.registerEntityRenderingHandler(EntityGleipnir::class.java, RenderEntityGleipnir)
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemImmortal::class.java, RenderEntityItemImmortal)

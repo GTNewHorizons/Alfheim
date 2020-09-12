@@ -109,6 +109,7 @@ object AlfheimRegistry {
 		registerEntity(EntityButterfly::class.java, "Butterfly", AlfheimCore.instance, id)
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
 		registerEntity(EntityElf::class.java, "Elf", AlfheimCore.instance, id)
+		registerEntity(EntityFenrir::class.java, "Fenrir", AlfheimCore.instance, id)
 		registerEntity(EntityFireAura::class.java, "FireAura", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
 		registerEntity(EntityItemImmortal::class.java, "ImmortalItem", AlfheimCore.instance, id)
