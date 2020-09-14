@@ -1,5 +1,6 @@
 package alfheim.common.integration.travellersgear
 
+import alexsocol.asjlib.addStringToTooltip
 import alfheim.AlfheimCore
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
@@ -30,11 +31,5 @@ object TravellerBaubleTooltipHandler {
 		
 		if (bauble.hasPhantomInk(stack))
 			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.hasPhantomInk"), tooltip)
-	}
-	
-	// --------------------------------
-	
-	fun addStringToTooltip(s: String, tooltip: MutableList<Any?>) {
-		tooltip.add(s.replace("&".toRegex(), "\u00a7"))
 	}
 }

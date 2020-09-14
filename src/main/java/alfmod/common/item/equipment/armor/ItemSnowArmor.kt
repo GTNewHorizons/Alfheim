@@ -1,6 +1,8 @@
 package alfmod.common.item.equipment.armor
 
 import alexsocol.asjlib.*
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.security.InteractionSecurity
 import alfmod.AlfheimModularCore
 import alfmod.client.model.armor.ModelSnowArmor
@@ -108,7 +110,8 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		itemIcon = IconHelper.forItem(reg, this)
 	}
 	
-	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack?) = false
+	override fun getIsRepairable(stack: ItemStack, material: ItemStack) =
+		stack.item === AlfheimItems.elvenResource && stack.meta == ElvenResourcesMetas.NiflheimPowerIngot
 	
 	var armorSet: Array<ItemStack>? = null
 	

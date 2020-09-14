@@ -23,12 +23,9 @@ object RenderEntityButterfly: RenderLiving(ModelButterfly(), 0.25f) {
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, pitch: Float) {
 		if (entity.isInvisible) return
 		
-		val lastX = OpenGlHelper.lastBrightnessX
-		val lastY = OpenGlHelper.lastBrightnessY
-		
-		glEnable(GL_BLEND)
+		ASJRenderHelper.setGlow()
+		ASJRenderHelper.setBlend()
 		glAlphaFunc(GL_GREATER, 0f)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		
 		ASJRenderHelper.glColor1u(Color.HSBtoRGB((ClientTickHandler.ticksInGame + (entity.entityId shl 3)) % 360 / 360f, 1f, 1f))
 		
@@ -37,10 +34,8 @@ object RenderEntityButterfly: RenderLiving(ModelButterfly(), 0.25f) {
 		super.doRender(entity, x, y, z, yaw, pitch)
 		glPopMatrix()
 		
-		glDisable(GL_BLEND)
 		glColor4f(1f, 1f, 1f, 1f)
-		
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
+		ASJRenderHelper.discard()
 	}
 	
 	private fun setPixieBrightness(pixie: EntityButterfly, pass: Int, ticks: Float): Int {
@@ -53,7 +48,7 @@ object RenderEntityButterfly: RenderLiving(ModelButterfly(), 0.25f) {
 		else
 			glDepthMask(true)
 		
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f) // FIXME
 		return 1
 	}
 	

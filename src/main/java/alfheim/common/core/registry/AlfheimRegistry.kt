@@ -112,6 +112,7 @@ object AlfheimRegistry {
 		registerEntity(EntityFenrir::class.java, "Fenrir", AlfheimCore.instance, id)
 		registerEntity(EntityFireAura::class.java, "FireAura", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
+		registerEntity(EntityFracturedSpaceCollector::class.java, "FracturedSpaceCollector", AlfheimCore.instance, id)
 		registerEntity(EntityItemImmortal::class.java, "ImmortalItem", AlfheimCore.instance, id)
 		registerEntity(EntityItemImmortalRelic::class.java, "ImmortalRelicItem", AlfheimCore.instance, id)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)

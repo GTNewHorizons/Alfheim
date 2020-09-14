@@ -19,8 +19,9 @@ object SchemaGenerator {
 		for (ele in arr) {
 			for (loc in ele.location) {
 				world.setBlock(x + loc.x, y + loc.y, z + loc.z, Block.getBlockFromName(ele.block), loc.meta, 3)
+				
 				if (loc.nbt != null) {
-					val tile = TileEntity.createAndLoadEntity(JsonToNBT.func_150315_a(loc.nbt) as NBTTagCompound)
+					val tile = TileEntity.createAndLoadEntity(JsonToNBT.func_150315_a(loc.nbt) as NBTTagCompound) ?: return
 					tile.xCoord = x + loc.x
 					tile.yCoord = y + loc.y
 					tile.zCoord = z + loc.z

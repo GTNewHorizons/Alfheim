@@ -2,100 +2,91 @@ package alfheim.client.render.item
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.render.ASJRenderHelper.discard
+import alexsocol.asjlib.render.ASJRenderHelper.setBlend
 import alexsocol.asjlib.render.ASJRenderHelper.setGlow
 import alexsocol.asjlib.render.ASJRenderHelper.setTwoside
-import alfheim.api.ModInfo
+import alfheim.api.lib.LibResourceLocations
 import net.minecraft.client.renderer.Tessellator
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.IItemRenderer
 import net.minecraftforge.client.IItemRenderer.ItemRenderType.*
 import org.lwjgl.opengl.GL11.*
 
 object RenderItemFenrirClaws: IItemRenderer {
 	
-	val texture = ResourceLocation("${ModInfo.MODID}:textures/items/FenrirClaws0.png")
-	val overlay = ResourceLocation("${ModInfo.MODID}:textures/items/FenrirClaws1.png")
-	
 	override fun renderItem(type: IItemRenderer.ItemRenderType, item: ItemStack?, vararg data: Any?) {
 		glPushMatrix()
 		setTwoside()
-		
-		glScaled(1.0/16)
+		setBlend()
 		
 		@Suppress("NON_EXHAUSTIVE_WHEN")
 		when (type) {
-			EQUIPPED              -> {
-				glRotatef(-10f, 0f, 0f, 1f)
-				glRotatef(90f, 1f, 0f, 0f)
-				glTranslatef(6f, -2f, 0f)
-			}
 			EQUIPPED_FIRST_PERSON -> {
-				glRotatef(90f, 0f, 1f, 0f)
-				glRotatef(90f, 1f, 0f, 0f)
-				glTranslatef(0f, 4f, 0f)
+				glTranslatef(0f, 0.5f, -0.75f)
+				glRotatef(-45f, 0f, 0f, 1f)
+				
+				data.firstOrNull { it is EntityPlayer }?.let {
+					if ((it as EntityPlayer).isBlocking) {
+						glRotatef(45f, 0f, 0f, 1f)
+						glTranslated(0.25, -0.35, -0.25)
+					}
+				}
 			}
+			
+			EQUIPPED              -> {
+				// FUCK YOU MOJANG FOR YOUR NON-ORTHO PLACEMENT RELATIVE TO PLAYERS' HAND! FUCK! FUCK! FUCK! JUST DIE THE ONE WHO DID IT! YOU DESERVE TO BURN IN HELL!
+				glRotatef(100f, 1f, 0f, 0f)
+				glRotatef(-30f, 0f, 0f, 1f)
+				glRotatef(15f, 0f, 1f, 0f)
+				glTranslatef(-4 / 16f, 5 / 16f, -5.5f / 16f)
+				glRotatef(-30f, 0f, 0f, 1f)
+				glTranslatef(-1 / 16f, 2 / 16f, 0f)
+			}
+			
 			INVENTORY             -> {
-				glRotatef(180f, 0f, 1f, 0f)
-				glTranslatef(-3f, 3f, 0f)
+				glScaled(1.5)
+				glRotatef(180f, 0f, 0f, 1f)
+				glTranslatef(-9.25f, -10.25f, 0f)
+			}
+			
+			ENTITY                -> {
+				glTranslated(-0.25, -0.25, -0.5)
 			}
 		}
 		
-//		glTranslatef(2f, 2f, 0f)
+		if (type != INVENTORY) glScaled(1.0 / 16)
 		
 		val tes = Tessellator.instance
 		
-		val x0: Number
-		val y0: Number
-//		var z0: Number
-		val u0: Number
-		val v0: Number
-		
-		val x1: Number
-		val y1: Number
-//		var z1: Number
-		val u1: Number
-		val v1: Number
-		
-		x0 = 0
-		y0 = 0
-//		z0 = 9.5
-		u0 = 0
-		v0 = 6
-		x1 = 10
-		y1 = 10
-//		z1 = 9.501
-		u1 = 10
-		v1 = 16
-		
 		for (i in 0..1) {
-			mc.renderEngine.bindTexture(if (i == 0) texture else overlay)
+			mc.renderEngine.bindTexture(if (i == 0) LibResourceLocations.fenrirClaw else LibResourceLocations.fenrirClawOverlay)
 			
-			if (i != 0) setGlow()
+			if (i != 0) setGlow() else if (type == INVENTORY) glColor4f(0.75f, 0.75f, 0.75f, 1f)
 			tes.startDrawingQuads()
 			
-			for ((z0, z1) in arrayOf<Pair<Number, Number>>(9.5 to 9.501, 8 to 8.001, 6 to 6.501)) {
-				tes.addVertexWithUV(x0, y0, z0, u0, v0)
-				tes.addVertexWithUV(x0, y1, z0, u0, v1)
-				tes.addVertexWithUV(x1, y1, z1, u1, v1)
-				tes.addVertexWithUV(x1, y0, z1, u1, v0)
+			for ((z0, z1) in arrayOf<Pair<Number, Number>>(10.8 to 10.801, 9 to 9.001, 7.15 to 7.151, 5.1 to 5.601)) {
+				tes.addVertexWithUV(0, 0, z0, 0, 6)
+				tes.addVertexWithUV(0, 10, z0, 0, 16)
+				tes.addVertexWithUV(10, 10, z1, 10, 16)
+				tes.addVertexWithUV(10, 0, z1, 10, 6)
 			}
 			
 			tes.draw()
-			if (i != 0) discard()
+			if (i != 0) discard() else if (type == INVENTORY) glColor4f(1f, 1f, 1f, 1f)
 		}
-		
+
 //		discard() -- above in for-loop
 		glPopMatrix()
 	}
 	
-	override fun handleRenderType(item: ItemStack, type: IItemRenderer.ItemRenderType) = type != INVENTORY && type != ENTITY
+	override fun handleRenderType(item: ItemStack, type: IItemRenderer.ItemRenderType) = true
 	
 	override fun shouldUseRenderHelper(type: IItemRenderer.ItemRenderType, item: ItemStack, helper: IItemRenderer.ItemRendererHelper) =
 		helper == IItemRenderer.ItemRendererHelper.ENTITY_ROTATION || helper == IItemRenderer.ItemRendererHelper.ENTITY_BOBBING
 	
 	private fun Tessellator.addVertexWithUV(x: Number, y: Number, z: Number, u: Number, v: Number) {
-		this.setTextureUV(u.D, v.D)
+		this.setTextureUV(u.D / 16, v.D / 16)
 		this.addVertex(x.D, y.D, z.D)
 	}
 }

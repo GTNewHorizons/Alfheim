@@ -1,66 +1,61 @@
 package alfheim.common.item.equipment.tool
 
 import alexsocol.asjlib.render.ASJRenderHelper
+import alfheim.api.ModInfo
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.item.ItemMod
-import com.google.common.collect.Multimap
+import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.equipment.armor.fenrir.ItemFenrirArmor
+import com.google.common.collect.*
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import vazkii.botania.api.mana.ManaItemHandler
-import vazkii.botania.common.item.equipment.tool.ToolCommons
+import net.minecraftforge.common.util.EnumHelper
+import vazkii.botania.common.core.helper.ItemNBTHelper
+import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
+import vazkii.botania.common.lib.LibMisc
 
-class ItemFenrirClaws: ItemMod("FenrirClaws") {
+class ItemFenrirClaws: ItemManasteelSword(FENRIR, "FenrirClaws") {
 	
 	val MANA_PER_DAMAGE = 40
+	val attackDamage = 3.0
 	
 	lateinit var overlay: IIcon
 	
 	init {
-		setMaxStackSize(1)
-		maxDamage = 1561
+		creativeTab = AlfheimTab
 	}
 	
-	override fun hitEntity(stack: ItemStack, target: EntityLivingBase?, attacker: EntityLivingBase?): Boolean {
-		ToolCommons.damageItem(stack, 1, attacker, MANA_PER_DAMAGE)
-		return true
-	}
-	
-	override fun onBlockDestroyed(stack: ItemStack?, world: World?, block: Block, x: Int, y: Int, z: Int, entity: EntityLivingBase?): Boolean {
-		if (block.getBlockHardness(world, x, y, z) != 0f)
-			ToolCommons.damageItem(stack, 1, entity, MANA_PER_DAMAGE)
-		return true
-	}
-	
-	val attackDamage = 1.5
+	override fun isFull3D() = false
 	
 	override fun onUpdate(stack: ItemStack, world: World, player: Entity, itemSlot: Int, isSelected: Boolean) {
-		if (!world.isRemote && player is EntityPlayer && stack.itemDamage > 0 && ManaItemHandler.requestManaExactForTool(stack, player, MANA_PER_DAMAGE * 2, true))
-			stack.itemDamage = stack.itemDamage - 1
+		super.onUpdate(stack, world, player, itemSlot, isSelected)
+		if (player !is EntityPlayer) return
+		ItemNBTHelper.setBoolean(stack, "SET", ItemFenrirArmor.hasSet(player))
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
-		player.setItemInUse(stack, getMaxItemUseDuration(stack))
-		return super.onItemRightClick(stack, world, player)
-	}
-	
-	override fun getItemUseAction(stack: ItemStack) = EnumAction.block
-	
-	override fun getMaxItemUseDuration(stack: ItemStack) = 72000
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack?) = false // TODO make repairable
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeModifier> {
-		val multimap = super.getAttributeModifiers(stack) as Multimap<String, AttributeModifier>
-		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", attackDamage, 0))
+		val set = ItemNBTHelper.getBoolean(stack, "SET", false)
+		val multimap = HashMultimap.create<String, AttributeModifier>()
+		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", attackDamage + if (set) (13.75 / 1.5 - 9 + attackDamage) else 0.0, 0))
 		return multimap
 	}
 	
-	override fun getItemEnchantability(): Int = 14
+	override fun getItemEnchantability() = 14
+	
+	override fun getManaPerDamage() = MANA_PER_DAMAGE
+	
+	override fun getItemStackDisplayName(stack: ItemStack) =
+		super.getItemStackDisplayName(stack).replace("&", "\u00a7")
+	
+	override fun getUnlocalizedNameInefficiently(stack: ItemStack) =
+		super.getUnlocalizedNameInefficiently(stack).replace(LibMisc.MOD_ID, ModInfo.MODID)
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
@@ -74,7 +69,7 @@ class ItemFenrirClaws: ItemMod("FenrirClaws") {
 	
 	override fun getIcon(stack: ItemStack?, pass: Int): IIcon? {
 		return when (pass) {
-			0    -> super.getIcon(stack, pass)
+			0    -> getIconIndex(stack)
 			1    -> {
 				ASJRenderHelper.setGlow()
 				overlay
@@ -85,8 +80,14 @@ class ItemFenrirClaws: ItemMod("FenrirClaws") {
 				// crutch because RenderItem#renderIcon has no null check :(
 				// and some other places maybe too...
 				// why not just use @Nullable ?
-				super.getIcon(stack, pass)
+				getIconIndex(stack)
 			}
 		}
+	}
+	
+	override fun getIconIndex(stack: ItemStack?) = itemIcon!! // no elucidator
+	
+	companion object {
+		val FENRIR = EnumHelper.addToolMaterial("FENRIR", 0, 2000, 0f, 3.0f, 14)
 	}
 }

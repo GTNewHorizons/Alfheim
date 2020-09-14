@@ -83,9 +83,8 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = Botani
 			stack.meta = stack.meta - 1
 	}
 	
-	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack): Boolean {
-		return par2ItemStack.item === ModItems.manaResource && par2ItemStack.meta == 0 || super.getIsRepairable(par1ItemStack, par2ItemStack)
-	}
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack) =
+		material.item === ModItems.manaResource && material.meta == 0
 	
 	override fun usesMana(stack: ItemStack): Boolean {
 		return true

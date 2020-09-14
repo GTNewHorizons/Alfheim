@@ -1,5 +1,6 @@
 package alfheim.common.item.equipment.tool.elementuim
 
+import alexsocol.asjlib.meta
 import alfheim.common.item.equipment.tool.manasteel.ItemManasteelHoe
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -7,6 +8,7 @@ import net.minecraft.util.StatCollector
 import net.minecraft.world.World
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.common.Botania
+import vazkii.botania.common.item.ModItems
 
 class ItemElementiumHoe: ItemManasteelHoe(BotaniaAPI.elementiumToolMaterial, "ElementiumHoe") {
 	
@@ -28,6 +30,9 @@ class ItemElementiumHoe: ItemManasteelHoe(BotaniaAPI.elementiumToolMaterial, "El
 		
 		return did
 	}
+	
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack) =
+		material.item === ModItems.manaResource && material.meta == 7
 	
 	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, info: MutableList<Any?>, extra: Boolean) {
 		info.add(StatCollector.translateToLocal("item.ElementiumHoe.desc"))

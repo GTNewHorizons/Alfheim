@@ -63,6 +63,10 @@ val Number.D get() = this.toDouble()
 val Number.F get() = this.toFloat()
 val Number.I get() = this.toInt()
 
+fun addStringToTooltip(s: String, tooltip: MutableList<Any?>) {
+	tooltip.add(s.replace("&".toRegex(), "\u00a7"))
+}
+
 // ################ MINECRAFT ####################
 
 /** Free fall acceleration */

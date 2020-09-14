@@ -25,6 +25,7 @@ import vazkii.botania.api.item.IManaProficiencyArmor
 import vazkii.botania.api.mana.IManaDiscountArmor
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
 import java.util.*
 
@@ -46,7 +47,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 	}
 	
 	override fun getIsRepairable(armor: ItemStack?, material: ItemStack): Boolean {
-		return material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.ElvoriumIngot || super.getIsRepairable(armor, material)
+		return material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.ElvoriumIngot
 	}
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeModifier> {
@@ -107,13 +108,12 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
 		super.onArmorTick(world, player, stack)
 		if (!stack.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
-		stack.stackTagCompound.setBoolean("SET", hasArmorSet(player))
+		ItemNBTHelper.setBoolean(stack, "SET", hasArmorSet(player))
 	}
 	
 	@Optional.Method(modid = "Thaumcraft")
 	override fun getRunicCharge(stack: ItemStack): Int {
-		if (!stack.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
-		return if (stack.stackTagCompound.getBoolean("SET")) 2 else 0
+		return if (ItemNBTHelper.getBoolean(stack, "SET", false)) 2 else 0
 	}
 	
 	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer): Float {

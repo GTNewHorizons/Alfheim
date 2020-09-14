@@ -111,6 +111,7 @@ object AlfheimItems {
 	val realitySword: Item
 	val ringFeedFlower: Item
 	val ringSpider: Item
+	val rodBlackHole: Item
 	val rodColorfulSkyDirt: Item
 	val rodClicker: Item
 	val rodFlameStar: Item
@@ -218,6 +219,7 @@ object AlfheimItems {
 		realitySword = ItemRealitySword()
 		ringFeedFlower = ItemFeedFlowerRing()
 		ringSpider = ItemSpiderRing()
+		rodBlackHole = ItemBlackHoleRod()
 		rodColorfulSkyDirt = ItemRodIridescent()
 		rodClicker = ItemRodClicker()
 		rodMuspelheim = ItemRodElemental("MuspelheimRod") { AlfheimBlocks.redFlame }

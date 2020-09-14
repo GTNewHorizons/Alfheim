@@ -210,10 +210,9 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	
 	fun getEfficiencyOnProperMaterial(): Float = toolMaterial.efficiencyOnProperMaterial
 	
-	override fun getIsRepairable(stack: ItemStack?, materialstack: ItemStack?): Boolean {
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack?): Boolean {
 		val mat = toolMaterial.repairItemStack
-		if (mat != null && OreDictionary.itemMatches(mat, materialstack, false)) return true
-		return super.getIsRepairable(stack, materialstack)
+		return mat != null && OreDictionary.itemMatches(mat, material, false)
 	}
 	
 	override fun getHarvestLevel(stack: ItemStack?, toolClass: String?): Int {

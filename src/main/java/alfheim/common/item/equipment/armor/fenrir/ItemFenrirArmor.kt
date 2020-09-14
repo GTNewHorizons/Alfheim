@@ -1,6 +1,6 @@
 package alfheim.common.item.equipment.armor.fenrir
 
-import alexsocol.asjlib.meta
+import alexsocol.asjlib.*
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.ModInfo
 import alfheim.client.model.armor.ModelFenrirArmor
@@ -8,8 +8,10 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.equipment.tool.ItemFenrirClaws
 import alfheim.common.item.material.ElvenResourcesMetas
 import com.google.common.collect.*
+import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -17,9 +19,8 @@ import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
-import net.minecraft.world.World
+import net.minecraftforge.event.entity.living.LivingAttackEvent
 import vazkii.botania.api.mana.IManaDiscountArmor
 import vazkii.botania.client.lib.LibResources
 import vazkii.botania.common.core.handler.ConfigHandler
@@ -55,7 +56,7 @@ open class ItemFenrirArmor(slot: Int, name: String): ItemManasteelArmor(slot, na
 	override fun getColor(stack: ItemStack) = 0xFFFFFF
 	
 	override fun getIsRepairable(armor: ItemStack?, material: ItemStack): Boolean {
-		return material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.FenrirFur || super.getIsRepairable(armor, material)
+		return material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.FenrirFur
 	}
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeModifier> {
@@ -127,16 +128,16 @@ open class ItemFenrirArmor(slot: Int, name: String): ItemManasteelArmor(slot, na
 		addStringToTooltip(StatCollector.translateToLocal("alfheim.armorset.fenrir.desc1"), list)
 	}
 	
-	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slotID: Int, inHand: Boolean) {
-		if (entity is EntityPlayer)
-			onArmorTick(world, entity, stack)
-	}
-	
-	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
-		super.onArmorTick(world, player, stack)
-		if (!stack.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
-		stack.stackTagCompound.setBoolean("SET", hasArmorSet(player))
-	}
+//	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slotID: Int, inHand: Boolean) {
+//		if (entity is EntityPlayer)
+//			onArmorTick(world, entity, stack)
+//	}
+//
+//	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
+//		super.onArmorTick(world, player, stack)
+//		if (!stack.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
+//		stack.stackTagCompound.setBoolean("SET", hasArmorSet(player))
+//	}
 	
 	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer): Float {
 		return if (hasArmorSet(player)) 0.2f / 4f else 0f
@@ -146,6 +147,21 @@ open class ItemFenrirArmor(slot: Int, name: String): ItemManasteelArmor(slot, na
 		
 		internal var armorset: Array<ItemStack>? = null
 		
+		init {
+			eventForge()
+		}
+		
 		fun hasSet(player: EntityPlayer?) = (AlfheimItems.fenrirChestplate as ItemFenrirArmor).hasArmorSet(player)
+		
+		@SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+		fun onLivingAttack(e: LivingAttackEvent) {
+			val attacker = e.source.entity as? EntityPlayer ?: return
+			val flagSet = hasSet(attacker)
+			val flagClaws = attacker.heldItem?.item is ItemFenrirClaws
+			if (e.source.damageType == "player" && ((flagSet && attacker.heldItem == null) || flagClaws)) {
+				e.source.setDamageBypassesArmor()
+				e.isCanceled = false
+			}
+		}
 	}
 }

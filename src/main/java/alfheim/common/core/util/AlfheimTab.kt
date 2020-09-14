@@ -175,6 +175,11 @@ import alfheim.common.item.AlfheimItems.elvoriumHelmet
 import alfheim.common.item.AlfheimItems.elvoriumLeggings
 import alfheim.common.item.AlfheimItems.enlighter
 import alfheim.common.item.AlfheimItems.excaliber
+import alfheim.common.item.AlfheimItems.fenrirBoots
+import alfheim.common.item.AlfheimItems.fenrirChestplate
+import alfheim.common.item.AlfheimItems.fenrirClaws
+import alfheim.common.item.AlfheimItems.fenrirHelmet
+import alfheim.common.item.AlfheimItems.fenrirLeggings
 import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.flugelDisc
 import alfheim.common.item.AlfheimItems.flugelHead
@@ -368,18 +373,24 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (elementalLeggings)
 		addItem (elementalBoots)
 		
+		addItem(fenrirHelmet)
+		addItem(fenrirChestplate)
+		addItem(fenrirLeggings)
+		addItem(fenrirBoots)
+		addItem(fenrirClaws)
+		
 		addItem (elvoriumHelmet)
 		addItem (elvoriumChestplate)
 		addItem (elvoriumLeggings)
 		addItem (elvoriumBoots)
+		addItem (realitySword)
 		
 		addItem (soulSword)
-		addItem (realitySword)
 		
 		//addItem (storyToken)
 		
-		addItem (mjolnir)
 		addItem (excaliber)
+		addItem (mjolnir)
 		addItem (subspaceSpear)
 		addItem (gungnir)
 		addItem (gleipnir)

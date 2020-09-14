@@ -1,7 +1,8 @@
 package alfmod.common.item.equipment.armor
 
 import alexsocol.asjlib.*
-import alfheim.common.block.AlfheimBlocks
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfmod.AlfheimModularCore
 import alfmod.client.model.armor.ModelArmorVolcano
 import alfmod.common.core.helper.IconHelper
@@ -24,7 +25,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
-import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
@@ -57,7 +57,8 @@ open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, n
 		itemIcon = IconHelper.forItem(reg, this)
 	}
 	
-	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack?) = false
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack) =
+		material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.MuspelheimPowerIngot
 	
 	var armorSet: Array<ItemStack>? = null
 	

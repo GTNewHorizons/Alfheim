@@ -57,6 +57,8 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 		}
 	}
 	
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack?) = false
+	
 	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, infoList: List<Any?>, advTooltip: Boolean) =
 		ItemRelic.addBindInfo(infoList, stack, player)
 	

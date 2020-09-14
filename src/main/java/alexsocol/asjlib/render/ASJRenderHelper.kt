@@ -15,6 +15,7 @@ object ASJRenderHelper {
 	@JvmStatic
 	fun drawGuideArrows() {
 		glDisable(GL_TEXTURE_2D)
+		glLineWidth(2f)
 		
 		glColor4f(0f, 0f, 1f, 1f)
 		glBegin(GL_LINES)
@@ -36,6 +37,7 @@ object ASJRenderHelper {
 		
 		glColor4f(1f, 1f, 1f, 1f)
 		
+		glLineWidth(1f)
 		glEnable(GL_TEXTURE_2D)
 	}
 	
