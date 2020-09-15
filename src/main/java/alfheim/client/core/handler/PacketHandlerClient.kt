@@ -17,6 +17,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.*
 import alfheim.common.entity.spell.EntitySpellFireball
+import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import alfheim.common.item.relic.record.GinnungagapHandler
 import alfheim.common.network.*
 import alfheim.common.network.Message0dC.m0dc
@@ -65,6 +66,13 @@ object PacketHandlerClient {
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.I]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.I)
 			m1d.GINNUNGAGAP      -> GinnungagapHandler.active = packet.data1 != 0.0
+			m1d.RAGNAROK         -> {
+				ItemRagnarokEmblem.ragnarok = packet.data1 < 1
+				ItemRagnarokEmblem.fogFade = packet.data1.F
+				
+				if (packet.data1 > 0)
+					mc.theWorld.playSound(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, "mob.enderdragon.end", 50f, 0.5f, false)
+			}
 		}
 	}
 	

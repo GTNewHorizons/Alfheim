@@ -1,7 +1,7 @@
 package alfheim.client.gui
 
 import alexsocol.asjlib.*
-import alfheim.AlfheimCore
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.entity.*
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -22,8 +22,7 @@ class GUIRace: Gui() {
 		if (e.type != ElementType.HOTBAR || mc.thePlayer.race == EnumRace.HUMAN) return
 		
 		glPushMatrix()
-		glEnable(GL_BLEND)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		ASJRenderHelper.setBlend()
 		glDisable(GL_DEPTH_TEST)
 		glDepthMask(false)
 		glDisable(GL_ALPHA_TEST)
@@ -59,7 +58,7 @@ class GUIRace: Gui() {
 		glEnable(GL_ALPHA_TEST)
 		glDepthMask(true)
 		glEnable(GL_DEPTH_TEST)
-		glDisable(GL_BLEND)
+		ASJRenderHelper.discard()
 		glPopMatrix()
 	}
 }

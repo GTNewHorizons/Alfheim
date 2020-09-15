@@ -3,8 +3,8 @@ package alfheim.common.item.equipment.bauble.faith
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.api.lib.LibOreDict
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.RagnarokStartHandler
@@ -13,20 +13,22 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.FakeLightning
 import alfheim.common.entity.item.EntityItemImmortal
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.block.ItemStarPlacer2
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
+import alfheim.common.network.Message1d
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.*
+import cpw.mods.fml.common.gameevent.PlayerEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.item.EntityItem
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.*
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.client.event.*
@@ -49,7 +51,8 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		ASJUtilities.say(player, "Check: ${RagnarokStartHandler.check(player, x, y - 1, z)}")
+		if (!world.isRemote)
+			ASJUtilities.say(player, "Check: ${RagnarokStartHandler.check(player, x, y - 1, z)}")
 		
 		return true
 	}
@@ -139,13 +142,13 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 		}
 		
 		val ORE_KEYS = arrayOf(4, 2, 0, 3, 1, 5)
-		val AETHER = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Rainbow")]
-		val WATER = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Blue")]
-		val AIR = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Yellow")]
-		val FIRE = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Red")]
-		val EARTH = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Green")]
-		val ORDER = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("White")]
-		val VOID = ItemStarPlacer2.defaultColors[LibOreDict.COLORS.indexOf("Black")]
+		const val AETHER = -1
+		const val WATER = 336227
+		const val AIR = 15132211
+		const val FIRE = 100400115
+		const val EARTH = 6717491
+		const val ORDER = 16777215
+		const val VOID = 1710618
 		
 		@SubscribeEvent
 		fun craftPendant(e: EntityStruckByLightningEvent) {
@@ -197,7 +200,7 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 									world.setBlock(entityItem, Blocks.air, i, j, k)
 					
 					for (p in path) {
-						val tile = world.getTileEntity(p.x.mfloor(), p.y.mfloor(), p.z.mfloor()) as? TileCracklingStar ?: continue
+						val tile = p.getTileEntity(world) as? TileCracklingStar ?: continue
 						tile.color = VOID
 						tile.pos.set(0, -1, 0)
 						tile.markDirty()
@@ -208,18 +211,18 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 			}
 		}
 		
-		fun walkPath(pos: Vector3, world: World, max: Int, walked: Array<Vector3> = arrayOf(pos),
-					 walkedConnections: Array<Vector3> = arrayOf((world.getTileEntity(pos.x.mfloor(), pos.y.mfloor(), pos.z.mfloor()) as TileCracklingStar).pos),
-					 walkedColors: IntArray = intArrayOf((world.getTileEntity(pos.x.mfloor(), pos.y.mfloor(), pos.z.mfloor()) as TileCracklingStar).color))
+		fun walkPath(start: Vector3, world: World, max: Int, walked: Array<Vector3> = arrayOf(start),
+					 walkedConnections: Array<Vector3> = arrayOf((start.getTileEntity(world) as TileCracklingStar).pos),
+					 walkedColors: IntArray = intArrayOf((start.getTileEntity(world) as TileCracklingStar).color))
 			: Triple<Array<Vector3>, Array<Vector3>, IntArray> {
 			
 			if (walked.size > max) return Triple(walked, walkedConnections, walkedColors)
-			val tile = world.getTileEntity(pos.x.mfloor(), pos.y.mfloor(), pos.z.mfloor())
+			val tile = start.getTileEntity(world)
 			if (tile is TileCracklingStar) {
 				val link = tile.pos.copy()
 				if (link == Vector3(0, -1, 0)) return Triple(walked, walkedConnections, walkedColors)
 				if (link in walked) return Triple(walked, walkedConnections, walkedColors)
-				val linked = world.getTileEntity(link.x.mfloor(), link.y.mfloor(), link.z.mfloor())
+				val linked = link.getTileEntity(world)
 				if (linked is TileCracklingStar) {
 					val linkPos = linked.pos.copy()
 					if (linkPos != Vector3(0, -1, 0))
@@ -228,6 +231,8 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 			}
 			return Triple(walked, walkedConnections, walkedColors)
 		}
+		
+		fun Vector3.getTileEntity(world: World): TileEntity? = world.getTileEntity(x.mfloor(), y.mfloor(), z.mfloor())
 		
 		fun checkItem(path: Array<Vector3>, index: Int, world: World): EntityItem? {
 			val (x, y, z) = path[index]
@@ -246,6 +251,7 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 			player.triggerAchievement(AlfheimAchievements.theEND)
 			
 			ragnarok = true
+			AlfheimCore.network.sendToAll(Message1d(Message1d.m1d.RAGNAROK, 0.999))
 			// TODO the rest
 		}
 		
@@ -266,14 +272,14 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 			if (ragnar.heldItem?.item !== AlfheimItems.soulSword) return
 			
 			when (emblemLight.item) {
-				AlfheimItems.priestEmblem   -> {
+				AlfheimItems.priestEmblem -> {
 					val arr = getByteArray(emblemDark, TAG_CONSUMED, ByteArray(6))
 					if (arr[emblemLight.meta] > 0) return
 					arr[emblemLight.meta] = 1
 					setByteArray(emblemDark, TAG_CONSUMED, arr)
 				}
 				
-				AlfheimItems.ragnarokEmblem -> {
+				AlfheimItems.aesirEmblem  -> {
 					val arr = getByteArray(emblemDark, TAG_CONSUMED, ByteArray(6))
 					val id = arr.indexOfFirst { it < 1 }
 					if (id == -1) return
@@ -281,7 +287,7 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 					setByteArray(emblemDark, TAG_CONSUMED, arr)
 				}
 				
-				else                        -> return
+				else                      -> return
 			}
 			
 			ragnar.playSoundAtEntity("mob.enderdragon.growl", 10f, 0.1f)
@@ -299,6 +305,11 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 			PlayerHandler.getPlayerBaubles(e.entityPlayer)[0] = entity.entityItem?.copy() ?: return
 			entity.setEntityItemStack(null)
 			entity.setDead()
+		}
+		
+		@SubscribeEvent
+		fun informAboutRagnarok(e: PlayerEvent.PlayerLoggedInEvent) {
+			AlfheimCore.network.sendTo(Message1d(Message1d.m1d.RAGNAROK, if (ragnarok) 0.0 else 1.0), e.player as EntityPlayerMP)
 		}
 		
 		@SubscribeEvent

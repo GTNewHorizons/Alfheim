@@ -35,7 +35,6 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.Botania
-import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.tile.TileBrewery
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
@@ -60,10 +59,9 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect, IImmortalHandledItem
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		val block = world.getBlock(x, y, z)
-		if (block === ModBlocks.brewery) {
-			val brew = world.getTileEntity(x, y, z) as TileBrewery
-			brew[0] = stack.splitStack(1)
+		val tile = world.getTileEntity(x, y, z)
+		if (tile is TileBrewery) {
+			tile[0] = stack.splitStack(1)
 		} else { // Stupid Et Futurum
 			if (player.isSneaking && getBlocked(stack) < SEGMENTS) {
 				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true, false)

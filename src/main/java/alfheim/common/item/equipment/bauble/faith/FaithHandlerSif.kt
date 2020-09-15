@@ -20,6 +20,7 @@ import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
+import vazkii.botania.common.item.ModItems
 import java.awt.Color
 
 object FaithHandlerSif: IFaithHandler {
@@ -98,7 +99,7 @@ object FaithHandlerSif: IFaithHandler {
 			if (!world.isRemote && !player.capabilities.isCreativeMode) setInt(emblem, TAG_COOLDOWN, COOLDOWN_PLANT)
 		}
 		
-		if (lvl >= 6) {
+		if (lvl > 5) {
 			if (!world.isRemote && block === Blocks.grass && e.face == 1 && world.getBlock(e.x, e.y + 1, e.z).isAir(world, e.x, e.y + 1, e.z) &&
 				(!world.provider.hasNoSky || e.y < 255) && ModBlocks.flower.canBlockStay(world, e.x, e.y + 1, e.z) && ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 500, true) &&
 				world.setBlock(e.x, e.y + 1, e.z, ModBlocks.flower, world.rand.nextInt(16), 3))
@@ -124,6 +125,7 @@ object FaithHandlerSif: IFaithHandler {
 	override fun getGodPowerLevel(player: EntityPlayer): Int {
 		var lvl = 0
 		
+		if (player.inventory.hasItemStack(ItemStack(ModItems.infiniteFruit))) lvl += 4
 		if (ItemPriestCloak.getCloak(1, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(1, player) != null) lvl += 2
 		if (ItemSifRing.getSifRing(player) != null) lvl += 1

@@ -214,10 +214,12 @@ import alfheim.common.item.AlfheimItems.priestEmblem
 import alfheim.common.item.AlfheimItems.priestRingHeimdall
 import alfheim.common.item.AlfheimItems.priestRingNjord
 import alfheim.common.item.AlfheimItems.priestRingSif
+import alfheim.common.item.AlfheimItems.ragnarokEmblem
 import alfheim.common.item.AlfheimItems.rationBelt
 import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.ringFeedFlower
 import alfheim.common.item.AlfheimItems.ringSpider
+import alfheim.common.item.AlfheimItems.rodBlackHole
 import alfheim.common.item.AlfheimItems.rodClicker
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFlameStar
@@ -329,6 +331,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (attributionBauble)
 		addItem (priestEmblem)
 		addItem (aesirEmblem)
+		addItem (ragnarokEmblem)
 		addItem (creativeReachPendant)
 		addItem (elfFirePendant)
 		addItem (elfIcePendant)
@@ -363,6 +366,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (rodPrismatic)
 		addItem (rodPortal)
 		addItem (rodClicker)
+		addItem (rodBlackHole)
 		addItem (rodGrass)
 		addItem (livingrockPickaxe)
 		addItem (manasteelHoe)

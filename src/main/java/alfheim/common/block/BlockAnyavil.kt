@@ -47,7 +47,8 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 	override fun getRenderType() = LibRenderIDs.idAnyavil
 	
 	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, entity: EntityLivingBase, stack: ItemStack?) {
-		val l = (entity.rotationYaw * 4f / 360f + 0.5).I and 3
+		var l = (entity.rotationYaw * 4f / 360f + 0.5).I and 3
+		if (l % 2 == 0) l = (l + 2) % 4
 		world.setBlockMetadataWithNotify(x, y, z, l, 3)
 	}
 	

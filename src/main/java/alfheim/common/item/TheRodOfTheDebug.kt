@@ -5,6 +5,7 @@ import alfheim.api.ModInfo
 import alfheim.api.entity.*
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
+import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -28,6 +29,8 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 					//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
 					CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
 				}
+				
+				ItemRagnarokEmblem.beginRagnarok(player)
 				
 				// for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
 			} else {

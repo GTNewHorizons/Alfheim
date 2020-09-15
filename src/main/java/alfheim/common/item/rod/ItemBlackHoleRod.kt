@@ -16,6 +16,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 class ItemBlackHoleRod: ItemMod("RodFracturedSpace"), IManaUsingItem, ICoordBoundItem {
 	
 	init {
+		setFull3D()
 		setMaxStackSize(1)
 	}
 	
@@ -56,8 +57,8 @@ class ItemBlackHoleRod: ItemMod("RodFracturedSpace"), IManaUsingItem, ICoordBoun
 				
 				val rememberedTile = world.getTileEntity(i, j, k)
 				if (rememberedTile !is TileOpenCrate) {
-					return false
 					ASJUtilities.say(player, "incorporeal.fracturedSpace.noCrateThere")
+					return false
 				}
 				
 				//Spawn the entity.

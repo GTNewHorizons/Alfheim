@@ -13,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraft.util.*
-import net.minecraft.world.World
+import net.minecraft.world.*
 import net.minecraftforge.common.ForgeHooks
 import vazkii.botania.client.core.handler.BossBarHandler
 import java.awt.*
@@ -46,7 +46,7 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 		super.applyEntityAttributes()
 		getEntityAttribute(SharedMonsterAttributes.followRange).baseValue = 64.0
 		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.4
-		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 650.0
+		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 666.0
 		stepHeight = 5f
 	}
 	
@@ -81,7 +81,13 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 	}
 	
 	override fun onUpdate() {
+		if (worldObj.difficultySetting == EnumDifficulty.PEACEFUL) {
+			setDead()
+			return
+		}
+		
 		super.onUpdate()
+		
 		if (isWet) {
 			isDripping = true
 			isShaking = false

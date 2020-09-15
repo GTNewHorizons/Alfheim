@@ -12,7 +12,7 @@ import vazkii.botania.common.item.relic.ItemRelic
 
 class ItemGjallarhorn: ItemRelic("Gjallarhorn") {
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (!ItemRagnarokEmblem.ragnarok) return stack
 		
 		player.setItemInUse(stack, getMaxItemUseDuration(stack))

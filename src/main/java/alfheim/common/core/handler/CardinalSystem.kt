@@ -10,6 +10,7 @@ import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
+import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
@@ -51,16 +52,17 @@ object CardinalSystem {
 		}
 		
 		try {
-			val fis = FileInputStream(file)
-			val oin = ObjectInputStream(fis)
-			playerSegments = oin.readObject() as HashMap<String, PlayerSegment>
-			TimeStopSystem.tsAreas = oin.readObject() as HashMap<Int, LinkedList<TimeStopSystem.TimeStopArea>>
-			oin.close()
+			ObjectInputStream(FileInputStream(file)).use { oin ->
+				playerSegments = oin.readObject() as HashMap<String, PlayerSegment>
+				TimeStopSystem.tsAreas = oin.readObject() as HashMap<Int, LinkedList<TimeStopSystem.TimeStopArea>>
+				ItemRagnarokEmblem.ragnarok = oin.readObject() as Boolean
+			}
 		} catch (e: Throwable) {
 			ASJUtilities.error("Unable to read whole Cardinal System data. Generating default values...")
 			e.printStackTrace()
 			playerSegments = HashMap()
 			TimeStopSystem.tsAreas = HashMap()
+			ItemRagnarokEmblem.ragnarok = false
 		}
 	}
 	
@@ -82,12 +84,11 @@ object CardinalSystem {
 	
 	fun save(save: String) {
 		try {
-			val fos = FileOutputStream("$save/data/Cardinal.sys")
-			val oos = ObjectOutputStream(fos)
-			oos.writeObject(playerSegments)
-			oos.writeObject(TimeStopSystem.tsAreas)
-			oos.flush()
-			oos.close()
+			ObjectOutputStream(FileOutputStream("$save/data/Cardinal.sys")).use { oos ->
+				oos.writeObject(playerSegments)
+				oos.writeObject(TimeStopSystem.tsAreas)
+				oos.writeObject(ItemRagnarokEmblem.ragnarok)
+			}
 		} catch (e: Throwable) {
 			ASJUtilities.error("Unable to save whole Cardinal System data. Discarding. Sorry :(")
 			e.printStackTrace()
@@ -102,7 +103,9 @@ object CardinalSystem {
 	}
 	
 	fun forPlayer(player: EntityPlayer): PlayerSegment {
-		if (ASJUtilities.isClient) throw RuntimeException("You shouldn't access this from client")
+		if (ASJUtilities.isClient)
+			throw RuntimeException("You shouldn't access this from client")
+		
 		ensureExistance(player)
 		return playerSegments[player.commandSenderName]!!
 	}
