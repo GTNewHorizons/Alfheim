@@ -4,15 +4,11 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.client.render.world.VisualEffectHandlerClient
-import alfheim.common.block.schema.BlockElement
 import alfheim.common.block.tile.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.item.material.EventResourcesMetas
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 import vazkii.botania.common.item.ModItems
@@ -28,7 +24,9 @@ object RagnarokStartHandler {
 			it.readBytes().toString(Charsets.UTF_8)
 		}
 		
-		if (!checkStructure(world, x, y, z, structure)) {
+		if (!SchemaUtils.checkStructure(world, x, y, z, structure) { i, j, k ->
+				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+			}) {
 			ASJUtilities.say(player, "alfheimmisc.ragnarok.wrongStructure")
 			return false
 		}
@@ -93,41 +91,19 @@ object RagnarokStartHandler {
 		15132211
 	)
 	
-	private val cclockStars = arrayOf(
-		arrayOf(2, 0, 2),
-		arrayOf(2, 0, -2),
-		arrayOf(-2, 0, -2),
-		arrayOf(-2, 0, 2)
-	)
-	
-	private val clockStars = arrayOf(
-		arrayOf(7, 0, 0),
-		arrayOf(0, 0, 7),
-		arrayOf(-7, 0, 0),
-		arrayOf(0, 0, -7)
-	)
-	
-	private fun checkStructure(world: World, x: Int, y: Int, z: Int, structure: String): Boolean {
-		val type = object: TypeToken<List<BlockElement>>() {}.type
-		
-		val arr = Gson().fromJson<List<BlockElement>>(structure, type)
-		
-		for (ele in arr) {
-			for (loc in ele.location) {
-				val i = x + loc.x
-				val j = y + loc.y
-				val k = z + loc.z
-				
-				if (world.getBlock(i, j, k) != Block.getBlockFromName(ele.block) || world.getBlockMetadata(i, j, k) != loc.meta) {
-					VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
-					
-					return false
-				}
-			}
-		}
-		
-		return true
-	}
+	private val stars = arrayOf(
+		arrayOf(
+				arrayOf(2, 2),
+				arrayOf(2, -2),
+				arrayOf(-2, -2),
+				arrayOf(-2, 2)
+		) to 5079193,
+		arrayOf(
+				arrayOf(7, 0),
+				arrayOf(0, 7),
+				arrayOf(-7, 0),
+				arrayOf(0, -7)
+		) to 1710618)
 	
 	private fun checkItems(world: World, x: Int, y: Int, z: Int): Boolean {
 		for ((id, pl) in platforms.withIndex()) {
@@ -167,37 +143,22 @@ object RagnarokStartHandler {
 			}
 		}
 		
-		for ((id, s) in cclockStars.withIndex()) {
-			val (i, _, k) = s
-			
-			fun check(): Boolean {
-				val star = world.getTileEntity(x + i, y, z + k) as? TileCracklingStar ?: return false
-				if (star.color != 5079193) return false
-				val (a, _, c) = cclockStars[(id + 1) % cclockStars.size]
-				return star.pos == Vector3(x + a, y, z + c)
+		for (starData in stars)
+			for ((id, s) in starData.first.withIndex()) {
+				val (i, k) = s
+				
+				fun check(starData: Pair<Array<Array<Int>>, Int>): Boolean {
+					val star = world.getTileEntity(x + i, y, z + k) as? TileCracklingStar ?: return false
+					if (star.color != starData.second) return false
+					val (a, c) = starData.first[(id + 1) % starData.first.size]
+					return star.pos == Vector3(x + a, y, z + c)
+				}
+				
+				if (!check(starData)) {
+					VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+					return false
+				}
 			}
-			
-			if (!check()) {
-				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
-				return false
-			}
-		}
-		
-		for ((id, s) in clockStars.withIndex()) {
-			val (i, _, k) = s
-			
-			fun check(): Boolean {
-				val star = world.getTileEntity(x + i, y, z + k) as? TileCracklingStar ?: return false
-				if (star.color != 1710618) return false
-				val (a, _, c) = clockStars[(id + 1) % clockStars.size]
-				return star.pos == Vector3(x + a, y, z + c)
-			}
-			
-			if (!check()) {
-				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
-				return false
-			}
-		}
 		
 		return true
 	}

@@ -1,6 +1,10 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.ItemNBTHelper.getInt
+import alexsocol.asjlib.ItemNBTHelper.getNBT
+import alexsocol.asjlib.ItemNBTHelper.getIntArray
+import alexsocol.asjlib.ItemNBTHelper.setInt
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -9,7 +13,6 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 import org.apache.commons.lang3.ArrayUtils
 import vazkii.botania.api.mana.*
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import kotlin.math.min
 
 class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDisplay {

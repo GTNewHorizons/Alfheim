@@ -1,9 +1,9 @@
-package alfheim.common.core.asm;
+package alexsocol.patcher.asm;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 
-public class AlfheimSyntheticMethods {
+public class ASJSyntheticMethods {
 	
 	public static void onFinishedPotionEffect(EntityLivingBase e, PotionEffect pe) {
 		// e.onFinishedPotionEffect(pe);

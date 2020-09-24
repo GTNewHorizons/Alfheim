@@ -1,9 +1,15 @@
 package alfheim.common.entity.boss
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.math.Vector3
+import alfheim.api.ModInfo
 import alfheim.api.boss.IBotaniaBossWithName
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.common.block.tile.*
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScaledResolution
@@ -12,10 +18,13 @@ import net.minecraft.entity.ai.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
+import net.minecraft.tileentity.TileEntityBeacon
 import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraftforge.common.ForgeHooks
+import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import vazkii.botania.client.core.handler.BossBarHandler
+import vazkii.botania.common.item.ModItems
 import java.awt.*
 import kotlin.math.*
 
@@ -23,8 +32,10 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 	
 	/** true is the wolf is wet else false */
 	private var isDripping = false
+	
 	/** True if the wolf is shaking else False */
 	private var isShaking = false
+	
 	/** This time increases while wolf is shaking and emitting water particles.  */
 	private var timeWolfIsShaking = 0f
 	private var prevTimeWolfIsShaking = 0f
@@ -52,9 +63,9 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 	
 	override fun isAIEnabled() = true
 	
-	override fun func_145780_a(x: Int, y: Int, z: Int, block: Block?) {
-		playSound("mob.wolf.step", soundVolume, soundPitch)
-	}
+	override fun canDespawn() = false
+	
+	override fun func_145780_a(x: Int, y: Int, z: Int, block: Block?) = playSound("mob.wolf.step", soundVolume, soundPitch)
 	
 	override fun getLivingSound() = "mob.wolf.growl"
 	
@@ -186,16 +197,12 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarTextureRect(): Rectangle {
-		if (barRect == null)
-			barRect = Rectangle(0, 88, 185, 15)
-		return barRect!!
+		return barRect ?: Rectangle(0, 88, 185, 15).apply { barRect = this }
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarHPTextureRect(): Rectangle {
-		if (hpBarRect == null)
-			hpBarRect = Rectangle(0, 59, 181, 7)
-		return hpBarRect!!
+		return hpBarRect ?: Rectangle(0, 59, 181, 7).apply { hpBarRect = this }
 	}
 	
 	override fun getBossBarTexture() = BossBarHandler.defaultBossBar!!
@@ -203,9 +210,120 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 	override fun bossBarRenderCallback(res: ScaledResolution?, x: Int, y: Int) = Unit
 	
 	companion object {
+		
 		@SideOnly(Side.CLIENT)
 		private var barRect: Rectangle? = null
+		
 		@SideOnly(Side.CLIENT)
 		private var hpBarRect: Rectangle? = null
+		
+		init {
+			object { // sideonly properties requiring sideonly getters/setters so this will be better :(
+				@SubscribeEvent
+				fun onPlayerInteract(e: PlayerInteractEvent) {
+					if (e.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) return
+					val stack = e.entityPlayer.heldItem ?: return
+					if (stack.item !== ModItems.ancientWill || stack.meta != 6) return
+					
+					e.isCanceled = spawn(e.entityPlayer, stack, e.world, e.x, e.y, e.z)
+				}
+			}.eventFML()
+		}
+		
+		fun spawn(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int): Boolean {
+			if (world.getTileEntity(x, y, z) !is TileEntityBeacon)
+				return false
+			
+			if (!EntityFlugel.isTruePlayer(player)) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.fakeplayer")
+				return false
+			}
+			
+			if (world.difficultySetting == EnumDifficulty.PEACEFUL) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.peacefulNoob")
+				return false
+			}
+			
+			if ((world.getTileEntity(x, y, z) as TileEntityBeacon).levels < 1) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.inactive")
+				return false
+			}
+			
+			if (!hasProperArena(world, x, y, z)) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.badArena")
+				return false
+			}
+			
+			stack.stackSize--
+			if (world.isRemote) return true
+			
+			val e = EntityFenrir(world)
+			e.setPosition(x + 0.5, (y + 3).D, z + 0.5)
+			e.playSoundAtEntity("mob.enderdragon.growl", 10f, 0.1f)
+			world.spawnEntityInWorld(e)
+			return true
+		}
+		
+		val structure = Companion::class.java.getResourceAsStream("/assets/${ModInfo.MODID}/schemas/FenrirRitual").use {
+			it.readBytes().toString(Charsets.UTF_8)
+		}
+		
+		val stars = arrayOf(
+			arrayOf(
+				arrayOf(0, 4),
+				arrayOf(2, -3),
+				arrayOf(-2, -3),
+				arrayOf(0, -4),
+				arrayOf(-2, 3),
+				arrayOf(2, 3)
+			) to 10040115,
+			arrayOf(
+				arrayOf(6, 0),
+				arrayOf(4, -4),
+				arrayOf(-4, -4),
+				arrayOf(-6, 0),
+				arrayOf(-4, 4),
+				arrayOf(4, 4)
+			) to 1710618
+		)
+		
+		val items = Array(6) { ItemStack(ModItems.ancientWill, 1, it) }
+		
+		fun hasProperArena(world: World, x: Int, y: Int, z: Int): Boolean {
+			val struct = SchemaUtils.checkStructure(world, x, y, z, structure)
+			
+			for (starData in stars)
+				for ((id, s) in starData.first.withIndex()) {
+					val (i, k) = s
+					
+					fun check(starData: Pair<Array<Array<Int>>, Int>): Boolean {
+						val star = world.getTileEntity(x + i, y + 1, z + k) as? TileCracklingStar ?: return false
+						if (star.color != starData.second) return false
+						val (a, c) = starData.first[(id + 1) % starData.first.size]
+						return star.pos == Vector3(x + a, y + 1, z + c)
+					}
+					
+					if (!check(starData)) {
+						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+						return false
+					}
+				}
+			
+			for ((id, pos) in stars[1].first.withIndex()) {
+				val (i, k) = pos
+				
+				fun check(): Boolean {
+					val display = world.getTileEntity(x + i, y + 1, z + k) as? TileItemDisplay ?: return false
+					return ASJUtilities.isItemStackEqualCrafting(ItemStack(ModItems.ancientWill, 1, id), display[0] ?: return false)
+				}
+				
+				if (!check()) {
+					VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+					return false
+				}
+			}
+			
+			return struct
+		}
 	}
 }

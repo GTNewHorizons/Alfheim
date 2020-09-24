@@ -897,91 +897,90 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		var isPlayingMusic = false
 		
 		fun spawn(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, hard: Boolean, ultra: Boolean): Boolean {
-			if (world.getTileEntity(x, y, z) is TileEntityBeacon) {
-				if (isTruePlayer(player)) {
-					if (world.difficultySetting == EnumDifficulty.PEACEFUL) {
-						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.peacefulNoob")
-						return false
-					}
-					
-					if ((hard && !player.hasAchievement(AlfheimAchievements.flugelSoul)) || (ultra && !player.hasAchievement(AlfheimAchievements.mask))) {
-						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.tooweak")
-						return false
-					}
-					
-					if ((world.getTileEntity(x, y, z) as TileEntityBeacon).levels < 1) {
-						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.inactive")
-						return false
-					}
-					
-					for (coords in PYLON_LOCATIONS) { // TODO change structure
-						val i = x + coords[0]
-						val j = y + coords[1]
-						val k = z + coords[2]
-						
-						val blockat = world.getBlock(i, j, k)
-						val meta = world.getBlockMetadata(i, j, k)
-						if (blockat !== ModBlocks.pylon || meta != 2) {
-							if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.needsCatalysts")
-							return false
-						}
-						
-					}
-					
-					if (!hasProperArena(world, x, y, z)) {
-						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.badArena")
-						return false
-					}
-					
-					var miku = false
-					var crds: ChunkCoordinates? = null
-					
-					if (stack.item === ModItems.flugelEye) {
-						crds = (ModItems.flugelEye as ItemFlugelEye).getBinding(stack)
-					} else if (stack.item === AlfheimItems.flugelSoul) {
-						crds = ItemFlugelSoul.getFirstCoords(stack)
-					}
-					
-					if (crds != null) miku = crds.posX == 39 && crds.posY == 39 && crds.posZ == 39
-					
-					if (!hard) stack.stackSize--
-					if (world.isRemote) return true
-					
-					val e = EntityFlugel(world)
-					e.setPosition(x + 0.5, (y + 3).D, z + 0.5)
-					e.aiTask = AITask.INVUL
-					e.aiTaskTimer = 0
-					e.dataWatcher.updateObject(6, 1f)
-					e.setSource(x, y, z)
-					
-					if (hard) e.isHardMode = hard
-					if (ultra) e.isUltraMode = ultra
-					
-					e.summoner = player.commandSenderName
-					e.playersDamage[player.commandSenderName] = 0.1f
-					
-					if (miku) {
-						e.alwaysRenderNameTag = true
-						e.customNameTag = "Hatsune Miku"
-					}
-					
-					val players = e.playersAround
-					val playerCount = players.count { isTruePlayer(it) }
-					
-					e.playerCount = playerCount
-					e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).D
-					e.noClip = true
-					
-					e.playSoundAtEntity("mob.enderdragon.growl", 10f, 0.1f)
-					world.spawnEntityInWorld(e)
-					return true
-				}
-				ASJUtilities.say(player, "alfheimmisc.flugel.fakeplayer")
+			if (world.getTileEntity(x, y, z) !is TileEntityBeacon)
+				return false
+			
+			if (!isTruePlayer(player)) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.fakeplayer")
 				return false
 			}
 			
-			// ASJUtilities.say(player, "alfheimmisc.flugel.notbeacon")
-			return false
+			if (world.difficultySetting == EnumDifficulty.PEACEFUL) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.peacefulNoob")
+				return false
+			}
+			
+			if ((hard && !player.hasAchievement(AlfheimAchievements.flugelSoul)) || (ultra && !player.hasAchievement(AlfheimAchievements.mask))) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.tooweak.$ultra")
+				return false
+			}
+			
+			if ((world.getTileEntity(x, y, z) as TileEntityBeacon).levels < 1) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.inactive")
+				return false
+			}
+			
+			for (coords in PYLON_LOCATIONS) { // TODO change structure
+				val i = x + coords[0]
+				val j = y + coords[1]
+				val k = z + coords[2]
+				
+				val blockat = world.getBlock(i, j, k)
+				val meta = world.getBlockMetadata(i, j, k)
+				if (blockat !== ModBlocks.pylon || meta != 2) {
+					if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.needsCatalysts")
+					return false
+				}
+				
+			}
+			
+			if (!hasProperArena(world, x, y, z)) {
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.badArena")
+				return false
+			}
+			
+			var miku = false
+			var crds: ChunkCoordinates? = null
+			
+			if (stack.item === ModItems.flugelEye) {
+				crds = (ModItems.flugelEye as ItemFlugelEye).getBinding(stack)
+			} else if (stack.item === AlfheimItems.flugelSoul) {
+				crds = ItemFlugelSoul.getFirstCoords(stack)
+			}
+			
+			if (crds != null) miku = crds.posX == 39 && crds.posY == 39 && crds.posZ == 39
+			
+			if (!hard) stack.stackSize--
+			if (world.isRemote) return true
+			
+			val e = EntityFlugel(world)
+			e.setPosition(x + 0.5, (y + 3).D, z + 0.5)
+			e.aiTask = AITask.INVUL
+			e.aiTaskTimer = 0
+			e.dataWatcher.updateObject(6, 1f)
+			e.setSource(x, y, z)
+			
+			if (hard) e.isHardMode = hard
+			if (ultra) e.isUltraMode = ultra
+			
+			e.summoner = player.commandSenderName
+			e.playersDamage[player.commandSenderName] = 0.1f
+			
+			if (miku) {
+				e.alwaysRenderNameTag = true
+				e.customNameTag = "Hatsune Miku"
+			}
+			
+			val players = e.playersAround
+			val playerCount = players.count { isTruePlayer(it) }
+			
+			e.playerCount = playerCount
+			e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).D
+			e.noClip = true
+			
+			e.playSoundAtEntity("mob.enderdragon.growl", 10f, 0.1f)
+			world.spawnEntityInWorld(e)
+			return true
 		}
 		
 		/*	================================	UTILITY STUFF	================================	*/

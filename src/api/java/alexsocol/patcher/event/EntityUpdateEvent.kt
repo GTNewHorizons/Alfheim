@@ -1,4 +1,4 @@
-package alfheim.api.event
+package alexsocol.patcher.event
 
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.Entity
@@ -10,12 +10,12 @@ class EntityUpdateEvent(val entity: Entity): Event() {
 	
 	companion object {
 		
-		/** Used in ASM  */
+		/** Used in ASM */
 		@JvmStatic
 		fun instantiate(e: Entity) =
 			EntityUpdateEvent(e)
 		
-		/** Used in ASM  */
+		/** Used in ASM because I'm dumb */
 		@JvmStatic
 		fun stub() {}
 	}

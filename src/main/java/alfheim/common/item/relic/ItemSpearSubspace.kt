@@ -1,6 +1,10 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.ItemNBTHelper.getInt
+import alexsocol.asjlib.ItemNBTHelper.getString
+import alexsocol.asjlib.ItemNBTHelper.setInt
+import alexsocol.asjlib.ItemNBTHelper.setString
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
@@ -126,9 +130,9 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 		super.onPlayerStoppedUsing(stack, world, player, itemInUse)
 	}
 	
-	fun getCooldown(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0)
-	fun isCooledDown(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0) == 0
-	fun setCooldown(stack: ItemStack, cd: Int) = ItemNBTHelper.setInt(stack, TAG_COOLDOWN, cd)
+	fun getCooldown(stack: ItemStack) = getInt(stack, TAG_COOLDOWN, 0)
+	fun isCooledDown(stack: ItemStack) = getInt(stack, TAG_COOLDOWN, 0) == 0
+	fun setCooldown(stack: ItemStack, cd: Int) = setInt(stack, TAG_COOLDOWN, cd)
 	
 	override fun usesMana(arg0: ItemStack) = true
 	
@@ -149,7 +153,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	
 	override fun updateBurst(burst: IManaBurst, stack: ItemStack) {
 		val entity = burst as EntityThrowable
-		val attackerName = ItemNBTHelper.getString(burst.sourceLens, TAG_ATTACKER_USERNAME, "")
+		val attackerName = getString(burst.sourceLens, TAG_ATTACKER_USERNAME, "")
 		
 		val axis = AxisAlignedBB.getBoundingBox(entity.posX - 2.5f, entity.posY - 2.5f, entity.posZ - 2.5f, entity.lastTickPosX + 2.5f, entity.lastTickPosY + 2.5f, entity.lastTickPosZ + 2.5f)
 		
@@ -182,7 +186,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 		burst.setMotion(burst.motionX * motionModifier, burst.motionY * motionModifier, burst.motionZ * motionModifier)
 		
 		val lens = stack.copy()
-		ItemNBTHelper.setString(lens, TAG_ATTACKER_USERNAME, player.commandSenderName)
+		setString(lens, TAG_ATTACKER_USERNAME, player.commandSenderName)
 		burst.sourceLens = lens
 		return burst
 	}

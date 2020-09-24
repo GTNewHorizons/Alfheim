@@ -4,6 +4,8 @@ apply plugin: 'idea'
 
 def mainMod = true
 
+project.logger.lifecycle("\nBuilding " + (mainMod ? "main" : "side") + " mod\n")
+
 buildscript {
 	ext.kotlinVersion = '1.3.50'
 	
@@ -44,7 +46,7 @@ repositories {
 	mavenCentral()
 }
 
-version = mainMod ? "BETA-pre38.2" : "11"
+version = mainMod ? "BETA-pre38.3" : "11"
 group = "main"
 archivesBaseName = mainMod ? "Alfheim" : "AlfheimModular"
 
@@ -72,9 +74,9 @@ dependencies {
 	compile "tconstruct:TConstruct:1.7.10-1.8.8.build991:deobf"
 	
 	compile fileTree(dir: 'lib', include: ['*.jar'])
-	if (mainMod)
-		embed "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-	else
+//	if (mainMod)
+//		embed "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+//	else
 		compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 }
 
@@ -100,6 +102,8 @@ jar {
 		
 		attributes 'FMLCorePluginContainsFMLMod': 'true'
 	}
+	
+	exclude("alexsocol/**")
 	
 	if (mainMod) {
 		exclude ("alfmod/**")

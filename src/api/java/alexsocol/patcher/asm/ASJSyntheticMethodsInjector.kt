@@ -1,12 +1,12 @@
-package alfheim.common.core.asm
+package alexsocol.patcher.asm
 
-import alfheim.api.ModInfo.OBF
+import alexsocol.patcher.asm.ASJHookLoader.Companion.OBF
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
 
 @Suppress("NAME_SHADOWING")
-class AlfheimSyntheticMethodsInjector: IClassTransformer {
+class ASJSyntheticMethodsInjector: IClassTransformer {
 	
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		var basicClass = basicClass
@@ -24,15 +24,15 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 			basicClass = cw.toByteArray()
 		} catch (e: Throwable) {
 			if (doLog) {
-				System.err.println("Something went wrong while transforming class $transformedName. Ignore if everything is OK (this is NOT Alfheim error).")
+				System.err.println("Something went wrong while transforming class $transformedName. Ignore if everything is OK (this is NOT ASJLib error).")
 				e.printStackTrace()
 			}
 		}
 		
-		if (transformedName == "alfheim.common.core.asm.AlfheimSyntheticMethods") {
+		if (transformedName == "alexsocol.patcher.asm.ASJSyntheticMethods") {
 			cr = ClassReader(basicClass!!)
 			cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
-			cv = `AlfheimSyntheticMethods$ClassVisitor`(cw)
+			cv = `ASJSyntheticMethods$ClassVisitor`(cw)
 			cr.accept(cv, ClassReader.SKIP_FRAMES)
 			return cw.toByteArray()
 		}
@@ -56,20 +56,20 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 		}
 	}
 	
-	internal class `AlfheimSyntheticMethods$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+	internal class `ASJSyntheticMethods$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "onFinishedPotionEffect") {
 				println("Generating synthetic onFinishedPotionEffect")
-				return `AlfheimSyntheticMethods$onFinishedPotionEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+				return `ASJSyntheticMethods$onFinishedPotionEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			} else if (name == "onChangedPotionEffect") {
 				println("Generating synthetic onChangedPotionEffect")
-				return `AlfheimSyntheticMethods$onChangedPotionEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+				return `ASJSyntheticMethods$onChangedPotionEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `AlfheimSyntheticMethods$onFinishedPotionEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+		internal class `ASJSyntheticMethods$onFinishedPotionEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitInsn(opcode: Int) {
 				if (opcode == RETURN) {
@@ -85,7 +85,7 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 			}
 		}
 		
-		internal class `AlfheimSyntheticMethods$onChangedPotionEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+		internal class `ASJSyntheticMethods$onChangedPotionEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitInsn(opcode: Int) {
 				if (opcode == RETURN) {
@@ -104,7 +104,6 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 	}
 	
 	companion object {
-		
 		val doLog = System.getProperty("asjlib.asm.errorlog", "off") == "on"
 	}
 }

@@ -1,6 +1,8 @@
 package alfheim.common.item.rod
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.ItemNBTHelper.getBoolean
+import alexsocol.asjlib.ItemNBTHelper.setBoolean
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.entity.boss.EntityFlugel
@@ -172,9 +174,9 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 	
 	override fun getOverlayResource(tile: IAvatarTile?, stack: ItemStack?) = LibResourceLocations.avatarClicker
 	
-	private fun ItemStack.isLeftClick() = ItemNBTHelper.getBoolean(this, TAG_MODE, false)
+	private fun ItemStack.isLeftClick() = getBoolean(this, TAG_MODE, false)
 	
-	private fun ItemStack.setLeftClick(left: Boolean) = ItemNBTHelper.setBoolean(this, TAG_MODE, left)
+	private fun ItemStack.setLeftClick(left: Boolean) = setBoolean(this, TAG_MODE, left)
 	
 	companion object {
 		

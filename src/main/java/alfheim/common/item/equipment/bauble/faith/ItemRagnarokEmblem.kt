@@ -1,6 +1,10 @@
 package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.ItemNBTHelper.getBoolean
+import alexsocol.asjlib.ItemNBTHelper.getByteArray
+import alexsocol.asjlib.ItemNBTHelper.setBoolean
+import alexsocol.asjlib.ItemNBTHelper.setByteArray
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
@@ -38,7 +42,6 @@ import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11
 import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.common.achievement.IPickupAchievement
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAchievement {

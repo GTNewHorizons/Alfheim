@@ -1,6 +1,5 @@
 package alfheim
 
-import alexsocol.asjlib.command.CommandDimTP
 import alfheim.api.ModInfo.MODID
 import alfheim.common.core.asm.AlfheimModularLoader
 import alfheim.common.core.command.*
@@ -120,7 +119,6 @@ class AlfheimCore {
 		CardinalSystem.load(save)
 		e.registerServerCommand(CommandAlfheim())
 		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo())
-		CommandDimTP.register(e)
 	}
 	
 	@EventHandler

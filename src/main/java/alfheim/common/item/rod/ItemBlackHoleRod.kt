@@ -1,12 +1,13 @@
 package alfheim.common.item.rod
 
 import alexsocol.asjlib.*
+import alfheim.api.ModInfo
 import alfheim.common.entity.EntityFracturedSpaceCollector
 import alfheim.common.item.ItemMod
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
+import net.minecraft.util.ChunkCoordinates
 import net.minecraft.world.World
 import vazkii.botania.api.mana.IManaUsingItem
 import vazkii.botania.api.wand.ICoordBoundItem
@@ -28,7 +29,7 @@ class ItemBlackHoleRod: ItemMod("RodFracturedSpace"), IManaUsingItem, ICoordBoun
 			ItemNBTHelper.setInt(stack, TAG_Y, y)
 			ItemNBTHelper.setInt(stack, TAG_Z, z)
 			ItemNBTHelper.setInt(stack, TAG_D, world.provider.dimensionId)
-			if (!world.isRemote) ASJUtilities.say(player, "incorporeal.fracturedSpace.savedPos")
+			if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.fracturedSpace.savedPos")
 			return true
 		} else {
 			//Didn't click a crate.
@@ -39,14 +40,14 @@ class ItemBlackHoleRod: ItemMod("RodFracturedSpace"), IManaUsingItem, ICoordBoun
 			val j = ItemNBTHelper.getInt(stack, TAG_Y, -1)
 			
 			if (j == -1) {
-				if (!world.isRemote) ASJUtilities.say(player, "incorporeal.fracturedSpace.noPos")
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.fracturedSpace.noPos")
 				return false
 			}
 			
 			val d = ItemNBTHelper.getInt(stack, TAG_D, 0)
 			
 			if (d != world.provider.dimensionId) {
-				if (!world.isRemote) ASJUtilities.say(player, "incorporeal.fracturedSpace.wrongDimension")
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.fracturedSpace.wrongDimension")
 				return false
 			}
 			
@@ -57,7 +58,7 @@ class ItemBlackHoleRod: ItemMod("RodFracturedSpace"), IManaUsingItem, ICoordBoun
 				
 				val rememberedTile = world.getTileEntity(i, j, k)
 				if (rememberedTile !is TileOpenCrate) {
-					ASJUtilities.say(player, "incorporeal.fracturedSpace.noCrateThere")
+					ASJUtilities.say(player, "alfheimmisc.fracturedSpace.noCrateThere")
 					return false
 				}
 				
@@ -81,18 +82,18 @@ class ItemBlackHoleRod: ItemMod("RodFracturedSpace"), IManaUsingItem, ICoordBoun
 	override fun addInformation(stack: ItemStack?, player: EntityPlayer, tooltip: MutableList<Any?>, adv: Boolean) {
 		val y = ItemNBTHelper.getInt(stack, TAG_Y, -1)
 		if (y == -1) {
-			addStringToTooltip(StatCollector.translateToLocal("incorporeal.fracturedSpace.tooltipNotBound"), tooltip)
+			addStringToTooltip(tooltip, "alfheimmisc.fracturedSpace.tooltipNotBound")
 		} else {
-			addStringToTooltip(StatCollector.translateToLocal("incorporeal.fracturedSpace.tooltipBound"), tooltip)
+			addStringToTooltip(tooltip, "alfheimmisc.fracturedSpace.tooltipBound")
 			
 			val d = ItemNBTHelper.getInt(stack, TAG_D, 0)
 			
 			if (player.dimension != d)
-				addStringToTooltip(StatCollector.translateToLocal("incorporeal.fracturedSpace.tooltipWrongDimension"), tooltip)
+				addStringToTooltip(tooltip, "alfheimmisc.fracturedSpace.tooltipWrongDimension")
 			
 			if (adv) {
-				addStringToTooltip(StatCollector.translateToLocalFormatted("incorporeal.fracturedSpace.debug.tooltipPos", ItemNBTHelper.getInt(stack, TAG_X, 0), y, ItemNBTHelper.getInt(stack, TAG_Z, 0)), tooltip)
-				addStringToTooltip(StatCollector.translateToLocalFormatted("incorporeal.fracturedSpace.debug.tooltipDim", d), tooltip)
+				addStringToTooltip(tooltip, "alfheimmisc.fracturedSpace.debug.tooltipPos", ItemNBTHelper.getInt(stack, TAG_X, 0).toString(), "$y", ItemNBTHelper.getInt(stack, TAG_Z, 0).toString())
+				addStringToTooltip(tooltip, "alfheimmisc.fracturedSpace.debug.tooltipDim", "$d")
 			}
 		}
 	}

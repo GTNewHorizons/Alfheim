@@ -1,6 +1,12 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.ItemNBTHelper.getBoolean
+import alexsocol.asjlib.ItemNBTHelper.getLong
+import alexsocol.asjlib.ItemNBTHelper.getInt
+import alexsocol.asjlib.ItemNBTHelper.setBoolean
+import alexsocol.asjlib.ItemNBTHelper.setLong
+import alexsocol.asjlib.ItemNBTHelper.setInt
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alexsocol.asjlib.render.ASJRenderHelper.discard
@@ -8,8 +14,8 @@ import alexsocol.asjlib.render.ASJRenderHelper.interpolate
 import alexsocol.asjlib.render.ASJRenderHelper.setBlend
 import alexsocol.asjlib.render.ASJRenderHelper.setGlow
 import alexsocol.asjlib.render.ASJRenderHelper.setTwoside
+import alexsocol.patcher.event.RenderEntityPostEvent
 import alfheim.api.ModInfo
-import alfheim.api.event.RenderEntityPostEvent
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.ContributorsPrivacyHelper
@@ -31,7 +37,6 @@ import net.minecraftforge.event.entity.living.*
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.client.core.handler.ClientTickHandler
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import vazkii.botania.common.item.relic.ItemRelic
 import java.awt.Color
 import java.util.*

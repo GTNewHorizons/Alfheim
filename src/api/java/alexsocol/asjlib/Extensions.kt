@@ -15,7 +15,6 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.oredict.OreDictionary
-import vazkii.botania.common.core.helper.ItemNBTHelper
 import kotlin.math.*
 
 fun Int.bidiRange(range: Int) = (this - range)..(this + range)
@@ -63,9 +62,7 @@ val Number.D get() = this.toDouble()
 val Number.F get() = this.toFloat()
 val Number.I get() = this.toInt()
 
-fun addStringToTooltip(s: String, tooltip: MutableList<Any?>) {
-	tooltip.add(s.replace("&".toRegex(), "\u00a7"))
-}
+operator fun <T> T.plus(s: String) = "$this$s"
 
 // ################ MINECRAFT ####################
 
@@ -171,22 +168,6 @@ fun ItemStack.areItemStackTagsEqual(stack: ItemStack): Boolean {
 	}
 }
 
-fun getIntArray(stack: ItemStack?, tag: String?, defaultExpected: IntArray = IntArray(0)): IntArray {
-	return if (ItemNBTHelper.verifyExistance(stack, tag)) ItemNBTHelper.getNBT(stack).getIntArray(tag) else defaultExpected
-}
-
-fun setIntArray(stack: ItemStack?, tag: String?, array: IntArray) {
-	if (ItemNBTHelper.verifyExistance(stack, tag)) ItemNBTHelper.getNBT(stack).setIntArray(tag, array)
-}
-
-fun getByteArray(stack: ItemStack?, tag: String?, defaultExpected: ByteArray = ByteArray(0)): ByteArray {
-	return if (ItemNBTHelper.verifyExistance(stack, tag)) ItemNBTHelper.getNBT(stack).getByteArray(tag) else defaultExpected
-}
-
-fun setByteArray(stack: ItemStack?, tag: String?, array: ByteArray) {
-	if (ItemNBTHelper.verifyExistance(stack, tag)) ItemNBTHelper.getNBT(stack).setByteArray(tag, array)
-}
-
 var ItemStack.meta
 	get() = itemDamage
 	set(meta) {
@@ -232,4 +213,8 @@ fun World.getTileEntity(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): TileEnti
 fun World.setBlock(e: Entity, block: Block, x: Int = 0, y: Int = 0, z: Int = 0, meta: Int = 0): Boolean {
 	val (i, j, k) = Vector3.fromEntity(e).mf()
 	return setBlock(i + x, j + y, k + z, block, meta, 3)
+}
+
+fun addStringToTooltip(tooltip: MutableList<Any?>, s: String, vararg format: String) {
+	tooltip.add(StatCollector.translateToLocalFormatted(s.replace("&".toRegex(), "\u00a7"), *format))
 }

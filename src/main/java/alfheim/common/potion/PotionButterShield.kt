@@ -2,7 +2,7 @@ package alfheim.common.potion
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.render.ASJRenderHelper
-import alfheim.api.event.RenderEntityPostEvent
+import alexsocol.patcher.event.RenderEntityPostEvent
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

@@ -13,7 +13,7 @@ abstract class EntityRidableFlying(world: World): EntityRidable(world) {
 	override fun fall(f: Float) = Unit // NO-OP
 	
 	override fun moveEntityWithHeading(mS: Float, mF: Float) {
-		onGround = !worldObj.isAirBlock(MathHelper.floor_double(posX), MathHelper.ceiling_double_int(posY - 1.0), MathHelper.floor_double(posZ))
+		onGround = !worldObj.isAirBlock(posX.mfloor(), MathHelper.ceiling_double_int(posY - 1.0), posZ.mfloor())
 		
 		if (rider != null) {
 			rotationYaw = riddenByEntity.rotationYaw

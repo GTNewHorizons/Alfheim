@@ -6,7 +6,7 @@ import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.relauncher.*
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion
-import gloomyfolken.hooklib.minecraft.*
+import gloomyfolken.hooklib.minecraft.HookLoader
 import java.io.File
 
 @MCVersion(value = "1.7.10")
@@ -21,8 +21,7 @@ class AlfheimHookLoader: HookLoader() {
 	}
 	
 	override fun getASMTransformerClass(): Array<String>? {
-		return (arrayOf(AlfheimClassTransformer::class.java.name, ASJPacketCompleter::class.java.name, AlfheimSyntheticMethodsInjector::class.java.name, ASJASM::class.java.name)
-				+ if (AlfheimConfigHandler.primaryClassTransformer) arrayOf(PrimaryClassTransformer::class.java.name) else emptyArray())
+		return arrayOf(AlfheimClassTransformer::class.java.name, ASJPacketCompleter::class.java.name, ASJASM::class.java.name)
 	}
 	
 	override fun registerHooks() {

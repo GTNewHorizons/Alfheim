@@ -1,13 +1,12 @@
 package alexsocol.asjlib.command
 
 import alexsocol.asjlib.*
-import cpw.mods.fml.common.event.FMLServerStartingEvent
 import net.minecraft.command.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.ChunkCoordinates
 
-class CommandDimTP private constructor(): CommandBase() {
+object CommandDimTP: CommandBase() {
 	
 	override fun getRequiredPermissionLevel() = 2
 	
@@ -38,17 +37,6 @@ class CommandDimTP private constructor(): CommandBase() {
 			
 		} else {
 			throw WrongUsageException("alfheim.commands.tpdim.wrong")
-		}
-	}
-	
-	companion object {
-		
-		val instance = CommandDimTP()
-		var registered = false
-		
-		fun register(event: FMLServerStartingEvent) {
-			event.registerServerCommand(instance)
-			registered = true
 		}
 	}
 }

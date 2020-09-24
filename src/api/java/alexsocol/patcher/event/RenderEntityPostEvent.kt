@@ -1,4 +1,4 @@
-package alfheim.api.event
+package alexsocol.patcher.event
 
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.Entity

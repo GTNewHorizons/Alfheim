@@ -1,4 +1,4 @@
-package alfheim.common.block.schema
+package alexsocol.asjlib
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -8,7 +8,7 @@ import net.minecraft.nbt.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 
-object SchemaGenerator {
+object SchemaUtils {
 	
 	fun generate(world: World, x: Int, y: Int, z: Int, schemaText: String) {
 		val type = object: TypeToken<List<BlockElement>>() {}.type
@@ -29,6 +29,27 @@ object SchemaGenerator {
 				}
 			}
 		}
+	}
+	
+	fun checkStructure(world: World, x: Int, y: Int, z: Int, structure: String, onFail: ((Int, Int, Int) -> Unit)? = null): Boolean {
+		val type = object: TypeToken<List<BlockElement>>() {}.type
+		
+		val arr = Gson().fromJson<List<BlockElement>>(structure, type)
+		
+		for (ele in arr) {
+			for (loc in ele.location) {
+				val i = x + loc.x
+				val j = y + loc.y
+				val k = z + loc.z
+				
+				if (world.getBlock(i, j, k) != Block.getBlockFromName(ele.block) || world.getBlockMetadata(i, j, k) != loc.meta) {
+					onFail?.invoke(i, j, k)
+					return false
+				}
+			}
+		}
+		
+		return true
 	}
 }
 

@@ -53,7 +53,6 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var modularThread			= false
 	var modularUpdate			= true
 	var modularUpdateConfirm	= false
-	var primaryClassTransformer	= true
 	
 	// DIMENSION
 	var biomeIDAlfheim			= 152
@@ -70,7 +69,6 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var winterGrassReadyGen		= true
 	
 	// ENTITIES
-	var globalEntityIDs			= true
 	var butterflySpawn			= intArrayOf(10, 1, 2)
 	var chickSpawn				= intArrayOf(10, 4, 4)
 	var cowSpawn				= intArrayOf( 8, 4, 4)
@@ -195,7 +193,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		addCategory(CATEGORY_POTIONS, "Potion IDs")
 		addCategory(CATEGORY_INTEGRATION, "Cross-mods and modpacks integration")
 		addCategory(CATEGORY_INT_NEI, "NEI integration")
-		addCategory(CATEGORY_INT_OF, "OptiFine integration")
+		addCategory(CATEGORY_INT_OF, "OptiFine override")
 		addCategory(CATEGORY_INT_TC, "Thaumcraft integration")
 		addCategory(CATEGORY_INT_TiC, "Tinkers' Construct integration")
 		addCategory(CATEGORY_ESMODE, "Elvenstory Mode optional features")
@@ -217,7 +215,6 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
 		modularUpdate = loadProp(CATEGORY_PRELOAD, "modularUpdate", modularUpdate, true, "[HIGHLY !NOT! RECOMMENDED - can cause me be angry at you] Set this to false if you REALLY don't want Alfheim Modular to be downloaded/updated automatically")
 		modularUpdateConfirm = loadProp(CATEGORY_PRELOAD, "modularUpdateConfirm", modularUpdateConfirm, true, "Set this to true if you are totally 146% sure you don't want modular auto updates")
-		primaryClassTransformer = loadProp(CATEGORY_PRELOAD, "primaryClassTransformer", primaryClassTransformer, true, "Set this to false if some mod in your modpack is also using GloomyFolken's hooklib and there are conflicts")
 		
 		biomeIDAlfheim = loadProp(CATEGORY_DIMENSION, "biomeIDAlfheim", biomeIDAlfheim, true, "Biome ID for standart biome")
 		destroyPortal = loadProp(CATEGORY_DIMENSION, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
@@ -231,7 +228,6 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
 		winterGrassReadyGen = loadProp(CATEGORY_WORLDGEN, "winterGrassReadyGen", winterGrassReadyGen, false, "Set this to false to prevent ready generation snow grass instead of regular")
 		
-		globalEntityIDs = loadProp(CATEGORY_ENTITIES, "globalEntityIDs", globalEntityIDs, true, "Set this to false to use local mod entity IDs")
 		butterflySpawn = loadProp(CATEGORY_ENTITIES, "butterflySpawn", butterflySpawn, false, "Butterfly spawn weight (chance), min and max group count")
 		cowSpawn = loadProp(CATEGORY_ENTITIES, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
 		chickSpawn = loadProp(CATEGORY_ENTITIES, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
@@ -246,7 +242,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		authTimeout = loadProp(CATEGORY_GENERAL, "authTimeout", authTimeout, false, "Time limit for client to send authentication credentials", 100, 600)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
-		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to false forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")
+		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to false to forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")
 		flugelSwapBlackList = loadProp(CATEGORY_GENERAL, "flugelSwapBlackList", flugelSwapBlackList, false, "Blacklist for items that flugel can't swap [modid:name]", false)
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
@@ -265,7 +261,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, false, "Which schemas are allowed to be generated", false)
 		schemaMaxSize = loadProp(CATEGORY_GENERAL, "schemaMaxSize", schemaMaxSize, false, "Max schema cuboid side length")
-		soulSwordMaxLvl = loadProp(CATEGORY_GENERAL, "soulSwordMaxLvl", soulSwordMaxLvl, false, "Soul Sword max level")
+		soulSwordMaxLvl = loadProp(CATEGORY_GENERAL, "soulSwordMaxLvl", soulSwordMaxLvl, false, "Sword of Ragnarok max level")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
 		triquetrumBlackList = loadProp(CATEGORY_GENERAL, "triquetrumBlackList", triquetrumBlackList, false, "Blacklist for blocks that triquetrum can't swap [modid:name]", false)
@@ -281,17 +277,17 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		interactionSecurity = loadProp(CATEGORY_INTEGRATION, "interactionSecurity", interactionSecurity, false, "Region security manager. Visit Alfheim wiki for more info")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity (for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools)")
 		
-		clearWater = loadProp(CATEGORY_INT_OF, "clearWater", clearWater, false, "[OF override] Set this to true for clear, transparent water")
-		voidFog = loadProp(CATEGORY_INT_OF, "voidFog", voidFog, false, "[OF override] Set this to false to disable void fog")
+		clearWater = loadProp(CATEGORY_INT_OF, "clearWater", clearWater, false, "Set this to true for clear, transparent water")
+		voidFog = loadProp(CATEGORY_INT_OF, "voidFog", voidFog, false, "Set this to false to disable void fog")
 		
-		blacklistWither = loadProp(CATEGORY_INT_NEI, "NEI.blacklistWither", blacklistWither, true, "[NEI] Set this to false to make Wither spawner visible")
+		blacklistWither = loadProp(CATEGORY_INT_NEI, "NEI.blacklistWither", blacklistWither, true, "Set this to false to make Wither spawner visible")
 		
-		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")
-		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
-		thaumTreeSuffusion = loadProp(CATEGORY_INT_TC, "TC.treeCrafting", thaumTreeSuffusion, true, "[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
+		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "Set this to false to disable adding aspects to Botania")
+		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "Set this to false to use Sensus instead of Color aspect")
+		thaumTreeSuffusion = loadProp(CATEGORY_INT_TC, "TC.treeCrafting", thaumTreeSuffusion, true, "[GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
 		
-		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Livingrock, Redstring, Manastring materials respectively")
-		modifierIDs = loadProp(CATEGORY_INT_TiC, "TiC.modifierIDs", modifierIDs, true, "[TiC] IDs for ManaCore modifiers respectively")
+		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Livingrock, Redstring, Manastring materials respectively")
+		modifierIDs = loadProp(CATEGORY_INT_TiC, "TiC.modifierIDs", modifierIDs, true, "IDs for ManaCore modifiers respectively")
 		
 		potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")
 		potionIDBleeding = loadProp(CATEGORY_MMOP, "potionIDBleeding", potionIDBleeding, true, "Potion id for Bleeding")

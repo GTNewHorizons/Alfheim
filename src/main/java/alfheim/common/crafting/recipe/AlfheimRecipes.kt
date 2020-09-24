@@ -1671,9 +1671,6 @@ object AlfheimRecipes {
 	private fun registerShapelessRecipes() {
 		arrayOf(ELVORIUM_INGOT, MAUFTRIUM_INGOT, MUSPELHEIM_POWER_INGOT, NIFLHEIM_POWER_INGOT).forEachIndexed { id, ingot ->
 			addShapelessOreDictRecipe(ItemStack(alfStorage, 1, id), *Array(9) { ingot })
-			addShapelessOreDictRecipe(ItemStack(alfStorage, 1, id), *Array(9) { ingot })
-			addShapelessOreDictRecipe(ItemStack(alfStorage, 1, id), *Array(9) { ingot })
-			addShapelessOreDictRecipe(ItemStack(alfStorage, 1, id), *Array(9) { ingot })
 		}
 		
 		addShapelessOreDictRecipe(ItemStack(auraRingElven), ELVORIUM_INGOT, auraRingGreater)
