@@ -46,6 +46,7 @@ object AlfheimItems {
 	val colorOverride: Item
 	val creativeReachPendant: Item
 	val crescentMoonAmulet: Item
+	val daolos: Item
 	val dodgeRing: Item
 	val elementalBoots: Item
 	val elementalChestplate: Item
@@ -154,6 +155,7 @@ object AlfheimItems {
 		colorOverride = ItemColorOverride()
 		creativeReachPendant = ItemCreativeReachPendant()
 		crescentMoonAmulet = ItemCrescentMoonAmulet()
+		daolos = ItemDaolos()
 		dodgeRing = ItemDodgeRing()
 		fireGrenade = ItemFireGrenade()
 		elementalHelmet = ItemElementalWaterHelm()

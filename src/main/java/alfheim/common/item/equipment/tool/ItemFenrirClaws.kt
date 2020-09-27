@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.tool
 
 import alexsocol.asjlib.render.ASJRenderHelper
-import alfheim.api.ModInfo
+import alfheim.api.*
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.equipment.armor.fenrir.ItemFenrirArmor
@@ -14,12 +14,11 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import net.minecraftforge.common.util.EnumHelper
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
 import vazkii.botania.common.lib.LibMisc
 
-class ItemFenrirClaws: ItemManasteelSword(FENRIR, "FenrirClaws") {
+class ItemFenrirClaws: ItemManasteelSword(AlfheimAPI.FENRIR, "FenrirClaws") {
 	
 	val MANA_PER_DAMAGE = 40
 	val attackDamage = 3.0
@@ -86,8 +85,4 @@ class ItemFenrirClaws: ItemManasteelSword(FENRIR, "FenrirClaws") {
 	}
 	
 	override fun getIconIndex(stack: ItemStack?) = itemIcon!! // no elucidator
-	
-	companion object {
-		val FENRIR = EnumHelper.addToolMaterial("FENRIR", 0, 2000, 0f, 3.0f, 14)
-	}
 }

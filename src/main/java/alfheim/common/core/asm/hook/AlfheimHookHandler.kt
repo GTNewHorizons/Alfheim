@@ -74,7 +74,7 @@ import vazkii.botania.common.block.tile.mana.*
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
-import vazkii.botania.common.crafting.recipe.AesirRingRecipe
+import vazkii.botania.common.crafting.recipe.*
 import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
@@ -610,6 +610,15 @@ object AlfheimHookHandler {
 		}
 		
 		return foundThorRing && foundSifRing && foundNjordRing && foundLokiRing && foundHeimdallRing && foundOdinRing
+	}
+	
+	val specialHeads = arrayOf("AlexSocol", "Vazkii", "yrsegal", "l0nekitsune", "Tristaric")
+	
+	@JvmStatic
+	@Hook
+	fun getOutput(recipe: HeadRecipe) {
+		if (recipe.name in specialHeads)
+			recipe.name = ""
 	}
 	
 	@JvmStatic
