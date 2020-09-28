@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.tool
 
 import alexsocol.asjlib.*
-import alfheim.api.ModInfo
+import alfheim.api.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
@@ -24,7 +24,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import kotlin.math.*
 
-class ItemSoulSword: ItemSword(soul), IManaUsingItem {
+class ItemSoulSword: ItemSword(AlfheimAPI.SOUL), IManaUsingItem {
 	
 	init {
 		creativeTab = AlfheimTab
@@ -63,8 +63,6 @@ class ItemSoulSword: ItemSword(soul), IManaUsingItem {
 	}
 	
 	companion object {
-		
-		private val soul = EnumHelper.addToolMaterial("Soul", -1, -1, -1f, -1f, -1)!!
 		
 		private const val TAG_SOUL_LEVEL = "soulLevel"
 		

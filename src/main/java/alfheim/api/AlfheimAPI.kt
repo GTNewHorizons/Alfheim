@@ -24,12 +24,16 @@ import kotlin.collections.HashMap
 
 object AlfheimAPI {
 	
-	val ElvoriumArmor = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)!!
-	val elvoriumToolMaterial = EnumHelper.addToolMaterial("ELVORIUM", 4, 2400, 9.5f, 3f, 30)!!
-	val ElementalArmor = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)!!
-	val mauftriumToolmaterial = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 40)!!
+	val ElvoriumArmor = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)
+	val elvoriumToolMaterial = EnumHelper.addToolMaterial("ELVORIUM", 4, 2400, 9.5f, 3f, 30)
+	val ElementalArmor = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)
+	val mauftriumToolmaterial = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 40)
 	
-	var RUNEAXE = EnumHelper.addToolMaterial("RUNEAXE", 4, 1561, 8f, 2f, 50)!!
+	// relic
+	val EXCALIBER = EnumHelper.addToolMaterial("EXCALIBER", 3, -1, 6.2f, 6f, 40)
+	val FENRIR = EnumHelper.addToolMaterial("FENRIR", 0, 2000, 0f, 3.0f, 14)
+	var RUNEAXE = EnumHelper.addToolMaterial("RUNEAXE", 4, 1561, 8f, 2f, 50)
+	val SOUL = EnumHelper.addToolMaterial("SOUL", -1, -1, -1f, -1f, -1) // ragnarok sword
 	
 	/** List of [RecipeElvenTrade] outputs banned for re'trading in Alfheim trade portal  */
 	val bannedRetrades = ArrayList<ItemStack>()

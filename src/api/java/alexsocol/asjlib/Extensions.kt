@@ -221,5 +221,5 @@ fun World.setBlock(e: Entity, block: Block, x: Int = 0, y: Int = 0, z: Int = 0, 
 }
 
 fun addStringToTooltip(tooltip: MutableList<Any?>, s: String, vararg format: String) {
-	tooltip.add(StatCollector.translateToLocalFormatted(s.replace("&".toRegex(), "\u00a7"), *format))
+	tooltip.add(StatCollector.translateToLocalFormatted(s, *format).replace("&".toRegex(), "\u00a7"))
 }
