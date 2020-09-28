@@ -954,7 +954,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			if (world.isRemote) return true
 			
 			val e = EntityFlugel(world)
-			e.setPosition(x + 0.5, (y + 3).D, z + 0.5)
+			e.setPosition(x + 0.5, y + 3.0, z + 0.5)
 			e.aiTask = AITask.INVUL
 			e.aiTaskTimer = 0
 			e.dataWatcher.updateObject(6, 1f)

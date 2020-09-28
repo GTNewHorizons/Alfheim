@@ -6,7 +6,6 @@ import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.*
 import net.minecraft.init.Blocks
@@ -298,7 +297,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	
 	override fun recieveMana(mana: Int) {
 		this.mana = max(0, min(MAX_MANA, this.mana + mana))
-		worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
+		ASJUtilities.dispatchTEToNearbyPlayers(this)
 	}
 	
 	override fun canRecieveManaFromBursts() = hasValidPlatform() && areItemsValid(items)
@@ -308,18 +307,12 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	override fun attachSpark(entity: ISparkEntity) = Unit
 	
 	override fun getAttachedSpark(): ISparkEntity? {
-		val sparks = worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, AxisAlignedBB.getBoundingBox(xCoord.D, (yCoord + 1).D, zCoord.D, (xCoord + 1).D, (yCoord + 2).D, (zCoord + 1).D))
-		if (sparks.size == 1) {
-			val e = sparks[0] as Entity
-			return e as ISparkEntity
-		}
-		
-		return null
+		return worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, boundingBox().offset(0.0, 1.0, 0.0)).safeZeroGet(0) as? ISparkEntity
 	}
 	
 	override fun areIncomingTranfersDone() = !hasValidPlatform() || !areItemsValid(items)
 	
-	override fun getAvailableSpaceForMana() = max(0, MAX_MANA - currentMana)
+	override fun getAvailableSpaceForMana() = max(0, MAX_MANA - mana)
 	
 	fun onWanded(player: EntityPlayer?) {
 		if (player == null)

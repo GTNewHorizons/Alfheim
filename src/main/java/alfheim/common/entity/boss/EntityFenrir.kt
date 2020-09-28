@@ -227,7 +227,7 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 					
 					e.isCanceled = spawn(e.entityPlayer, stack, e.world, e.x, e.y, e.z)
 				}
-			}.eventFML()
+			}.eventForge()
 		}
 		
 		fun spawn(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int): Boolean {
@@ -258,7 +258,7 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 			if (world.isRemote) return true
 			
 			val e = EntityFenrir(world)
-			e.setPosition(x + 0.5, (y + 3).D, z + 0.5)
+			e.setPosition(x + 0.5, y + 3.0, z + 0.5)
 			e.playSoundAtEntity("mob.enderdragon.growl", 10f, 0.1f)
 			world.spawnEntityInWorld(e)
 			return true

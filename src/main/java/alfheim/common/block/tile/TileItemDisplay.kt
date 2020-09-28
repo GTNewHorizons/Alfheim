@@ -1,12 +1,13 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.I
+import alexsocol.asjlib.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.ISidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.*
 import vazkii.botania.common.block.tile.TileMod
 
+// FIXME change to TileItemContainer
 class TileItemDisplay: TileMod(), ISidedInventory {
  
 	private val slots = intArrayOf(0)
@@ -60,11 +61,7 @@ class TileItemDisplay: TileMod(), ISidedInventory {
 			par2ItemStack.stackSize = this.inventoryStackLimit
 		}
         
-        markDirty()
-		if (!worldObj.isRemote) {
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord)
-		}
-		
+        ASJUtilities.dispatchTEToNearbyPlayers(this)
 	}
 	
 	override fun getInventoryName() = "container.itemDisplay"

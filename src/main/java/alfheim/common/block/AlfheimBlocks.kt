@@ -93,6 +93,7 @@ object AlfheimBlocks {
 	val poisonIce: Block
 	val powerStone: Block
 	val raceSelector: Block
+	val ragnarokCore: Block
 	val rainbowDirt: Block
 	val rainbowFlame: Block
 	val rainbowGrass: Block
@@ -250,6 +251,7 @@ object AlfheimBlocks {
 		poisonIce = BlockPoisonIce()
 		powerStone = BlockPowerStone()
 		raceSelector = BlockRaceSelector()
+		ragnarokCore = BlockRagnarokCore()
 		rainbowDirt = BlockRainbowDirt()
 		rainbowFlame = BlockManaFlame("rainbowFlame", TileRainbowManaFlame::class.java)
 		rainbowLeaves = BlockRainbowLeaves()

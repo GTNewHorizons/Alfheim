@@ -163,6 +163,7 @@ object AlfheimRegistry {
 		registerTile(TileManaInfuser::class.java, "ManaInfuser")
 		registerTile(TilePowerStone::class.java, "PowerStone")
 		registerTile(TileRaceSelector::class.java, "RaceSelector")
+		registerTile(TileRagnarokCore::class.java, "RagnarokCore")
 		registerTile(TileTradePortal::class.java, "TradePortal")
 		
 		registerAnomalies()

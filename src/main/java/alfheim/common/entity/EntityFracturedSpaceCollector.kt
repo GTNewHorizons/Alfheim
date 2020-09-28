@@ -48,7 +48,12 @@ class EntityFracturedSpaceCollector(world: World): Entity(world) {
 			if (age > AGE_SPECIAL_START) {
 				val nearbyItemEnts = worldObj.getEntitiesWithinAABB(EntityItem::class.java, boundingBox().expand(RADIUS, 1.0, RADIUS)) as MutableList<EntityItem>
 				
-				nearbyItemEnts.removeAll { MathHelper.pointDistancePlane(it.posX, it.posZ, posX, posZ) > RADIUS }
+				nearbyItemEnts.removeAll {
+					MathHelper.pointDistancePlane(it.posX, it.posZ, posX, posZ) > RADIUS ||
+					!it.isEntityAlive ||
+					it.entityItem == null ||
+					it.entityItem.stackSize <= 0
+				}
 				
 				//Succ into the wormhole
 				for (ent in nearbyItemEnts) {
@@ -79,9 +84,9 @@ class EntityFracturedSpaceCollector(world: World): Entity(world) {
 					if (tile is TileOpenCrate && tile.canEject()) {
 						//delete all the items and emit them from the crate
 						for (ent in nearbyItemEnts) {
-							val stack = ent.entityItem ?: continue
+							val stack = ent.entityItem // ?: continue removed above
 							val count = stack.stackSize
-							if (count <= 0) continue
+//							if (count <= 0) continue // removed above
 							val cost = count * MANA_COST_PER_ITEM
 							if (ManaItemHandler.requestManaExact(TOOL_STACK, player, cost, false)) {
 								//(item stacks aren't sorted by size so don't break on a failed mana extraction)

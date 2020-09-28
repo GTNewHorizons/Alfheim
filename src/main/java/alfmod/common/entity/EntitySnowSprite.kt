@@ -129,10 +129,6 @@ object SpriteKillHandler {
 	
 	val regions = HashMap<Pair<Int, Int>, Int>()
 	
-	init {
-		MinecraftForge.EVENT_BUS.register(this)
-	}
-	
 	@SubscribeEvent
 	fun onSpriteKilled(e: LivingDeathEvent) {
 		val sprite = e.entityLiving as? EntitySnowSprite ?: return

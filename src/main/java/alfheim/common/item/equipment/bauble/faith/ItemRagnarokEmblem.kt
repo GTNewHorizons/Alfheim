@@ -11,7 +11,6 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.tile.*
-import alfheim.common.core.handler.RagnarokStartHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.FakeLightning
@@ -53,12 +52,12 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 		setHasSubtypes(true)
 	}
 	
-	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		if (!world.isRemote)
-			ASJUtilities.say(player, "Check: ${RagnarokStartHandler.check(player, x, y - 1, z)}")
-		
-		return true
-	}
+//	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+//		if (!world.isRemote)
+//			ASJUtilities.say(player, "Check: ${RagnarokStartHandler.check(player, x, y - 1, z)}")
+//
+//		return true
+//	}
 	
 	override fun canEquip(stack: ItemStack?, player: EntityLivingBase?) =
 		player is EntityPlayer && player.hasAchievement(AlfheimAchievements.ragnarok)
@@ -117,6 +116,7 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 		}
 	}
 	
+	// FIXME move to another file
 	companion object RagnarokHandler {
 		
 		const val TAG_BOUND = "ragnarok.bound"

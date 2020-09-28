@@ -20,8 +20,13 @@ import kotlin.math.*
 fun Int.bidiRange(range: Int) = (this - range)..(this + range)
 
 fun safeIndex(id: Int, size: Int) = max(0, min(id, size - 1))
+
 fun <T> List<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
+fun <T> List<T>.safeZeroGet(id: Int): T? = if (size == 0) null else this[safeIndex(id, size)]
+
 fun <T> Array<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
+fun <T> Array<T>.safeZeroGet(id: Int): T? = if (size == 0) null else this[safeIndex(id, size)]
+
 fun <T> Array<T>.shuffled(): MutableList<T> = toMutableList().apply { shuffle() }
 
 /**

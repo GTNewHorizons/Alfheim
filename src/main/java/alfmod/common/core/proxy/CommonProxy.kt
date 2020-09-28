@@ -41,7 +41,8 @@ open class CommonProxy {
 	}
 	
 	open fun registerHandlers() {
-		if (WRATH_OF_THE_WINTER) SpriteKillHandler
+		if (WRATH_OF_THE_WINTER)
+			SpriteKillHandler.eventForge()
 	}
 	
 	open fun postInit() {

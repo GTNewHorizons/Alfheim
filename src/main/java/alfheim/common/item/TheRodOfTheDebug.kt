@@ -3,8 +3,8 @@ package alfheim.common.item
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.entity.*
+import alfheim.common.block.tile.TileRagnarokCore
 import alfheim.common.core.handler.CardinalSystem
-import alfheim.common.entity.boss.EntityFenrir
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
@@ -48,6 +48,8 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 		
 		try {
 //			if (!world.isRemote) world.getBlock(x, y, z).updateTick(world, x, y, z, world.rand)
+			
+			SchemaUtils.generate(world, x, y, z, TileRagnarokCore.structureWinter)
 			
 			val te = world.getTileEntity(x, y, z)
 			if (te != null) {
