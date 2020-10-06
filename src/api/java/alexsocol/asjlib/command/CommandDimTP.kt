@@ -14,29 +14,26 @@ object CommandDimTP: CommandBase() {
 	
 	override fun getCommandName() = "tpdim"
 	
-	override fun getCommandUsage(sender: ICommandSender) = "alfheim.commands.tpdim.usage"
+	override fun getCommandUsage(sender: ICommandSender) = "asjcore.commands.tpdim.usage"
 	
 	override fun processCommand(sender: ICommandSender, args: Array<String>) {
-		if (args.size == 1 && args[0].matches("-?\\d+".toRegex()) && sender is EntityPlayer) {
-			try {
-				val id = args[0].toInt()
-				try {
-					val w = MinecraftServer.getServer().worldServerForDimension(id) ?: throw NullPointerException("Loaded dimension is null")
-					
-					var s: ChunkCoordinates? = sender.getBedLocation(id)
-					// stupid minecraft returns overworld coordinates in ANY dimension
-					if (s == null) s = w.spawnPoint
-					ASJUtilities.sendToDimensionWithoutPortal(sender, id, s!!.posX.D, s.posY.D, s.posZ.D)
-				} catch (e: Throwable) {
-					throw WrongUsageException("alfheim.commands.tpdim.worlderr")
-				}
-				
-			} catch (nfe: NumberFormatException) {
-				throw WrongUsageException("alfheim.commands.tpdim.wrongid")
-			}
+		try {
+			sender as EntityPlayer
+			val id = args[0].toInt()
+			val w = MinecraftServer.getServer().worldServerForDimension(id) ?: throw NoWorldException("Loaded dimension is null")
+			var s: ChunkCoordinates? = sender.getBedLocation(id)
+			// stupid minecraft returns overworld coordinates in ANY dimension
+			if (s == null) s = w.spawnPoint
+			ASJUtilities.sendToDimensionWithoutPortal(sender, id, s!!.posX.D, s.posY.D, s.posZ.D)
 			
-		} else {
-			throw WrongUsageException("alfheim.commands.tpdim.wrong")
+		} catch (e: NumberFormatException) {
+			throw WrongUsageException("asjcore.commands.tpdim.wrongid", e)
+		} catch (e: NoWorldException) {
+			throw WrongUsageException("asjcore.commands.tpdim.worlderr", e)
+		} catch (e: Throwable) {
+			throw WrongUsageException("asjcore.commands.tpdim.wrong", e)
 		}
 	}
+	
+	private class NoWorldException(message: String): RuntimeException(message)
 }

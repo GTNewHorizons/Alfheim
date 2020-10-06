@@ -70,9 +70,6 @@ object FaithHandlerHeimdall: IFaithHandler {
 		return Vector3(e.motionX, e.motionY, e.motionZ)
 	}
 
-//	@SubscribeEvent
-//	fun bifrostPlatform(e: LivingUpdateEvent) {
-	
 	fun bifrostPlatform(player: EntityPlayer, emblem: ItemStack) {
 		if (player.capabilities.isFlying) return
 		val world = player.worldObj

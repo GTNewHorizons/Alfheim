@@ -6,7 +6,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import com.google.gson.*
 import cpw.mods.fml.common.registry.*
-import cpw.mods.fml.relauncher.*
+import cpw.mods.fml.relauncher.FMLInjectionData
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -369,6 +369,9 @@ open class TileSchemaController: TileMod() {
 					worldObj.getTileEntity(x, y, z)?.let {
 						nbt = NBTTagCompound()
 						it.writeToNBT(nbt)
+						nbt!!.removeTag("x")
+						nbt!!.removeTag("y")
+						nbt!!.removeTag("z")
 					}
 					
 					if (map.containsKey(key))

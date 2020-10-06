@@ -4,7 +4,6 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.api.boss.IBotaniaBossWithName
-import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.AlfheimItems
@@ -264,9 +263,7 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 			return true
 		}
 		
-		val structure = Companion::class.java.getResourceAsStream("/assets/${ModInfo.MODID}/schemas/FenrirRitual").use {
-			it.readBytes().toString(Charsets.UTF_8)
-		}
+		val structure = SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/FenrirRitual")
 		
 		val stars = arrayOf(
 			arrayOf(
@@ -290,7 +287,7 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 		val items = Array(6) { ItemStack(ModItems.ancientWill, 1, it) }
 		
 		fun hasProperArena(world: World, x: Int, y: Int, z: Int): Boolean {
-			val struct = SchemaUtils.checkStructure(world, x, y, z, structure)
+			val struct = SchemaUtils.checkStructure(world, x, y, z, structure, VisualEffectHandler::sendError)
 			
 			for (starData in stars)
 				for ((id, s) in starData.first.withIndex()) {
@@ -304,7 +301,7 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 					}
 					
 					if (!check(starData)) {
-						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+						VisualEffectHandler.sendError(world.provider.dimensionId, x + i, y, z + k)
 						return false
 					}
 				}
@@ -318,7 +315,7 @@ class EntityFenrir(world: World): EntityCreature(world), IBotaniaBossWithName {
 				}
 				
 				if (!check()) {
-					VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+					VisualEffectHandler.sendError(world.provider.dimensionId, x + i, y, z + k)
 					return false
 				}
 			}

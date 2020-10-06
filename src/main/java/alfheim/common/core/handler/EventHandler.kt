@@ -291,7 +291,8 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onServerTick(e: ServerTickEvent) {
-		EntityLolicorn.tick()
+		if (e.phase == Phase.START)
+			EntityLolicorn.tick()
 		
 		if (AlfheimConfigHandler.enableMMO) {
 			if (e.phase == Phase.START) {

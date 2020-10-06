@@ -15,9 +15,9 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
+import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfheim.common.core.helper.*
 import alfheim.common.entity.spell.EntitySpellFireball
-import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import alfheim.common.item.relic.record.GinnungagapHandler
 import alfheim.common.network.*
 import alfheim.common.network.Message0dC.m0dc
@@ -67,10 +67,10 @@ object PacketHandlerClient {
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.I)
 			m1d.GINNUNGAGAP      -> GinnungagapHandler.active = packet.data1 != 0.0
 			m1d.RAGNAROK         -> {
-				ItemRagnarokEmblem.ragnarok = packet.data1 < 1
-				ItemRagnarokEmblem.fogFade = packet.data1.F
+				RagnarokHandler.ragnarok = packet.data1 < 1
+				RagnarokHandler.fogFade = packet.data1.F
 				
-				if (packet.data1 > 0)
+				if (0 < packet.data1 && packet.data1 < 1)
 					mc.theWorld.playSound(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, "mob.enderdragon.end", 50f, 0.5f, false)
 			}
 		}
@@ -134,6 +134,9 @@ object PacketHandlerClient {
 			}
 			
 			m3d.WAETHER      -> {
+				mc.theWorld.setRainStrength(if (packet.data1.I > 0) 1f else 0f)
+				mc.theWorld.setThunderStrength(if (packet.data1.I > 1) 1f else 0f)
+				
 				val info = mc.theWorld.worldInfo
 				info.isRaining = packet.data1.I > 0
 				info.rainTime = packet.data2.I

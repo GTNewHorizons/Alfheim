@@ -2,48 +2,49 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.ItemNBTHelper.getBoolean
-import alexsocol.asjlib.ItemNBTHelper.getByteArray
-import alexsocol.asjlib.ItemNBTHelper.setBoolean
-import alexsocol.asjlib.ItemNBTHelper.setByteArray
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.api.event.PlayerInteractAdequateEvent
+import alfheim.api.item.equipment.bauble.IManaDiscountBauble
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.block.tile.*
+import alfheim.common.core.handler.ragnarok.RagnarokEmblemStabilizationHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.entity.FakeLightning
-import alfheim.common.entity.item.EntityItemImmortal
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.equipment.bauble.ItemPriestEmblem
-import alfheim.common.network.Message1d
+import alfheim.common.item.equipment.bauble.*
+import alfheim.common.item.material.ElvenResourcesMetas
+import alfheim.common.item.relic.*
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
-import cpw.mods.fml.common.eventhandler.*
-import cpw.mods.fml.common.gameevent.PlayerEvent
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
+import net.minecraft.block.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.item.EntityItem
-import net.minecraft.entity.player.*
-import net.minecraft.init.Blocks
-import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntity
+import net.minecraft.entity.passive.EntityVillager
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.*
+import net.minecraft.item.*
+import net.minecraft.potion.*
 import net.minecraft.util.*
-import net.minecraft.world.World
-import net.minecraftforge.client.event.*
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent
-import net.minecraftforge.event.entity.living.LivingDeathEvent
-import net.minecraftforge.event.entity.player.*
+import net.minecraftforge.client.event.RenderPlayerEvent
+import net.minecraftforge.event.entity.living.*
 import org.lwjgl.opengl.GL11
+import travellersgear.api.TravellersGearAPI
 import vazkii.botania.api.item.IBaubleRender
-import vazkii.botania.common.achievement.IPickupAchievement
+import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.subtile.ISpecialFlower
+import vazkii.botania.common.core.handler.ConfigHandler
+import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
+import vazkii.botania.common.item.relic.*
+import java.util.*
 
-class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAchievement {
+class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IManaDiscountBauble {
 	
 	lateinit var gemIcons: Array<IIcon>
 	
@@ -52,18 +53,211 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 		setHasSubtypes(true)
 	}
 	
-//	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-//		if (!world.isRemote)
-//			ASJUtilities.say(player, "Check: ${RagnarokStartHandler.check(player, x, y - 1, z)}")
-//
-//		return true
-//	}
+	lateinit var godRelics: Array<Item>
 	
 	override fun canEquip(stack: ItemStack?, player: EntityLivingBase?) =
 		player is EntityPlayer && player.hasAchievement(AlfheimAchievements.ragnarok)
 	
+	override fun onEquippedOrLoadedIntoWorld(stack: ItemStack, player: EntityLivingBase) {
+		if (stack.hasSoul(0))
+			FaithHandlerThor.onEquipped(stack, player as? EntityPlayer ?: return, IFaithHandler.FaithBauble.EMBLEM)
+	}
+	
+	override fun onWornTick(stack: ItemStack, player: EntityLivingBase?) {
+		super.onWornTick(stack, player)
+		
+		if (player !is EntityPlayer) return
+		
+		if (stack.hasSoul(1))
+			doReversedSif(stack, player)
+		
+		if (stack.hasSoul(2))
+			doReversedNjord(stack, player)
+		
+		if (stack.hasSoul(3))
+			FaithHandlerLoki.onWornTick(stack, player, IFaithHandler.FaithBauble.EMBLEM)
+		
+		if (stack.hasSoul(4) && !player.worldObj.isRemote && ManaItemHandler.requestManaExact(stack, player, 1, !player.worldObj.isRemote)) {
+			player.addPotionEffect(PotionEffect(Potion.nightVision.id, 10, 0))
+			player.removePotionEffect(Potion.blindness.id)
+		}
+		
+		if (!::godRelics.isInitialized)
+			godRelics = arrayOf(AlfheimItems.mjolnir, ModItems.infiniteFruit, AlfheimItems.daolos, AlfheimItems.gleipnir, AlfheimItems.gjallarhorn, AlfheimItems.gungnir,
+								ModItems.thorRing, AlfheimItems.priestRingSif, AlfheimItems.priestRingNjord, ModItems.lokiRing, AlfheimItems.priestRingHeimdall, ModItems.odinRing, ModItems.aesirRing)
+		
+		if (ItemThorRing.getThorRing(player) != null ||
+			ItemSifRing.getSifRing(player) != null ||
+			ItemNjordRing.getNjordRing(player) != null ||
+			ItemLokiRing.getLokiRing(player) != null ||
+			ItemHeimdallRing.getHeimdallRing(player) != null ||
+			ItemOdinRing.getOdinRing(player) != null ||
+			godRelics.any {
+				val slot = ASJUtilities.getSlotWithItem(it, player.inventory)
+				if (slot == -1) return@any false
+				val relic = player.inventory[slot]
+				relic != null && ItemRelic.isRightPlayer(player, relic)
+			}) {
+			
+			stack.instability++
+			
+			when {
+				stack.instability == 600  -> ASJUtilities.say(player, "alfheimmisc.ragnarok.instability1")
+				stack.instability == 1200 -> ASJUtilities.say(player, "alfheimmisc.ragnarok.instability2")
+				stack.instability == 1800 -> ASJUtilities.say(player, "alfheimmisc.ragnarok.instability3")
+				
+				stack.instability >= 2400 -> {
+					ASJUtilities.say(player, "alfheimmisc.ragnarok.instabilityS")
+					
+					PlayerHandler.getPlayerBaubles(player)[0] = null
+				}
+			}
+			
+			return
+		}
+		
+		for (meta in 0 until ItemPriestEmblem.TYPES) {
+			ItemPriestCloak.getCloak(meta, player) ?: continue
+			
+			stack.instability++
+			
+			when {
+				stack.instability == 600  -> ASJUtilities.say(player, "alfheimmisc.ragnarok.instability1")
+				stack.instability == 1200 -> ASJUtilities.say(player, "alfheimmisc.ragnarok.instability2")
+				stack.instability == 1800 -> ASJUtilities.say(player, "alfheimmisc.ragnarok.instability3")
+				
+				stack.instability >= 2400 -> {
+					ASJUtilities.say(player, "alfheimmisc.ragnarok.instabilityO")
+					
+					if (AlfheimCore.TravellersGearLoaded) {
+						val tg = TravellersGearAPI.getExtendedInventory(player)
+						tg[0] = null
+						TravellersGearAPI.setExtendedInventory(player, tg)
+					} else {
+						PlayerHandler.getPlayerBaubles(player)[3] = null
+					}
+				}
+			}
+			
+			return
+		}
+	}
+	
 	override fun canUnequip(stack: ItemStack?, player: EntityLivingBase?) =
-		player !is EntityPlayer || !player.hasAchievement(AlfheimAchievements.theEND)
+		!getBoolean(stack, TAG_BOUND, false)
+	
+	override fun onUnequipped(stack: ItemStack, player: EntityLivingBase) {
+		if (stack.hasSoul(0))
+			FaithHandlerThor.onUnequipped(stack, player as? EntityPlayer ?: return, IFaithHandler.FaithBauble.EMBLEM)
+	}
+	
+	fun doReversedSif(stack: ItemStack, player: EntityPlayer) {
+		if (player.rng.nextInt(120) != 0) return
+		if (!ManaItemHandler.requestManaExact(stack, player, 10, true)) return
+		
+		val (srcx, srcy, srcz) = Vector3.fromEntity(player).mf()
+		val world = player.worldObj
+		
+		val range = 8
+		val rangeY = 4
+		val coords: MutableList<ChunkCoordinates?> = ArrayList()
+		
+		for (i in -range..range) {
+			for (j in -rangeY..rangeY) {
+				for (k in -range..range) {
+					val x = srcx + i
+					val y = srcy + j
+					val z = srcz + k
+					
+					val block = world.getBlock(x, y, z)
+					
+					if (!(block is BlockBush || block is ISpecialFlower || block.isLeaves(world, x, y, z)))
+						continue
+					
+					coords.add(ChunkCoordinates(x, y, z))
+				}
+			}
+		}
+		
+		if (coords.isEmpty()) return
+		
+		val currCoords = coords.random()!!
+		val block = world.getBlock(currCoords.posX, currCoords.posY, currCoords.posZ)
+		val meta = world.getBlockMetadata(currCoords.posX, currCoords.posY, currCoords.posZ)
+		val items = block.getDrops(world, currCoords.posX, currCoords.posY, currCoords.posZ, meta, 0)
+		
+		if (!world.isRemote) {
+			world.setBlockToAir(currCoords.posX, currCoords.posY, currCoords.posZ)
+			
+			if (ConfigHandler.blockBreakParticles)
+				world.playAuxSFX(2001, currCoords.posX, currCoords.posY, currCoords.posZ, Block.getIdFromBlock(block) + (meta shl 12))
+			
+			items.forEach { world.spawnEntityInWorld(EntityItem(world, currCoords.posX.toDouble() + 0.5, currCoords.posY.toDouble() + 0.5, currCoords.posZ.toDouble() + 0.5, it)) }
+		}
+	}
+	
+	fun doReversedNjord(stack: ItemStack, player: EntityPlayer) {
+		if (player.rng.nextInt(60) != 0) return
+		if (!ManaItemHandler.requestManaExact(stack, player, 10, true)) return
+		
+		val (srcx, srcy, srcz) = Vector3.fromEntity(player).mf()
+		val world = player.worldObj
+		
+		val range = 8
+		val rangeY = 4
+		val coords: MutableList<ChunkCoordinates?> = ArrayList()
+		
+		for (i in -range..range) {
+			for (j in -rangeY..rangeY) {
+				for (k in -range..range) {
+					val x = srcx + i
+					val y = srcy + j
+					val z = srcz + k
+					
+					val block = world.getBlock(x, y, z)
+					
+					if (!(block === Blocks.fire || block === Blocks.flowing_lava || block === Blocks.lava))
+						continue
+					
+					coords.add(ChunkCoordinates(x, y, z))
+				}
+			}
+		}
+		
+		if (coords.isEmpty()) return
+		
+		val currCoords = coords.random()!!
+		val block = world.getBlock(currCoords.posX, currCoords.posY, currCoords.posZ)
+		val meta = world.getBlockMetadata(currCoords.posX, currCoords.posY, currCoords.posZ)
+		
+		if (!world.isRemote) {
+			if (block === Blocks.lava)
+				world.setBlock(currCoords.posX, currCoords.posY, currCoords.posZ, Blocks.cobblestone)
+			else
+				world.setBlockToAir(currCoords.posX, currCoords.posY, currCoords.posZ)
+			
+			if (ConfigHandler.blockBreakParticles)
+				world.playAuxSFX(2001, currCoords.posX, currCoords.posY, currCoords.posZ, Block.getIdFromBlock(block) + (meta shl 12))
+		}
+	}
+	
+	private var ItemStack.instability
+		get() = ItemNBTHelper.getInt(this, TAG_INSTABILITY, 0)
+		set(value) = ItemNBTHelper.setInt(this, TAG_INSTABILITY, value)
+	
+	override fun addHiddenTooltip(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, adv: Boolean) {
+		super.addHiddenTooltip(stack, player, list, adv)
+		
+		val souls = ItemNBTHelper.getByteArray(stack, TAG_CONSUMED, ByteArray(6))
+		if (souls.any { it < 1 }) return
+		
+		addStringToTooltip(list, "\"${RagnarokEmblemStabilizationHandler.phrase1}")
+		addStringToTooltip(list, "${RagnarokEmblemStabilizationHandler.phrase2}\"")
+	}
+	
+	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer): Float {
+		return ItemNBTHelper.getByteArray(stack, TAG_CONSUMED, ByteArray(6)).sum() / 6f * 0.25f
+	}
 	
 	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
 		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("item\\.botania:".toRegex(), "item.${ModInfo.MODID}:")
@@ -85,8 +279,6 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 		pass == 0 && getBoolean(stack, TAG_BOUND, false)
 	
 	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
-	
-	override fun getAchievementOnPickup(stack: ItemStack?, player: EntityPlayer?, entityItem: EntityItem?) = AlfheimAchievements.ragnarok
 	
 	override fun onPlayerBaubleRender(stack: ItemStack?, event: RenderPlayerEvent, type: IBaubleRender.RenderType?) {
 		if (type == IBaubleRender.RenderType.BODY) {
@@ -116,223 +308,57 @@ class ItemRagnarokEmblem: ItemBauble("ragnarokEmblem"), IBaubleRender, IPickupAc
 		}
 	}
 	
-	// FIXME move to another file
-	companion object RagnarokHandler {
+	companion object {
 		
 		const val TAG_BOUND = "ragnarok.bound"
-		const val TAG_GEM_FLAG = "renderGem"
 		const val TAG_CONSUMED = "consumedPowers"
+		const val TAG_GEM_FLAG = "renderGem"
+		const val TAG_INSTABILITY = "instability"
 		
-		var ragnarok = false
-		var fogFade = 1f
+		const val TAG_STOLEN = "ragnarok.stolen"
 		
 		init {
 			eventForge()
 		}
 		
-		// ################################################################
-		// ####################### Crafting Pendant #######################
-		// ################################################################
+		private fun ItemStack.hasSoul(meta: Int): Boolean = ItemNBTHelper.getByteArray(this, TAG_CONSUMED, ByteArray(6))[meta] > 0
 		
-		@SubscribeEvent
-		fun spawnLightningForPendant(e: PlayerInteractEvent) {
-			if (e.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) return
-			val player = e.entityPlayer
-			if (player.heldItem?.item !== AlfheimItems.wiltedLotus || player.heldItem.meta != 1) return
-			val tile = e.world.getTileEntity(e.x, e.y, e.z) as? TileAnomaly ?: return
-			if (tile.mainSubTile != "Lightning") return
-			e.world.addWeatherEffect(EntityLightningBolt(e.world, e.x.D, e.y.D, e.z.D))
-		}
-		
-		val ORE_KEYS = arrayOf(4, 2, 0, 3, 1, 5)
-		const val AETHER = -1
-		const val WATER = 336227
-		const val AIR = 15132211
-		const val FIRE = 100400115
-		const val EARTH = 6717491
-		const val ORDER = 16777215
-		const val VOID = 1710618
-		
-		@SubscribeEvent
-		fun craftPendant(e: EntityStruckByLightningEvent) {
-			val entityItem = e.entity
-			if (entityItem !is EntityItem || entityItem.entityItem == null || entityItem.entityItem.item !== AlfheimItems.attributionBauble) return
-			val world = entityItem.worldObj
-			val anomaly = world.getTileEntity(entityItem) as? TileAnomaly ?: return
-			if (anomaly.mainSubTile != "Lightning") return
-			
-			val (x, y, z) = Vector3.fromEntity(entityItem).mf()
-			
-			val poses = mutableListOf<Vector3>()
-			
-			for (i in x.bidiRange(5))
-				for (j in y.bidiRange(5))
-					for (k in z.bidiRange(5)) {
-						if (Vector3.pointDistanceSpace(x, y, z, i, j, k) > 25) continue
-						val star = world.getTileEntity(i, j, k) as? TileCracklingStar ?: continue
-						
-						if (star.color == AETHER)
-							poses.add(Vector3(i, j, k))
-					}
-			
-			mainLoop@ for (pos in poses) {
-				val (path, connections, colors) = walkPath(pos, world, 5)
-				if (path.size != 6) continue
-				if (connections[5] != path[0]) continue
-				if (colors[0] == AETHER &&
-					colors[1] == WATER &&
-					colors[2] == AIR &&
-					colors[3] == FIRE &&
-					colors[4] == EARTH &&
-					colors[5] == ORDER) {
-					for (i in path.indices)
-						(checkItem(path, i, world) ?: continue@mainLoop).setDead()
-					
-					entityItem.setDead()
-					val entity = EntityItemImmortal(world, entityItem.posX, entityItem.posY + 1, entityItem.posZ, ItemStack(AlfheimItems.ragnarokEmblem))
-					entity.motionY = 1.0
-					entity.delayBeforeCanPickup = 30
-					world.spawnEntityInWorld(entity)
-					val fakeBolt = FakeLightning(world, entityItem.posX, entityItem.posY, entityItem.posZ)
-					world.addWeatherEffect(fakeBolt)
-					
-					for (i in 0.bidiRange(3))
-						for (j in 0.bidiRange(3))
-							for (k in 0.bidiRange(3))
-								if (world.getBlock(entityItem, i, j, k) === Blocks.fire)
-									world.setBlock(entityItem, Blocks.air, i, j, k)
-					
-					for (p in path) {
-						val tile = p.getTileEntity(world) as? TileCracklingStar ?: continue
-						tile.color = VOID
-						tile.pos.set(0, -1, 0)
-						tile.markDirty()
-					}
-					
-					break
-				}
-			}
-		}
-		
-		fun walkPath(start: Vector3, world: World, max: Int, walked: Array<Vector3> = arrayOf(start),
-					 walkedConnections: Array<Vector3> = arrayOf((start.getTileEntity(world) as TileCracklingStar).pos),
-					 walkedColors: IntArray = intArrayOf((start.getTileEntity(world) as TileCracklingStar).color))
-			: Triple<Array<Vector3>, Array<Vector3>, IntArray> {
-			
-			if (walked.size > max) return Triple(walked, walkedConnections, walkedColors)
-			val tile = start.getTileEntity(world)
-			if (tile is TileCracklingStar) {
-				val link = tile.pos.copy()
-				if (link == Vector3(0, -1, 0)) return Triple(walked, walkedConnections, walkedColors)
-				if (link in walked) return Triple(walked, walkedConnections, walkedColors)
-				val linked = link.getTileEntity(world)
-				if (linked is TileCracklingStar) {
-					val linkPos = linked.pos.copy()
-					if (linkPos != Vector3(0, -1, 0))
-						return walkPath(link, world, max, arrayOf(*walked, link), arrayOf(*walkedConnections, linkPos), intArrayOf(*walkedColors, linked.color))
-				}
-			}
-			return Triple(walked, walkedConnections, walkedColors)
-		}
-		
-		fun Vector3.getTileEntity(world: World): TileEntity? = world.getTileEntity(x.mfloor(), y.mfloor(), z.mfloor())
-		
-		fun checkItem(path: Array<Vector3>, index: Int, world: World): EntityItem? {
-			val (x, y, z) = path[index]
-			val items = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1)) as List<EntityItem>
-			return items.firstOrNull { it.entityItem != null && it.entityItem.item === AlfheimItems.priestEmblem && it.entityItem.meta == ORE_KEYS[index] }
-		}
-		
-		// ################################################################
-		// ######################## Begin Ragnarok ########################
-		// ################################################################
-		
-		fun beginRagnarok(player: EntityPlayer) {
-			if (!player.hasAchievement(AlfheimAchievements.ragnarok)) return
-			val emblem = getEmblem(player) ?: return
-			setBoolean(emblem, TAG_BOUND, true)
-			player.triggerAchievement(AlfheimAchievements.theEND)
-			
-			ragnarok = true
-			AlfheimCore.network.sendToAll(Message1d(Message1d.m1d.RAGNAROK, 0.999))
-			// TODO the rest
-		}
-		
-		// ################################################################
-		// ################### Consume Priests' emblems ###################
-		// ################################################################
-		
-		@SubscribeEvent(priority = EventPriority.LOWEST) // let it be canceled
-		fun onPlayerDied(e: LivingDeathEvent) {
-			if (!ragnarok) return
-			
-			val ragnar = e.source.entity as? EntityPlayer ?: return
-			val priest = e.entityLiving as? EntityPlayer ?: return
-			
-			val emblemDark = getEmblem(ragnar) ?: return
-			val emblemLight = ItemPriestEmblem.getEmblem(-1, priest) ?: return
-			
-			if (ragnar.heldItem?.item !== AlfheimItems.soulSword) return
-			
-			when (emblemLight.item) {
-				AlfheimItems.priestEmblem -> {
-					val arr = getByteArray(emblemDark, TAG_CONSUMED, ByteArray(6))
-					if (arr[emblemLight.meta] > 0) return
-					arr[emblemLight.meta] = 1
-					setByteArray(emblemDark, TAG_CONSUMED, arr)
-				}
-				
-				AlfheimItems.aesirEmblem  -> {
-					val arr = getByteArray(emblemDark, TAG_CONSUMED, ByteArray(6))
-					val id = arr.indexOfFirst { it < 1 }
-					if (id == -1) return
-					arr[id] = 1
-					setByteArray(emblemDark, TAG_CONSUMED, arr)
-				}
-				
-				else                      -> return
-			}
-			
-			ragnar.playSoundAtEntity("mob.enderdragon.growl", 10f, 0.1f)
-			--emblemLight.stackSize
-		}
-		
-		// technical stuff
-		
-		@SubscribeEvent(priority = EventPriority.LOWEST) // for Baubles to add it's contents
-		fun lockEmblemForever(e: PlayerDropsEvent) {
-			val i = e.drops.indexOfFirst { getBoolean(it.entityItem, TAG_BOUND, false) }
-			if (i == -1) return
-			
-			val entity = e.drops.removeAt(i) ?: return
-			PlayerHandler.getPlayerBaubles(e.entityPlayer)[0] = entity.entityItem?.copy() ?: return
-			entity.setEntityItemStack(null)
-			entity.setDead()
-		}
-		
-		@SubscribeEvent
-		fun informAboutRagnarok(e: PlayerEvent.PlayerLoggedInEvent) {
-			AlfheimCore.network.sendTo(Message1d(Message1d.m1d.RAGNAROK, if (ragnarok) 0.0 else 1.0), e.player as EntityPlayerMP)
-		}
-		
-		@SubscribeEvent
-		@SideOnly(Side.CLIENT)
-		fun makeTheHorizonRed(e: EntityViewRenderEvent.FogColors) {
-			if (!ragnarok) return
-			
-			if (e.entity.dimension == 1) return // not sure
-			
-			if (fogFade > 0) fogFade -= 0.001f
-			
-			e.red += (1f - e.red) * (1 - fogFade)
-			e.green *= fogFade
-			e.blue *= fogFade
-		}
-		
-		fun getEmblem(player: EntityPlayer?): ItemStack? {
+		fun getEmblem(player: EntityPlayer?, meta: Int = -1): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player ?: return null)
 			val stack = baubles[0] ?: return null
-			return if (stack.item === AlfheimItems.ragnarokEmblem) stack else null
+			if (stack.item !== AlfheimItems.ragnarokEmblem) return null
+			if (meta != -1 && !stack.hasSoul(meta)) return null
+			return stack
+		}
+		
+		@SubscribeEvent
+		fun onLivingHurt(e: LivingHurtEvent) {
+			if (e.source.damageType != "player") return
+			
+			val player = e.source.entity as? EntityPlayer ?: return
+			if (getEmblem(player, 4) != null && Math.random() > 0.25)
+				e.ammount *= 1.5f
+			
+			if (getEmblem(player, 5) != null)
+				e.ammount *= 1 + (1 - player.health / player.maxHealth) * 0.5f
+		}
+		
+		@SubscribeEvent
+		fun stealFromVillagers(e: PlayerInteractAdequateEvent.RightClick) {
+			val target = e.entity as? EntityVillager ?: return
+			if (e.player.heldItem != null && !e.player.isSneaking) return
+			if (target.entityData.getBoolean(TAG_STOLEN)) return
+			
+			e.player.dropPlayerItemWithRandomChoice(if (target.isChild) ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvenWeed) else ItemStack(Items.emerald), true)
+			target.entityData.setBoolean(TAG_STOLEN, true)
+		}
+		
+		@SubscribeEvent
+		fun restoreStolenVillager(e: LivingEvent.LivingUpdateEvent) {
+			val target = e.entity as? EntityVillager ?: return
+			if (!target.entityData.getBoolean(TAG_STOLEN)) return
+			if (target.worldObj.rand.nextInt(10000) != 0) return
+			target.entityData.setBoolean(TAG_STOLEN, false)
 		}
 	}
 }

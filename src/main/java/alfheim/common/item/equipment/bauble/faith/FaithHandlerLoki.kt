@@ -40,7 +40,9 @@ object FaithHandlerLoki: IFaithHandler {
 		val player = e.player
 		val stack = player.heldItem
 		
-		val emblem = ItemPriestEmblem.getEmblem(3, player) ?: return
+		var emblem = ItemPriestEmblem.getEmblem(3, player)
+		if (emblem == null) emblem = ItemRagnarokEmblem.getEmblem(player, 3) ?: return
+		
 		if (!ManaItemHandler.requestManaExact(emblem, player, 300, false)) return
 		if (emblem.cooldown > 0) return
 		
@@ -98,7 +100,10 @@ object FaithHandlerLoki: IFaithHandler {
 	fun onPlayerHurt(e: LivingAttackEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		
-		if (ItemPriestCloak.getCloak(3, player) != null)
+		var emblem = ItemPriestEmblem.getEmblem(3, player)
+		if (emblem == null) emblem = ItemRagnarokEmblem.getEmblem(player, 3)
+		
+		if (emblem != null)
 			if (e.source.isExplosion || (Math.random() <= 0.1 && e.source.damageType in avoidableDamage)) {
 				e.isCanceled = true
 				

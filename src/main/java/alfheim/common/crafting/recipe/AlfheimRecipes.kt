@@ -15,6 +15,7 @@ import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
 import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
 import alfheim.api.lib.LibOreDict.EMERALD
+import alfheim.api.lib.LibOreDict.FENRIR_FUR
 import alfheim.api.lib.LibOreDict.FLORAL_POWDER
 import alfheim.api.lib.LibOreDict.HOLY_PENDANT
 import alfheim.api.lib.LibOreDict.IFFESAL_DUST
@@ -185,6 +186,12 @@ import alfheim.common.item.AlfheimItems.elvoriumHelmet
 import alfheim.common.item.AlfheimItems.elvoriumHelmetRevealing
 import alfheim.common.item.AlfheimItems.elvoriumLeggings
 import alfheim.common.item.AlfheimItems.enlighter
+import alfheim.common.item.AlfheimItems.fenrirBoots
+import alfheim.common.item.AlfheimItems.fenrirChestplate
+import alfheim.common.item.AlfheimItems.fenrirClaws
+import alfheim.common.item.AlfheimItems.fenrirHelmet
+import alfheim.common.item.AlfheimItems.fenrirHelmetRevealing
+import alfheim.common.item.AlfheimItems.fenrirLeggings
 import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.invisibilityCloak
@@ -210,6 +217,7 @@ import alfheim.common.item.AlfheimItems.rationBelt
 import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.ringFeedFlower
 import alfheim.common.item.AlfheimItems.ringSpider
+import alfheim.common.item.AlfheimItems.rodBlackHole
 import alfheim.common.item.AlfheimItems.rodClicker
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFlameStar
@@ -221,6 +229,7 @@ import alfheim.common.item.AlfheimItems.rodNiflheim
 import alfheim.common.item.AlfheimItems.rodPortal
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.soulHorn
+import alfheim.common.item.AlfheimItems.soulSword
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer2
@@ -237,6 +246,7 @@ import alfheim.common.item.material.ElvenResourcesMetas.GrapeLeaf
 import alfheim.common.item.material.ElvenResourcesMetas.IffesalDust
 import alfheim.common.item.material.ElvenResourcesMetas.InfusedDreamwoodTwig
 import alfheim.common.item.material.ElvenResourcesMetas.InterdimensionalGatewayCore
+import alfheim.common.item.material.ElvenResourcesMetas.JormungandScale
 import alfheim.common.item.material.ElvenResourcesMetas.Jug
 import alfheim.common.item.material.ElvenResourcesMetas.ManaInfusionCore
 import alfheim.common.item.material.ElvenResourcesMetas.MauftriumIngot
@@ -348,6 +358,11 @@ object AlfheimRecipes {
 	lateinit var recipeElvoriumPylon: IRecipe
 	lateinit var recipeEnderActuator: IRecipe
 	lateinit var recipeEnlighter: IRecipe
+	lateinit var recipeFenrirBoots: IRecipe
+	lateinit var recipeFenrirClaws: IRecipe
+	lateinit var recipeFenrirChestplate: IRecipe
+	lateinit var recipeFenrirHelmet: IRecipe
+	lateinit var recipeFenrirLeggings: IRecipe
 	lateinit var recipeFurnace: IRecipe
 	lateinit var recipeGaiaPylon: IRecipe
 	lateinit var recipeHyperBucket: IRecipe
@@ -407,6 +422,7 @@ object AlfheimRecipes {
 	lateinit var recipeRelicCleaner: IRecipe
 	lateinit var recipeRingFeedFlower: IRecipe
 	lateinit var recipeRingSpider: IRecipe
+	lateinit var recipeRodBlackhole: IRecipe
 	lateinit var recipeRodClicker: IRecipe
 	lateinit var recipesRodColoredSkyDirt: List<IRecipe>
 	lateinit var recipeRodFlame: IRecipe
@@ -423,6 +439,7 @@ object AlfheimRecipes {
 	lateinit var recipeShimmerQuartz: IRecipe
 	lateinit var recipeSixTorches: IRecipe
 	lateinit var recipeSoulHorn: IRecipe
+	lateinit var recipeSoulSword: IRecipe
 	lateinit var recipesSpark: MutableList<IRecipe>
 	lateinit var recipeSpatiotemporal: IRecipe
 	lateinit var recipeSplashPotions: IRecipe
@@ -518,8 +535,7 @@ object AlfheimRecipes {
 						 'C', "cobblestone")
 		recipesApothecaryVanilla.add(BotaniaAPI.getLatestAddedRecipe())
 		
-		// TODO Ygg & Dream planks ?
-		val woods = Array(4) { ItemStack(altWood0, 1, it) } + Array(2) { ItemStack(altWood1, 1, it) }
+		val woods = Array(4) { ItemStack(altWood0, 1, it) } + Array(3) { ItemStack(altWood1, 1, it) }
 		woods.forEachIndexed { id, it -> addShapelessOreDictRecipe(ItemStack(altPlanks, 4, id), it) }
 		recipesAltPlanks = BotaniaAPI.getLatestAddedRecipes(6)
 		
@@ -599,8 +615,8 @@ object AlfheimRecipes {
 		recipeCalicoSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(calicoStairs, 4), true,
-				  "P  ", "PP ", "PPP",
-				  'P', ItemStack(calicoPlanks))
+						 "P  ", "PP ", "PPP",
+						 'P', ItemStack(calicoPlanks))
 		recipeCalicoStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		addRecipe(ItemStack(circuitSlabs, 6),
@@ -826,6 +842,42 @@ object AlfheimRecipes {
 						 'W', ItemStack(wool, 1, 32767))
 		CraftingManager.getInstance().recipeList.remove(recipeFlowerBag)
 		recipeFlowerBag = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(fenrirBoots),
+						 "G G", "F F", "FBF",
+						 'G', "dustGlowstone",
+						 'F', FENRIR_FUR,
+						 'B', leather_boots)
+		recipeFenrirBoots = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(fenrirChestplate),
+						 "G G", "FCF", "FFF",
+						 'G', "dustGlowstone",
+						 'F', FENRIR_FUR,
+						 'C', leather_chestplate)
+		recipeFenrirChestplate = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(fenrirClaws),
+						 " MI", " GI", "FI ",
+						 'G', "dustGlowstone",
+						 'I', "ingotIron",
+						 'M', MAUFTRIUM_NUGGET,
+						 'F', FENRIR_FUR)
+		recipeFenrirClaws = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(fenrirHelmet),
+						 "GFG", "FHF", " F ",
+						 'G', "dustGlowstone",
+						 'F', FENRIR_FUR,
+						 'H', leather_helmet)
+		recipeFenrirHelmet = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(fenrirLeggings),
+						 "FFF", "GLG", "F F",
+						 'G', "dustGlowstone",
+						 'F', FENRIR_FUR,
+						 'L', leather_leggings)
+		recipeFenrirLeggings = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(furnace, 1, 8),
 						 "SSS", "S S", "SSS",
@@ -1200,6 +1252,15 @@ object AlfheimRecipes {
 						 'W', web)
 		recipeRingSpider = BotaniaAPI.getLatestAddedRecipe()
 		
+		addOreDictRecipe(ItemStack(rodBlackHole),
+						 "NID", " HI", "T N",
+						 'N', ELEMENTIUM_NUGGET,
+						 'I', ELEMENTIUM,
+						 'D', DRAGONSTONE,
+						 'H', blackHoleTalisman,
+						 'T', INFUSED_DREAM_TWIG)
+		recipeRodBlackhole = BotaniaAPI.getLatestAddedRecipe()
+		
 		addOreDictRecipe(ItemStack(rodClicker),
 						 "GEG", " TE", "T G",
 						 'G', DRAGONSTONE,
@@ -1298,6 +1359,13 @@ object AlfheimRecipes {
 						 'E', ELVORIUM_INGOT,
 						 'I', IFFESAL_DUST)
 		recipeSoulHorn = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(soulSword),
+						 "  G", "TG ", "DT ",
+						 'G', GAIA_INGOT,
+						 'T', TERRA_STEEL,
+						 'D', INFUSED_DREAM_TWIG)
+		recipeSoulSword = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
 			addOreDictRecipe(ItemStack(spark),
@@ -1700,6 +1768,7 @@ object AlfheimRecipes {
 			val goggles = Item.itemRegistry.getObject("Thaumcraft:ItemGoggles") as Item
 			addShapelessRecipe(ItemStack(elementalHelmetRevealing), ItemStack(elementalHelmet), goggles)
 			addShapelessRecipe(ItemStack(elvoriumHelmetRevealing), ItemStack(elvoriumHelmet), goggles)
+			addShapelessRecipe(ItemStack(fenrirHelmetRevealing), ItemStack(fenrirHelmet), goggles)
 		}
 		
 		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, ElvoriumNugget), ELVORIUM_INGOT)
@@ -1822,7 +1891,7 @@ object AlfheimRecipes {
 			addSmelting(ItemStack(altWood0, 1, i), ItemStack(coal, 1, 1), 0.15F)
 			
 			if (i != 2)
-			addSmelting(ItemStack(altWood1, 1, i), ItemStack(coal, 1, 1), 0.15F)
+				addSmelting(ItemStack(altWood1, 1, i), ItemStack(coal, 1, 1), 0.15F)
 		}
 		
 		addSmelting(irisWood0, ItemStack(coal, 1, 1), 0.15F)
@@ -1891,49 +1960,49 @@ object AlfheimRecipes {
 	
 	private fun registerDendrology() {
 		recipeLightningTree = AlfheimAPI.addTreeRecipe(50000,
-														 ItemStack(lightningSapling),
-														 ItemStack(irisSapling),
-														 350,
-														 MANA_STEEL, MANA_STEEL, MANA_STEEL,
-														 RUNE[13], // Wrath
-														 LEAVES[10], LEAVES[10], LEAVES[10], // Purple
-														 ItemStack(teruTeruBozu))
-		
-		recipeInfernalTree = AlfheimAPI.addTreeRecipe(10000,
-														ItemStack(netherSapling),
-														ItemStack(irisSapling),
-														70,
-														"ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
-														RUNE[1], // Fire
-														LEAVES[1], LEAVES[1], LEAVES[1], // orange
-														BLAZE_BLOCK)
-		
-		recipeCalicoTree = AlfheimAPI.addTreeRecipe(50000,
-													  ItemStack(calicoSapling),
-													  ItemStack(irisSapling),
-													  70,
-													  ItemStack(soul_sand), ItemStack(soul_sand), ItemStack(soul_sand),
-													  RUNE[11], // Greed
-													  LEAVES[1], LEAVES[0], LEAVES[12], // Orange White Brown
-													  ItemStack(obsidian))
-		
-		recipeCircuitTree = AlfheimAPI.addTreeRecipe(10000,
-													   ItemStack(circuitSapling),
-													   ItemStack(irisSapling),
-													   70,
-													   ItemStack(repeater), ItemStack(comparator), ItemStack(repeater),
-													   RUNE[9], // Lust
-													   LEAVES[14], LEAVES[14], LEAVES[14], // Red
-													   "blockRedstone")
-		
-		recipeSealingTree = AlfheimAPI.addTreeRecipe(50000,
-													   ItemStack(sealingSapling),
+													   ItemStack(lightningSapling),
 													   ItemStack(irisSapling),
 													   350,
-													   ELEMENTIUM, ELEMENTIUM, ELEMENTIUM,
-													   RUNE[7], // Winter
-													   LEAVES[0], LEAVES[0], LEAVES[0], // White
-													   ItemStack(wool, 1, WILDCARD_VALUE))
+													   MANA_STEEL, MANA_STEEL, MANA_STEEL,
+													   RUNE[13], // Wrath
+													   LEAVES[10], LEAVES[10], LEAVES[10], // Purple
+													   ItemStack(teruTeruBozu))
+		
+		recipeInfernalTree = AlfheimAPI.addTreeRecipe(10000,
+													  ItemStack(netherSapling),
+													  ItemStack(irisSapling),
+													  70,
+													  "ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
+													  RUNE[1], // Fire
+													  LEAVES[1], LEAVES[1], LEAVES[1], // orange
+													  BLAZE_BLOCK)
+		
+		recipeCalicoTree = AlfheimAPI.addTreeRecipe(50000,
+													ItemStack(calicoSapling),
+													ItemStack(irisSapling),
+													70,
+													ItemStack(soul_sand), ItemStack(soul_sand), ItemStack(soul_sand),
+													RUNE[11], // Greed
+													LEAVES[1], LEAVES[0], LEAVES[12], // Orange White Brown
+													ItemStack(obsidian))
+		
+		recipeCircuitTree = AlfheimAPI.addTreeRecipe(10000,
+													 ItemStack(circuitSapling),
+													 ItemStack(irisSapling),
+													 70,
+													 ItemStack(repeater), ItemStack(comparator), ItemStack(repeater),
+													 RUNE[9], // Lust
+													 LEAVES[14], LEAVES[14], LEAVES[14], // Red
+													 "blockRedstone")
+		
+		recipeSealingTree = AlfheimAPI.addTreeRecipe(50000,
+													 ItemStack(sealingSapling),
+													 ItemStack(irisSapling),
+													 350,
+													 ELEMENTIUM, ELEMENTIUM, ELEMENTIUM,
+													 RUNE[7], // Winter
+													 LEAVES[0], LEAVES[0], LEAVES[0], // White
+													 ItemStack(wool, 1, WILDCARD_VALUE))
 		
 		if (Botania.thaumcraftLoaded && ((Botania.gardenOfGlassLoaded && AlfheimConfigHandler.thaumTreeSuffusion) || ModInfo.DEV))
 			ThaumcraftSuffusionRecipes.initRecipes()
@@ -2014,6 +2083,7 @@ object AlfheimRecipes {
 		BotaniaAPI.pureDaisyRecipes.add(recipeIrisSapling)
 		
 		BotaniaAPI.registerManaInfusionRecipe(ItemStack(elvenResource, 1, InfusedDreamwoodTwig), ItemStack(manaResource, 1, 13), 10000)
+		BotaniaAPI.registerManaAlchemyRecipe(ItemStack(elvenResource, 4, JormungandScale), ItemStack(manaResource, 1, 10), 56000)
 		ModManaInfusionRecipes.manaPowderRecipes.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(manaResource, 1, 23), ItemStack(elvenResource, 1, RainbowDust), 400))
 		
 		val grasses = Array(16) { ItemStack(irisGrass, 1, it) } + Array(2) { ItemStack(rainbowGrass, 1, it) }
@@ -2081,29 +2151,29 @@ object AlfheimRecipes {
 	
 	private fun addQuartzRecipes(block: Block, stairs: Block, slab: Block): IRecipe {
 		addRecipe(ItemStack(block),
-							   "QQ",
-							   "QQ",
-							   'Q', ItemStack(elvenResource, 1, RainbowQuartz))
+				  "QQ",
+				  "QQ",
+				  'Q', ItemStack(elvenResource, 1, RainbowQuartz))
 		
 		BotaniaAPI.registerManaAlchemyRecipe(ItemStack(elvenResource, 4, RainbowQuartz), ItemStack(block, 1, 32767), 25)
 		
 		addRecipe(ItemStack(block, 2, 2),
-							   "Q",
-							   "Q",
-							   'Q', block)
+				  "Q",
+				  "Q",
+				  'Q', block)
 		
 		addRecipe(ItemStack(block, 1, 1),
-							   "Q",
-							   "Q",
-							   'Q', slab)
+				  "Q",
+				  "Q",
+				  'Q', slab)
 		addStairsAndSlabs(block, 0, stairs, slab)
 		
 		addRecipe(ShapedOreRecipe(ItemStack(elvenResource, 8, RainbowQuartz),
-											   "QQQ",
-											   "QCQ",
-											   "QQQ",
-											   'Q', "gemQuartz",
-											   'C', DYES[16]))
+								  "QQQ",
+								  "QCQ",
+								  "QQQ",
+								  'Q', "gemQuartz",
+								  'C', DYES[16]))
 		return BotaniaAPI.getLatestAddedRecipe()
 	}
 	

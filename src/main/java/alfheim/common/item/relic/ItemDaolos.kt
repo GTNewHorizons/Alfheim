@@ -45,8 +45,8 @@ class ItemDaolos: ItemAxe(AlfheimAPI.RUNEAXE), IRelic {
 		}
 		
 		@SubscribeEvent
-		fun onWaterRightclick(e: PlayerInteractAdequateEvent.RightClick) {
-			if (e.action != PlayerInteractAdequateEvent.RightClick.Action.RIGHT_CLICK_LIQUID) return
+		fun onWaterLeftClick(e: PlayerInteractAdequateEvent.LeftClick) {
+			if (e.action != PlayerInteractAdequateEvent.LeftClick.Action.LEFT_CLICK_LIQUID) return
 			val stack = e.player.heldItem ?: return
 			if (stack.item !== AlfheimItems.daolos) return
 			
@@ -54,7 +54,7 @@ class ItemDaolos: ItemAxe(AlfheimAPI.RUNEAXE), IRelic {
 			val world = e.player.worldObj
 			val block = world.getBlock(x, y, z)
 			
-			if (block != Blocks.water || block != Blocks.flowing_water) return
+			if (block != Blocks.water && block != Blocks.flowing_water) return
 			
 			if (ManaItemHandler.requestManaExact(stack, e.player, if (world.isRaining) 25 else 100, true)) e.player.heal(1f)
 			
@@ -64,8 +64,8 @@ class ItemDaolos: ItemAxe(AlfheimAPI.RUNEAXE), IRelic {
 			for (entity in list) {
 				if (world.getBlock(entity) !== block) continue
 				
-				if (ManaItemHandler.requestManaExact(stack, e.player, if (world.isRaining) 5 else 20, true))
-					entity.attackEntityFrom(DamageSource.wither, 1f)
+				if (ManaItemHandler.requestManaExact(stack, e.player, if (world.isRaining) 25 else 100, true))
+					entity.attackEntityFrom(DamageSource.wither, 3f)
 				else
 					break
 			}
@@ -129,7 +129,7 @@ class ItemDaolos: ItemAxe(AlfheimAPI.RUNEAXE), IRelic {
 	fun push(world: World, player: EntityPlayer) {
 		if (world.getBlock(player, y = -1) !is BlockLiquid || player.isInsideOfMaterial(Material.water) || player.isInsideOfMaterial(Material.lava)) return
 		
-		val (x, _, z) = Vector3(player.lookVec).mul(1, 0, 1).normalize().mul(0.1)
+		val (x, _, z) = Vector3(player.lookVec).mul(1, 0, 1).normalize().mul(0.25)
 		player.motionX += x
 		player.motionZ += z
 	}

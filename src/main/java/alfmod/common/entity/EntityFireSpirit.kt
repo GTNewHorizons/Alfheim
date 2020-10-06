@@ -349,7 +349,7 @@ class EntityFireSpirit(world: World): EntityLiving(world) {
 					if (world.getBlock(x + c[0], y + c[1], z + c[2]) !== AlfheimBlocks.alfheimPylon || world.getBlockMetadata(x + c[0], y + c[1], z + c[2]) != 1) {
 						if (!world.isRemote) {
 							ASJUtilities.say(player, "alfmodmisc.spirit.nopylons")
-							VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + c[0] + 0.5, y + c[1] + 0.5, z + c[2] + 0.5, 1.0, 0.5, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+							VisualEffectHandler.sendError(world.provider.dimensionId, x + c[0], y + c[1], z + c[2])
 						}
 						return false
 					}
@@ -377,7 +377,7 @@ class EntityFireSpirit(world: World): EntityLiving(world) {
 						if (abs(i - x) == 5 && abs(k - z) == 5 && j == y + 1 || Vector3.pointDistanceSpace(i, j, k, x, y, z) > RADIUS) continue  // Ignore pylons and out of circle
 						
 						if (world.getTileEntity(i, j, k) != null) {
-							VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+							VisualEffectHandler.sendError(world.provider.dimensionId, i, j, k)
 							
 							return false
 						}
@@ -387,7 +387,7 @@ class EntityFireSpirit(world: World): EntityLiving(world) {
 						
 						if (j != y) {
 							if (!world.isAirBlock(i, j, k)) {
-								VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+								VisualEffectHandler.sendError(world.provider.dimensionId, i, j, k)
 								
 								return false
 							}
@@ -405,7 +405,7 @@ class EntityFireSpirit(world: World): EntityLiving(world) {
 									it.maxZ != k + 1.0
 								}) {
 								
-								VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+								VisualEffectHandler.sendError(world.provider.dimensionId, i, j, k)
 								
 								return false
 							}

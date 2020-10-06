@@ -1,8 +1,8 @@
 package alfheim.common.item.relic
 
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
-import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
@@ -13,7 +13,7 @@ import vazkii.botania.common.item.relic.ItemRelic
 class ItemGjallarhorn: ItemRelic("Gjallarhorn") {
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		if (!ItemRagnarokEmblem.ragnarok) return stack
+		if (!RagnarokHandler.ragnarok) return stack
 		
 		player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack

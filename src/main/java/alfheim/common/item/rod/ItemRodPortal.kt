@@ -130,7 +130,10 @@ class ItemRodPortal: ItemMod("rodPortal") {
 				
 				player.removePotionEffect(AlfheimConfigHandler.potionIDEternity)
 				
-				CommandDimTP.processCommand(player, arrayOf(pair.second.toString()))
+				try {
+					CommandDimTP.processCommand(player, arrayOf(pair.second.toString()))
+				} catch (ignore: Throwable) {}
+
 				break
 			}
 		

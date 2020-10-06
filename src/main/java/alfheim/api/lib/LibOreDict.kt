@@ -19,6 +19,7 @@ object LibOreDict {
 	const val MUSPELHEIM_ESSENCE = "essenceMuspelheim"
 	const val NIFLHEIM_ESSENCE = "essenceNiflheim"
 	const val IFFESAL_DUST = "dustIffesal"
+	const val FENRIR_FUR = "furFenrir"
 	val ARUNE = arrayOf("runePrimalA", "runeMuspelheimA", "runeNiflheimA")
 	const val INFUSED_DREAM_TWIG = "twig${LibOreDict.DREAM_WOOD}Insufed"
 	const val DREAM_WOOD_LOG = "log${LibOreDict.DREAM_WOOD}"

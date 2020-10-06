@@ -2,16 +2,16 @@ package alfheim.common.core.handler
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alexsocol.patcher.event.*
+import alexsocol.patcher.event.EntityUpdateEvent
 import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.api.entity.*
-import alfheim.api.event.*
+import alfheim.api.event.SpellCastEvent
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
+import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
@@ -56,14 +56,12 @@ object CardinalSystem {
 			ObjectInputStream(FileInputStream(file)).use { oin ->
 				playerSegments = oin.readObject() as HashMap<String, PlayerSegment>
 				TimeStopSystem.tsAreas = oin.readObject() as HashMap<Int, LinkedList<TimeStopSystem.TimeStopArea>>
-				ItemRagnarokEmblem.ragnarok = oin.readObject() as Boolean
 			}
 		} catch (e: Throwable) {
 			ASJUtilities.error("Unable to read whole Cardinal System data. Generating default values...")
 			e.printStackTrace()
 			playerSegments = HashMap()
 			TimeStopSystem.tsAreas = HashMap()
-			ItemRagnarokEmblem.ragnarok = false
 		}
 	}
 	
@@ -88,7 +86,6 @@ object CardinalSystem {
 			ObjectOutputStream(FileOutputStream("$save/data/Cardinal.sys")).use { oos ->
 				oos.writeObject(playerSegments)
 				oos.writeObject(TimeStopSystem.tsAreas)
-				oos.writeObject(ItemRagnarokEmblem.ragnarok)
 			}
 		} catch (e: Throwable) {
 			ASJUtilities.error("Unable to save whole Cardinal System data. Discarding. Sorry :(")

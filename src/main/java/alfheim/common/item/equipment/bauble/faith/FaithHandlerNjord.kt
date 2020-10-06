@@ -108,7 +108,8 @@ object FaithHandlerNjord: IFaithHandler {
 	@SubscribeEvent
 	fun onPlayerAttack(e: AttackEntityEvent) {
 		val player = e.entityPlayer
-		val emblem = ItemPriestEmblem.getEmblem(2, player) ?: return
+		var emblem = ItemPriestEmblem.getEmblem(2, player)
+		if (emblem == null) emblem = ItemRagnarokEmblem.getEmblem(player, 2) ?: return
 		
 		val entity = e.target
 		if (entity is EntityLivingBase)

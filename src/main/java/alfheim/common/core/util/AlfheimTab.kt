@@ -75,6 +75,7 @@ import alfheim.common.block.AlfheimBlocks.netherSlabs
 import alfheim.common.block.AlfheimBlocks.netherStairs
 import alfheim.common.block.AlfheimBlocks.netherWood
 import alfheim.common.block.AlfheimBlocks.powerStone
+import alfheim.common.block.AlfheimBlocks.ragnarokCore
 import alfheim.common.block.AlfheimBlocks.rainbowDirt
 import alfheim.common.block.AlfheimBlocks.rainbowGrass
 import alfheim.common.block.AlfheimBlocks.rainbowLeaves
@@ -159,6 +160,7 @@ import alfheim.common.item.AlfheimItems.coatOfArms
 import alfheim.common.item.AlfheimItems.colorOverride
 import alfheim.common.item.AlfheimItems.creativeReachPendant
 import alfheim.common.item.AlfheimItems.crescentMoonAmulet
+import alfheim.common.item.AlfheimItems.daolos
 import alfheim.common.item.AlfheimItems.dodgeRing
 import alfheim.common.item.AlfheimItems.elementalBoots
 import alfheim.common.item.AlfheimItems.elementalChestplate
@@ -276,6 +278,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(enderActuator)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
+		addBlock(ragnarokCore)
 		addBlock(Blocks.furnace, 8)
 		addBlock(ModBlocks.spreader, 4)
 		// addBlock(anomalyHarvester) // BACK
@@ -394,6 +397,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		//addItem (storyToken)
 		
 		addItem (excaliber)
+		addItem (daolos)
 		addItem (mjolnir)
 		addItem (subspaceSpear)
 		addItem (gungnir)

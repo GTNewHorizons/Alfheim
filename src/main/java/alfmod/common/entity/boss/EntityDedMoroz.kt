@@ -108,7 +108,7 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 	}
 	
 	override fun onLivingUpdate() {
-		if (!WRATH_OF_THE_WINTER) setDead().also { return }
+//		if (!WRATH_OF_THE_WINTER) setDead().also { return }
 		
 		super.onLivingUpdate()
 		

@@ -68,12 +68,16 @@ object 	FaithHandlerThor: IFaithHandler {
 		e.entityLiving.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 20 * lvl, 1))
 		e.ammount *= (lvl * 0.25f / 12) + 1f
 		
+		traceLightning(player, e.entityLiving)
+	}
+	
+	fun traceLightning(from: Entity, to: Entity) {
 		if (ASJUtilities.isServer) {
-			val (x, y, z) = Vector3.fromEntityCenter(player)
-			val (x2, y2, z2) = Vector3.fromEntityCenter(e.entityLiving)
-			val color = ColorOverrideHelper.getColor(player, 0x0079C4)
+			val (x, y, z) = Vector3.fromEntityCenter(from)
+			val (x2, y2, z2) = Vector3.fromEntityCenter(to)
+			val color = if (from is EntityPlayer) ColorOverrideHelper.getColor(from, 0x0079C4) else 0x0079C4
 			val innerColor = Color(color).brighter().brighter().rgb
-			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.LIGHTNING, player.dimension, x, y, z, x2, y2, z2, 1.0, color.D, innerColor.D)
+			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.LIGHTNING, from.dimension, x, y, z, x2, y2, z2, 1.0, color.D, innerColor.D)
 		}
 	}
 	

@@ -2,9 +2,10 @@ package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.ASJTile
+import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
-import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.item.material.EventResourcesMetas
 import net.minecraft.item.ItemStack
@@ -24,9 +25,12 @@ class TileRagnarokCore: ASJTile(), ISparkAttachable {
 	var isWinter = false
 	var isSummer = false
 	
-	// TODO add valid positions set and delete block if it is in manually built hand
-	// TODO do nothing if winter/summer/ragnarok is active
 	override fun updateEntity() {
+		if (Vector3.fromTileEntity(this) !in RagnarokHandler.handsSet) {
+			worldObj.setBlockToAir(xCoord, yCoord, zCoord)
+			return
+		}
+		
 		if (!started)
 			return
 		
@@ -63,18 +67,18 @@ class TileRagnarokCore: ASJTile(), ISparkAttachable {
 		if (relic?.item === AlfheimModularItems.eventResource && relic.meta == EventResourcesMetas.SnowRelic) {
 			if (stackOnly) return true
 			
-			return SchemaUtils.checkStructure(worldObj, xCoord, yCoord + 1, zCoord, structureWinter) { x, y, z ->
-				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, worldObj.provider.dimensionId, x + 0.5, y + 0.5, z + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
-			}.also { if (it) isWinter = true }
+			if (!RagnarokHandler.canStartWinter()) return false
+			
+			return SchemaUtils.checkStructure(worldObj, xCoord, yCoord + 1, zCoord, structureWinter, VisualEffectHandler::sendError).also { if (it) isWinter = true }
 		}
 		
 		relic = (worldObj.getTileEntity(xCoord + 5, yCoord, zCoord) as? TileItemDisplay)?.get(0)
 		if (relic?.item === AlfheimModularItems.eventResource && relic.meta == EventResourcesMetas.VolcanoRelic) {
 			if (stackOnly) return true
 			
-			return SchemaUtils.checkStructure(worldObj, xCoord, yCoord + 1, zCoord, structureSummer) { x, y, z ->
-				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, worldObj.provider.dimensionId, x + 0.5, y + 0.5, z + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
-			}.also { if (it) isSummer = true }
+			if (!RagnarokHandler.canStartSummer()) return false
+			
+			return SchemaUtils.checkStructure(worldObj, xCoord, yCoord + 1, zCoord, structureSummer, VisualEffectHandler::sendError).also { if (it) isSummer = true }
 		}
 		
 		return false
@@ -125,32 +129,38 @@ class TileRagnarokCore: ASJTile(), ISparkAttachable {
 	
 	fun startEvent() {
 		val success = isSuccessful()
-		if (success)
-			started = false
+		started = false
 		
-		// TODO add consequences
+		if (!success) {
+			worldObj.setBlockToAir(xCoord, yCoord, zCoord)
+			worldObj.createExplosion(null, xCoord.D, yCoord.D, zCoord.D, 50f, isWinter)
+		}
 	}
 	
 	fun isSuccessful(): Boolean {
-		if (!checkStructure(false))
-			return false
+		val struct = checkStructure(false)
+		if (!struct)
+			RagnarokHandler.isSeasonDeadly = true
 		
 		if (isWinter) {
 			(worldObj.getTileEntity(xCoord - 5, yCoord, zCoord) as TileItemDisplay)[0] = null
-			if (!worldObj.isRemote) ASJUtilities.sayToAllOnline("alfheimmisc.ragnarok.startedWinter")
-			// TODO start winter in RagnarokHandler
-			return true
+			if (!worldObj.isRemote) ASJUtilities.sayToAllOnline("alfheimmisc.ragnarok.startedWinter.${RagnarokHandler.isSeasonDeadly}")
+			RagnarokHandler.winter = true
+			return struct
 		}
 		
 		if (isSummer) {
 			(worldObj.getTileEntity(xCoord + 5, yCoord, zCoord) as TileItemDisplay)[0] = null
-			if (!worldObj.isRemote) ASJUtilities.sayToAllOnline("alfheimmisc.ragnarok.startedSummer")
-			// TODO start summer in RagnarokHandler
-			return true
+			if (!worldObj.isRemote) ASJUtilities.sayToAllOnline("alfheimmisc.ragnarok.endedWinter.${RagnarokHandler.isSeasonDeadly}")
+			RagnarokHandler.winter = false
+			RagnarokHandler.winterTicks = 0
+			
+			RagnarokHandler.summer = true
+			return struct
 		}
 		
 		// theoretically unreachable
-		return false
+		return struct
 	}
 	
 	override fun writeToNBT(nbt: NBTTagCompound) {
@@ -182,7 +192,7 @@ class TileRagnarokCore: ASJTile(), ISparkAttachable {
 				worldObj.spawnParticle("iconcrack_${AlfheimModularItems.eventResource.id}_${EventResourcesMetas.SnowRelic}", xCoord - 4.5, yCoord + 1.0, zCoord + .5, 0.625, 0.2, 0.0)
 			
 			if (isSummer)
-				worldObj.spawnParticle("iconcrack_${AlfheimModularItems.eventResource.id}_${EventResourcesMetas.VolcanoRelic}", xCoord + 5.5, yCoord + 1.0, zCoord + .5, -0.625, 0.1, 0.0)
+				worldObj.spawnParticle("iconcrack_${AlfheimModularItems.eventResource.id}_${EventResourcesMetas.VolcanoRelic}", xCoord + 5.5, yCoord + 1.0, zCoord + .5, -0.625, 0.2, 0.0)
 		}
 		
 		this.mana = max(0, min(MAX_MANA, this.mana + mana))
@@ -209,12 +219,7 @@ class TileRagnarokCore: ASJTile(), ISparkAttachable {
 		const val TAG_LAST_MANA_TICK = "lastManaTick"
 		const val TAG_STARTED = "started"
 		
-		val structureWinter = javaClass.getResourceAsStream("/assets/${ModInfo.MODID}/schemas/WinterHandGem").use {
-			it.readBytes().toString(Charsets.UTF_8)
-		}
-		
-		val structureSummer = javaClass.getResourceAsStream("/assets/${ModInfo.MODID}/schemas/SummerHandGem").use {
-			it.readBytes().toString(Charsets.UTF_8)
-		}
+		val structureWinter = SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/WinterHandGem")
+		val structureSummer = SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/SummerHandGem")
 	}
 }

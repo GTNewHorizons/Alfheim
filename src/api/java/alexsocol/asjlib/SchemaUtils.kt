@@ -31,7 +31,7 @@ object SchemaUtils {
 		}
 	}
 	
-	fun checkStructure(world: World, x: Int, y: Int, z: Int, structure: String, onFail: ((Int, Int, Int) -> Unit)? = null): Boolean {
+	fun checkStructure(world: World, x: Int, y: Int, z: Int, structure: String, onFail: ((Int, Int, Int, Int) -> Unit)? = null): Boolean {
 		val type = object: TypeToken<List<BlockElement>>() {}.type
 		
 		val arr = Gson().fromJson<List<BlockElement>>(structure, type)
@@ -42,14 +42,37 @@ object SchemaUtils {
 				val j = y + loc.y
 				val k = z + loc.z
 				
-				if (world.getBlock(i, j, k) != Block.getBlockFromName(ele.block) || world.getBlockMetadata(i, j, k) != loc.meta) {
-					onFail?.invoke(i, j, k)
+				fun check(): Boolean {
+					if (world.getBlock(i, j, k) != Block.getBlockFromName(ele.block) || world.getBlockMetadata(i, j, k) != loc.meta)
+						return false
+					
+					loc.nbt ?: return true
+					val locNBT = JsonToNBT.func_150315_a(loc.nbt) as NBTTagCompound
+					
+					val tile = world.getTileEntity(i, j, k) ?: return false
+					val landNBT = NBTTagCompound()
+					tile.writeToNBT(landNBT)
+					
+					for (entry in locNBT.tagMap)
+						if (entry.value != landNBT.tagMap[entry.key]) return false
+					
+					return true
+				}
+				
+				if (!check()) {
+					onFail?.invoke(world.provider.dimensionId, i, j, k)
 					return false
 				}
 			}
 		}
 		
 		return true
+	}
+	
+	fun loadStructure(path: String): String {
+		return javaClass.getResourceAsStream("/assets/$path").use {
+			it.readBytes().toString(Charsets.UTF_8)
+		}
 	}
 }
 

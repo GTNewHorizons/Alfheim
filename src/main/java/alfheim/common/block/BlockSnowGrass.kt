@@ -69,12 +69,16 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 				}
 			}
 		} else {
-			if (world.rand.nextInt(20) != 0) return
+			if (world.rand.nextInt(meltDelay) != 0) return
 			
 			if (above === AlfheimBlocks.snowLayer || above === Blocks.snow_layer)
 				world.setBlockToAir(x, y + 1, z)
 			
 			world.setBlock(x, y, z, Blocks.grass)
 		}
+	}
+	
+	companion object {
+		var meltDelay = 20
 	}
 }

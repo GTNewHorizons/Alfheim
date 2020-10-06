@@ -1,32 +1,64 @@
-package alfheim.common.core.handler
+package alfheim.common.core.handler.ragnarok
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.tile.*
+import alfheim.common.core.asm.hook.AlfheimHookHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import alfheim.common.item.material.ElvenResourcesMetas
+import alfheim.common.network.Message1d
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.item.material.EventResourcesMetas
+import cpw.mods.fml.common.eventhandler.*
+import net.minecraft.entity.passive.EntityVillager
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
+import net.minecraftforge.event.entity.living.LivingDeathEvent
 import vazkii.botania.common.item.ModItems
 
-object RagnarokStartHandler {
+object RagnarokEndHandler {
+	
+	init {
+		eventForge()
+	}
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	fun endRagnarok(e: LivingDeathEvent) {
+		if (!RagnarokHandler.canEndRagnarok()) return
+		
+		val sacr = e.entityLiving as? EntityVillager ?: return
+		if (sacr.isChild) return // suffer more >:)
+		if (!sacr.entityData.getBoolean(AlfheimHookHandler.TAG_COCOONED)) return
+		
+		val killer = e.source.entity as? EntityPlayer ?: return
+		if (!killer.hasAchievement(AlfheimAchievements.theEND)) return
+		
+		ItemRagnarokEmblem.getEmblem(killer) ?: return
+		
+		val (x, y, z) = Vector3.fromEntity(sacr).sub(0, 1, 0).mf()
+		if (!check(killer, x, y, z)) return
+		
+		val world = sacr.worldObj
+		for (pl in platforms) {
+			val (i, j, k) = pl
+			(world.getTileEntity(x + i, y + j, z + k) as? TileItemDisplay ?: continue)[0] = null
+		}
+		
+		RagnarokHandler.ragnarok = false
+		AlfheimCore.network.sendToAll(Message1d(Message1d.m1d.RAGNAROK, 1.0))
+	}
 	
 	fun check(player: EntityPlayer, x: Int, y: Int, z: Int): Boolean {
 		val world = player.worldObj
 		
 		if (world.isRemote) return false
 		
-		val structure = javaClass.getResourceAsStream("/assets/${ModInfo.MODID}/schemas/ragnarok").use {
-			it.readBytes().toString(Charsets.UTF_8)
-		}
-		
-		if (!SchemaUtils.checkStructure(world, x, y, z, structure) { i, j, k ->
-				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
-			}) {
+		if (!SchemaUtils.checkStructure(world, x, y, z, structure, VisualEffectHandler::sendError)) {
 			ASJUtilities.say(player, "alfheimmisc.ragnarok.wrongStructure")
 			return false
 		}
@@ -42,6 +74,8 @@ object RagnarokStartHandler {
 		
 		return true
 	}
+	
+	val structure = SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/ragnarok")
 	
 	private val platforms = arrayOf(
 		arrayOf(0, 0, 0),
@@ -63,7 +97,7 @@ object RagnarokStartHandler {
 		AlfheimModularItems.volcanoHelmet,
 		AlfheimItems.elvenResource, // Fur
 		AlfheimModularItems.eventResource, // snow relic
-		AlfheimItems.elvenResource, // TODO change to Scale
+		AlfheimItems.elvenResource, // Jormungand Scale
 		AlfheimModularItems.eventResource // volcano relic
 	)
 	
@@ -75,7 +109,7 @@ object RagnarokStartHandler {
 		0, // helm volcano
 		ElvenResourcesMetas.FenrirFur,
 		EventResourcesMetas.SnowRelic,
-		ElvenResourcesMetas.GrapeLeaf, // Scale
+		ElvenResourcesMetas.JormungandScale,
 		EventResourcesMetas.VolcanoRelic
 	)
 	
@@ -116,7 +150,7 @@ object RagnarokStartHandler {
 			}
 			
 			if (!check()) {
-				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + j + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+				VisualEffectHandler.sendError(world.provider.dimensionId, x + i, y + j, z + k)
 				return false
 			}
 		}
@@ -138,7 +172,7 @@ object RagnarokStartHandler {
 			}
 			
 			if (!check()) {
-				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + j + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+				VisualEffectHandler.sendError(world.provider.dimensionId, x + i, y + j, z + k)
 				return false
 			}
 		}
@@ -155,7 +189,7 @@ object RagnarokStartHandler {
 				}
 				
 				if (!check(starData)) {
-					VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + i + 0.5, y + 0.5, z + k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+					VisualEffectHandler.sendError(world.provider.dimensionId, x + i, y, z + k)
 					return false
 				}
 			}

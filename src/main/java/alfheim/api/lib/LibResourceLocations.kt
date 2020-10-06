@@ -90,7 +90,7 @@ object LibResourceLocations {
 	val uberSpreaderFrame = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderFrame.png")
 	val uberSpreaderGolden = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderGolden.png")
 	val uberSpreaderHalloween = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderHalloween.png")
-	val uberSpreaderHalloweenGolden = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderHalloweenGolden.png")
+	val uberSpreaderHalloweenGolden = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderGoldenHalloween.png")
 	val wind = ResourceLocation(ModInfo.MODID, "textures/model/entity/wind.png")
 	val yordinPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylon.png")
 	val yordinPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylonOld.png")

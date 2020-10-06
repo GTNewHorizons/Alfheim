@@ -77,7 +77,6 @@ object FaithHandlerSif: IFaithHandler {
 		bonemeal(world, pair.second, x, y, z, player, stack, 10)
 		
 		grow.clear()
-		
 	}
 	
 	@SubscribeEvent
@@ -86,8 +85,6 @@ object FaithHandlerSif: IFaithHandler {
 		
 		if (e.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) return
 		val emblem = ItemPriestEmblem.getEmblem(1, player) ?: return
-		
-		val lvl = getGodPowerLevel(player)
 		
 		val cooldown = getInt(emblem, TAG_COOLDOWN, 0)
 		if (cooldown != 0 || e.entityPlayer.isSneaking || player.heldItem != null || !ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 50, false)) return
@@ -98,6 +95,8 @@ object FaithHandlerSif: IFaithHandler {
 		if (block is IGrowable && block !== Blocks.grass && block.func_149851_a(world, e.x, e.y, e.z, world.isRemote) && bonemeal(world, block, e.x, e.y, e.z, player, emblem, 50)) {
 			if (!world.isRemote && !player.capabilities.isCreativeMode) setInt(emblem, TAG_COOLDOWN, COOLDOWN_PLANT)
 		}
+		
+		val lvl = getGodPowerLevel(player)
 		
 		if (lvl > 5) {
 			if (!world.isRemote && block === Blocks.grass && e.face == 1 && world.getBlock(e.x, e.y + 1, e.z).isAir(world, e.x, e.y + 1, e.z) &&

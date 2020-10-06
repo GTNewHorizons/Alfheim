@@ -78,6 +78,7 @@ fun Int.clamp(min: Int, max: Int) = MathHelper.clamp_int(this, min, max)
 fun Float.clamp(min: Float, max: Float) = MathHelper.clamp_float(this, min, max)
 fun Double.clamp(min: Double, max: Double) = MathHelper.clamp_double(this, min, max)
 fun Double.mfloor() = MathHelper.floor_double(this)
+fun Float.mfloor() = MathHelper.floor_float(this)
 
 fun Entity.setSize(wid: Double, hei: Double) {
 	var f2: Float

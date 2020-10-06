@@ -262,24 +262,20 @@ object AlfheimHookHandler {
 	var cocooned = false
 	
 	@JvmStatic
-	@Hook(targetMethod = "hatch")
-	fun hatchPre(tile: TileCocoon) {
+	@Hook
+	fun hatch(tile: TileCocoon) {
 		cocooned = true
 	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
 	fun spawnEntityInWorld(world: World, entity: Entity?, @ReturnValue result: Boolean): Boolean {
-		if (result && entity != null)
+		if (cocooned && result && entity != null) {
 			entity.entityData.setBoolean(TAG_COCOONED, true)
+			cocooned = false
+		}
 		
 		return result
-	}
-	
-	@JvmStatic
-	@Hook(injectOnExit = true, targetMethod = "hatch")
-	fun hatchPost(tile: TileCocoon) {
-		cocooned = false
 	}
 	
 	@JvmStatic

@@ -1,12 +1,12 @@
 package alfheim.common.item.equipment.armor.elemental
 
-import alexsocol.asjlib.F
+import alexsocol.asjlib.*
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
+import net.minecraft.util.StatCollector
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent
 import net.minecraftforge.event.entity.living.LivingFallEvent
@@ -41,7 +41,7 @@ class ItemElementalAirBoots: ElementalArmor(3, "ElementalAirBoots") {
 			if (event.distance < 4.5063215) event.distance = 0f
 			
 			if (event.distance >= 4.5063215) {
-				val decrease = ManaItemHandler.requestMana((event.entityLiving as EntityPlayer).getCurrentArmor(0), event.entityLiving as EntityPlayer, MathHelper.floor_float(event.distance) * ONEBLOCKCOST, true)
+				val decrease = ManaItemHandler.requestMana((event.entityLiving as EntityPlayer).getCurrentArmor(0), event.entityLiving as EntityPlayer, event.distance.mfloor() * ONEBLOCKCOST, true)
 				event.distance -= (decrease / ONEBLOCKCOST).F
 			}
 		}

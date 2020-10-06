@@ -382,15 +382,6 @@ item.alfheim:RodClicker.name=Rod of the High Will
 item.RodClicker.leftclick.false=Use Mode
 item.RodClicker.leftclick.true=Hit Mode
 item.alfheim:RodFracturedSpace.name=Rod of the Fractured Space
-alfheimmisc.fracturedSpace.savedPos=Crate remembered.
-alfheimmisc.fracturedSpace.noPos=Not bound to a crate.
-alfheimmisc.fracturedSpace.wrongDimension=Bound crate not of this realm.
-alfheimmisc.fracturedSpace.noCrateThere=Missing crate at bound location.
-alfheimmisc.fracturedSpace.tooltipBound=Bound to a crate
-alfheimmisc.fracturedSpace.tooltipNotBound=Not bound to a crate
-alfheimmisc.fracturedSpace.tooltipWrongDimension=! Bound crate not of this realm
-alfheimmisc.fracturedSpace.debug.tooltipPos=Bound position: X %s, Y %s, Z %s
-alfheimmisc.fracturedSpace.debug.tooltipDim=Bound dimension: %s
 item.alfheim:rodPortal.name=Rod of the Einstein-Rosen bridge
 item.botania:SifRing.name=Ring of Sif
 item.alfheim:SoulHorn.name=Horn of Souls
@@ -492,11 +483,6 @@ alfheim.commands.alfheim.wrong=/alfheim <command>
 alfheim.commands.mtspell.usage=Info about selected spell
 alfheim.commands.mtspell.wrong=MMO mode is off
 
-alfheim.commands.tpdim.usage=Used for cross-world teleport
-alfheim.commands.tpdim.wrong=tpdim <ID>
-alfheim.commands.tpdim.worlderr=Dimension Initialization Exception
-alfheim.commands.tpdim.wrongid=Wrong dim ID
-
 alfheim.nei.manainfusion=Mana Infusion
 alfheim.nei.tradeportal=Midgard Trade
 
@@ -555,6 +541,30 @@ alfheimmisc.flugel.notallowed=Foolish mortal! You can't even fly without help! Y
 alfheimmisc.flugel.peacefulNoob=You try to offer your sacrifice, but the peaceful vibes of your world prevent you from doing so. Perhaps you should do something about that.
 alfheimmisc.flugel.tooweak.false=You try to activate the ritual, but the soul falls out of your shaking hands. You think that before summoning such a powerful creature you should try yourself in some less dangerous battle.
 alfheimmisc.flugel.tooweak.true=You try to activate the ritual, but the horn falls out of your shaking hands. You think that before summoning such a powerful creature you should try yourself in some less dangerous battle.
+
+alfheimmisc.fracturedSpace.savedPos=Crate remembered.
+alfheimmisc.fracturedSpace.noPos=Not bound to a crate.
+alfheimmisc.fracturedSpace.wrongDimension=Bound crate not of this realm.
+alfheimmisc.fracturedSpace.noCrateThere=Missing crate at bound location.
+alfheimmisc.fracturedSpace.tooltipBound=Bound to a crate
+alfheimmisc.fracturedSpace.tooltipNotBound=Not bound to a crate
+alfheimmisc.fracturedSpace.tooltipWrongDimension=Bound crate not of this realm
+alfheimmisc.fracturedSpace.debug.tooltipPos=Bound position: X %s, Y %s, Z %s
+alfheimmisc.fracturedSpace.debug.tooltipDim=Bound dimension: %s
+
+alfheimmisc.ragnarok.betrayer=YOU DARE BETRAY THE END? DIE!
+alfheimmisc.ragnarok.consumed=WELL DONE. ONE STEP CLOSER...
+alfheimmisc.ragnarok.instability1=You're feeling strange vibration in your emblem
+alfheimmisc.ragnarok.instability2=You're feeling strange crackling in your emblem
+alfheimmisc.ragnarok.instability3=You're feeling strange burning in your emblem
+alfheimmisc.ragnarok.instabilityS=The pendant shatters
+alfheimmisc.ragnarok.instabilityO=The cloak shatters
+alfheimmisc.ragnarok.startedWinter.false=Winter has Started
+alfheimmisc.ragnarok.startedWinter.true=Fimbulwinter has come!
+alfheimmisc.ragnarok.endedWinter.false=Winter has Ended
+alfheimmisc.ragnarok.endedWinter.true=Let the earth burn in fire!
+alfheimmisc.ragnarok.startedRagnarok=Ragnarok has Started
+alfheimmisc.ragnarok.startedRagnarok.special=SHOW THE SON OF LANDS THAT GODS CAN BE SLAIN.
 
 alfheimmisc.actuated=Ender Actuator has successfully synchronized with vibes of your soul!
 alfheimmisc.autocraft.request=Requested Item

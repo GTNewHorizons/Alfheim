@@ -4,6 +4,7 @@ import alfheim.api.ModInfo.MODID
 import alfheim.common.core.asm.AlfheimModularLoader
 import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
+import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.core.util.*
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
@@ -49,7 +50,8 @@ class AlfheimCore {
 		var TravellersGearLoaded = false
 		
 		val jingleTheBells: Boolean
-		val winter: Boolean
+		// do not reassign this unless you know what you are doing
+		var winter: Boolean
 		
 		/** Today's month */
 		val month: Int
@@ -117,6 +119,7 @@ class AlfheimCore {
 		if (AlfheimConfigHandler.enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
+		RagnarokHandler.load(save)
 		e.registerServerCommand(CommandAlfheim())
 		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo())
 	}
@@ -124,6 +127,7 @@ class AlfheimCore {
 	@EventHandler
 	fun stopping(e: FMLServerStoppingEvent) {
 		CardinalSystem.save(save)
+		RagnarokHandler.save(save)
 	}
 	
 	fun registerPackets() {

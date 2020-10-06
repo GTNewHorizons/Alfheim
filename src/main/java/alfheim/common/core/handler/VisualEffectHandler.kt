@@ -15,4 +15,8 @@ object VisualEffectHandler {
 	fun sendPacket(s: VisualEffects, dimension: Int, vararg data: Double) {
 		if (ASJUtilities.isServer) AlfheimCore.network.sendToDimension(MessageVisualEffect(s.ordinal, *data), dimension)
 	}
+	
+	fun sendError(dim: Int, x: Int, y: Int, z: Int) {
+		sendPacket(VisualEffects.WISP, dim, x + 0.5, y + 0.5, z + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
+	}
 }

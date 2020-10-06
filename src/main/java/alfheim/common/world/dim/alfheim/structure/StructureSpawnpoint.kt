@@ -25,9 +25,7 @@ object StructureSpawnpoint {
 	
 	fun generateSpawnCastle(world: World, x: Int, y: Int, z: Int) {
 		world.setSpawnLocation(x, y, z)
-		javaClass.getResourceAsStream("/assets/${ModInfo.MODID}/schemas/spawnpoint").use {
-			SchemaUtils.generate(world, x, y, z, it.readBytes().toString(Charsets.UTF_8))
-		}
+		SchemaUtils.generate(world, x, y, z, SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/spawnpoint\""))
 		ASJUtilities.fillGenHoles(world, if (AlfheimCore.winter) AlfheimBlocks.snowGrass else Blocks.grass, 0, x - 11, x + 11, y - 8, z - 41, z + 1, 0)
 	}
 	
