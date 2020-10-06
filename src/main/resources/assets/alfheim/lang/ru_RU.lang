@@ -492,11 +492,6 @@ alfheim.commands.alfheim.wrong=/alfheim <команда>
 alfheim.commands.mtspell.usage=Информация о выбранном заклинании
 alfheim.commands.mtspell.wrong=Режим MMO выключен
 
-alfheim.commands.tpdim.usage=Используется для перемещения между измерениями
-alfheim.commands.tpdim.wrong=/tpdim <ID измерения>
-alfheim.commands.tpdim.worlderr=Ошибка инициализации измерения!
-alfheim.commands.tpdim.wrongid=Неверно указан ID измерения!
-
 alfheim.nei.manainfusion=Мана-наполнение
 alfheim.nei.tradeportal=Обмен с Мидгардом
 
