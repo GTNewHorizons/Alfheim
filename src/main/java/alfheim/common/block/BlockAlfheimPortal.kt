@@ -2,11 +2,11 @@ package alfheim.common.block
 
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
+import alfheim.client.core.helper.*
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAlfheimPortal
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.AlfheimLexiconData

@@ -2,7 +2,7 @@ package alfheim.common.block.colored
 
 import alexsocol.asjlib.*
 import alfheim.api.AlfheimAPI
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.AlfheimLexiconData

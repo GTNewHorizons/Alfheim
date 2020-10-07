@@ -2,7 +2,7 @@ package alfheim.common.item.equipment.tool
 
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.*
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.equipment.armor.fenrir.ItemFenrirArmor
 import com.google.common.collect.*

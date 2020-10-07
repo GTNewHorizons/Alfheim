@@ -3,7 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileItemDisplay
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler

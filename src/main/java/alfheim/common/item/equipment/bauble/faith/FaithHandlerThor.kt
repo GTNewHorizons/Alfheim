@@ -1,4 +1,4 @@
-	package alfheim.common.item.equipment.bauble.faith
+package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
@@ -25,7 +25,7 @@ import java.awt.Color
 import java.util.*
 import vazkii.botania.common.core.helper.Vector3 as Bector3
 
-object 	FaithHandlerThor: IFaithHandler {
+object FaithHandlerThor: IFaithHandler {
 	
 	val uuid = UUID.fromString("67d86aaf-e4c5-4f0e-af7e-7e56d1ec9fb0")
 	val mod = AttributeModifier(uuid, "Thor faith modifier", 0.2, 1)

@@ -3,7 +3,7 @@ package alfheim.common.item
 import alexsocol.asjlib.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileRainbowManaFlame
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.item.rod.ItemRodPrismatic
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.material.Material

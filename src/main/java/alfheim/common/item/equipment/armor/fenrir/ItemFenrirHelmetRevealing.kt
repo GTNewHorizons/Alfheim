@@ -2,7 +2,7 @@ package alfheim.common.item.equipment.armor.fenrir
 
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.ModInfo
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.Optional

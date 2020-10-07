@@ -5,7 +5,7 @@ import alfheim.api.ModInfo
 import alfheim.api.item.equipment.bauble.IManaDiscountBauble
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler.Companion.getFaithHandler

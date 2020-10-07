@@ -10,7 +10,7 @@ import alfheim.api.event.PlayerInteractAdequateEvent
 import alfheim.api.item.equipment.bauble.IManaDiscountBauble
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.ragnarok.RagnarokEmblemStabilizationHandler
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*

@@ -2,7 +2,7 @@ package alfheim.common.item.material
 
 import alexsocol.asjlib.meta
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.ItemMod
 import net.minecraft.client.renderer.texture.IIconRegister

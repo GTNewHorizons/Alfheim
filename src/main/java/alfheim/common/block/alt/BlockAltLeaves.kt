@@ -6,7 +6,7 @@ import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.handler.CardinalSystem
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.*
 import cpw.mods.fml.common.registry.GameRegistry

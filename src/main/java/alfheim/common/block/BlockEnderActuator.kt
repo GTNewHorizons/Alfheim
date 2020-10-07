@@ -3,7 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileEnderActuator
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material

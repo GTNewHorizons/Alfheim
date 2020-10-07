@@ -2,7 +2,7 @@ package alfheim.common.block.colored.rainbow
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.AlfheimLexiconData

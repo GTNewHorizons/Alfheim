@@ -1,6 +1,7 @@
 package alfheim.common.item.creator
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.client.core.helper.*
 import alfheim.common.core.helper.*
 import alfheim.common.item.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

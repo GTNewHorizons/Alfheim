@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.ItemNBTHelper.getBoolean
 import alexsocol.asjlib.ItemNBTHelper.setBoolean
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.ItemMod
 import com.mojang.authlib.GameProfile

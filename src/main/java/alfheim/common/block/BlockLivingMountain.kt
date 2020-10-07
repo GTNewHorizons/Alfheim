@@ -3,7 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.extendables.block.BlockModMeta
 import alexsocol.asjlib.safeGet
 import alfheim.api.ModInfo
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material

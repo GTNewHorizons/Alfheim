@@ -1,9 +1,9 @@
 package alfheim.common.block
 
 import alfheim.api.ModInfo
+import alfheim.client.core.helper.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileTradePortal
-import alfheim.common.core.helper.*
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.*

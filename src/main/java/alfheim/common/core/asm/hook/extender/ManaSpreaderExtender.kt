@@ -3,6 +3,7 @@ package alfheim.common.core.asm.hook.extender
 import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.model.block.ModelSpreaderFrame
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*

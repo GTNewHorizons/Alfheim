@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

@@ -1,7 +1,7 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.*
-import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*

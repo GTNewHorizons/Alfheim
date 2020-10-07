@@ -133,7 +133,7 @@ object GodAttributesHooks {
 		return if (dontDie) null else boat.entityDropItem(ItemStack(item, count, 0), force)
 	}
 	
-	@JvmStatic // TODO remove - not AEsir
+	@JvmStatic // TODO remove - Njord not AEsir
 	@Hook(injectOnExit = true)
 	fun onUnequipped(ring: ItemAesirRing, stack: ItemStack, player: EntityLivingBase) {
 		player.stepHeight = 0.5f

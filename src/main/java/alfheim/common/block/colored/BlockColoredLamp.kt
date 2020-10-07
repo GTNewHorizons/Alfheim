@@ -2,7 +2,7 @@ package alfheim.common.block.colored
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

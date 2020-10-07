@@ -7,6 +7,7 @@ import alfheim.common.core.handler.*
 import alfheim.common.entity.EntityThrownPotion
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
+import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
@@ -49,7 +50,10 @@ object FaithHandlerOdin: IFaithHandler {
 				potions.removeAll { pt.isMember(it.thrower) }
 			}
 			
-			potions.forEach { it.worldObj.removeEntity(it) }
+			potions.forEach {
+				if (InteractionSecurity.canDoSomethingWithEntity(player, it))
+					it.worldObj.removeEntity(it)
+			}
 		}
 	}
 	
@@ -60,7 +64,8 @@ object FaithHandlerOdin: IFaithHandler {
 		if (e.world.playerEntities.any {
 				it as EntityPlayer
 				Vector3.entityDistance(e.entity, it) < 6 &&
-				ItemPriestCloak.getCloak(5, it) != null
+				ItemPriestCloak.getCloak(5, it) != null &&
+				InteractionSecurity.canDoSomethingWithEntity(it, e.entity)
 			})
 			e.isCanceled = true
 	}

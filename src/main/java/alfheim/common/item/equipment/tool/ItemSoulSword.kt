@@ -3,7 +3,7 @@ package alfheim.common.item.equipment.tool
 import alexsocol.asjlib.*
 import alfheim.api.*
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
@@ -17,7 +17,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.World
-import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper

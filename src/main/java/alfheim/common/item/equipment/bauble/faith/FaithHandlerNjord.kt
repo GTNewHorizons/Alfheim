@@ -8,6 +8,7 @@ import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.relic.ItemNjordRing
+import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
@@ -49,7 +50,7 @@ object FaithHandlerNjord: IFaithHandler {
 	}
 	
 	@SubscribeEvent
-	fun onPlayerClick(e: RightClick) {
+	fun onPlayerClickLiquid(e: RightClick) {
 		if (e.action != RIGHT_CLICK_LIQUID) return
 		
 		val player = e.player
@@ -58,6 +59,9 @@ object FaithHandlerNjord: IFaithHandler {
 		if (getGodPowerLevel(player) < 3) return
 		if (player.isSneaking || !player.isInsideOfMaterial(Material.air)) return
 
+		if (!InteractionSecurity.canDoSomethingHere(player, e.x, e.y, e.z))
+			return
+		
 		val state = player.worldObj.getBlock(e.x, e.y, e.z)
 		
 		if (state.material.isLiquid) {
@@ -95,10 +99,8 @@ object FaithHandlerNjord: IFaithHandler {
 			if (!player.capabilities.isCreativeMode) emblem.cooldown = 50
 			
 			player.isSprinting = true
-			val increase = min(0.07f * 200 + 0.67f, 0.9f)
-			
-			player.motionY += increase.D
-			val speed = min(0.12f * 200 + 1.1f, 1.825f)
+			player.motionY += 0.9
+			val speed = 1.825
 			player.motionX = (-sin(player.rotationYaw * Math.PI / 180) * cos(player.rotationPitch * Math.PI / 180) * speed)
 			player.motionZ = (cos(player.rotationYaw * Math.PI / 180) * cos(player.rotationPitch * Math.PI / 180) * speed)
 		}

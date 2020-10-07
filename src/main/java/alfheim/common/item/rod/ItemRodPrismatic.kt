@@ -3,7 +3,7 @@ package alfheim.common.item.rod
 import alexsocol.asjlib.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileRainbowManaFlame
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.item.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister

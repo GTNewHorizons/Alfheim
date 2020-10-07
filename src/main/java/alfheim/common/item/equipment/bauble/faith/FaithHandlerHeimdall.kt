@@ -9,6 +9,7 @@ import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler.FaithBauble.*
 import alfheim.common.item.relic.ItemHeimdallRing
 import alfheim.common.network.MessageHeimdallBlink
+import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -85,6 +86,9 @@ object FaithHandlerHeimdall: IFaithHandler {
 				for (i in -2..2)
 					for (k in -2..2) {
 						if (abs(i) == 2 && abs(k) == 2) continue
+						
+						if (!InteractionSecurity.canDoSomethingHere(player, x + i, y, z + k))
+							continue
 						
 						val block = world.getBlock(x + i, y, z + k)
 						

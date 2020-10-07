@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.entity.EntityMjolnir
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
 import alfheim.common.item.equipment.bauble.*

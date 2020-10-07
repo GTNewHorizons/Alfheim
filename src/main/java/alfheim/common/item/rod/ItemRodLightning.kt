@@ -6,7 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import alfheim.common.network.MessageEffectLightning

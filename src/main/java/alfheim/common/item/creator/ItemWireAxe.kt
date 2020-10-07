@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alfheim.api.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import cpw.mods.fml.common.registry.GameRegistry

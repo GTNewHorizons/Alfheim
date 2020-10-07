@@ -3,7 +3,7 @@ package alfheim.common.item.equipment.bauble
 //import alfheim.AlfheimCore
 //import alfheim.api.ModInfo
 //import alfheim.api.item.IToolbeltBlacklisted
-//import alfheim.common.core.helper.IconHelper
+//import alfheim.client.core.helper.IconHelper
 //import alfheim.common.core.util.AlfheimTab
 //import alfheim.common.network.MessagePlayerItem
 //import baubles.api.BaubleType

@@ -2,8 +2,8 @@ package alfheim.common.block.alt
 
 import alexsocol.asjlib.*
 import alfheim.api.lib.LibOreDict.ALT_TYPES
+import alfheim.client.core.helper.*
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.helper.*
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.*
 import cpw.mods.fml.common.IFuelHandler

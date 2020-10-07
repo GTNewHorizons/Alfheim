@@ -5,7 +5,7 @@ import alfheim.api.ModInfo
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileLivingwoodFunnel
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block

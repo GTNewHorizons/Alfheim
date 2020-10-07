@@ -1,8 +1,8 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.client.core.helper.*
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.helper.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material

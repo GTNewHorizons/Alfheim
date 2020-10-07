@@ -1,4 +1,4 @@
-package alfheim.common.core.helper
+package alfheim.client.core.helper
 
 import alfheim.api.ModInfo
 import net.minecraft.block.Block

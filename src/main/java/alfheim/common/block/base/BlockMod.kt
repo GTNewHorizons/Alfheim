@@ -1,7 +1,7 @@
 package alfheim.common.block.base
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.helper.*
+import alfheim.client.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

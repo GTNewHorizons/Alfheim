@@ -2,7 +2,7 @@ package alfheim.common.item.creator
 
 import alexsocol.asjlib.*
 import alfheim.api.*
-import alfheim.common.core.helper.*
+import alfheim.client.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

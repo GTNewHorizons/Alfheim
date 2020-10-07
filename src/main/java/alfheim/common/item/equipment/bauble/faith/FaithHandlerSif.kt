@@ -6,6 +6,7 @@ import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.relic.ItemSifRing
+import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.*
 import net.minecraft.entity.EntityLivingBase
@@ -89,6 +90,9 @@ object FaithHandlerSif: IFaithHandler {
 		val cooldown = getInt(emblem, TAG_COOLDOWN, 0)
 		if (cooldown != 0 || e.entityPlayer.isSneaking || player.heldItem != null || !ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 50, false)) return
 		
+		if (!InteractionSecurity.canDoSomethingHere(player, e.x, e.y, e.z, e.world))
+			return
+		
 		val world = e.world
 		val block = world.getBlock(e.x, e.y, e.z)
 		
@@ -109,6 +113,9 @@ object FaithHandlerSif: IFaithHandler {
 	}
 	
 	fun bonemeal(world: World, block: IGrowable, x: Int, y: Int, z: Int, player: EntityPlayer, stack: ItemStack, cost: Int): Boolean {
+		if (!InteractionSecurity.canDoSomethingHere(player, x, y, z, world))
+			return false
+		
 		if (world.isRemote) {
 			world.playAuxSFX(2005, x, y, z, 0)
 			return true

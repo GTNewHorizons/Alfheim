@@ -3,7 +3,7 @@ package alfheim.common.item
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer

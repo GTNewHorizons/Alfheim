@@ -4,7 +4,7 @@ import alexsocol.asjlib.meta
 import alfheim.api.ModInfo
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.block.colored.rainbow.BlockRainbowGrass
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.IIconRegister

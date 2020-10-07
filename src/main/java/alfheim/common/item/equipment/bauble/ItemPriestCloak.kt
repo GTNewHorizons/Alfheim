@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler

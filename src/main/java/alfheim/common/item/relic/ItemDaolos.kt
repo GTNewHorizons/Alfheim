@@ -4,7 +4,8 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.*
 import alfheim.api.event.PlayerInteractAdequateEvent
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfmod.common.entity.EntityMuspellsun
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -32,6 +33,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 class ItemDaolos: ItemAxe(AlfheimAPI.RUNEAXE), IRelic {
 	
 	init {
+		setCreativeTab(AlfheimTab)
 		setMaxStackSize(1)
 		unlocalizedName = "Daolos"
 	}

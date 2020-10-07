@@ -12,6 +12,10 @@ import vazkii.botania.common.item.relic.ItemRelic
 
 class ItemGjallarhorn: ItemRelic("Gjallarhorn") {
 	
+	init {
+		setFull3D()
+	}
+	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (!RagnarokHandler.ragnarok) return stack
 		
