@@ -9,6 +9,7 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.EntityLolicorn
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -53,14 +54,14 @@ class ItemRodPortal: ItemMod("rodPortal") {
 		val (x, y, z) = Vector3.fromEntity(player).mf()
 		
 		if (pairs.none { it.check(player, world.getBlock(x, y - 1, z)) }) return stack
-		if (!isClearAllTheWayUp(world, x, y + 1, z)) return stack
+		if (!isClearAllTheWayUp(world, x, y + 1, z, player)) return stack
 		
 		for (i in -2..2)
 			for (k in -2..2) {
 				if (abs(i) == 2 && abs(k) == 2)
 					continue
 				
-				if (!isClearAllTheWayUp(world, x + i, y + 1, z + k))
+				if (!isClearAllTheWayUp(world, x + i, y + 1, z + k, player))
 					return stack
 			}
 		
@@ -74,7 +75,7 @@ class ItemRodPortal: ItemMod("rodPortal") {
 		return stack
 	}
 	
-	fun isClearAllTheWayUp(world: World, x: Int, y: Int, z: Int) = world.canBlockSeeTheSky(x, y, z) && world.getPrecipitationHeight(x, z) <= y
+	fun isClearAllTheWayUp(world: World, x: Int, y: Int, z: Int, player: EntityPlayer) = InteractionSecurity.canDoSomethingHere(player, x, y, z) && world.canBlockSeeTheSky (x, y, z) && world.getPrecipitationHeight(x, z) <= y
 	
 	override fun getMaxItemUseDuration(stack: ItemStack?) = 120
 	
