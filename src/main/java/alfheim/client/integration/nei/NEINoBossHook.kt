@@ -1,5 +1,6 @@
 package alfheim.client.integration.nei
 
+import alexsocol.asjlib.ASJReflectionHelper
 import alfheim.common.core.handler.AlfheimConfigHandler
 import codechicken.nei.ItemMobSpawner
 import codechicken.nei.api.ItemInfo
@@ -13,7 +14,7 @@ object NEINoBossHook {
 	@JvmStatic
 	@Hook(injectOnExit = true)
 	fun load(spawner: ItemInfo?, world: World) {
-		if (AlfheimConfigHandler.blacklistWither)
-			ItemMobSpawner.IDtoNameMap.remove(EntityList.classToIDMapping[EntityWither::class.java])
+		if (AlfheimConfigHandler.blacklistWither) // oh just shut the fuck up, I'm tired of making that shit public every time gradle decides to redownload the whole mod
+			ASJReflectionHelper.getStaticValue<ItemMobSpawner, MutableMap<Int, String>>(ItemMobSpawner::class.java, "IDtoNameMap").remove(EntityList.classToIDMapping[EntityWither::class.java])
 	}
 }

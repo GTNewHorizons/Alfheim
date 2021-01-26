@@ -7,7 +7,7 @@ import alfheim.common.core.handler.*
 import alfheim.common.entity.EntityThrownPotion
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier

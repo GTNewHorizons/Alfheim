@@ -1,5 +1,9 @@
 package alexsocol.asjlib.extendables
 
+import cpw.mods.fml.client.event.ConfigChangedEvent
+import cpw.mods.fml.common.FMLCommonHandler
+import cpw.mods.fml.common.event.FMLPreInitializationEvent
+import cpw.mods.fml.common.eventhandler.*
 import net.minecraftforge.common.config.Configuration
 import java.io.File
 
@@ -7,6 +11,10 @@ abstract class ASJConfigHandler {
 	
 	lateinit var config: Configuration
 	
+	/**
+	 * Function called once in [FMLPreInitializationEvent]
+	 * to initialize categories and properties
+	 */
 	fun loadConfig(cfg: File) {
 		config = Configuration(cfg)
 		config.load()
@@ -14,14 +22,33 @@ abstract class ASJConfigHandler {
 		syncConfig()
 	}
 	
+	/**
+	 * Call this if you have config GUI for your mod
+	 */
+	fun registerChangeHandler(modid: String) {
+		FMLCommonHandler.instance().bus().register(object {
+			@SubscribeEvent(priority = EventPriority.HIGHEST)
+			fun onConfigChanged(e: ConfigChangedEvent.OnConfigChangedEvent) {
+				if (e.modID == modid) syncConfig()
+			}
+		})
+	}
+	
 	fun addCategory(cat: String, comment: String) {
 		config.addCustomCategoryComment(cat, comment)
 		config.getCategory(cat).setLanguageKey(cat)
 	}
 	
+	fun syncConfig() {
+		readProperties()
+		
+		if (config.hasChanged())
+			config.save()
+	}
+	
 	abstract fun addCategories()
 	
-	abstract fun syncConfig()
+	abstract fun readProperties()
 	
 	fun loadProp(category: String, propName: String, default: Boolean, restart: Boolean, desc: String): Boolean {
 		val prop = config.get(category, propName, default, desc)

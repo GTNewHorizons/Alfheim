@@ -61,10 +61,10 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		rg.replaceBlocksMetaList.clear()
 		rg.addReplacingBlock(ModBlocks.livingrock, 0.toByte())
 		cp.createChunkGen_List.add(rg)
-		val snowGen = WE_SnowGen()
-		snowGen.snowPoint = 164
-		snowGen.randomSnowPoint = 8
-		cp.createChunkGen_InXZ_List.add(snowGen)
+//		val snowGen = WE_SnowGen()
+//		snowGen.snowPoint = 164
+//		snowGen.randomSnowPoint = 8
+//		cp.createChunkGen_InXZ_List.add(snowGen)
 		
 		if (Botania.thaumcraftLoaded)
 			cp.decorateChunkGen_List.add(WorldGenAlfheimThaumOre())

@@ -8,7 +8,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.network.MessageVisualEffect
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
 

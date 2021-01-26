@@ -1203,8 +1203,6 @@ primaryClassTransformer.tooltip=Установите значение этого
 
 general.alfheim=Альфхейм
 general.alfheim.tooltip=Настройки измерения Альфхейм.
-biomeIDAlfheim=ID биома Альфхейм
-biomeIDAlfheim.tooltip=Идентификатор биома Альфхейм.
 destroyPortal=Уничтожение порталов
 destroyPortal.tooltip=Установите значение этого параметра на 'false', чтобы отключить уничтожение порталов на ненулевых координатах в Альфхейме.
 dimensionIDAlfheim=ID измерения Альфхейм

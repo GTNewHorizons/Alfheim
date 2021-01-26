@@ -171,10 +171,6 @@ object EventHandler {
 				e.isCanceled = true
 				return
 			}
-			if ((e.source.damageType.equals(DamageSource.inWall.damageType, ignoreCase = true) || e.source.damageType.equals(DamageSource.drown.damageType, ignoreCase = true)) && target.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) {
-				e.isCanceled = true
-				return
-			}
 		}
 		
 		if (AlfheimConfigHandler.enableElvenStory && e.source.damageType == DamageSource.fall.damageType && target is EntityPlayer && target.race != EnumRace.HUMAN) {

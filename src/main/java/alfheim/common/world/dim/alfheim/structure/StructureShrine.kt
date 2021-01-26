@@ -2,6 +2,7 @@ package alfheim.common.world.dim.alfheim.structure
 
 import alexsocol.asjlib.SchemaUtils
 import net.minecraft.world.World
+import ru.vamig.worldengine.standardcustomgen.StructureBaseClass
 import java.util.*
 
 class StructureShrine: StructureBaseClass() {

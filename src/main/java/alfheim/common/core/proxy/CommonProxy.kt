@@ -13,7 +13,7 @@ import alfheim.common.integration.multipart.MultipartAlfheimConfig
 import alfheim.common.integration.thaumcraft.TCHandlerShadowFoxAspects
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.*
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.client.event.ConfigChangedEvent
 import cpw.mods.fml.common.*

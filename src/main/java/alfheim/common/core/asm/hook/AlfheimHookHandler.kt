@@ -1,6 +1,7 @@
 package alfheim.common.core.asm.hook
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.IHourglassTrigger
@@ -38,9 +39,8 @@ import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.init.*
-import net.minecraft.inventory.InventoryCrafting
+import net.minecraft.inventory.*
 import net.minecraft.item.*
-import net.minecraft.network.*
 import net.minecraft.potion.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
@@ -79,6 +79,7 @@ import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.LensFirework
+import vazkii.botania.common.item.material.ItemManaResource
 import vazkii.botania.common.item.relic.*
 import vazkii.botania.common.item.rod.ItemRainbowRod
 import vazkii.botania.common.lib.LibBlockNames
@@ -252,7 +253,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getColor(tile: TileHourglass, @ReturnValue color: Int): Int {
-		val stack = tile.get(0)
+		val stack = tile[0]
 		return if (stack != null && color == 0) {
 			if (stack.item === AlfheimBlocks.elvenSand.toItem()) 0xf7f5d9 else 0
 		} else color
@@ -329,15 +330,15 @@ object AlfheimHookHandler {
 						1    -> pos.entityHit is EntityPlayer
 						2    -> pos.entityHit != null
 						else -> false
-					} && pos.entityHit?.isSneaking == false
+					} && !entity.worldObj.isRemote && pos.entityHit?.isSneaking == false
 		
-		if (!entity.worldObj.isRemote && allow) {
-			val fireworkStack: ItemStack = lens.generateFirework(burst.color)
-			val rocket = EntityFireworkRocket(entity.worldObj, entity.posX, entity.posY, entity.posZ, fireworkStack)
-			entity.worldObj.spawnEntityInWorld(rocket)
-			pos.entityHit.mountEntity(rocket)
-			return true
-		}
+		if (!allow) return false
+		if (!InteractionSecurity.canDoSomethingWithEntity((burst as EntityManaBurst).thrower, pos.entityHit)) return false
+		
+		val fireworkStack: ItemStack = lens.generateFirework(burst.color)
+		val rocket = EntityFireworkRocket(entity.worldObj, entity.posX, entity.posY, entity.posZ, fireworkStack)
+		entity.worldObj.spawnEntityInWorld(rocket)
+		pos.entityHit.mountEntity(rocket)
 		
 		return false
 	}
@@ -564,20 +565,6 @@ object AlfheimHookHandler {
 	fun getIcon(pylon: BlockPylon, side: Int, meta: Int) =
 		(if (meta == 0 || meta == 1) ModBlocks.storage.getIcon(side, meta) else Blocks.diamond_block.getIcon(side, 0))!!
 	
-	var sendToClient = true
-	
-	@JvmStatic
-	@Hook(returnCondition = ON_TRUE)
-	fun sendPacket(handler: NetHandlerPlayServer, packet: Packet?): Boolean {
-		if (!sendToClient) {
-			sendToClient = true
-			
-			return true
-		}
-		
-		return false
-	}
-	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true, booleanReturnConstant = false)
 	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int) =
@@ -586,23 +573,23 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun matches(recipe: AesirRingRecipe, inv: InventoryCrafting, world: World?): Boolean {
-		var foundThorRing		= false
-		var foundSifRing		= false
-		var foundNjordRing		= false // TODO remove - not AEsir
-		var foundLokiRing		= false
-		var foundHeimdallRing	= false
-		var foundOdinRing		= false
+		var foundThorRing = false
+		var foundSifRing = false
+		var foundNjordRing = false // TODO remove - not AEsir
+		var foundLokiRing = false
+		var foundHeimdallRing = false
+		var foundOdinRing = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.get(i) ?: continue
+			val stack = inv[i] ?: continue
 			
-			if (stack.item === ModItems		.thorRing			&& !foundThorRing)		foundThorRing		= true else
-			if (stack.item === AlfheimItems	.priestRingSif		&& !foundSifRing)		foundSifRing		= true else
-			if (stack.item === AlfheimItems	.priestRingNjord	&& !foundNjordRing)		foundNjordRing		= true else
-			if (stack.item === ModItems		.lokiRing			&& !foundLokiRing)		foundLokiRing		= true else
-			if (stack.item === AlfheimItems	.priestRingHeimdall	&& !foundHeimdallRing)	foundHeimdallRing	= true else
-			if (stack.item === ModItems		.odinRing			&& !foundOdinRing)		foundOdinRing		= true else
-			return false // Found an invalid item, breaking the recipe
+			if (stack.item === ModItems.thorRing && !foundThorRing) foundThorRing = true else
+				if (stack.item === AlfheimItems.priestRingSif && !foundSifRing) foundSifRing = true else
+					if (stack.item === AlfheimItems.priestRingNjord && !foundNjordRing) foundNjordRing = true else
+						if (stack.item === ModItems.lokiRing && !foundLokiRing) foundLokiRing = true else
+							if (stack.item === AlfheimItems.priestRingHeimdall && !foundHeimdallRing) foundHeimdallRing = true else
+								if (stack.item === ModItems.odinRing && !foundOdinRing) foundOdinRing = true else
+									return false // Found an invalid item, breaking the recipe
 		}
 		
 		return foundThorRing && foundSifRing && foundNjordRing && foundLokiRing && foundHeimdallRing && foundOdinRing
@@ -801,6 +788,12 @@ object AlfheimHookHandler {
 	fun getColorFromItemStack(item: ItemManaMirror, stack: ItemStack, pass: Int): Int {
 		val mana = item.getMana(stack).F
 		return if (pass == 1) Color.HSBtoRGB(0.528f, (mana / TilePool.MAX_MANA).clamp(0f, 1f), 1f) else 0xFFFFFF
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun canFit(item: ItemManaResource, stack: ItemStack, apothecary: IInventory?): Boolean {
+		return stack.meta == 15 // Ender Air Bottle
 	}
 	
 	@JvmStatic

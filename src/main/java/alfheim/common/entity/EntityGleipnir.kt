@@ -1,7 +1,7 @@
 package alfheim.common.entity
 
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.core.handler.*
-import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer

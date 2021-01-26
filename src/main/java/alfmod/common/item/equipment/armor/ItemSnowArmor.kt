@@ -3,7 +3,7 @@ package alfmod.common.item.equipment.armor
 import alexsocol.asjlib.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import alfmod.AlfheimModularCore
 import alfmod.client.model.armor.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper

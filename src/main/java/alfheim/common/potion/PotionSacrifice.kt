@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.spell.darkness.SpellSacrifice
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap

@@ -3,14 +3,14 @@
 
 package ru.vamig.worldengine;
 
-import alfheim.common.core.handler.AlfheimConfigHandler;
+import alexsocol.patcher.PatcherConfigHandler;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public abstract class WE_WorldProvider extends WorldProvider {
 	
-	public static final int we_id = AlfheimConfigHandler.INSTANCE.getBiomeIDAlfheim();
+	public static final int we_id = PatcherConfigHandler.INSTANCE.getWEBiomeID();
 	public final float rainfall = 0.1F;
 	public WE_ChunkProvider cp = null;
 	

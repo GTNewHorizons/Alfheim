@@ -1,7 +1,7 @@
 package alexsocol.patcher.asm
 
+import alexsocol.patcher.PatcherConfigHandler
 import alexsocol.patcher.asm.ASJHookLoader.Companion.OBF
-import alexsocol.patcher.asm.ASJHookLoader.Companion.maxParticles
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
 
@@ -106,10 +106,10 @@ class ASJClassTransformer: IClassTransformer {
 			
 			override fun visitIntInsn(opcode: Int, operand: Int) {
 				if (opcode == Opcodes.SIPUSH && operand == 4000) {
-					when (maxParticles) {
-						in Byte.MIN_VALUE..Byte.MAX_VALUE   -> super.visitIntInsn(Opcodes.BIPUSH, maxParticles)
-						in Short.MIN_VALUE..Short.MAX_VALUE -> super.visitIntInsn(Opcodes.SIPUSH, maxParticles)
-						else                                -> super.visitLdcInsn(Integer(maxParticles))
+					when (PatcherConfigHandler.maxParticles) {
+						in Byte.MIN_VALUE..Byte.MAX_VALUE   -> super.visitIntInsn(Opcodes.BIPUSH, PatcherConfigHandler.maxParticles)
+						in Short.MIN_VALUE..Short.MAX_VALUE -> super.visitIntInsn(Opcodes.SIPUSH, PatcherConfigHandler.maxParticles)
+						else                                -> super.visitLdcInsn(Integer(PatcherConfigHandler.maxParticles))
 					}
 				} else
 					super.visitIntInsn(opcode, operand)

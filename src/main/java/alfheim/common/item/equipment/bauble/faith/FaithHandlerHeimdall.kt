@@ -9,7 +9,7 @@ import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler.FaithBauble.*
 import alfheim.common.item.relic.ItemHeimdallRing
 import alfheim.common.network.MessageHeimdallBlink
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer

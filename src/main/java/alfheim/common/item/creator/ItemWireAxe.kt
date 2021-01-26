@@ -2,9 +2,9 @@ package alfheim.common.item.creator
 
 import alexsocol.asjlib.*
 import alfheim.api.*
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import cpw.mods.fml.common.registry.GameRegistry
@@ -103,7 +103,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		if (!ManaItemHandler.requestManaExact(stack, player, 100, false)) return
 		
 		val range = min(getMaxItemUseDuration(stack) - inUseTicks, 200) / 20 + 1
-		val entities = world.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range))
+		val entities = world.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox(range))
 		if (!player.capabilities.isCreativeMode) stack.damageStack(1, player)
 		
 		var count = 0

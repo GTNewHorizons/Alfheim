@@ -1,15 +1,15 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.toItem
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
 import alfheim.common.core.util.AlfheimTab
-import net.minecraft.block.IGrowable
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.init.Blocks
 import net.minecraft.world.*
-import net.minecraftforge.common.IPlantable
+import net.minecraftforge.common.*
 import net.minecraftforge.common.util.ForgeDirection
 import java.util.*
 
@@ -36,8 +36,20 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, isRemote: Boolean) = true
 	override fun func_149852_a(world: World?, random: Random?, x: Int, y: Int, z: Int) = true
 	override fun func_149853_b(world: World?, random: Random?, x: Int, y: Int, z: Int) = Unit
-	override fun canSustainPlant(world: IBlockAccess?, x: Int, y: Int, z: Int, direction: ForgeDirection?, plantable: IPlantable?) = true
 	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = Blocks.dirt.toItem()
+	
+	override fun canSustainPlant(world: IBlockAccess, x: Int, y: Int, z: Int, direction: ForgeDirection, plantable: IPlantable): Boolean {
+		// fuck you mojang and your protected shit!
+		if (plantable is BlockBush && canPlaceBlockOn.invoke(plantable, Blocks.grass) as Boolean) {
+			return true
+		}
+		
+		return when (plantable.getPlantType(world, x, y + 1, z)) {
+			EnumPlantType.Plains -> true
+			EnumPlantType.Beach  -> world.getBlock(x - 1, y, z).material === Material.water || world.getBlock(x + 1, y, z).material === Material.water || world.getBlock(x, y, z - 1).material === Material.water || world.getBlock(x, y, z + 1).material === Material.water
+			else                 -> false
+		}
+	}
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, random: Random) {
 		val above = world.getBlock(x, y + 1, z)
@@ -80,5 +92,7 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 	
 	companion object {
 		var meltDelay = 20
+		
+		val canPlaceBlockOn = ASJReflectionHelper.getMethod(BlockBush::class.java, arrayOf("canPlaceBlockOn", "func_149854_a", "a"), arrayOf(Block::class.java)).also { it.isAccessible = true }
 	}
 }

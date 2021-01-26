@@ -5,6 +5,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
+import ru.vamig.worldengine.standardcustomgen.StructureBaseClass
 import java.util.*
 
 class StructureDreamsTree

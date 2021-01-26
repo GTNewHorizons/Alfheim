@@ -396,10 +396,7 @@ open class TileSchemaController: TileMod() {
 	}
 	
 	internal fun getUniqueName(block: Block): String {
-		val name = GameData.getBlockRegistry().getNameForObject(block)
-		val ui = GameRegistry.UniqueIdentifier(name)
-		
-		return "${ui.modId}:${ui.name}"
+		return GameRegistry.findUniqueIdentifierFor(block).toString()
 	}
 	
 	fun Int.tickDelay(lambda: () -> Any) {

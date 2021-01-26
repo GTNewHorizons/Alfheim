@@ -69,10 +69,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			dataWatcher.updateObject(21, stage.toByte())
 			
 			regens = when (stage) {
-				1    -> 3
-				2    -> 5
-				3    -> 8
-				else -> 0
+				STAGE_AGGRO    -> 3
+				STAGE_MAGIC    -> 5
+				STAGE_DEATHRAY -> 8
+				else           -> 0
 			}
 		}
 	
@@ -150,9 +150,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			if (aiTask == AITask.REGEN || aiTask == AITask.TP) {
 				lastHit /= 2f
 				if (aiTask == AITask.REGEN) {
-					aiTaskTimer = 0
 					lastHit /= 2f
-					e.attackEntityFrom(source, lastHit)
+					if (!isUltraMode)
+						aiTaskTimer = 0
+//					e.attackEntityFrom(source, lastHit) // why is it called twice ???
 				}
 			}
 			
@@ -891,9 +892,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		const val TAG_SUMMONER = "summoner"
 		const val TAG_ATTACKED = "attacked"
 		
-		const val STAGE_AGGRO = 1    //100%	hp
-		const val STAGE_MAGIC = 2    //60%	hp
-		const val STAGE_DEATHRAY = 3    //12.5%	hp
+		const val STAGE_AGGRO		= 1	//100%	hp
+		const val STAGE_MAGIC		= 2	//60%	hp
+		const val STAGE_DEATHRAY	= 3	//12.5%	hp
+		
 		var isPlayingMusic = false
 		
 		fun spawn(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, hard: Boolean, ultra: Boolean): Boolean {

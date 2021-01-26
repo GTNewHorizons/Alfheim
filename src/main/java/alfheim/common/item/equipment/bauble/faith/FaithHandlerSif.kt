@@ -2,11 +2,11 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.relic.ItemSifRing
-import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.*
 import net.minecraft.entity.EntityLivingBase
@@ -37,6 +37,8 @@ object FaithHandlerSif: IFaithHandler {
 	
 	@SubscribeEvent
 	fun onLivingAttacked(e: LivingAttackEvent) {
+		if (e.source.isUnblockable) return
+		
 		val attacker = e.source.entity as? EntityLivingBase ?: return
 		val player = e.entityLiving as? EntityPlayer ?: return
 		if (ItemPriestCloak.getCloak(1, player) == null) return
