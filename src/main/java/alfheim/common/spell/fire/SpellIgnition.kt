@@ -5,7 +5,7 @@ import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.*
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks

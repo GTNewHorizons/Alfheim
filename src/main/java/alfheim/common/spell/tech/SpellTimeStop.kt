@@ -5,7 +5,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellVisualizations
 import alfheim.common.core.handler.CardinalSystem.TimeStopSystem
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 
 object SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 100, true) {

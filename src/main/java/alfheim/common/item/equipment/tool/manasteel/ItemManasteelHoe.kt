@@ -4,7 +4,7 @@ import alexsocol.asjlib.meta
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.Event.Result
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block

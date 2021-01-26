@@ -3,7 +3,7 @@ package alfheim.common.item
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.client.gui.ItemsRemainingRenderHandler
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -90,9 +90,13 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		
 		val stacksToCheck = ArrayList<ItemStack>()
 		for (i in 0 until player.inventory.sizeInventory) {
-			val stackInSlot = player.inventory.get(i)
+			val stackInSlot = player.inventory[i]
 			if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === blockToPlace.item && stackInSlot.meta == blockToPlace.meta) {
 				stackInSlot.stackSize--
+				
+				if (stackInSlot.stackSize <= 0)
+					player.inventory[i] = null
+				
 				return
 			}
 			
@@ -153,7 +157,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			var current = 0
 			val stacksToCheck = ArrayList<ItemStack>()
 			for (i in 0 until player.inventory.sizeInventory) {
-				val stackInSlot = player.inventory.get(i)
+				val stackInSlot = player.inventory[i]
 				if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === reqStack.item && stackInSlot.meta == reqStack.meta) {
 					current += stackInSlot.stackSize
 					if (current >= required)

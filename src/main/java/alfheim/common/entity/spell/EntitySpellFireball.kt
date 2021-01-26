@@ -9,7 +9,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.spell.fire.SpellFireball
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*

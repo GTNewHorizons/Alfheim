@@ -8,7 +8,7 @@ import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.relic.ItemNjordRing
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase

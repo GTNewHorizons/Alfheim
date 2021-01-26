@@ -1,3 +1,4 @@
+
 package alfheim.common.potion
 
 import alfheim.common.core.handler.AlfheimConfigHandler

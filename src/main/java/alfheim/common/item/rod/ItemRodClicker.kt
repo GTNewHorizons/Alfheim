@@ -13,7 +13,7 @@ import net.minecraft.entity.*
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.inventory.IInventory
+import net.minecraft.inventory.*
 import net.minecraft.item.ItemStack
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
@@ -146,6 +146,8 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 			if (i >= inv.sizeInventory) break
 			
 			var stack = inv[i]?.copy()
+			if (stack != null && inv is ISidedInventory && !inv.canExtractItem(i, stack, 1))
+			
 			if (stack == null || stack.stackSize <= 0) stack = null
 			inv[i] = null
 			

@@ -2,7 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alfheim.common.item.AlfheimItems
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

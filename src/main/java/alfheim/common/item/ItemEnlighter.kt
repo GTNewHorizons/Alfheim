@@ -5,7 +5,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileRainbowManaFlame
 import alfheim.client.core.helper.IconHelper
 import alfheim.common.item.rod.ItemRodPrismatic
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity

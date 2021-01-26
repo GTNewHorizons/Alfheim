@@ -6,7 +6,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 

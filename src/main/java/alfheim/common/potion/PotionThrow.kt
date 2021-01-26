@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellThrow
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.DamageSource

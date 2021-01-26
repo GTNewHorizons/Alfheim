@@ -1,7 +1,9 @@
 package alexsocol.patcher.asm
 
 import alexsocol.asjlib.*
+import alexsocol.patcher.PatcherConfigHandler
 import alexsocol.patcher.event.*
+import cpw.mods.fml.client.FMLClientHandler
 import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.*
@@ -14,17 +16,24 @@ import net.minecraft.client.renderer.entity.Render
 import net.minecraft.command.server.CommandSummon
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.*
+import net.minecraft.entity.passive.EntityMooshroom
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.*
+import net.minecraft.item.*
+import net.minecraft.network.*
 import net.minecraft.potion.*
 import net.minecraft.tileentity.TileEntityFurnace
+import net.minecraft.util.ResourceLocation
 import net.minecraft.world.*
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.*
 import java.nio.FloatBuffer
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.min
 
+@Suppress("UNUSED_PARAMETER")
 object ASJHookHandler {
 	
 	@JvmStatic
@@ -62,22 +71,19 @@ object ASJHookHandler {
 	var portalHook = false
 	
 	@JvmStatic
-	@Hook(targetMethod = "onLivingUpdate")
-	fun onLivingUpdatePre(player: EntityPlayerSP) {
-		portalHook = true
+	@Hook
+	fun onLivingUpdate(player: EntityPlayerSP) {
+		portalHook = PatcherConfigHandler.portalHook
 	}
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ON_TRUE)
 	@SideOnly(Side.CLIENT)
 	fun displayGuiScreen(mc: Minecraft, gui: GuiScreen?): Boolean {
-		return portalHook && gui == null
-	}
-	
-	@JvmStatic
-	@Hook(targetMethod = "onLivingUpdate", injectOnExit = true)
-	fun onLivingUpdatePost(player: EntityPlayerSP) {
-		portalHook = false
+		return if (portalHook && mc.thePlayer?.inPortal == true) {
+			portalHook = false
+			gui == null
+		} else false
 	}
 	
 	// #### BlockFence connection fix ####
@@ -141,7 +147,6 @@ object ASJHookHandler {
 	}
 	
 	// #### BlockWall fix end ####
-	
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
@@ -245,6 +250,69 @@ object ASJHookHandler {
 	fun getNightVisionBrightness(render: EntityRenderer, player: EntityPlayer, partialTicks: Float) =
 		if ((player.getActivePotionEffect(Potion.nightVision.id)?.duration ?: 0) > 0) 1f else 0f
 	
+	// Fix nbt clearing in Enchanting Table
+	
+	val mergeItemStack by lazy {
+		ASJReflectionHelper.getMethod(Container::class.java, arrayOf("mergeItemStack", "func_75135_a"), arrayOf(ItemStack::class.java, Int::class.java, Int::class.java, Boolean::class.java)).also {
+			it.isAccessible = true
+		}
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	fun transferStackInSlot(container: ContainerEnchantment, player: EntityPlayer?, slotID: Int): ItemStack? {
+		var itemstack: ItemStack? = null
+		val slot = container.inventorySlots[slotID] as Slot?
+		if (slot != null && slot.hasStack) {
+			val itemstack1 = slot.stack
+			itemstack = itemstack1.copy()
+			if (slotID == 0) {
+				// I'm sooo sorry but all inheritance will just fuck everything up
+				if (!(mergeItemStack.invoke(container, itemstack1, 1, 37, true) as Boolean))
+					return null
+			} else {
+				if ((container.inventorySlots[0] as Slot).hasStack || !(container.inventorySlots[0] as Slot).isItemValid(itemstack1))
+					return null
+				
+				if (itemstack1.hasTagCompound() && itemstack1.stackSize == 1) {
+					(container.inventorySlots[0] as Slot).putStack(itemstack1.copy())
+					itemstack1.stackSize = 0
+				} else if (itemstack1.stackSize >= 1) {
+					val copy = itemstack1.copy()
+					copy.stackSize = 1
+					(container.inventorySlots[0] as Slot).putStack(copy)
+					--itemstack1.stackSize
+				}
+			}
+			if (itemstack1.stackSize == 0)
+				slot.putStack(null as ItemStack?)
+			else
+				slot.onSlotChanged()
+			
+			if (itemstack1.stackSize == itemstack.stackSize)
+				return null
+			
+			slot.onPickupFromSlot(player, itemstack1)
+		}
+		return itemstack
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ON_TRUE)
+	fun itemInteractionForEntity(item: ItemNameTag, stack: ItemStack, player: EntityPlayer?, target: EntityLivingBase?): Boolean {
+		if (!stack.hasDisplayName() && target is EntityLiving) {
+			target.customNameTag = ""
+			return true
+		}
+		
+		return false
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ON_NOT_NULL)
+	fun onSheared(entity: EntityMooshroom, item: ItemStack?, world: IBlockAccess?, x: Int, y: Int, z: Int, fortune: Int) =
+		if (entity.isDead) ArrayList<Any?>() else null
+	
 	// int overflow fix
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
@@ -328,9 +396,9 @@ object ASJHookHandler {
 				GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP)
 				
 				if (entitylivingbase.isPotionActive(Potion.waterBreathing)) {
-					GL11.glFogf(GL11.GL_FOG_DENSITY, if (ASJHookLoader.clearWater) 0.01f else 0.05f)
+					GL11.glFogf(GL11.GL_FOG_DENSITY, if (PatcherConfigHandler.clearWater) 0.01f else 0.05f)
 				} else {
-					GL11.glFogf(GL11.GL_FOG_DENSITY, if (ASJHookLoader.clearWater) 0.01f else 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
+					GL11.glFogf(GL11.GL_FOG_DENSITY, if (PatcherConfigHandler.clearWater) 0.01f else 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
 				}
 			} else if (block.material === Material.lava) {
 				GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP)
@@ -338,7 +406,7 @@ object ASJHookHandler {
 			} else {
 				f1 = renderer.farPlaneDistance
 				
-				if (renderer.mc.theWorld.provider.worldHasVoidParticles && ASJHookLoader.voidFog && !creative) {
+				if (renderer.mc.theWorld.provider.worldHasVoidParticles && PatcherConfigHandler.voidFog && !creative) {
 					var d0 = (entitylivingbase.getBrightnessForRender(renderPartialTicks) and 15728640 shr 20).D / 16.0 + (entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * renderPartialTicks.D + 4.0) / 32.0
 					
 					if (d0 < 1.0) {
@@ -384,5 +452,41 @@ object ASJHookHandler {
 			GL11.glEnable(GL11.GL_COLOR_MATERIAL)
 			GL11.glColorMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT)
 		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Synchronized
+	@JvmStatic // fixing some occasional OptiFine crashes
+	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	fun deleteDisplayLists(gla: GLAllocation?, id: Int) {
+		if (GLAllocation.mapDisplayLists.contains(id))
+			GL11.glDeleteLists(id, GLAllocation.mapDisplayLists.remove(id) as Int)
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ON_TRUE)
+	fun trackBrokenTexture(handler: FMLClientHandler, resourceLocation: ResourceLocation, error: String?): Boolean {
+		if (error == null) {
+			handler.trackBrokenTexture(resourceLocation, "Unknown Error")
+			return true
+		}
+		
+		return false
+	}
+	
+	// For Security Manager
+	
+	var sendToClient = true
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ON_TRUE)
+	fun sendPacket(handler: NetHandlerPlayServer, packet: Packet?): Boolean {
+		if (!sendToClient) {
+			sendToClient = true
+			
+			return true
+		}
+		
+		return false
 	}
 }

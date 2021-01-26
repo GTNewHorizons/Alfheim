@@ -3,7 +3,7 @@ package alfheim.common.item.rod
 import alexsocol.asjlib.mfloor
 import alfheim.common.item.ItemMod
 import alfheim.common.item.relic.ItemSifRing
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks

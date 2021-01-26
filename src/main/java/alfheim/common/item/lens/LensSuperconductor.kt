@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.mana.BurstProperties
+import vazkii.botania.common.entity.EntityManaBurst
 import vazkii.botania.common.item.lens.Lens
 
 class LensSuperconductor: Lens() {
@@ -28,8 +29,8 @@ class LensSuperconductor: Lens() {
 		val list = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as MutableList<EntityLivingBase>
 		
 		for (e in list)
-			e.attackEntityFrom(SUPERCONDUCTOR, if (e is EntityPlayer) if (ItemElvoriumArmor.hasSet(e) || !AlfheimConfigHandler.uberBlaster) 12f.also { if (AlfheimConfigHandler.uberBlaster) e.inventory.damageArmor(13f) } else 25f else 8f)
+			e.attackEntityFrom(SUPERCONDUCTOR((burst as EntityManaBurst).thrower), if (e is EntityPlayer) if (ItemElvoriumArmor.hasSet(e) || !AlfheimConfigHandler.uberBlaster) 12f.also { if (AlfheimConfigHandler.uberBlaster) e.inventory.damageArmor(13f) } else 25f else 8f)
 	}
 	
-	val SUPERCONDUCTOR = DamageSource("magic").setDamageBypassesArmor().setMagicDamage().setDamageIsAbsolute().setDifficultyScaled()
+	fun SUPERCONDUCTOR(e: EntityLivingBase) = EntityDamageSource("magic", e).setDamageBypassesArmor().setMagicDamage().setDamageIsAbsolute().setDifficultyScaled()
 }

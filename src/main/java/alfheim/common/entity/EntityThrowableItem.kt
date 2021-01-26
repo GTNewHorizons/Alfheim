@@ -1,7 +1,7 @@
 package alfheim.common.entity
 
 import alexsocol.asjlib.*
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable

@@ -6,7 +6,6 @@ import alfheim.api.crafting.recipe.*
 import alfheim.api.entity.EnumRace
 import alfheim.api.item.ThrowableCollidingItem
 import alfheim.api.lib.LibResourceLocations
-import alfheim.api.security.ISecurityManager
 import alfheim.api.spell.SpellBase
 import alfheim.api.trees.*
 import alfheim.common.block.tile.TileAnomalyHarvester
@@ -51,8 +50,6 @@ object AlfheimAPI {
 	val anomalyBehaviors = HashMap<String, ((TileAnomalyHarvester) -> Unit)>()
 	/** Map of anomaly types and their subtile instances, used for render :o  */
 	val anomalyInstances = HashMap<String, SubTileAnomalyBase>()
-	/** Map of security managers by name */
-	val securityManagers = HashMap<String, ISecurityManager>()
 	/** Petronia fuels map */
 	val fuelMap = HashMap<String, Pair<Int, Int>>()
 	/** Ores for Orechid Endium */
@@ -174,14 +171,6 @@ object AlfheimAPI {
 	fun getAnomaly(name: String): Class<out SubTileAnomalyBase> = anomalies[name] ?: FallbackAnomaly::class.java
 	
 	fun getAnomalyInstance(name: String) = anomalyInstances[name] ?: FallbackAnomaly
-	
-	fun registerSecurityManager(man: ISecurityManager, name: String) {
-		if (name.isBlank()) throw IllegalArgumentException("Name should not be blank")
-		if (securityManagers.containsKey(name)) throw IllegalArgumentException("Security Manager \"$name\" is already registered")
-		
-		ASJUtilities.log("Registering security manager with name \"$name\"")
-		securityManagers[name] = man
-	}
 	
 	fun registerFuel(name: String, burnTime: Int, manaPerTick: Int) {
 		fuelMap[name] = burnTime to manaPerTick

@@ -5,6 +5,7 @@ import alfheim.common.world.dim.alfheim.biome.BiomeRiver
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
 import ru.vamig.worldengine.*
+import ru.vamig.worldengine.standardcustomgen.StructureBaseClass
 import vazkii.botania.common.block.*
 import java.util.*
 

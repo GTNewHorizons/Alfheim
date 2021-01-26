@@ -10,7 +10,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*

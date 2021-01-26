@@ -48,14 +48,12 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var gaiaBarOffset			= 1
 	var gaiaNameColor			= 0x00D5FF
 	var hpHooks					= true
-	var maxParticles			= 4000
 	var modularFilename			= ""
 	var modularThread			= false
 	var modularUpdate			= true
 	var modularUpdateConfirm	= false
 	
 	// DIMENSION
-	var biomeIDAlfheim			= 152
 	var destroyPortal			= true
 	var dimensionIDAlfheim		= -105
 	var enableAlfheimRespawn	= true
@@ -117,15 +115,10 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	
 	// INTEGRATION
 	var chatLimiters			= "%s"
-	var interactionSecurity 	= "default"
 	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
 	
 	// NEI
 	var blacklistWither			= true
-	
-	// OptiFine override
-	var clearWater				= false
-	var voidFog					= true
 	
 	// TC INTEGRATION
 	var addAspectsToBotania		= true
@@ -174,6 +167,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	// MMO
 	var deathScreenAddTime		= 1200
 	var disabledSpells			= emptyArray<String>()
+	var disableWireframe		= false
 	var frienldyFire			= false
 	var raceManaMult			= 2.toByte()
 	var maxPartyMembers			= 5
@@ -202,7 +196,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		addCategory(CATEGORY_MMOP, "Potion IDs")
 	}
 	
-	override fun syncConfig() {
+	override fun readProperties() {
 		_enableElvenStory = loadProp(CATEGORY_PRELOAD, "enableElvenStory", _enableElvenStory, true, "Set this to false to disable ESM and MMO")
 		_enableMMO = _enableElvenStory && loadProp(CATEGORY_PRELOAD, "enableMMO", _enableMMO, true, "Set this to false to disable MMO")
 		
@@ -210,13 +204,11 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		gaiaBarOffset = loadProp(CATEGORY_PRELOAD, "gaiaBarOffset", gaiaBarOffset, true, "Gaia hp and bg boss bar variant (from default texture pairs)")
 		gaiaNameColor = loadProp(CATEGORY_PRELOAD, "gaiaNameColor", gaiaNameColor, false, "Gaia name color on boss bar")
 		hpHooks = loadProp(CATEGORY_PRELOAD, "hpHooks", hpHooks, true, "Toggles hooks to vanilla health system. Set this to false if you have any issues with other systems")
-		maxParticles = loadProp(CATEGORY_PRELOAD, "maxParticles", maxParticles, true, "How many [any] particles can there be at one time (defaults to vanilla value)")
 		modularFilename = loadProp(CATEGORY_PRELOAD, "modularFilename", modularFilename, true, "Custom name for Alfheim Modular .jar file")
 		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
 		modularUpdate = loadProp(CATEGORY_PRELOAD, "modularUpdate", modularUpdate, true, "[HIGHLY !NOT! RECOMMENDED - can cause me be angry at you] Set this to false if you REALLY don't want Alfheim Modular to be downloaded/updated automatically")
 		modularUpdateConfirm = loadProp(CATEGORY_PRELOAD, "modularUpdateConfirm", modularUpdateConfirm, true, "Set this to true if you are totally 146% sure you don't want modular auto updates")
 		
-		biomeIDAlfheim = loadProp(CATEGORY_DIMENSION, "biomeIDAlfheim", biomeIDAlfheim, true, "Biome ID for standart biome")
 		destroyPortal = loadProp(CATEGORY_DIMENSION, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
 		dimensionIDAlfheim = loadProp(CATEGORY_DIMENSION, "dimensionIDAlfheim", dimensionIDAlfheim, true, "Dimension ID for Alfheim")
 		enableAlfheimRespawn = loadProp(CATEGORY_DIMENSION, "enableAlfheimRespawn", enableAlfheimRespawn, false, "Set this to false to disable respawning in Alfheim")
@@ -274,11 +266,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
-		interactionSecurity = loadProp(CATEGORY_INTEGRATION, "interactionSecurity", interactionSecurity, false, "Region security manager. Visit Alfheim wiki for more info")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity (for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools)")
-		
-		clearWater = loadProp(CATEGORY_INT_OF, "clearWater", clearWater, false, "Set this to true for clear, transparent water")
-		voidFog = loadProp(CATEGORY_INT_OF, "voidFog", voidFog, false, "Set this to false to disable void fog")
 		
 		blacklistWither = loadProp(CATEGORY_INT_NEI, "NEI.blacklistWither", blacklistWither, true, "Set this to false to make Wither spawner visible")
 		
@@ -322,6 +310,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
 		disabledSpells = loadProp(CATEGORY_MMO, "disabledSpells", disabledSpells, true, "List of spell name IDs that won't be registered", false)
+		disableWireframe = loadProp(CATEGORY_MMO, "disableWireframe", disableWireframe, false, "Set this to true to disable rendering block wireframe in noclip mode")
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
 		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult.I, false, "Mana cost multiplier for spells with not your affinity").toByte()
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")
@@ -331,10 +320,6 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		selfHealthUI = loadProp(CATEGORY_HUD, "selfHealthUI", selfHealthUI, false, "Set this to false to hide player's healthbar")
 		spellsFadeOut = loadProp(CATEGORY_HUD, "spellsFadeOut", spellsFadeOut, false, "Set this to true to make spell UI fade out when not active")
 		targetUI = loadProp(CATEGORY_HUD, "targethUI", targetUI, false, "Set this to false to hide target's healthbar")
-		
-		if (config.hasChanged()) {
-			config.save()
-		}
 	}
 	
 	fun initWorldCoordsForElvenStory(save: String) {

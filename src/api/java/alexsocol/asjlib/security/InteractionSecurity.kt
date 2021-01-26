@@ -1,10 +1,8 @@
-package alfheim.common.security
+package alexsocol.asjlib.security
 
-import alexsocol.asjlib.mfloor
-import alfheim.api.*
-import alfheim.api.security.ISecurityManager
-import alfheim.common.core.asm.hook.AlfheimHookHandler
-import alfheim.common.core.handler.AlfheimConfigHandler
+import alexsocol.asjlib.*
+import alexsocol.patcher.PatcherConfigHandler
+import alexsocol.patcher.asm.ASJHookHandler
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
@@ -12,23 +10,34 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.DamageSource
 import net.minecraft.world.World
 import net.minecraft.world.WorldSettings.GameType
-import net.minecraftforge.common.*
+import net.minecraftforge.common.ForgeHooks
+
+/** Map of security managers by name */
+val securityManagers = HashMap<String, ISecurityManager>()
+
+fun registerSecurityManager(man: ISecurityManager, name: String) {
+	if (name.isBlank()) throw IllegalArgumentException("Name should not be blank")
+	if (securityManagers.containsKey(name)) throw IllegalArgumentException("Security Manager \"$name\" is already registered")
+	
+	ASJUtilities.log("Registering security manager with name \"$name\"")
+	securityManagers[name] = man
+}
 
 object InteractionSecurity: ISecurityManager {
 	
 	fun manager(): ISecurityManager =
-		AlfheimAPI.securityManagers[AlfheimConfigHandler.interactionSecurity]?.also {
+		securityManagers[PatcherConfigHandler.interactionSecurity]?.also {
 			if (it === this)
 				throw IllegalArgumentException("General InteractionSecurity manager was set as custom security manager. This will cause recursive stack overflow")
 		} ?:
-			throw IllegalArgumentException("No security manager was found with name \"${AlfheimConfigHandler.interactionSecurity}\". Available managers are: ${AlfheimAPI.securityManagers.keys}")
+		throw IllegalArgumentException("No security manager was found with name \"${PatcherConfigHandler.interactionSecurity}\". Available managers are: ${securityManagers.keys}")
 	
 	init {
-		AlfheimAPI.registerSecurityManager(DefaultSecurityManager, "default")
-		AlfheimAPI.registerSecurityManager(BlockSecurityManager, "block")
-		AlfheimAPI.registerSecurityManager(MixedSecurityManager, "mixed")
+		registerSecurityManager(DefaultSecurityManager, "default")
+		registerSecurityManager(BlockSecurityManager, "block")
+		registerSecurityManager(MixedSecurityManager, "mixed")
 		
-		manager().also { FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Security manager is set to ${AlfheimConfigHandler.interactionSecurity}") }
+		manager().also { FMLRelaunchLog.info("[ASJLib] Security manager is set to ${PatcherConfigHandler.interactionSecurity}") }
 	}
 	
 	override fun canDoSomethingHere(performer: EntityLivingBase) = manager().canDoSomethingHere(performer)
@@ -55,7 +64,7 @@ private object BlockSecurityManager: ISecurityManager {
 		if (MinecraftServer.getServer().isSinglePlayer) return true
 		
 		// fuck you worldguard
-		AlfheimHookHandler.sendToClient = false
+		ASJHookHandler.sendToClient = false
 		return !ForgeHooks.onBlockBreakEvent(world, GameType.SURVIVAL, performer, x, y, z).isCanceled.also { world.markBlockForUpdate(x, y, z) }
 	}
 	
@@ -71,4 +80,12 @@ private object MixedSecurityManager: ISecurityManager {
 	
 	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = if (MinecraftServer.getServer()?.isSinglePlayer == true) true else target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
 	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
+}
+
+interface ISecurityManager {
+	fun canDoSomethingHere(performer: EntityLivingBase): Boolean
+	fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World = performer.worldObj): Boolean
+	fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World = performer.worldObj): Boolean
+	fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World = target.worldObj): Boolean
+	fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase): Boolean
 }

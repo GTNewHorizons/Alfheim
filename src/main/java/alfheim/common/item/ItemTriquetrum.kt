@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.*
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer

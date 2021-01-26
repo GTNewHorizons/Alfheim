@@ -9,7 +9,7 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.entity.item.*
 import alfheim.common.item.*
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*

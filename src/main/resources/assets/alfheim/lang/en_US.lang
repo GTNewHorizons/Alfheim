@@ -1204,8 +1204,7 @@ modularUpdateConfirm=Update Confirm
 primaryClassTransformer=Primary Class Transformer
 
 general.alfheim=Alfheim
-biomeIDAlfheim=Alfheim Biome ID
-destroyPortal=Portal Destruction
+=destroyPortal=Portal Destruction
 dimensionIDAlfheim=Alfheim Dimension ID
 enableAlfheimRespawn=Alfheim Revival
 rainbowPolys=Alfheim Sky

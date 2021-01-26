@@ -7,7 +7,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.network.MessageEffect
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
 

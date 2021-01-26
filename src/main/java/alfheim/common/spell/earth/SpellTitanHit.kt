@@ -3,7 +3,7 @@ package alfheim.common.spell.earth
 import alexsocol.asjlib.*
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
