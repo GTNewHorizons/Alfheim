@@ -1,7 +1,7 @@
 package alfheim.common.item.lens
 
 import alexsocol.asjlib.*
-import net.minecraft.block.Block
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
@@ -24,11 +24,13 @@ class LensSmelt: Lens() {
 		val y = pos.blockY
 		val z = pos.blockZ
 		
+		if (!InteractionSecurity.canDoSomethingHere(entity.thrower, x, y, z)) return false
+		
 		val block = world.getBlock(x, y, z)
+		val meta = world.getBlockMetadata(x, y, z)
 		val harvestLevel: Int = ConfigHandler.harvestLevelBore
 		val tile = world.getTileEntity(x, y, z)
 		val hardness = block.getBlockHardness(world, x, y, z)
-		val meta = world.getBlockMetadata(x, y, z)
 		val neededHarvestLevel: Int = block.getHarvestLevel(meta)
 		val mana = burst.mana
 		val source = burst.burstSourceChunkCoordinates
@@ -36,13 +38,14 @@ class LensSmelt: Lens() {
 		if (source != ChunkCoordinates(x, y, z) && tile !is IManaBlock && neededHarvestLevel <= harvestLevel && hardness != -1f && hardness < 50f && (burst.isFake || mana >= 24)) {
 			if (!burst.hasAlreadyCollidedAt(x, y, z)) {
 				if (!burst.isFake) {
-					val itemstack = FurnaceRecipes.smelting().getSmeltingResult(ItemStack(block))?.copy()
+					val itemstack = FurnaceRecipes.smelting().getSmeltingResult(ItemStack(block, 1, meta))?.copy()
+					
 					if (itemstack != null) {
 						if (!entity.worldObj.isRemote) {
 							val xp = FurnaceRecipes.smelting().func_151398_b(itemstack)
-							if (xp >= 1f) {
+							if (xp >= 1f)
 								entity.worldObj.getBlock(x, y, z).dropXpOnBlockBreak(entity.worldObj, x, y, z, xp.I)
-							}
+							
 							entity.worldObj.func_147480_a(x, y, z, false)
 							entity.entityDropItem(itemstack, 0f)
 						} else {

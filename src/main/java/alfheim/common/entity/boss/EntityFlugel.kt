@@ -46,6 +46,7 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.math.*
 
+@Suppress("UNCHECKED_CAST")
 class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { // EntityDoppleganger
 	
 	val playersDamage: HashMap<String, Float> = HashMap()
@@ -137,7 +138,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		val e = source.entity ?: return false
 		if ((source.damageType == "player" || source is DamageSourceSpell) && isTruePlayer(e) && !isEntityInvulnerable) {
 			val player = e as EntityPlayer
-			
+			if (playersDamage[player.commandSenderName] == null) return false
 			if (!player.capabilities.isCreativeMode && player.capabilities.disableDamage) return false
 			
 			val crit = player.fallDistance > 0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
@@ -145,7 +146,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			maxHit = if (player.capabilities.isCreativeMode) Float.MAX_VALUE else if (crit) 60f else 40f
 			lastHit = min(maxHit, damage) * if (isUltraMode) 0.3f else if (isHardMode) 0.6f else 1f
 			
-			playersDamage[player.commandSenderName] = playersDamage.getOrDefault(player.commandSenderName, 0f) + lastHit
+			playersDamage[player.commandSenderName] = playersDamage[player.commandSenderName]!! + lastHit
 			
 			if (aiTask == AITask.REGEN || aiTask == AITask.TP) {
 				lastHit /= 2f
@@ -249,19 +250,25 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 							
 							when {
 								ultra                                                                                                        -> {
-									when {
-										!player.hasAchievement(AlfheimAchievements.excaliber)    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
-										!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
-										!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
-										!player.hasAchievement(AlfheimAchievements.mjolnir)      -> ItemStack(AlfheimItems.mjolnir).also { player.triggerAchievement(AlfheimAchievements.mjolnir) }
-										!player.hasAchievement(AlfheimAchievements.gleipnir)     -> ItemStack(AlfheimItems.gleipnir).also { player.triggerAchievement(AlfheimAchievements.gleipnir) }
-										!player.hasAchievement(AlfheimAchievements.gjallarhorn)  -> ItemStack(AlfheimItems.gjallarhorn).also { player.triggerAchievement(AlfheimAchievements.gjallarhorn) }
-										!player.hasAchievement(AlfheimAchievements.gungnir)      -> ItemStack(AlfheimItems.gungnir).also { player.triggerAchievement(AlfheimAchievements.gungnir) }
-										!player.hasAchievement(AlfheimAchievements.ringSif)      -> ItemStack(AlfheimItems.priestRingSif).also { player.triggerAchievement(AlfheimAchievements.ringSif) }
-										!player.hasAchievement(AlfheimAchievements.ringNjord)    -> ItemStack(AlfheimItems.priestRingNjord).also { player.triggerAchievement(AlfheimAchievements.ringNjord) }
-										!player.hasAchievement(AlfheimAchievements.ringHeimdall) -> ItemStack(AlfheimItems.priestRingHeimdall).also { player.triggerAchievement(AlfheimAchievements.ringHeimdall) }
-										!player.hasAchievement(AlfheimAchievements.akashic)      -> ItemStack(AlfheimItems.akashicRecords).also { player.triggerAchievement(AlfheimAchievements.akashic) }
-										else                                                     -> ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(4, 6, rand), ElvenResourcesMetas.IffesalDust)
+									val map = mutableMapOf(AlfheimAchievements.excaliber to AlfheimItems.excaliber,
+														   AlfheimAchievements.subspace to AlfheimItems.subspaceSpear,
+														   AlfheimAchievements.moonlightBow to AlfheimItems.moonlightBow,
+														   AlfheimAchievements.mjolnir to AlfheimItems.mjolnir,
+														   AlfheimAchievements.gungnir to AlfheimItems.gungnir,
+														   AlfheimAchievements.akashic to AlfheimItems.akashicRecords,
+														   AlfheimAchievements.gleipnir to AlfheimItems.gleipnir,
+														   AlfheimAchievements.ringSif to AlfheimItems.priestRingSif,
+														   AlfheimAchievements.ringNjord to AlfheimItems.priestRingNjord,
+														   AlfheimAchievements.ringHeimdall to AlfheimItems.priestRingHeimdall)
+									
+									map.iterator().onEach { (k, _) ->
+										if (player.hasAchievement(k))
+											remove()
+									}
+									
+									if (map.isEmpty()) ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(4, 6, rand), ElvenResourcesMetas.IffesalDust) else {
+										val ach = map.keys.random()
+										ItemStack(map[ach]!!).also { player.triggerAchievement(ach) }
 									}
 								}
 								
@@ -892,9 +899,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		const val TAG_SUMMONER = "summoner"
 		const val TAG_ATTACKED = "attacked"
 		
-		const val STAGE_AGGRO		= 1	//100%	hp
-		const val STAGE_MAGIC		= 2	//60%	hp
-		const val STAGE_DEATHRAY	= 3	//12.5%	hp
+		const val STAGE_AGGRO = 1    //100%	hp
+		const val STAGE_MAGIC = 2    //60%	hp
+		const val STAGE_DEATHRAY = 3    //12.5%	hp
 		
 		var isPlayingMusic = false
 		
@@ -975,6 +982,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			
 			val players = e.playersAround
 			val playerCount = players.count { isTruePlayer(it) }
+			
+			players.forEach {
+				if (isTruePlayer(it))
+					e.playersDamage[player.commandSenderName] = 0f
+			}
 			
 			e.playerCount = playerCount
 			e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).D

@@ -1,5 +1,6 @@
 package alfheim.common.item.equipment.tool
 
+import alexsocol.asjlib.D
 import alfheim.common.item.ItemMod
 import com.google.common.collect.Multimap
 import net.minecraft.entity.*
@@ -34,7 +35,7 @@ class ItemGaiaSlayer: ItemMod("GaiaSlayer") {
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeModifier> {
 		val multimap = super.getAttributeModifiers(stack) as Multimap<String, AttributeModifier>
-		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", 8.0, 0))
+		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", Int.MAX_VALUE.D, 0))
 		return multimap
 	}
 }

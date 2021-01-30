@@ -1,15 +1,10 @@
 package alfheim.common.item
 
-import alexsocol.asjlib.*
-import alfheim.AlfheimCore
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.api.entity.*
-import alfheim.common.core.handler.CardinalSystem
-import alfheim.common.core.handler.ragnarok.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
-import alfheim.common.network.Message1d
 import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -28,13 +23,12 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 		
 		try {
 			if (!player.isSneaking) {
-				if (!world.isRemote) {
-					//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
-					CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
-				}
-				
-				for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
-			
+//				if (!world.isRemote) {
+//					//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
+//					CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
+//				}
+//
+//				for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
 			} else {
 				player.raceID = (player.race.ordinal + 1) % 11
 				ASJUtilities.chatLog("${player.race.ordinal} - ${player.race}", player)
@@ -50,14 +44,9 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (ModInfo.OBF) return false
 		
-		RagnarokHandler.ragnarok = true
-		AlfheimCore.network.sendToAll(Message1d(Message1d.m1d.RAGNAROK, 0.999))
-		
 		try {
 //			if (!world.isRemote) world.getBlock(x, y, z).updateTick(world, x, y, z, world.rand)
 
-			SchemaUtils.generate(world, x, y, z, RagnarokEmblemStabilizationHandler.structure)
-			
 			val te = world.getTileEntity(x, y, z)
 			if (te != null) {
 				val nbt = NBTTagCompound()

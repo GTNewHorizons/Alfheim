@@ -16,7 +16,7 @@ import net.minecraft.util.*
 import net.minecraftforge.common.AchievementPage
 import vazkii.botania.common.Botania
 
-class CommandAlfheim: CommandBase() {
+object CommandAlfheim: CommandBase() {
 	
 	override fun getRequiredPermissionLevel() = 2
 	
@@ -58,33 +58,30 @@ class CommandAlfheim: CommandBase() {
 	
 	override fun addTabCompletionOptions(sender: ICommandSender?, args: Array<String>?) = getListOfStringsMatchingLastWord(args, "ESM", "MMO")
 	
-	companion object {
-		
-		fun toggleESM(on: Boolean) {
-			if (on) {
-				AlfheimConfigHandler.initWorldCoordsForElvenStory(AlfheimCore.save)
-				ESMHandler.checkAddAttrs()
-				AchievementPage.getAchievementPage(ModInfo.MODID.capitalize()).achievements.add(AlfheimAchievements.newChance)
-				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
-			} else {
-				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes()
-				AlfheimConfigHandler.enableMMO = false
-				toggleMMO(AlfheimConfigHandler.enableMMO)
-				AchievementPage.getAchievementPage(ModInfo.MODID.capitalize()).achievements.remove(AlfheimAchievements.newChance)
-			}
+	fun toggleESM(on: Boolean) {
+		if (on) {
+			AlfheimConfigHandler.initWorldCoordsForElvenStory(AlfheimCore.save)
+			ESMHandler.checkAddAttrs()
+			AchievementPage.getAchievementPage(ModInfo.MODID.capitalize()).achievements.add(AlfheimAchievements.newChance)
+			if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
+		} else {
+			if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes()
+			AlfheimConfigHandler.enableMMO = false
+			toggleMMO(AlfheimConfigHandler.enableMMO)
+			AchievementPage.getAchievementPage(ModInfo.MODID.capitalize()).achievements.remove(AlfheimAchievements.newChance)
 		}
-		
-		fun toggleMMO(on: Boolean) {
-			if (on) {
-				CardinalSystem.load(AlfheimCore.save)
-				AlfheimRecipes.addMMORecipes()
-				AlfheimConfigHandler.enableElvenStory = true
-				toggleESM(AlfheimConfigHandler.enableElvenStory)
-				for (o in MinecraftServer.getServer().configurationManager.playerEntityList) CardinalSystem.transfer(o as EntityPlayerMP)
-			} else {
-				CardinalSystem.save(AlfheimCore.save)
-				AlfheimRecipes.removeMMORecipes()
-			}
+	}
+	
+	fun toggleMMO(on: Boolean) {
+		if (on) {
+			CardinalSystem.load(AlfheimCore.save)
+			AlfheimRecipes.addMMORecipes()
+			AlfheimConfigHandler.enableElvenStory = true
+			toggleESM(AlfheimConfigHandler.enableElvenStory)
+			for (o in MinecraftServer.getServer().configurationManager.playerEntityList) CardinalSystem.transfer(o as EntityPlayerMP)
+		} else {
+			CardinalSystem.save(AlfheimCore.save)
+			AlfheimRecipes.removeMMORecipes()
 		}
 	}
 }

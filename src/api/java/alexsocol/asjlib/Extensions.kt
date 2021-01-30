@@ -45,6 +45,10 @@ fun <T> Iterable<T>.paired(last: T? = null): List<Pair<T, T>> {
 	return pairs
 }
 
+fun <T> MutableIterator<T>.onEach(action: MutableIterator<T>.(T) -> Unit): MutableIterator<T> {
+	return apply { for (element in this) action(element) }
+}
+
 fun <T> MutableCollection<T>.removeRandom(): T {
 	return this.random().also { remove(it) }
 }

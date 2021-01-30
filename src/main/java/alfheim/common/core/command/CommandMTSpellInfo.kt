@@ -6,7 +6,7 @@ import alfheim.common.network.Message0dC
 import net.minecraft.command.*
 import net.minecraft.entity.player.EntityPlayerMP
 
-class CommandMTSpellInfo: CommandBase() {
+object CommandMTSpellInfo: CommandBase() {
 	
 	override fun getRequiredPermissionLevel() = 0
 	

@@ -32,5 +32,5 @@ class LensSuperconductor: Lens() {
 			e.attackEntityFrom(SUPERCONDUCTOR((burst as EntityManaBurst).thrower), if (e is EntityPlayer) if (ItemElvoriumArmor.hasSet(e) || !AlfheimConfigHandler.uberBlaster) 12f.also { if (AlfheimConfigHandler.uberBlaster) e.inventory.damageArmor(13f) } else 25f else 8f)
 	}
 	
-	fun SUPERCONDUCTOR(e: EntityLivingBase) = EntityDamageSource("magic", e).setDamageBypassesArmor().setMagicDamage().setDamageIsAbsolute().setDifficultyScaled()
+	fun SUPERCONDUCTOR(e: EntityLivingBase?) = EntityDamageSource("magic", e).setDamageBypassesArmor().setMagicDamage().setDamageIsAbsolute().setDifficultyScaled()
 }

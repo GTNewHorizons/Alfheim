@@ -120,8 +120,8 @@ class AlfheimCore {
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
 		RagnarokHandler.load(save)
-		e.registerServerCommand(CommandAlfheim())
-		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo())
+		e.registerServerCommand(CommandAlfheim)
+		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo)
 	}
 	
 	@EventHandler

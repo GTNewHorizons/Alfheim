@@ -415,7 +415,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			
 			// ################################################################################################################
 			// # NO IT CAN'T BE SO EASILY DONE OTHERWISE !!! STOP DELETING THIS BEFORE YOU ACTUALLY MADE A BETTER VERSION !!! #
-			// ###############################################################################################################
+			// ################################################################################################################
 			
 			if (name == "attackEntityFrom" || name == "a" && desc == "(Lro;F)Z") {
 				println("Visiting EntityDoppleganger#attackEntityFrom: $name$desc")

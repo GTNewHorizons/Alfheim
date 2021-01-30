@@ -6,7 +6,6 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.tile.*
-import alfheim.common.core.asm.hook.AlfheimHookHandler
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
@@ -17,6 +16,7 @@ import alfmod.common.item.material.EventResourcesMetas
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.passive.EntityVillager
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.world.World
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import vazkii.botania.common.item.ModItems
@@ -32,15 +32,15 @@ object RagnarokEndHandler {
 		if (!RagnarokHandler.canEndRagnarok()) return
 		
 		val sacr = e.entityLiving as? EntityVillager ?: return
-		if (sacr.isChild) return // suffer more >:)
-		if (!sacr.entityData.getBoolean(AlfheimHookHandler.TAG_COCOONED)) return
+//		if (sacr.isChild) return // suffer more >:)
+//		if (!sacr.entityData.getBoolean(AlfheimHookHandler.TAG_COCOONED)) return
 		
 		val killer = e.source.entity as? EntityPlayer ?: return
 		if (!killer.hasAchievement(AlfheimAchievements.theEND)) return
 		
 		ItemRagnarokEmblem.getEmblem(killer) ?: return
 		
-		val (x, y, z) = Vector3.fromEntity(sacr).sub(0, 1, 0).mf()
+		val (x, y, z) = Vector3.fromEntity(sacr).mf()
 		if (!check(killer, x, y, z)) return
 		
 		val world = sacr.worldObj
@@ -172,6 +172,7 @@ object RagnarokEndHandler {
 			}
 			
 			if (!check()) {
+				world.setBlock(x + i, y + j + 5, z + k, Blocks.stone)
 				VisualEffectHandler.sendError(world.provider.dimensionId, x + i, y + j, z + k)
 				return false
 			}
@@ -189,6 +190,7 @@ object RagnarokEndHandler {
 				}
 				
 				if (!check(starData)) {
+					world.setBlock(x + i, y + 5, z + k, Blocks.stone)
 					VisualEffectHandler.sendError(world.provider.dimensionId, x + i, y, z + k)
 					return false
 				}

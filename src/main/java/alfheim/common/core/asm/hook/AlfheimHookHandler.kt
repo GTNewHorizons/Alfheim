@@ -310,15 +310,39 @@ object AlfheimHookHandler {
 					if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.inactive")
 					return true
 				}
+		
 		return false
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false)
-	fun attackEntityFrom(gaia: EntityDoppleganger, src: DamageSource, dmg: Float): Boolean {
+	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false, targetMethod = "attackEntityFrom")
+	fun disableGod(gaia: EntityDoppleganger, src: DamageSource, dmg: Float): Boolean {
 		val player = src.entity as? EntityPlayer ?: return false
 		return !player.capabilities.isCreativeMode && player.capabilities.disableDamage
 	}
+	
+	var hadPlayer = false
+	
+	@JvmStatic
+	@Hook(targetMethod = "attackEntityFrom")
+	fun noDupePre(gaia: EntityDoppleganger, src: DamageSource, dmg: Float): Boolean {
+		val player = src.entity as? EntityPlayer ?: return false
+		hadPlayer = gaia.playersWhoAttacked.contains(player.commandSenderName)
+		return false
+	}
+	
+	@JvmStatic
+	@Hook(targetMethod = "attackEntityFrom", injectOnExit = true)
+	fun noDupePost(gaia: EntityDoppleganger, src: DamageSource, dmg: Float): Boolean {
+		val player = src.entity as? EntityPlayer ?: return false
+		if (!hadPlayer) gaia.playersWhoAttacked.remove(player.commandSenderName)
+		return false
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun getNameColor(gaia: EntityDoppleganger) = AlfheimConfigHandler.gaiaNameColor
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
@@ -341,6 +365,12 @@ object AlfheimHookHandler {
 		pos.entityHit.mountEntity(rocket)
 		
 		return false
+	}
+	
+	@JvmStatic
+	@Hook(targetMethod = "<init>", injectOnExit = true)
+	fun `EntityManaBurst$init`(obj: EntityManaBurst, player: EntityPlayer?) {
+		obj.thrower = player
 	}
 	
 	@JvmStatic
@@ -892,11 +922,6 @@ object AlfheimHookHandler {
 		
 		return result
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@JvmStatic
-	@Hook(createMethod = true, returnCondition = ALWAYS)
-	fun getNameColor(gaia: EntityDoppleganger) = AlfheimConfigHandler.gaiaNameColor
 	
 	@JvmStatic
 	@Hook // for blue line above item tooltip

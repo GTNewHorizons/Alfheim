@@ -48,6 +48,7 @@ import vazkii.botania.api.item.IRelic
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
 import vazkii.botania.common.block.tile.TileAlfPortal
+import vazkii.botania.common.entity.EntityDoppleganger
 import vazkii.botania.common.item.ModItems
 import kotlin.math.max
 
@@ -94,12 +95,22 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityJoinWorld(e: EntityJoinWorldEvent) {
+		if (e.entity is EntityDoppleganger)
+			fixGaiaAbuse(e.entity as EntityDoppleganger)
+		
 		if (e.entity is IMob && e.world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim && e.world.getBiomeGenForCoords(e.entity.posX.mfloor(), e.entity.posZ.mfloor()) is WE_Biome)
 			e.isCanceled = true
 		
 		val player = e.entity as? EntityPlayerMP ?: return
 		val seed = player.worldObj.seed
 		AlfheimCore.network.sendTo(Message1l(Message1l.m1l.SEED, seed), player)
+	}
+	
+	fun fixGaiaAbuse(e: EntityDoppleganger) {
+		e.playersAround.forEach {
+			if (EntityDoppleganger.isTruePlayer(it))
+				e.playersWhoAttacked.add(it.commandSenderName)
+		}
 	}
 	
 	@SubscribeEvent

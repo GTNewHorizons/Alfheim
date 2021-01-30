@@ -1,21 +1,19 @@
 package alexsocol.patcher
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.command.*
+import alexsocol.patcher.asm.ASJHookLoader
 import cpw.mods.fml.common.Mod
-import cpw.mods.fml.common.event.*
+import cpw.mods.fml.common.event.FMLServerStartingEvent
 
-@Mod(modid = "ASJPatcher")
+@Mod(modid = "asjpatcher")
 class PatcherMain {
-	
-	@Mod.EventHandler
-	fun construct(e: FMLConstructionEvent) {
-		ASJUtilities.debug("I like trains")
-	}
 	
 	@Mod.EventHandler
 	fun onServerStart(e: FMLServerStartingEvent) {
 		e.registerServerCommand(CommandDimTP)
 		e.registerServerCommand(CommandSchema)
+		
+		if (!ASJHookLoader.OBF)
+			e.registerServerCommand(CommandResources)
 	}
 }
