@@ -2,6 +2,7 @@ package alfheim.common.entity
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
@@ -48,7 +49,7 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 		tasks.addTask(7, EntityAIWatchClosest(this, EntityPlayer::class.java, 6f))
 		tasks.addTask(7, EntityAIWatchClosest(this, EntityElf::class.java, 6f))
 		tasks.addTask(8, EntityAILookIdle(this))
-		targetTasks.addTask(1, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 0, false, false, RagnarSelector))
+		if (AlfheimCore.ENABLE_RAGNAROK) targetTasks.addTask(1, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 0, false, false, RagnarSelector))
 		targetTasks.addTask(2, EntityAIHurtByTarget(this, false))
 		targetTasks.addTask(3, EntityAINearestAttackableTarget(this, EntityLiving::class.java, 0, false, true, IMob.mobSelector))
 	}

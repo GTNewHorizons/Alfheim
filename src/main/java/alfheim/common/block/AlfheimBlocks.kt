@@ -2,6 +2,7 @@ package alfheim.common.block
 
 import alexsocol.asjlib.ASJUtilities.setBurnable
 import alexsocol.asjlib.extendables.block.BlockModMeta
+import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.alt.*
@@ -251,7 +252,7 @@ object AlfheimBlocks {
 		poisonIce = BlockPoisonIce()
 		powerStone = BlockPowerStone()
 		raceSelector = BlockRaceSelector()
-		ragnarokCore = BlockRagnarokCore()
+		ragnarokCore = if (AlfheimCore.ENABLE_RAGNAROK) BlockRagnarokCore() else Blocks.stone
 		rainbowDirt = BlockRainbowDirt()
 		rainbowFlame = BlockManaFlame("rainbowFlame", TileRainbowManaFlame::class.java)
 		rainbowLeaves = BlockRainbowLeaves()

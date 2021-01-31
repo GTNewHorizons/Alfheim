@@ -1,5 +1,7 @@
 package alfheim.common.item
 
+import alexsocol.asjlib.toItem
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
@@ -19,7 +21,7 @@ import alfheim.common.item.interaction.thaumcraft.*
 import alfheim.common.item.material.*
 import alfheim.common.item.relic.*
 import alfheim.common.item.rod.*
-import net.minecraft.init.Items
+import net.minecraft.init.*
 import net.minecraft.item.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
@@ -216,7 +218,7 @@ object AlfheimItems {
 		priestRingHeimdall = ItemHeimdallRing()
 		priestRingNjord = ItemNjordRing()
 		priestRingSif = ItemSifRing()
-		ragnarokEmblem = ItemRagnarokEmblem()
+		ragnarokEmblem = if (AlfheimCore.ENABLE_RAGNAROK) ItemRagnarokEmblem() else Blocks.stone.toItem()!!
 		rationBelt = ItemRationBelt()
 		realitySword = ItemRealitySword()
 		ringFeedFlower = ItemFeedFlowerRing()

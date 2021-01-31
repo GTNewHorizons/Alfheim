@@ -6,9 +6,11 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.tile.*
+import alfheim.common.core.asm.hook.AlfheimHookHandler
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
+import alfheim.common.item.equipment.tool.ItemSoulSword
 import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.network.Message1d
 import alfmod.common.item.AlfheimModularItems
@@ -23,6 +25,8 @@ import vazkii.botania.common.item.ModItems
 
 object RagnarokEndHandler {
 	
+	const val SOUL_COST = 2000
+	
 	init {
 		eventForge()
 	}
@@ -32,17 +36,22 @@ object RagnarokEndHandler {
 		if (!RagnarokHandler.canEndRagnarok()) return
 		
 		val sacr = e.entityLiving as? EntityVillager ?: return
-//		if (sacr.isChild) return // suffer more >:)
-//		if (!sacr.entityData.getBoolean(AlfheimHookHandler.TAG_COCOONED)) return
+		if (sacr.isChild) return // suffer more >:)
+		if (!sacr.entityData.getBoolean(AlfheimHookHandler.TAG_COCOONED)) return
 		
 		val killer = e.source.entity as? EntityPlayer ?: return
 		if (!killer.hasAchievement(AlfheimAchievements.theEND)) return
 		
 		ItemRagnarokEmblem.getEmblem(killer) ?: return
+		val sword = killer.heldItem ?: return
+		if (sword.item !== AlfheimItems.soulSword) return
+		val lvl = ItemSoulSword.getLevelP(sword)
+		if (lvl < SOUL_COST) return
 		
 		val (x, y, z) = Vector3.fromEntity(sacr).mf()
 		if (!check(killer, x, y, z)) return
 		
+		ItemSoulSword.setLevelP(sword, lvl - SOUL_COST)
 		val world = sacr.worldObj
 		for (pl in platforms) {
 			val (i, j, k) = pl

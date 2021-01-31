@@ -1,5 +1,6 @@
 package alfheim.common.item.relic
 
+import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
@@ -17,6 +18,7 @@ class ItemGjallarhorn: ItemRelic("Gjallarhorn") {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		if (!AlfheimCore.ENABLE_RAGNAROK) return stack
 		if (!RagnarokHandler.ragnarok) return stack
 		
 		player.setItemInUse(stack, getMaxItemUseDuration(stack))

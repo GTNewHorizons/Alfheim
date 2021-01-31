@@ -2,6 +2,7 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.AlfheimCore
 import alfheim.api.event.PlayerInteractAdequateEvent
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.entity.*
@@ -41,7 +42,7 @@ object FaithHandlerLoki: IFaithHandler {
 		val stack = player.heldItem
 		
 		var emblem = ItemPriestEmblem.getEmblem(3, player)
-		if (emblem == null) emblem = ItemRagnarokEmblem.getEmblem(player, 3) ?: return
+		if (emblem == null) if (AlfheimCore.ENABLE_RAGNAROK) emblem = ItemRagnarokEmblem.getEmblem(player, 3) ?: return else return
 		
 		if (!ManaItemHandler.requestManaExact(emblem, player, 300, false)) return
 		if (emblem.cooldown > 0) return
@@ -101,7 +102,7 @@ object FaithHandlerLoki: IFaithHandler {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		
 		var emblem = ItemPriestEmblem.getEmblem(3, player)
-		if (emblem == null) emblem = ItemRagnarokEmblem.getEmblem(player, 3)
+		if (emblem == null && AlfheimCore.ENABLE_RAGNAROK) emblem = ItemRagnarokEmblem.getEmblem(player, 3)
 		
 		if (emblem != null)
 			if (e.source.isExplosion || (Math.random() <= 0.1 && e.source.damageType in avoidableDamage)) {

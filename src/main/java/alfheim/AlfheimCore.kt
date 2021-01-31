@@ -29,6 +29,8 @@ class AlfheimCore {
 	
 	companion object {
 		
+		const val ENABLE_RAGNAROK = false
+		
 		@Instance(MODID)
 		lateinit var instance: AlfheimCore
 		
@@ -119,7 +121,7 @@ class AlfheimCore {
 		if (AlfheimConfigHandler.enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
-		RagnarokHandler.load(save)
+		if (ENABLE_RAGNAROK) RagnarokHandler.load (save)
 		e.registerServerCommand(CommandAlfheim)
 		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo)
 	}
@@ -127,7 +129,7 @@ class AlfheimCore {
 	@EventHandler
 	fun stopping(e: FMLServerStoppingEvent) {
 		CardinalSystem.save(save)
-		RagnarokHandler.save(save)
+		if (ENABLE_RAGNAROK) RagnarokHandler.save(save)
 	}
 	
 	fun registerPackets() {

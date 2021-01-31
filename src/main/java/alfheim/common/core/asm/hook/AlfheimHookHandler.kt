@@ -371,6 +371,7 @@ object AlfheimHookHandler {
 	@Hook(targetMethod = "<init>", injectOnExit = true)
 	fun `EntityManaBurst$init`(obj: EntityManaBurst, player: EntityPlayer?) {
 		obj.thrower = player
+		obj.throwerName = player?.commandSenderName
 	}
 	
 	@JvmStatic
@@ -823,7 +824,8 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
 	fun canFit(item: ItemManaResource, stack: ItemStack, apothecary: IInventory?): Boolean {
-		return stack.meta == 15 // Ender Air Bottle
+		return stack.meta == 9 ||	// Dragonstone
+			   stack.meta == 15		// Ender Air Bottle
 	}
 	
 	@JvmStatic

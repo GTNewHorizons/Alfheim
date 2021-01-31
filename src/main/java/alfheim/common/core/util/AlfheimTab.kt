@@ -278,7 +278,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(enderActuator)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
-		addBlock(ragnarokCore)
+		if (AlfheimCore.ENABLE_RAGNAROK) addBlock(ragnarokCore)
 		addBlock(Blocks.furnace, 8)
 		addBlock(ModBlocks.spreader, 4)
 		// addBlock(anomalyHarvester) // BACK
@@ -334,7 +334,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (attributionBauble)
 		addItem (priestEmblem)
 		addItem (aesirEmblem)
-		addItem (ragnarokEmblem)
+		if (AlfheimCore.ENABLE_RAGNAROK) addItem (ragnarokEmblem)
 		addItem (creativeReachPendant)
 		addItem (elfFirePendant)
 		addItem (elfIcePendant)

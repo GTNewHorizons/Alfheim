@@ -88,11 +88,11 @@ object FaithHandlerThor: IFaithHandler {
 		val cloak = ItemPriestCloak.getCloak(0, player) ?: return
 		if (getGodPowerLevel(player) < 7) return
 		
-		if (ManaItemHandler.requestManaExact(cloak, player, e.ammount.I, true)) return
+		if (!ManaItemHandler.requestManaExact(cloak, player, e.ammount.I, true)) return
 		
 		val list = player.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(player.posX, player.posY + 1, player.posZ).expand(5.0, 1.5, 5.0)) as MutableList<EntityLivingBase>
 		list.remove(player)
-		val dmg = e.ammount / list.size
+		val dmg = e.ammount / list.count { it.onGround }
 		for (t in list) if (t.onGround) t.attackEntityFrom(e.source, dmg)
 		e.isCanceled = true
 	}

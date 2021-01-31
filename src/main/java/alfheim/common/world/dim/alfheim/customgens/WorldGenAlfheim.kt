@@ -2,6 +2,7 @@ package alfheim.common.world.dim.alfheim.customgens
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.api.block.tile.SubTileAnomalyBase.EnumAnomalityRarity
@@ -56,6 +57,8 @@ object WorldGenAlfheim: IWorldGenerator {
 	}
 	
 	fun generateHand(world: World, chunkX: Int, chunkZ: Int, rand: Random) {
+		if (!AlfheimCore.ENABLE_RAGNAROK) return
+		
 		val x = chunkX * 16 + rand.nextInt(16) + 8
 		val z = chunkZ * 16 + rand.nextInt(16) + 8
 		val y = world.getTopSolidOrLiquidBlock(x, z)

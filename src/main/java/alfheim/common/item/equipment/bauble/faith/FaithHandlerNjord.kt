@@ -2,13 +2,14 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
+import alfheim.AlfheimCore
 import alfheim.api.event.PlayerInteractAdequateEvent.RightClick
 import alfheim.api.event.PlayerInteractAdequateEvent.RightClick.Action.*
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.relic.ItemNjordRing
-import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
@@ -111,7 +112,7 @@ object FaithHandlerNjord: IFaithHandler {
 	fun onPlayerAttack(e: AttackEntityEvent) {
 		val player = e.entityPlayer
 		var emblem = ItemPriestEmblem.getEmblem(2, player)
-		if (emblem == null) emblem = ItemRagnarokEmblem.getEmblem(player, 2) ?: return
+		if (emblem == null) if (AlfheimCore.ENABLE_RAGNAROK) emblem = ItemRagnarokEmblem.getEmblem(player, 2) ?: return else return
 		
 		val entity = e.target
 		if (entity is EntityLivingBase)

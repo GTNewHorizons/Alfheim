@@ -2,8 +2,8 @@ package alfheim.common.item.equipment.tool
 
 import alexsocol.asjlib.*
 import alfheim.api.*
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.client.core.helper.IconHelper
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
@@ -52,7 +52,7 @@ class ItemSoulSword: ItemSword(AlfheimAPI.SOUL), IManaUsingItem {
 		return super.setUnlocalizedName(name)
 	}
 	
-	override fun getUnlocalizedNameInefficiently(stack: ItemStack?): String? {
+	override fun getUnlocalizedNameInefficiently(stack: ItemStack?): String {
 		return super.getUnlocalizedNameInefficiently(stack).replace("item.".toRegex(), "item.${ModInfo.MODID}:")
 	}
 	
@@ -68,6 +68,12 @@ class ItemSoulSword: ItemSword(AlfheimAPI.SOUL), IManaUsingItem {
 		private var ItemStack.level: Int
 			get() = ItemNBTHelper.getInt(this, TAG_SOUL_LEVEL, 0)
 			set(lvl) = ItemNBTHelper.setInt(this, TAG_SOUL_LEVEL, lvl)
+		
+		fun setLevelP(stack: ItemStack, lvl: Int) {
+			stack.level = lvl
+		}
+		
+		fun getLevelP(stack: ItemStack) = stack.level
 		
 		private fun getDamageFromLevel(stack: ItemStack) = stack.level / 100.0
 		

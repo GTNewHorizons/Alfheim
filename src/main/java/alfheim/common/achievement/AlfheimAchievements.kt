@@ -1,5 +1,6 @@
 package alfheim.common.achievement
 
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimAchievementHandler
@@ -8,7 +9,7 @@ import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import net.minecraft.block.Block
 import net.minecraft.init.*
 import net.minecraft.item.*
-import net.minecraft.stats.Achievement
+import net.minecraft.stats.*
 import net.minecraftforge.common.AchievementPage
 import vazkii.botania.api.item.IRelic
 import vazkii.botania.common.core.helper.ItemNBTHelper
@@ -72,8 +73,8 @@ object AlfheimAchievements {
 		mask = AlfheimAchievement("mask", 4, 0, AlfheimItems.mask, flugelSoul)
 		outstander = AlfheimAchievement("outstander", 4, 3, Items.diamond_chestplate, mask).setSpecial()
 		
-		ragnarok = AlfheimAchievement("ragnarok", 32, 32, AlfheimItems.ragnarokEmblem, null).setSpecial()
-		theEND = AlfheimAchievement("theEND", 34, 32, ItemStack(AlfheimItems.ragnarokEmblem).apply { ItemNBTHelper.setBoolean(this, ItemRagnarokEmblem.TAG_GEM_FLAG, true) }, ragnarok).setSpecial()
+		ragnarok = if (AlfheimCore.ENABLE_RAGNAROK) AlfheimAchievement("ragnarok", 32, 32, AlfheimItems.ragnarokEmblem, null).setSpecial() else AchievementList.openInventory
+		theEND = if (AlfheimCore.ENABLE_RAGNAROK) AlfheimAchievement("theEND", 34, 32, ItemStack(AlfheimItems.ragnarokEmblem).apply { ItemNBTHelper.setBoolean(this, ItemRagnarokEmblem.TAG_GEM_FLAG, true) }, ragnarok).setSpecial() else AchievementList.openInventory
 		
 		akashic = AlfheimAchievement("akashic", 7, -1, AlfheimItems.akashicRecords, mask)
 		excaliber = AlfheimAchievement("excaliber", 7, 1, AlfheimItems.excaliber, mask)
