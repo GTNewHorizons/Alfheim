@@ -2083,7 +2083,7 @@ object AlfheimRecipes {
 		BotaniaAPI.pureDaisyRecipes.add(recipeIrisSapling)
 		
 		BotaniaAPI.registerManaInfusionRecipe(ItemStack(elvenResource, 1, InfusedDreamwoodTwig), ItemStack(manaResource, 1, 13), 10000)
-		BotaniaAPI.registerManaAlchemyRecipe(ItemStack(elvenResource, 1, JormungandScale), ItemStack(manaResource, 4, 10), 56000)
+		BotaniaAPI.registerManaAlchemyRecipe(ItemStack(elvenResource, 1, JormungandScale), ItemStack(manaResource, 1, 10), 56000) // FIXME ignores input stackSize
 		ModManaInfusionRecipes.manaPowderRecipes.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(manaResource, 1, 23), ItemStack(elvenResource, 1, RainbowDust), 400))
 		
 		val grasses = Array(16) { ItemStack(irisGrass, 1, it) } + Array(2) { ItemStack(rainbowGrass, 1, it) }

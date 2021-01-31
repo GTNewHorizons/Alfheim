@@ -4,10 +4,12 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.ASJTile
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.item.material.EventResourcesMetas
+import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import vazkii.botania.api.mana.IManaPool
@@ -28,6 +30,9 @@ class TileRagnarokCore: ASJTile(), ISparkAttachable {
 	override fun updateEntity() {
 		if (Vector3.fromTileEntity(this) !in RagnarokHandler.handsSet) {
 			worldObj.setBlockToAir(xCoord, yCoord, zCoord)
+			if (!worldObj.isRemote)
+				worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, ItemStack(AlfheimBlocks.ragnarokCore)).apply { setMotion(0.0) })
+			
 			return
 		}
 		

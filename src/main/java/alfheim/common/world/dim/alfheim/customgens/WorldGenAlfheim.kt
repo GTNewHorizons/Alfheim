@@ -15,87 +15,84 @@ import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
 import java.util.*
 
-class WorldGenAlfheim: IWorldGenerator {
+object WorldGenAlfheim: IWorldGenerator {
+	
+	val common = ArrayList<String>()
+	
+	val epic = ArrayList<String>()
+	val rare = ArrayList<String>()
+	val handWinter = SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/WinterHand")
+	val handSummer = SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/SummerHand")
+	
+	init {
+		for (s in AlfheimAPI.anomalies.keys)
+			when (AlfheimAPI.anomalyInstances[s]!!.rarity) {
+				EnumAnomalityRarity.COMMON -> common.add(s)
+				EnumAnomalityRarity.EPIC   -> epic.add(s)
+				EnumAnomalityRarity.RARE   -> rare.add(s)
+			}
+	}
 	
 	override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkProvider, chunkProvider: IChunkProvider) {
 		if (world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim)
 			generateAlfheim(world, chunkX, chunkZ, rand)
 	}
 	
-	companion object {
+	fun generateAlfheim(world: World, chunkX: Int, chunkZ: Int, rand: Random) {
+		if (chunkX == 0 && chunkZ == 0 && !world.isRemote) StructureSpawnpoint.generate(world, rand)
 		
-		val common = ArrayList<String>()
-		val epic = ArrayList<String>()
-		val rare = ArrayList<String>()
+		if (world.rand.nextInt(6000) == 0) generateHand(world, chunkX, chunkZ, rand)
 		
-		val handWinter = SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/WinterHand")
-		val handSummer = SchemaUtils.loadStructure("${ModInfo.MODID}/schemas/SummerHand")
+		if (AlfheimConfigHandler.anomaliesDispersion <= 0) return
 		
-		init {
-			for (s in AlfheimAPI.anomalies.keys)
-				when (AlfheimAPI.anomalyInstances[s]!!.rarity) {
-					EnumAnomalityRarity.COMMON -> common.add(s)
-					EnumAnomalityRarity.EPIC   -> epic.add(s)
-					EnumAnomalityRarity.RARE   -> rare.add(s)
-				}
-		}
-		
-		fun generateAlfheim(world: World, chunkX: Int, chunkZ: Int, rand: Random) {
-			if (chunkX == 0 && chunkZ == 0 && !world.isRemote) StructureSpawnpoint.generate(world, rand)
-			
-			if (world.rand.nextInt(6000) == 0) generateHand(world, chunkX, chunkZ, rand)
-			
-			if (AlfheimConfigHandler.anomaliesDispersion <= 0) return
-			
-			if (rand.nextInt(AlfheimConfigHandler.anomaliesDispersion) == 0) {
-				val chance = rand.nextInt(32) + 1
-				when {
-					chance == 32 -> genRandomAnomalyOfRarity(world, chunkX, chunkZ, rand, EnumAnomalityRarity.EPIC)
-					chance >= 24 -> genRandomAnomalyOfRarity(world, chunkX, chunkZ, rand, EnumAnomalityRarity.RARE)
-					chance >= 16 -> genRandomAnomalyOfRarity(world, chunkX, chunkZ, rand, EnumAnomalityRarity.COMMON)
-				}
+		if (rand.nextInt(AlfheimConfigHandler.anomaliesDispersion) == 0) {
+			val chance = rand.nextInt(32) + 1
+			when {
+				chance == 32 -> genRandomAnomalyOfRarity(world, chunkX, chunkZ, rand, EnumAnomalityRarity.EPIC)
+				chance >= 24 -> genRandomAnomalyOfRarity(world, chunkX, chunkZ, rand, EnumAnomalityRarity.RARE)
+				chance >= 16 -> genRandomAnomalyOfRarity(world, chunkX, chunkZ, rand, EnumAnomalityRarity.COMMON)
 			}
 		}
+	}
+	
+	fun generateHand(world: World, chunkX: Int, chunkZ: Int, rand: Random) {
+		val x = chunkX * 16 + rand.nextInt(16) + 8
+		val z = chunkZ * 16 + rand.nextInt(16) + 8
+		val y = world.getTopSolidOrLiquidBlock(x, z)
 		
-		fun generateHand(world: World, chunkX: Int, chunkZ: Int, rand: Random) {
-			val x = chunkX * 16 + rand.nextInt(16) + 8
-			val z = chunkZ * 16 + rand.nextInt(16) + 8
-			val y = world.getTopSolidOrLiquidBlock(x, z)
-			
-			ASJUtilities.chatLog("$x $y $z")
-			
-			SchemaUtils.generate(world, x, y + 1, z, if (rand.nextBoolean()) handWinter else handSummer)
-			
-			RagnarokHandler.handsSet.add(Vector3(x, y, z))
+		ASJUtilities.chatLog("$x $y $z")
+		
+		SchemaUtils.generate(world, x, y + 1, z, if (rand.nextBoolean()) handWinter else handSummer)
+		
+		RagnarokHandler.handsSet.add(Vector3(x, y, z))
+	}
+	
+	fun genRandomAnomalyOfRarity(world: World, chunkX: Int, chunkZ: Int, rand: Random, rarity: EnumAnomalityRarity) {
+		val type = when (rarity) {
+			EnumAnomalityRarity.COMMON -> common[rand.nextInt(common.size)]
+			EnumAnomalityRarity.EPIC   -> epic[rand.nextInt(epic.size)]
+			EnumAnomalityRarity.RARE   -> rare[rand.nextInt(rare.size)]
 		}
 		
-		fun genRandomAnomalyOfRarity(world: World, chunkX: Int, chunkZ: Int, rand: Random, rarity: EnumAnomalityRarity) {
-			val type = when (rarity) {
-				EnumAnomalityRarity.COMMON -> common[rand.nextInt(common.size)]
-				EnumAnomalityRarity.EPIC   -> epic[rand.nextInt(epic.size)]
-				EnumAnomalityRarity.RARE   -> rare[rand.nextInt(rare.size)]
-			}
-			
-			setAnomality(world, chunkX, chunkZ, rand, type)
-		}
+		setAnomality(world, chunkX, chunkZ, rand, type)
+	}
+	
+	fun setAnomality(world: World, chunkX: Int, chunkZ: Int, rand: Random, type: String) {
+		val x = chunkX * 16 + rand.nextInt(16) + 8
+		val z = chunkZ * 16 + rand.nextInt(16) + 8
+		val y = world.getTopSolidOrLiquidBlock(x, z) + 1
 		
-		fun setAnomality(world: World, chunkX: Int, chunkZ: Int, rand: Random, type: String) {
-			val x = chunkX * 16 + rand.nextInt(16) + 8
-			val z = chunkZ * 16 + rand.nextInt(16) + 8
-			val y = world.getTopSolidOrLiquidBlock(x, z) + 1
+		world.setBlock(x, y, z, AlfheimBlocks.anomaly)
+		val te = world.getTileEntity(x, y, z)
+		if (te is TileAnomaly) {
+			val sub = SubTileAnomalyBase.forName(type) ?: return
+			sub.worldGen = true
 			
-			world.setBlock(x, y, z, AlfheimBlocks.anomaly)
-			val te = world.getTileEntity(x, y, z)
-			if (te is TileAnomaly) {
-				val sub = SubTileAnomalyBase.forName(type) ?: return
-				sub.worldGen = true
-				
-				te.addSubTile(sub, type)
-				
-				for (i in 0 until AlfheimConfigHandler.anomaliesUpdate) te.updateEntity()
-				
-				sub.worldGen = false
-			}
+			te.addSubTile(sub, type)
+			
+			for (i in 0 until AlfheimConfigHandler.anomaliesUpdate) te.updateEntity()
+			
+			sub.worldGen = false
 		}
 	}
 }

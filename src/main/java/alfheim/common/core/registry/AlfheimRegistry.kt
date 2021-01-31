@@ -28,7 +28,6 @@ import alfheim.common.spell.tech.*
 import alfheim.common.spell.water.*
 import alfheim.common.spell.wind.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheim
-import cpw.mods.fml.common.IWorldGenerator
 import cpw.mods.fml.common.registry.EntityRegistry
 import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.entity.EnumCreatureType
@@ -46,18 +45,14 @@ import vazkii.botania.common.lib.LibBlockNames
 // TODO decentralize
 object AlfheimRegistry {
 	
-	private lateinit var worldGen: IWorldGenerator
-	
 	fun preInit() {
 		registerPotions()
 		registerEntities()
 		registerTileEntities()
-		
-		worldGen = WorldGenAlfheim()
 	}
 	
 	fun init() {
-		registerWorldGenerator(worldGen, 1)
+		registerWorldGenerator(WorldGenAlfheim, 1)
 		registerSpells()
 		loadAllPinkStuff()
 	}
