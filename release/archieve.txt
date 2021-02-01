@@ -1,0 +1,116 @@
+Links to all Alfheim versions. Compiled by @theJ89#6206
+
+BETA-37:
+    Aug 30, 2020 7:43:06 PM (UTC)
+    https://bitbucket.org/AlexSocol/alfheim/raw/5c50a90d75e6229f00d646ff69c2bb9e871de769/release/Alfheim-BETA-37.jar
+BETA-36:
+    Aug 7, 2020 8:49:15 AM (UTC)
+    https://bitbucket.org/AlexSocol/alfheim/raw/13e2da59d8ea4ab44a167ea164363def14b83438/release/Alfheim-BETA-36.jar
+BETA-35:
+    Aug 5, 2020 8:20:28 PM (UTC)
+    https://bitbucket.org/AlexSocol/alfheim/raw/bc7b7209ce3c47cf543f5a6b0d0c456c1d7d29cd/release/Alfheim-BETA-35.jar
+BETA-34:
+    Aug 1, 2020 3:45:42 PM (UTC)
+    https://bitbucket.org/AlexSocol/alfheim/raw/427bc524fd8023c03150a84006e5c92f1a89a01d/release/Alfheim-BETA-34.jar
+BETA-33:
+    Jun 2, 2020 9:40:51 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2971232/file
+BETA-32:
+    May 29, 2020 4:44:47 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2968232/file
+BETA-31:
+    May 3, 2020 5:46:34 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2947458/file
+BETA-30:
+    Apr 7, 2020 6:43:49 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2923703/file
+BETA-29:
+    Mar 22, 2020 11:27:31 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2909224/file
+BETA-28:
+    Feb 16, 2020 7:33:33 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2883155/file
+BETA-27:
+    Feb 10, 2020 8:25:20 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2879197/file
+BETA-26:
+    Jan 28, 2020 9:00:23 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2871021/file
+BETA-25:
+    Jan 5, 2020 7:32:06 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2855233/file
+BETA-24:
+    Dec 20, 2019 4:52:57 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2845801/file
+BETA-23:
+    Oct 26, 2019 12:08:47 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2816733/file
+BETA-22:
+    Sep 8, 2019 5:20:48 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2781137/file
+BETA-21:
+    Sep 5, 2019 8:53:08 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2779148/file
+BETA-20:
+    Aug 25, 2019 5:44:48 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2770769/file
+BETA-19:
+    Aug 20, 2019 6:15:58 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2766304/file
+BETA-18:
+    Mar 15, 2019 3:06:08 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2687559/file
+BETA-17:
+    Mar 4, 2019 4:11:41 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2683179/file
+BETA-16:
+    Feb 23, 2019 6:28:14 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2679197/file
+BETA-15:
+    Jan 30, 2019 10:02:00 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2666969/file
+BETA-14:
+    Jan 30, 2019 8:56:48 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2666948/file
+BETA-13:
+    Jan 21, 2019 5:35:26 AM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2662942/file
+BETA-12:
+    Jan 17, 2019 9:50:00 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2661430/file
+BETA-11:
+    Jan 14, 2019 6:28:40 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2660153/file
+BETA-10:
+    Jan 12, 2019 7:21:40 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2659286/file
+BETA-9:
+    Jan 5, 2019  5:47:17 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2656616/file
+BETA-8:
+    Aug 21, 2018 12:33:48 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2606581/file
+BETA-7:
+    Aug 20, 2018 12:49:57 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2598419/file
+BETA-6:
+    Jul 19, 2018 10:37:12 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2587006/file
+BETA-5:
+    Jul 5, 2018 7:25:45 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2579863/file
+BETA-4:
+    Feb 5, 2018 10:08:00 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2528451/file
+BETA-3:
+    Jan 9, 2018 12:00:00 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2518489/file
+BETA-2:
+    Jan 8, 2018 12:00:00 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2518157/file
+ElvenStory.jar:
+    Jan 8, 2018 4:41:44 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2518152/file
+BETA-1:
+    Jan 5, 2018 7:37:20 PM (UTC)
+    https://www.curseforge.com/minecraft/mc-mods/alfheim/download/2517121/file
