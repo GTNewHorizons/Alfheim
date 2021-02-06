@@ -307,7 +307,7 @@ object AlfheimLexiconData {
 			anomaly.setLexiconPages(PageImage("$name.t", ModInfo.MODID + ":textures/gui/entries/Anomaly" + name + ".png"), PageText("$name.d"))
 		}
 		
-		var pg: LexiconPage = PageTextLearnableKnowledge("botania.page.anomalyLightning.d", Knowledge.PYLONS)
+		var pg: LexiconPage = PageTextLearnableKnowledge("${ModInfo.MODID}.page.anomalyLightning.d", Knowledge.PYLONS)
 		anomaly.pages[index] = pg
 		pg.onPageAdded(anomaly, index)
 		
