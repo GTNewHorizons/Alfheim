@@ -168,6 +168,7 @@ tile.alfheim:smoothShimmerQuartz.name=Smooth Shimmering Quartz Block
 tile.alfheim:insertSunnyQuartz.name=Darkened Sunny Quartz Block
 tile.alfheim:smoothSunnyQuartz.name=Smooth Sunny Quartz Block
 tile.alfheim:RaceSelector.name=Race Panel
+tile.alfheim:RagnarokCore.name=Ragnarok Core
 tile.alfheim:rainFlower.name=Rainaria
 tile.botania:flower.rainFlower.name=Rainaria
 tile.alfheim:rainFlower.lore=It's wet!
@@ -695,15 +696,20 @@ lang.name=en_US
 
 #######################################################___RELIC POEMS___########################################################
 
+item.aesirRing.poem0=The forces of the Gods
+item.aesirRing.poem1=In this band form as one,
+item.aesirRing.poem2=And when combined all together
+item.aesirRing.poem3=Above them will be none.
+
 # item.AkashicRecords.poem0=No
 # item.AkashicRecords.poem1=English
 # item.AkashicRecords.poem2=Poem
 # item.AkashicRecords.poem3=Here :(
 
-item.aesirRing.poem0=The forces of the Gods
-item.aesirRing.poem1=In this band form as one,
-item.aesirRing.poem2=And when combined all together
-item.aesirRing.poem3=Above them will be none.
+# item.Daolos.poem0=No
+# item.Daolos.poem1=English
+# item.Daolos.poem2=Poem
+# item.Daolos.poem3=Here :(
 
 item.Excaliber.poem0=A sword of a true hero
 item.Excaliber.poem1=Fit for only one of the kind,
@@ -720,6 +726,26 @@ item.flugelEye.poem3=Will take the psyche back to basics.
 # item.FlugelSoul.poem2=Poem
 # item.FlugelSoul.poem3=Here :(
 
+# item.Gjallarhorn.poem0=No
+# item.Gjallarhorn.poem1=English
+# item.Gjallarhorn.poem2=Poem
+# item.Gjallarhorn.poem3=Here :(
+
+# item.Gleipnir.poem0=No
+# item.Gleipnir.poem1=English
+# item.Gleipnir.poem2=Poem
+# item.Gleipnir.poem3=Here :(
+
+# item.Gungnir.poem0=No
+# item.Gungnir.poem1=English
+# item.Gungnir.poem2=Poem
+# item.Gungnir.poem3=Here :(
+
+# item.HeimdallRing.poem0=No
+# item.HeimdallRing.poem1=English
+# item.HeimdallRing.poem2=Poem
+# item.HeimdallRing.poem3=Here :(
+
 item.infiniteFruit.poem0=The fruit of the forbidden garden
 item.infiniteFruit.poem1=Eternally cleanses one's hunger,
 item.infiniteFruit.poem2=For that it rebuilds its pulp
@@ -735,15 +761,30 @@ item.lokiRing.poem1=Once on the center, then around the track,
 item.lokiRing.poem2=Back to the start one'd go to complete
 item.lokiRing.poem3=The power of creating back-to-back.
 
+# item.Mjolnir.poem0=No
+# item.Mjolnir.poem1=English
+# item.Mjolnir.poem2=Poem
+# item.Mjolnir.poem3=Here :(
+
 # item.MoonlightBow.poem0=No
 # item.MoonlightBow.poem1=English
 # item.MoonlightBow.poem2=Poem
 # item.MoonlightBow.poem3=Here :(
 
+# item.NjordRing.poem0=No
+# item.NjordRing.poem1=English
+# item.NjordRing.poem2=Poem
+# item.NjordRing.poem3=Here :(
+
 item.odinRing.poem0=The wise old God lays its blessings,
 item.odinRing.poem1=Of virtue, life and divinity,
 item.odinRing.poem2=With the hindrance of death on one's hands,
 item.odinRing.poem3=They'll form the Holy Trinity.
+
+# item.SifRing.poem0=No
+# item.SifRing.poem1=English
+# item.SifRing.poem2=Poem
+# item.SifRing.poem3=Here :(
 
 # item.SpearSubspace.poem0=No
 # item.SpearSubspace.poem1=English
@@ -1206,7 +1247,7 @@ modularUpdateConfirm=Update Confirm
 primaryClassTransformer=Primary Class Transformer
 
 general.alfheim=Alfheim
-=destroyPortal=Portal Destruction
+destroyPortal=Portal Destruction
 dimensionIDAlfheim=Alfheim Dimension ID
 enableAlfheimRespawn=Alfheim Revival
 rainbowPolys=Alfheim Sky

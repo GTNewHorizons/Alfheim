@@ -1,9 +1,9 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.*
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileEnderActuator
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
@@ -45,7 +45,7 @@ class BlockEnderActuator: BlockContainerMod(Material.iron), ILexiconable {
 				val z1 = (z + Math.random())
 				Botania.proxy.wispFX(world, x1, y1, z1, 0.25f + Math.random().F * 0.25f, 0f, 1f, Math.random().F * 0.5f, -0.05f + Math.random().F * 0.05f)
 			}
-		} else {
+			
 			ASJUtilities.say(player, "alfheimmisc.actuated")
 		}
 		
