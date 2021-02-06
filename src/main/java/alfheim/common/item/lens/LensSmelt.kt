@@ -24,7 +24,7 @@ class LensSmelt: Lens() {
 		val y = pos.blockY
 		val z = pos.blockZ
 		
-		if (!InteractionSecurity.canDoSomethingHere(entity.thrower, x, y, z)) return false
+		if (entity.thrower != null && !InteractionSecurity.canDoSomethingHere(entity.thrower, x, y, z)) return false
 		
 		val block = world.getBlock(x, y, z)
 		val meta = world.getBlockMetadata(x, y, z)

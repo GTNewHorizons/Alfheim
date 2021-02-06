@@ -7,14 +7,13 @@ def mainMod = true
 project.logger.lifecycle("\nBuilding " + (mainMod ? "main" : "side") + " mod\n")
 
 buildscript {
-	ext.kotlinVersion = '1.4.21'
+	ext.kotlinVersion = '1.4.30'
 	
 	repositories {
 		mavenCentral()
 		maven {
 			url = "https://jcenter.bintray.com/"
 		}
-
 		maven {
 			name = "forge"
 			url = "https://files.minecraftforge.net/maven"

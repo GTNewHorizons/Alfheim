@@ -18,7 +18,7 @@ class LensPush: Lens() {
 		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as MutableList<EntityLivingBase>
 		val homeID = entity.entityData.getInteger(TAG_HOME_ID)
 		
-		if (!entity.worldObj.isRemote)
+		if (!entity.worldObj.isRemote && entity.thrower != null)
 			entities.removeAll { !InteractionSecurity.canDoSomethingWithEntity(entity.thrower, it) }
 		
 		for (living in entities) {

@@ -11,6 +11,8 @@ import net.minecraft.util.DamageSource
 import net.minecraft.world.World
 import net.minecraft.world.WorldSettings.GameType
 import net.minecraftforge.common.ForgeHooks
+import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.entity.living.LivingAttackEvent
 
 /** Map of security managers by name */
 val securityManagers = HashMap<String, ISecurityManager>()
@@ -29,8 +31,7 @@ object InteractionSecurity: ISecurityManager {
 		securityManagers[PatcherConfigHandler.interactionSecurity]?.also {
 			if (it === this)
 				throw IllegalArgumentException("General InteractionSecurity manager was set as custom security manager. This will cause recursive stack overflow")
-		} ?:
-		throw IllegalArgumentException("No security manager was found with name \"${PatcherConfigHandler.interactionSecurity}\". Available managers are: ${securityManagers.keys}")
+		} ?: throw IllegalArgumentException("No security manager was found with name \"${PatcherConfigHandler.interactionSecurity}\". Available managers are: ${securityManagers.keys}")
 	
 	init {
 		registerSecurityManager(DefaultSecurityManager, "default")
@@ -43,15 +44,16 @@ object InteractionSecurity: ISecurityManager {
 	override fun canDoSomethingHere(performer: EntityLivingBase) = manager().canDoSomethingHere(performer)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = manager().canDoSomethingHere(performer, x, y, z, world)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = manager().canDoSomethingHere(performer, x, y, z, world)
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = if (performer === target) true else manager().canDoSomethingWithEntity(performer, target, world)
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity) = if (performer === target) true else manager().canDoSomethingWithEntity(performer, target)
 	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = if (attacker === target) true else manager().canHurtEntity(attacker, target)
 }
 
 private object DefaultSecurityManager: ISecurityManager {
+	
 	override fun canDoSomethingHere(performer: EntityLivingBase) = true
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = true
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = true
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = true
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity) = true
 	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = true
 }
 
@@ -68,7 +70,7 @@ private object BlockSecurityManager: ISecurityManager {
 		return !ForgeHooks.onBlockBreakEvent(world, GameType.SURVIVAL, performer, x, y, z).isCanceled.also { world.markBlockForUpdate(x, y, z) }
 	}
 	
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = canDoSomethingHere(performer, target.posX.mfloor(), target.posY.mfloor(), target.posZ.mfloor(), world)
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity) = canDoSomethingHere(performer, target.posX.mfloor(), target.posY.mfloor(), target.posZ.mfloor())
 	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
 }
 
@@ -77,15 +79,25 @@ private object MixedSecurityManager: ISecurityManager {
 	override fun canDoSomethingHere(performer: EntityLivingBase) = BlockSecurityManager.canDoSomethingHere(performer)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = BlockSecurityManager.canDoSomethingHere(performer, x, y, z, world)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = BlockSecurityManager.canDoSomethingHere(performer, x, y, z, world)
+
+//	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity) = if (MinecraftServer.getServer()?.isSinglePlayer == true) true else target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
+//	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
 	
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = if (MinecraftServer.getServer()?.isSinglePlayer == true) true else target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
-	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity) = if (target is EntityLivingBase) canHurtEntity(performer, target) else true
+	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = if (MinecraftServer.getServer()?.isSinglePlayer == true) true else !MinecraftForge.EVENT_BUS.post(LivingAttackEvent(target, DamageSource.causeMobDamage(attacker), 0f))
+
+//	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = when {
+//		MinecraftServer.getServer()?.isSinglePlayer == true -> true
+//		performer is EntityPlayer -> !MinecraftForge.EVENT_BUS.post(EntityInteractEvent(performer, target))
+//		else -> true
+//	}
 }
 
 interface ISecurityManager {
+	
 	fun canDoSomethingHere(performer: EntityLivingBase): Boolean
 	fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World = performer.worldObj): Boolean
 	fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World = performer.worldObj): Boolean
-	fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World = target.worldObj): Boolean
+	fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity): Boolean
 	fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase): Boolean
 }

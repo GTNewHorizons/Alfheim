@@ -357,9 +357,9 @@ object AlfheimHookHandler {
 					} && !entity.worldObj.isRemote && pos.entityHit?.isSneaking == false
 		
 		if (!allow) return false
-		if (!InteractionSecurity.canDoSomethingWithEntity((burst as EntityManaBurst).thrower, pos.entityHit)) return false
+		if (entity.thrower != null && !InteractionSecurity.canDoSomethingWithEntity(entity.thrower, pos.entityHit)) return false
 		
-		val fireworkStack: ItemStack = lens.generateFirework(burst.color)
+		val fireworkStack = lens.generateFirework(burst.color)
 		val rocket = EntityFireworkRocket(entity.worldObj, entity.posX, entity.posY, entity.posZ, fireworkStack)
 		entity.worldObj.spawnEntityInWorld(rocket)
 		pos.entityHit.mountEntity(rocket)
