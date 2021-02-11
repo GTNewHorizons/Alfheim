@@ -11,7 +11,7 @@ class ASJClassTransformer: IClassTransformer {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		
 		return when (transformedName) {
-			"net.minecraft.client.network.NetHandlerPlayClient" -> {
+			"net.minecraft.client.network.NetHandlerPlayClient"  -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -20,7 +20,7 @@ class ASJClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.client.particle.EffectRenderer"                  -> {
+			"net.minecraft.client.particle.EffectRenderer"       -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -29,7 +29,7 @@ class ASJClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.server.management.ItemInWorldManager"            -> {
+			"net.minecraft.server.management.ItemInWorldManager" -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -38,7 +38,7 @@ class ASJClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.tileentity.TileEntityFurnace"                    -> {
+			"net.minecraft.tileentity.TileEntityFurnace"         -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -47,7 +47,7 @@ class ASJClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.world.World"                                     -> {
+			"net.minecraft.world.World"                          -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -56,7 +56,7 @@ class ASJClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"thaumcraft.common.blocks.BlockCustomOre"                       -> {
+			"thaumcraft.common.blocks.BlockCustomOre"            -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -65,7 +65,7 @@ class ASJClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			else                                                -> basicClass
+			else                                                 -> basicClass
 		}
 	}
 	
@@ -233,6 +233,7 @@ class ASJClassTransformer: IClassTransformer {
 		}
 		
 		internal class `BlockCustomOre$addHitEffects$MethodVisitor`(mv: MethodVisitor): MethodVisitor(Opcodes.ASM5, mv) {
+			
 			override fun visitIntInsn(opcode: Int, operand: Int) {
 				if (opcode == Opcodes.BIPUSH && operand == 6) super.visitIntInsn(opcode, 7)
 				else super.visitIntInsn(opcode, operand)

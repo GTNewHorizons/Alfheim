@@ -2,12 +2,12 @@ package alfheim.common.spell.illusion
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.core.util.EntityDamageSourceSpell
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 

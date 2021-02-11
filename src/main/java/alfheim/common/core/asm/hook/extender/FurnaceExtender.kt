@@ -121,7 +121,7 @@ object FurnaceHandler {
 		if (e.itemStack.item.toBlock() === Blocks.furnace && e.itemStack.meta > 7)
 			e.toolTip[0] = e.toolTip[0].replace(StatCollector.translateToLocal("tile.furnace.name"), StatCollector.translateToLocal("tile.furnace_living.name"))
 	}
-	
+
 //	@SubscribeEvent
 //	fun onTextureStitch(e: TextureStitchEvent) {
 //		if (e.map.textureType == 0)

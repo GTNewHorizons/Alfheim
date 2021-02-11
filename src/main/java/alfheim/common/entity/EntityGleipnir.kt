@@ -17,7 +17,7 @@ class EntityGleipnir: Entity {
 		setSize(10f, 10f)
 	}
 	
-	constructor(world: World, player: EntityPlayer): this (world) {
+	constructor(world: World, player: EntityPlayer): this(world) {
 		thrower = player
 	}
 	
@@ -50,7 +50,7 @@ class EntityGleipnir: Entity {
 			targets.removeAll { pt.isMember(it) }
 		}
 		
-		targets.forEach { it.addPotionEffect (PotionEffect(AlfheimConfigHandler.potionIDEternity, 5, 1, true)) }
+		targets.forEach { it.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 5, 1, true)) }
 	}
 	
 	override fun entityInit() = Unit

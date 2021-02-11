@@ -245,7 +245,7 @@ object RagnarokHandler {
 		
 		val world = killer.worldObj
 		when (victim) {
-			is EntityFenrir -> {
+			is EntityFenrir     -> {
 				for (i in 0..ASJUtilities.randInBounds(12, 18, killer.rng))
 					world.spawnEntityInWorld(
 						EntityWolf(world).apply {
@@ -258,7 +258,7 @@ object RagnarokHandler {
 					)
 			}
 			
-			is EntityDedMoroz -> {
+			is EntityDedMoroz   -> {
 				if (!(winter || summer || ragnarok)) return
 				for (i in 0..ASJUtilities.randInBounds(3, 5, killer.rng))
 					world.spawnEntityInWorld(
@@ -280,7 +280,7 @@ object RagnarokHandler {
 						(when (killer.rng.nextInt(5)) {
 							in 1..2 -> EntityBlaze(world)
 							in 3..4 -> EntityMagmaCube(world)
-							else -> EntityMuspellsun(world)
+							else    -> EntityMuspellsun(world)
 						} as EntityLiving).apply {
 							setPosition(killer)
 							// not sure which one so both
@@ -300,21 +300,21 @@ object RagnarokHandler {
 	@SubscribeEvent
 	fun controlWeather(e: TickEvent.WorldTickEvent) {
 		if (e.world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
-
+		
 		val time = if (winter) 0 else if (summer) Int.MAX_VALUE else return
-
+		
 		var info = e.world.worldInfo
 		if (info is DerivedWorldInfo) info = info.theWorldInfo
-
+		
 		e.world.setRainStrength(if (time == 0) 1f else 0f)
 		info.rainTime = time
 		info.isRaining = time == 0
-
+		
 		// no thunder though
 		e.world.setThunderStrength(0f)
 		info.thunderTime = 0
 		info.isThundering = false
-
+		
 		AlfheimCore.network.sendToDimension(Message3d(Message3d.m3d.WAETHER, if (time == 0) 1.0 else 0.0, time.D, time.D), e.world.provider.dimensionId)
 	}
 	

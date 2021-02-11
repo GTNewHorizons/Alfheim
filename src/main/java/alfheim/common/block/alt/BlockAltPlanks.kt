@@ -5,7 +5,7 @@ import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.client.core.helper.*
 import alfheim.common.block.base.BlockMod
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
-import alfheim.common.lexicon.*
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -102,5 +102,6 @@ class BlockAltPlanks: BlockMod(Material.wood), ILexiconable, IFuelHandler {
 			else                       -> AlfheimLexiconData.irisSapling
 		}
 	}
+	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 13 / 4 else 300 else 0
 }

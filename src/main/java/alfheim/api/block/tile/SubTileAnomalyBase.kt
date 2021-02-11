@@ -143,16 +143,22 @@ abstract class SubTileAnomalyBase {
 		
 		/**	0b00000 - fully compatible, do not use this unless you know what you are doing*/
 		const val NONE = 0
+		
 		/**	0b00001 - motion manipulation	- gravity */
 		const val MOTION = 1
+		
 		/**	0b00010 - health manipulation	- damaging */
 		const val HEALTH = 2
+		
 		/**	0b00100 - mana manipulation		- drain mana */
 		const val MANA = 4
+		
 		/**	0b01000 - ticks manipulation	- time speedup */
 		const val TIME = 8
+		
 		/**	0b10001 - space manipulation	- teleportation		- also incompatible with motion */
 		const val SPACE = 17
+		
 		/** 								- fully incompatible */
 		const val ALL = -0x1
 		

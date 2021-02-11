@@ -1,11 +1,11 @@
 package alfheim.common.spell.tech
 
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellVisualizations
 import alfheim.common.core.handler.CardinalSystem.TimeStopSystem
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 
 object SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 100, true) {

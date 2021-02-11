@@ -76,6 +76,7 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 		when (meta) {
 			0    -> ret.add(ItemStack(ThaumcraftAlfheimModule.alfheimThaumOre, 1, 0))
 			7    -> ret.add(ItemStack(ConfigItems.itemResource, 1 + world.rand.nextInt(fortune + 1), 6))
+			
 			else -> {
 				val q = 1 + world.rand.nextInt(2 + fortune)
 				
@@ -104,6 +105,7 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 	override fun getRenderType() = ThaumcraftAlfheimModule.renderIDOre
 	
 	companion object {
+		
 		lateinit var icon: Array<IIcon>
 	}
 }

@@ -498,7 +498,7 @@ object CardinalSystem {
 					}
 				} else {
 					val e = mc.theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.I
-																						  ?: 0)
+													  ?: 0)
 					return if (e is EntityLivingBase) e else null
 				}
 				return null
@@ -794,6 +794,7 @@ object CardinalSystem {
 					HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV, MOB, NPC, BOSS;
 					
 					companion object {
+						
 						fun typeOf(e: EntityLivingBase) = when (e) {
 							is EntityPlayer     -> values()[e.raceID]
 							is IBossDisplayData -> BOSS
@@ -804,6 +805,7 @@ object CardinalSystem {
 				}
 				
 				companion object {
+					
 					private const val serialVersionUID = 8416468367146381L
 				}
 			}
@@ -929,8 +931,10 @@ object CardinalSystem {
 		}
 		
 		class TimeStopArea(caster: EntityLivingBase): Serializable {
+			
 			val pos = Vector3.fromEntity(caster)
 			val uuid = caster.uniqueID!!
+			
 			@Transient
 			val id: Int
 			var life = SpellTimeStop.duration
@@ -998,8 +1002,7 @@ object CardinalSystem {
 		}
 		
 		fun transfer(player: EntityPlayerMP) {
-			playerSegments.forEach {
-				(name, seg) ->
+			playerSegments.forEach { (name, seg) ->
 				AlfheimCore.network.sendTo(MessageSkinInfo(name, seg.gender, seg.customSkin), player)
 			}
 		}
@@ -1008,19 +1011,25 @@ object CardinalSystem {
 	class PlayerSegment(player: EntityPlayer): Serializable {
 		
 		var party: Party = Party(player)
+		
 		@Transient
 		var target: EntityLivingBase? = null
+		
 		@Transient
 		var isParty = false
+		
 		@Transient
 		var partyIndex = -1
 		
 		var coolDown = HashMap<String, Int>()
 		var hotSpells = IntArray(12)
+		
 		@Transient
 		var castableSpell: SpellBase? = null
+		
 		@Transient
 		var ids: Int = 0
+		
 		@Transient
 		var init: Int = 0
 		
@@ -1040,12 +1049,15 @@ object CardinalSystem {
 		
 		@Transient
 		var quadStage = 0
+		
 		@Transient
 		var standingStill = 0 // POOKA ability
+		
 		@Transient
 		var lastPos = Vector3.fromEntity(player)
 		
 		companion object {
+			
 			private const val serialVersionUID = 6871678638741684L
 		}
 	}

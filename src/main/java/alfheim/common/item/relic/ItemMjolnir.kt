@@ -3,9 +3,9 @@ package alfheim.common.item.relic
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.entity.EntityMjolnir
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
 import alfheim.common.item.equipment.bauble.*
@@ -175,7 +175,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 			for (e in list) {
 				if (e === entity) continue
 				
-				if (Vector3.vecEntityDistance(center, e) in (radius-1)..(radius+1)) {
+				if (Vector3.vecEntityDistance(center, e) in (radius - 1)..(radius + 1)) {
 					if (e.onGround) {
 						e.attackEntityFrom(if (entity is EntityPlayer) DamageSource.causePlayerDamage(entity) else DamageSource.causeMobDamage(entity), 10f)
 						e.hurtResistantTime = 0
@@ -189,7 +189,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.FALLING, world.provider.dimensionId, x.D, y.D, z.D, radius)
 		}
 		
-		if (timer > 0) setInt(stack, TAG_SHAKE_TIMER, timer-1)
+		if (timer > 0) setInt(stack, TAG_SHAKE_TIMER, timer - 1)
 		
 		super.onUpdate(stack, world, entity, slot, inHand)
 	}

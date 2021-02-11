@@ -5,18 +5,17 @@ import org.objectweb.asm.*;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Позволяет при помощи велосипеда из костылей искать методы внутри незагруженных классов
  * и общие суперклассы для чего угодно. Работает через поиск class-файлов в classpath, и, в случае провала -
  * ищет через рефлексию. Для работы с майнкрафтом используется сабкласс под названием DeobfuscationMetadataReader,
- *
  */
 public class ClassMetadataReader {
+	
 	private static Method m;
-
+	
 	static {
 		try {
 			m = ClassLoader.class.getDeclaredMethod("findLoadedClass", String.class);
@@ -25,20 +24,20 @@ public class ClassMetadataReader {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public byte[] getClassData(String className) throws IOException {
 		String classResourceName = '/' + className.replace('.', '/') + ".class";
 		return IOUtils.toByteArray(ClassMetadataReader.class.getResourceAsStream(classResourceName));
 	}
-
+	
 	public void acceptVisitor(byte[] classData, ClassVisitor visitor) {
 		new ClassReader(classData).accept(visitor, 0);
 	}
-
+	
 	public void acceptVisitor(String className, ClassVisitor visitor) throws IOException {
 		acceptVisitor(getClassData(className), visitor);
 	}
-
+	
 	public MethodReference findVirtualMethod(String owner, String name, String desc) {
 		ArrayList<String> superClasses = getSuperClasses(owner);
 		for (int i = superClasses.size() - 1; i > 0; i--) { // чекать текущий класс смысла нет
@@ -51,7 +50,7 @@ public class ClassMetadataReader {
 		}
 		return null;
 	}
-
+	
 	private MethodReference getMethodReference(String type, String methodName, String desc) {
 		try {
 			return getMethodReferenceASM(type, methodName, desc);
@@ -59,7 +58,7 @@ public class ClassMetadataReader {
 			return getMethodReferenceReflect(type, methodName, desc);
 		}
 	}
-
+	
 	protected MethodReference getMethodReferenceASM(String type, String methodName, String desc) throws IOException {
 		FindMethodClassVisitor cv = new FindMethodClassVisitor(methodName, desc);
 		acceptVisitor(type, cv);
@@ -68,7 +67,7 @@ public class ClassMetadataReader {
 		}
 		return null;
 	}
-
+	
 	protected MethodReference getMethodReferenceReflect(String type, String methodName, String desc) {
 		Class loadedClass = getLoadedClass(type);
 		if (loadedClass != null) {
@@ -80,11 +79,11 @@ public class ClassMetadataReader {
 		}
 		return null;
 	}
-
+	
 	protected boolean checkSameMethod(String sourceName, String sourceDesc, String targetName, String targetDesc) {
 		return sourceName.equals(targetName) && sourceDesc.equals(targetDesc);
 	}
-
+	
 	/**
 	 * Возвращает суперклассы в порядке возрастающей конкретности (начиная с java/lang/Object
 	 * и заканчивая данным типом)
@@ -98,7 +97,7 @@ public class ClassMetadataReader {
 		Collections.reverse(superclasses);
 		return superclasses;
 	}
-
+	
 	private Class getLoadedClass(String type) {
 		if (m != null) {
 			try {
@@ -110,7 +109,7 @@ public class ClassMetadataReader {
 		}
 		return null;
 	}
-
+	
 	public String getSuperClass(String type) {
 		try {
 			return getSuperClassASM(type);
@@ -118,13 +117,13 @@ public class ClassMetadataReader {
 			return getSuperClassReflect(type);
 		}
 	}
-
+	
 	protected String getSuperClassASM(String type) throws IOException {
 		CheckSuperClassVisitor cv = new CheckSuperClassVisitor();
 		acceptVisitor(type, cv);
 		return cv.superClassName;
 	}
-
+	
 	protected String getSuperClassReflect(String type) {
 		Class loadedClass = getLoadedClass(type);
 		if (loadedClass != null) {
@@ -133,34 +132,60 @@ public class ClassMetadataReader {
 		}
 		return "java/lang/Object";
 	}
-
+	
+	public static class MethodReference {
+		
+		public final String owner;
+		public final String name;
+		public final String desc;
+		
+		public MethodReference(String owner, String name, String desc) {
+			this.owner = owner;
+			this.name = name;
+			this.desc = desc;
+		}
+		
+		public Type getType() {
+			return Type.getMethodType(desc);
+		}
+		
+		@Override
+		public String toString() {
+			return "MethodReference{" +
+				       "owner='" + owner + '\'' +
+				       ", name='" + name + '\'' +
+				       ", desc='" + desc + '\'' +
+				       '}';
+		}
+	}
+	
 	private class CheckSuperClassVisitor extends ClassVisitor {
-
+		
 		String superClassName;
-
+		
 		public CheckSuperClassVisitor() {
 			super(Opcodes.ASM5);
 		}
-
+		
 		@Override
 		public void visit(int version, int access, String name, String signature,
-						  String superName, String[] interfaces) {
+		                  String superName, String[] interfaces) {
 			this.superClassName = superName;
 		}
 	}
-
+	
 	protected class FindMethodClassVisitor extends ClassVisitor {
-
+		
 		public String targetName;
 		public String targetDesc;
 		public boolean found;
-
+		
 		public FindMethodClassVisitor(String name, String desc) {
 			super(Opcodes.ASM5);
 			this.targetName = name;
 			this.targetDesc = desc;
 		}
-
+		
 		@Override
 		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 			System.out.println("visiting " + name + "#" + desc);
@@ -172,30 +197,4 @@ public class ClassMetadataReader {
 			return null;
 		}
 	}
-
-	public static class MethodReference {
-
-		public final String owner;
-		public final String name;
-		public final String desc;
-
-		public MethodReference(String owner, String name, String desc) {
-			this.owner = owner;
-			this.name = name;
-			this.desc = desc;
-		}
-
-		public Type getType() {
-			return Type.getMethodType(desc);
-		}
-
-		@Override public String toString() {
-			return "MethodReference{" +
-					"owner='" + owner + '\'' +
-					", name='" + name + '\'' +
-					", desc='" + desc + '\'' +
-					'}';
-		}
-	}
-
 }

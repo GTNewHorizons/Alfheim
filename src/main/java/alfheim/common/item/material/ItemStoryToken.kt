@@ -1,8 +1,8 @@
 package alfheim.common.item.material
 
 import alexsocol.asjlib.meta
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.client.core.helper.IconHelper
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.ItemMod
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -48,6 +48,7 @@ class ItemStoryToken: ItemMod("StoryToken"), IElvenItem {
 	override fun isElvenItem(stack: ItemStack) = stack.meta == 1
 	
 	companion object {
+		
 		val TAG_STORY = "story"
 	}
 }

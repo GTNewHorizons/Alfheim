@@ -64,6 +64,7 @@ class SubTileStormFlower: SubTilePassiveGenerating() {
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("stormFlower").getIconForStack(null)
 	
 	companion object {
+		
 		const val TAG_COOLDOWN = "cooldown"
 	}
 }

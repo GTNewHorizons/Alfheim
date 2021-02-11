@@ -3,12 +3,12 @@ package alfheim.common.block.alt
 import alexsocol.asjlib.*
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibOreDict.ALT_TYPES
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.handler.CardinalSystem
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
-import alfheim.common.lexicon.*
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
@@ -130,11 +130,12 @@ class BlockAltLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 	}
 	
 	companion object {
+		
 		lateinit var textures: Array<Array<IIcon>>
 		lateinit var glowIcon: IIcon
-	
+		
 		val yggMeta = ALT_TYPES.indexOf("Wisdom")
-	
+		
 		fun spawnRandomSpirit(world: World, x: Int, y: Int, z: Int, rand: Random, r: Float, g: Float, b: Float) {
 			if (world.worldTime % 24000 in 13333..22666 && rand.nextInt(512) == 0) {
 				val i = Math.random()

@@ -4,7 +4,7 @@ import alexsocol.asjlib.network.ASJPacket;
 import net.minecraft.item.ItemStack;
 
 public class MessageTileItem extends ASJPacket {
-
+	
 	public int x, y, z;
 	public ItemStack s;
 	

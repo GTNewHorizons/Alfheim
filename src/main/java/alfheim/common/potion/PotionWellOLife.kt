@@ -11,6 +11,6 @@ class PotionWellOLife: PotionAlfheim(AlfheimConfigHandler.potionIDWellOLife, "we
 	
 	override fun performEffect(living: EntityLivingBase, ampl: Int) {
 		if (!AlfheimConfigHandler.enableMMO) return
-		if (living.isInWater) living.heal(SpellWellOLife.damage * (ampl+1))
+		if (living.isInWater) living.heal(SpellWellOLife.damage * (ampl + 1))
 	}
 }

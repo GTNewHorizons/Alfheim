@@ -2,9 +2,9 @@ package alfheim.common.item
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.item.*
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer

@@ -49,6 +49,7 @@ class TileEnderActuator: ASJTile(), IInventory {
 	}
 	
 	companion object {
+		
 		const val TAG_PLAYER_NAME = "name"
 	}
 }

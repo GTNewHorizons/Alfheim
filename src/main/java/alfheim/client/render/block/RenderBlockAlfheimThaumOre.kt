@@ -22,6 +22,7 @@ class RenderBlockAlfheimThaumOre: BlockRenderer(), ISimpleBlockRenderingHandler 
 		when {
 			metad == 0 -> drawFaces(renderer, block, BlockAlfheimThaumOre.icon[0], false)
 			metad == 7 -> drawFaces(renderer, block, BlockAlfheimThaumOre.icon[3], false)
+			
 			metad < 7  -> {
 				drawFaces(renderer, block, BlockAlfheimThaumOre.icon[1], false)
 				val c = Color(BlockCustomOreItem.colors[metad])

@@ -1,6 +1,5 @@
 package alfheim.common.network
 
-
 //public class MessageDelegate<T>() : ReadWriteProperty<Any, T> {
 //
 //

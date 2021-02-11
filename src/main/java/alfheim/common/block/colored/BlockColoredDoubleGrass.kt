@@ -2,9 +2,9 @@ package alfheim.common.block.colored
 
 import alexsocol.asjlib.id
 import alfheim.api.lib.LibRenderIDs
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.IDoublePlant
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.AlfheimLexiconData

@@ -46,7 +46,7 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 		if (lvl == 0) return
 		
 		val fire = if (lvl == 15) Blocks.fire else Blocks.air
-		world.setBlock(x, y+1, z, fire, 0, 1 or 2)
+		world.setBlock(x, y + 1, z, fire, 0, 1 or 2)
 	}
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 1200 else 0

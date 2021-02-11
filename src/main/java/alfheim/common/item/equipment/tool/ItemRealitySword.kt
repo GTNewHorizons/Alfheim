@@ -27,13 +27,13 @@ import kotlin.experimental.xor
 import kotlin.math.max
 
 class ItemRealitySword: ItemSword(AlfheimAPI.mauftriumToolmaterial), IManaUsingItem {
-
+	
 	init {
 		creativeTab = AlfheimTab
 		setNoRepair()
 		unlocalizedName = "RealitySword"
 	}
-
+	
 	override fun setUnlocalizedName(name: String): Item {
 		GameRegistry.registerItem(this, name)
 		return super.setUnlocalizedName(name)
@@ -53,7 +53,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.mauftriumToolmaterial), IManaUsingI
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (player.isSneaking) {
 			if (getInt(stack, TAG_ELEMENT, 0) == 5) return stack
-
+			
 			if (merge(ASJUtilities.mapGetKeyOrDefault(ContributorsPrivacyHelper.contributors, player.commandSenderName, "itsmemario"), stack.displayName) == "756179BA5B0697ED01B6CD292A3A726BACD5B99E0E624B37A11E18CE0B40B83E") {
 				setInt(stack, TAG_ELEMENT, 5)
 				stack.tagCompound.removeTag("display")

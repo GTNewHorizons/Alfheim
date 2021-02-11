@@ -1,9 +1,9 @@
 package alfheim.common.item.rod
 
 import alexsocol.asjlib.mfloor
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.item.ItemMod
 import alfheim.common.item.relic.ItemSifRing
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -15,7 +15,7 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
 
 class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
-
+	
 	init {
 		setFull3D()
 		maxStackSize = 1

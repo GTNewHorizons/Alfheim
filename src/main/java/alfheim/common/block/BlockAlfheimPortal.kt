@@ -74,6 +74,7 @@ class BlockAlfheimPortal: BlockContainerMod(Material.wood), ILexiconable {
 	}
 	
 	companion object {
+		
 		lateinit var textures: Array<IIcon?>
 	}
 }

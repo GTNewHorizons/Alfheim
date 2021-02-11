@@ -21,9 +21,9 @@ object GUIBanner: Gui() {
 	val bannerWOTW = ResourceLocation(AlfheimModularCore.MODID, "textures/banner/WrathOfTheWinter.png")
 	
 	val banners = arrayOf(
-						  WRATH_OF_THE_WINTER to bannerWOTW,
-						  HELLISH_VACATION to bannerHV
-						  )
+		WRATH_OF_THE_WINTER to bannerWOTW,
+		HELLISH_VACATION to bannerHV
+	)
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {

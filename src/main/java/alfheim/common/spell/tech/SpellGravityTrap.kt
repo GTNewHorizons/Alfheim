@@ -38,7 +38,7 @@ object SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 60
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
 			val s = radius
 			//glDisable(GL_ALPHA_TEST);
-			glAlphaFunc(GL_GREATER, 1/255f)
+			glAlphaFunc(GL_GREATER, 1 / 255f)
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			mc.renderEngine.bindTexture(LibResourceLocations.target)

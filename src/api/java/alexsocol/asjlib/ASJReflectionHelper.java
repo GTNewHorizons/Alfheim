@@ -8,7 +8,7 @@ import java.util.logging.*;
  * The class prev named CSReflection.
  * <p>
  * This class adds several utils for "hacking" into the JVM, also known as Reflection.
- * 
+ *
  * @author Clashsoft; slightly improved by AlexSocol
  */
 public class ASJReflectionHelper {
@@ -27,7 +27,7 @@ public class ASJReflectionHelper {
 	/**
 	 * Adds the modifiers {@code mod} to the given {@link Field} {@code field} if
 	 * {@code flag} is true, and removed them otherwise.
-	 * 
+	 *
 	 * @param field the field
 	 * @param mod the modifiers
 	 * @param flag add or remove
@@ -51,7 +51,7 @@ public class ASJReflectionHelper {
 	
 	/**
 	 * Returns the caller {@link Class}.
-	 * 
+	 *
 	 * @return the called class.
 	 */
 	public static Class getCallerClass() {
@@ -77,7 +77,7 @@ public class ASJReflectionHelper {
 	public static StackTraceElement getCaller() {
 		StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
 		String callerClassName = null;
-	
+		
 		for (int i = 1; i < stElements.length; i++) {
 			StackTraceElement ste = stElements[i];
 			String className = ste.getClassName();
@@ -96,6 +96,15 @@ public class ASJReflectionHelper {
 	
 	// Methods
 	
+	public static <T, R> R invokeStatic(Class<? super T> clazz, Object[] args, Object method) {
+		return invoke(clazz, null, args, method);
+	}
+	
+	public static <T, R> R invoke(Class<? super T> clazz, T instance, Object[] args, Object method) {
+		Method m = getMethod(clazz, method);
+		return invoke(m, instance, args);
+	}
+	
 	/**
 	 * Returns the method of the given {@link Class} {@code class} specified by the
 	 * given {@code object}.
@@ -111,9 +120,10 @@ public class ASJReflectionHelper {
 	 * {@code object[0]} is a String[]
 	 * </ul>
 	 * </ul>
-	 * 
+	 *
 	 * @param clazz the clazz
 	 * @param object the object
+	 *
 	 * @return the method
 	 */
 	public static Method getMethod(Class clazz, Object object) {
@@ -140,13 +150,52 @@ public class ASJReflectionHelper {
 	}
 	
 	/**
+	 * Directly invokes the given {@link Method} {@code method} on the given
+	 * {@link Object} {@code instance} with the given arguments {@code args} and
+	 * returns the result.
+	 *
+	 * @param method the method to invoke
+	 * @param instance the instance
+	 * @param args the arguments
+	 *
+	 * @return the result
+	 */
+	public static <T, R> R invoke(Method method, Object instance, Object[] args) {
+		try {
+			method.setAccessible(true);
+			return (R) method.invoke(instance, args);
+		} catch (Exception ex) {
+			CSLog.error(ex);
+			return null;
+		}
+	}
+	
+	// Method invocation
+	
+	// Reference
+	
+	/**
+	 * Returns the {@link Method} of the given {@link Class} {@code clazz} with the
+	 * given method ID {@code methodID}.
+	 *
+	 * @param clazz the clazz
+	 * @param methodID the method ID
+	 *
+	 * @return the method
+	 */
+	public static Method getMethod(Class clazz, int methodID) {
+		return clazz.getDeclaredMethods()[methodID];
+	}
+	
+	/**
 	 * Returns the {@link Method} of the given {@link Class} {@code clazz} with the
 	 * given name {@code methodName} and the given parameter types
 	 * {@code parameterTypes}.
-	 * 
+	 *
 	 * @param clazz the clazz
 	 * @param methodName the method name
 	 * @param parameterTypes the parameter types
+	 *
 	 * @return the method
 	 */
 	public static Method getMethod(Class clazz, String methodName, Class[] parameterTypes) {
@@ -167,10 +216,11 @@ public class ASJReflectionHelper {
 	 * Returns the {@link Method} of the given {@link Class} {@code clazz} with a
 	 * name contained in {@code methodNames} and the given parameter types
 	 * {@code parameterTypes}.
-	 * 
+	 *
 	 * @param clazz the clazz
 	 * @param methodNames the possible method names
 	 * @param parameterTypes the parameter types
+	 *
 	 * @return the method
 	 */
 	public static Method getMethod(Class clazz, String[] methodNames, Class[] parameterTypes) {
@@ -184,43 +234,14 @@ public class ASJReflectionHelper {
 		return null;
 	}
 	
-	/**
-	 * Returns the {@link Method} of the given {@link Class} {@code clazz} with the
-	 * given method ID {@code methodID}.
-	 * 
-	 * @param clazz the clazz
-	 * @param methodID the method ID
-	 * @return the method
-	 */
-	public static Method getMethod(Class clazz, int methodID) {
-		return clazz.getDeclaredMethods()[methodID];
-	}
-	
-	// Method invocation
-	
-	// Reference
-	
-	public static <T, R> R invokeStatic(Class<? super T> clazz, Object[] args, Object method) {
-		return invoke(clazz, null, args, method);
-	}
+	// Method ID
 	
 	public static <T, R> R invoke(T instance, Object[] args, Object method) {
 		return invoke((Class<T>) instance.getClass(), instance, args, method);
 	}
 	
-	public static <T, R> R invoke(Class<? super T> clazz, T instance, Object[] args, Object method) {
-		Method m = getMethod(clazz, method);
-		return invoke(m, instance, args);
-	}
-	
-	// Method ID
-	
 	public static <T, R> R invokeStatic(Class<? super T> clazz, Object[] args, int methodID) {
 		return invoke(clazz, null, args, methodID);
-	}
-	
-	public static <T, R> R invoke(T instance, Object[] args, int methodID) {
-		return invoke((Class<T>) instance.getClass(), instance, args, methodID);
 	}
 	
 	public static <T, R> R invoke(Class<? super T> clazz, T instance, Object[] args, int methodID) {
@@ -228,24 +249,8 @@ public class ASJReflectionHelper {
 		return invoke(m, instance, args);
 	}
 	
-	/**
-	 * Directly invokes the given {@link Method} {@code method} on the given
-	 * {@link Object} {@code instance} with the given arguments {@code args} and
-	 * returns the result.
-	 * 
-	 * @param method the method to invoke
-	 * @param instance the instance
-	 * @param args the arguments
-	 * @return the result
-	 */
-	public static <T, R> R invoke(Method method, Object instance, Object[] args) {
-		try {
-			method.setAccessible(true);
-			return (R) method.invoke(instance, args);
-		} catch (Exception ex) {
-			CSLog.error(ex);
-			return null;
-		}
+	public static <T, R> R invoke(T instance, Object[] args, int methodID) {
+		return invoke((Class<T>) instance.getClass(), instance, args, methodID);
 	}
 	
 	// Fields
@@ -276,9 +281,10 @@ public class ASJReflectionHelper {
 	/**
 	 * Returns the {@link Field} of the given {@link Class} {@code clazz} with the
 	 * name {@code name}.
-	 * 
+	 *
 	 * @param clazz the clazz
 	 * @param name the field name
+	 *
 	 * @return the field
 	 */
 	public static Field getField(Class clazz, String name) {
@@ -291,12 +297,26 @@ public class ASJReflectionHelper {
 		return null;
 	}
 	
+	public static <T, R> R getStaticValue(Class<? super T> clazz, String... fieldNames) {
+		return getValue(clazz, null, fieldNames);
+	}
+	
+	public static <T, R> R getValue(Class<? super T> clazz, T instance, String... fieldNames) {
+		Field f = getField(clazz, fieldNames);
+		return getValue(f, instance);
+	}
+	
+	// Field getters
+	
+	// Reference
+	
 	/**
 	 * Returns the {@link Field} of the given {@link Class} {@code clazz} with a
 	 * name contained in {@code fieldNames}.
-	 * 
+	 *
 	 * @param clazz the clazz
 	 * @param fieldNames the possible field names
+	 *
 	 * @return the field
 	 */
 	public static Field getField(Class clazz, String... fieldNames) {
@@ -312,50 +332,6 @@ public class ASJReflectionHelper {
 		return null;
 	}
 	
-	/**
-	 * Returns the {@link Field} of the given {@link Class} {@code clazz} with the
-	 * field ID {@code fieldID}
-	 * 
-	 * @param clazz the clazz
-	 * @param fieldID the field ID
-	 * @return the field
-	 */
-	public static Field getField(Class clazz, int fieldID) {
-		return clazz.getDeclaredFields()[fieldID];
-	}
-	
-	// Field getters
-	
-	// Reference
-	
-	public static <T, R> R getStaticValue(Class<? super T> clazz, String... fieldNames) {
-		return getValue(clazz, null, fieldNames);
-	}
-	
-	public static <T, R> R getValue(T instance, String... fieldNames) {
-		return getValue((Class<T>) instance.getClass(), instance, fieldNames);
-	}
-	
-	public static <T, R> R getValue(Class<? super T> clazz, T instance, String... fieldNames) {
-		Field f = getField(clazz, fieldNames);
-		return getValue(f, instance);
-	}
-	
-	// Field ID
-	
-	public static <T, R> R getStaticValue(Class<? super T> clazz, int fieldID) {
-		return getValue(clazz, null, fieldID);
-	}
-	
-	public static <T, R> R getValue(T instance, int fieldID) {
-		return getValue((Class<? super T>) instance.getClass(), instance, fieldID);
-	}
-	
-	public static <T, R> R getValue(Class<? super T> clazz, T instance, int fieldID) {
-		Field f = getField(clazz, fieldID);
-		return getValue(f, instance);
-	}
-	
 	public static <T> T getValue(Field field, Object instance) {
 		return getValue(field, instance, true);
 	}
@@ -363,10 +339,11 @@ public class ASJReflectionHelper {
 	/**
 	 * Directly gets the value of the given {@link Field} on the given
 	 * {@link Object} {@code instance}.
-	 * 
+	 *
 	 * @param field the field to get
 	 * @param instance the instance
 	 * @param checkAccessible true if field is private
+	 *
 	 * @return the value
 	 */
 	public static <T> T getValue(Field field, Object instance, boolean checkAccessible) {
@@ -379,6 +356,38 @@ public class ASJReflectionHelper {
 		}
 	}
 	
+	// Field ID
+	
+	public static <T, R> R getValue(T instance, String... fieldNames) {
+		return getValue((Class<T>) instance.getClass(), instance, fieldNames);
+	}
+	
+	public static <T, R> R getStaticValue(Class<? super T> clazz, int fieldID) {
+		return getValue(clazz, null, fieldID);
+	}
+	
+	public static <T, R> R getValue(Class<? super T> clazz, T instance, int fieldID) {
+		Field f = getField(clazz, fieldID);
+		return getValue(f, instance);
+	}
+	
+	/**
+	 * Returns the {@link Field} of the given {@link Class} {@code clazz} with the
+	 * field ID {@code fieldID}
+	 *
+	 * @param clazz the clazz
+	 * @param fieldID the field ID
+	 *
+	 * @return the field
+	 */
+	public static Field getField(Class clazz, int fieldID) {
+		return clazz.getDeclaredFields()[fieldID];
+	}
+	
+	public static <T, R> R getValue(T instance, int fieldID) {
+		return getValue((Class<? super T>) instance.getClass(), instance, fieldID);
+	}
+	
 	// Field setters
 	
 	// 
@@ -387,27 +396,8 @@ public class ASJReflectionHelper {
 		setValue(clazz, null, value, fieldNames);
 	}
 	
-	public static <T, V> void setValue(T instance, V value, String... fieldNames) {
-		setValue((Class<? super T>) instance.getClass(), instance, value, fieldNames);
-	}
-	
 	public static <T, V> void setValue(Class<? super T> clazz, T instance, V value, String... fieldNames) {
 		Field f = getField(clazz, fieldNames);
-		setValue(f, instance, value);
-	}
-	
-	// Field ID
-	
-	public static <T, V> void setStaticValue(Class<? super T> clazz, V value, int fieldID) {
-		setValue(clazz, null, value, fieldID);
-	}
-	
-	public static <T, V> void setValue(T instance, V value, int fieldID) {
-		setValue((Class<? super T>) instance.getClass(), instance, value, fieldID);
-	}
-	
-	public static <T, V> void setValue(Class<? super T> clazz, T instance, V value, int fieldID) {
-		Field f = getField(clazz, fieldID);
 		setValue(f, instance, value);
 	}
 	
@@ -415,10 +405,12 @@ public class ASJReflectionHelper {
 		setValue(field, instance, value, true);
 	}
 	
+	// Field ID
+	
 	/**
 	 * Directly sets the value of the given {@link Field} on the given
 	 * {@link Object} {@code instance} to the given {@link Object} {@code value} .
-	 * 
+	 *
 	 * @param field the field to set
 	 * @param instance the instance
 	 * @param value the new value
@@ -426,11 +418,28 @@ public class ASJReflectionHelper {
 	 */
 	public static <T, V> void setValue(Field field, T instance, V value, boolean checkAccessible) {
 		try {
-			if(checkAccessible) field.setAccessible(true);
+			if (checkAccessible) field.setAccessible(true);
 			field.set(instance, value);
 		} catch (Exception ex) {
 			CSLog.error(ex);
 		}
+	}
+	
+	public static <T, V> void setValue(T instance, V value, String... fieldNames) {
+		setValue((Class<? super T>) instance.getClass(), instance, value, fieldNames);
+	}
+	
+	public static <T, V> void setStaticValue(Class<? super T> clazz, V value, int fieldID) {
+		setValue(clazz, null, value, fieldID);
+	}
+	
+	public static <T, V> void setValue(Class<? super T> clazz, T instance, V value, int fieldID) {
+		Field f = getField(clazz, fieldID);
+		setValue(f, instance, value);
+	}
+	
+	public static <T, V> void setValue(T instance, V value, int fieldID) {
+		setValue((Class<? super T>) instance.getClass(), instance, value, fieldID);
 	}
 	
 	// Reference
@@ -439,33 +448,16 @@ public class ASJReflectionHelper {
 		setFinalValue(clazz, null, value, fieldNames);
 	}
 	
-	public static <T, V> void setFinalValue(T instance, V value, String... fieldNames) {
-		setFinalValue((Class<? super T>) instance.getClass(), instance, value, fieldNames);
-	}
-	
 	public static <T, V> void setFinalValue(Class<? super T> clazz, T instance, V value, String... fieldNames) {
 		Field f = getField(clazz, fieldNames);
-		setFinalValue(f, instance, value);
-	}
-	
-	// Field ID
-	
-	public static <T, V> void setStaticFinalValue(Class<? super T> clazz, V value, int fieldID) {
-		setFinalValue(clazz, null, value, fieldID);
-	}
-	
-	public static <T, V> void setFinalValue(T instance, V value, int fieldID) {
-		setFinalValue((Class<? super T>) instance.getClass(), instance, value, fieldID);
-	}
-	
-	public static <T, V> void setFinalValue(Class<? super T> clazz, T instance, V value, int fieldID) {
-		Field f = getField(clazz, fieldID);
 		setFinalValue(f, instance, value);
 	}
 	
 	public static <T, V> void setFinalValue(Field field, T instance, V value) {
 		setFinalValue(field, instance, value, true);
 	}
+	
+	// Field ID
 	
 	public static <T, V> void setFinalValue(Field field, T instance, V value, boolean checkAccessible) {
 		try {
@@ -477,6 +469,23 @@ public class ASJReflectionHelper {
 		} catch (Exception ex) {
 			CSLog.error(ex);
 		}
+	}
+	
+	public static <T, V> void setFinalValue(T instance, V value, String... fieldNames) {
+		setFinalValue((Class<? super T>) instance.getClass(), instance, value, fieldNames);
+	}
+	
+	public static <T, V> void setStaticFinalValue(Class<? super T> clazz, V value, int fieldID) {
+		setFinalValue(clazz, null, value, fieldID);
+	}
+	
+	public static <T, V> void setFinalValue(Class<? super T> clazz, T instance, V value, int fieldID) {
+		Field f = getField(clazz, fieldID);
+		setFinalValue(f, instance, value);
+	}
+	
+	public static <T, V> void setFinalValue(T instance, V value, int fieldID) {
+		setFinalValue((Class<? super T>) instance.getClass(), instance, value, fieldID);
 	}
 	
 	// Instances
@@ -505,7 +514,7 @@ public class ASJReflectionHelper {
 				parameterTypes[i] = parameters[i].getClass();
 			}
 		}
-	
+		
 		return createInstance(c, parameterTypes, parameters);
 	}
 	
@@ -519,38 +528,39 @@ public class ASJReflectionHelper {
 	}
 	
 	public static class CSLog {
+		
 		public static final CSLogger logger = new CSLogger();
-		
-		public static void print(String string) {
-			logger.log(Level.INFO, string);
-		}
-		
-		public static void info(String string) {
-			logger.log(Level.INFO, string);
-		}
-		
-		public static void warning(String string) {
-			logger.log(Level.WARNING, string);
-		}
-		
-		public static void error(String string) {
-			logger.log(Level.SEVERE, string);
-		}
 		
 		public static void print(Object object) {
 			print(String.valueOf(object));
+		}
+		
+		public static void print(String string) {
+			logger.log(Level.INFO, string);
 		}
 		
 		public static void info(Object object) {
 			info(String.valueOf(object));
 		}
 		
+		public static void info(String string) {
+			logger.log(Level.INFO, string);
+		}
+		
 		public static void warning(Object object) {
 			warning(String.valueOf(object));
 		}
 		
+		public static void warning(String string) {
+			logger.log(Level.WARNING, string);
+		}
+		
 		public static void error(Object object) {
 			error(String.valueOf(object));
+		}
+		
+		public static void error(String string) {
+			logger.log(Level.SEVERE, string);
 		}
 		
 		public static void error(Throwable throwable) {
@@ -574,6 +584,7 @@ public class ASJReflectionHelper {
 		}
 		
 		public static class CSLogger {
+			
 			public static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 			
 			public void log(Level level, String msg) {
@@ -584,6 +595,5 @@ public class ASJReflectionHelper {
 				log.log(level, error.getMessage(), error);
 			}
 		}
-		
 	}
 }

@@ -9,13 +9,13 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import java.util.*;
 
 public class WE_OreGen implements IWorldGenerator {
-
+	
 	public final List<WorldGenMinableParametrized> oreGen = new ArrayList<WorldGenMinableParametrized>();
 	
 	public void add(Block ore, Block replace, int meta, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
 		oreGen.add(new WorldGenMinableParametrized(ore, replace, meta, minVeinSize, maxVeinSize, minVeinsPerChunk, maxVeinsPerChunk, chanceToSpawn, minY, maxY));
 	}
-
+	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		for (WorldGenMinableParametrized wgmp : oreGen) {

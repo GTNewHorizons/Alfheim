@@ -12,7 +12,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockCalicoLeaves : BlockLeavesMod(), IExplosionDampener, ILexiconable {
+class BlockCalicoLeaves: BlockLeavesMod(), IExplosionDampener, ILexiconable {
 	
 	init {
 		setBlockName("calicoLeaves")

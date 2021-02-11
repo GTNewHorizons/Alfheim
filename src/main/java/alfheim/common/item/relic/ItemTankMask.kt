@@ -2,9 +2,9 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alfheim.AlfheimCore
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.network.MessageEffect

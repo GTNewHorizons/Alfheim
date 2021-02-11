@@ -9,13 +9,13 @@ import vazkii.botania.common.block.tile.TileMod
 
 // change to TileItemContainer ???
 class TileItemDisplay: TileMod(), ISidedInventory {
- 
+	
 	private val slots = intArrayOf(0)
- 
+	
 	private var inventory = arrayOfNulls<ItemStack>(1)
 	
 	override fun getSizeInventory() = 1
- 
+	
 	override fun getStackInSlot(par1: Int) = inventory[par1]
 	
 	override fun decrStackSize(slot: Int, size: Int): ItemStack? {
@@ -26,33 +26,33 @@ class TileItemDisplay: TileMod(), ISidedInventory {
 			}
 			
 			val itemstack: ItemStack
-            
-            return if (inventory[slot]!!.stackSize <= size) {
-                itemstack = inventory[slot]!!
-                inventory[slot] = null
-                markDirty()
-                itemstack
-            } else {
-                itemstack = inventory[slot]!!.splitStack(size)
-                if (inventory[slot]!!.stackSize == 0) {
-                    inventory[slot] = null
-                }
-    
-                markDirty()
-                itemstack
-            }
+			
+			return if (inventory[slot]!!.stackSize <= size) {
+				itemstack = inventory[slot]!!
+				inventory[slot] = null
+				markDirty()
+				itemstack
+			} else {
+				itemstack = inventory[slot]!!.splitStack(size)
+				if (inventory[slot]!!.stackSize == 0) {
+					inventory[slot] = null
+				}
+				
+				markDirty()
+				itemstack
+			}
 		}
-        return null
-    }
+		return null
+	}
 	
 	override fun getStackInSlotOnClosing(par1: Int): ItemStack? {
-        return if (inventory[par1] != null) {
-            val itemstack = inventory[par1]
-            inventory[par1] = null
-            itemstack
-        } else {
-            null
-        }
+		return if (inventory[par1] != null) {
+			val itemstack = inventory[par1]
+			inventory[par1] = null
+			itemstack
+		} else {
+			null
+		}
 	}
 	
 	override fun setInventorySlotContents(par1: Int, par2ItemStack: ItemStack?) {
@@ -60,14 +60,14 @@ class TileItemDisplay: TileMod(), ISidedInventory {
 		if (par2ItemStack != null && par2ItemStack.stackSize > this.inventoryStackLimit) {
 			par2ItemStack.stackSize = this.inventoryStackLimit
 		}
-        
-        ASJUtilities.dispatchTEToNearbyPlayers(this)
+		
+		ASJUtilities.dispatchTEToNearbyPlayers(this)
 	}
 	
 	override fun getInventoryName() = "container.itemDisplay"
- 
+	
 	override fun isUseableByPlayer(player: EntityPlayer?) = true
- 
+	
 	override fun hasCustomInventoryName() = false
 	
 	override fun readCustomNBT(nbttagcompound: NBTTagCompound) {

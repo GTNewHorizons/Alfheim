@@ -52,11 +52,13 @@ class AlfheimCore {
 		var TravellersGearLoaded = false
 		
 		val jingleTheBells: Boolean
+		
 		// do not reassign this unless you know what you are doing
 		var winter: Boolean
 		
 		/** Today's month */
 		val month: Int
+		
 		/** Today's day of month */
 		val date: Int
 		
@@ -121,7 +123,7 @@ class AlfheimCore {
 		if (AlfheimConfigHandler.enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
-		if (ENABLE_RAGNAROK) RagnarokHandler.load (save)
+		if (ENABLE_RAGNAROK) RagnarokHandler.load(save)
 		e.registerServerCommand(CommandAlfheim)
 		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo)
 	}

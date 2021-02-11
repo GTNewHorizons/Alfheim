@@ -31,6 +31,7 @@ import kotlin.math.*
 class TileTreeCrafter: TileMod(), ISparkAttachable {
 	
 	companion object {
+		
 		const val TAG_SUFF_TILE = "SuffusedTile"
 		
 		val ITEMDISPLAY_LOCATIONS = arrayOf(Pos(-3, 1, 3), Pos(-4, 1, 0), Pos(0, 1, 4), Pos(-3, 1, -3), Pos(0, 1, -4), Pos(3, 1, -3), Pos(4, 1, 0), Pos(3, 1, 3))
@@ -112,6 +113,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 	}
 	
 	class Pos(val x: Int, val y: Int, val z: Int) {
+		
 		fun getBlock(world: World, x0: Int = 0, y0: Int = 0, z0: Int = 0): Block = world.getBlock(x + x0, y + y0, z + z0)
 		fun isBlock(world: World, block: Block, x0: Int = 0, y0: Int = 0, z0: Int = 0): Boolean = world.getBlock(x + x0, y + y0, z + z0) === block
 		
@@ -237,7 +239,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		val core = worldObj.getBlock(xCoord, yCoord - 3, zCoord)
 		if (core === Blocks.air) return null
 		
-		val stack = ItemStack(core, 1, worldObj.getBlockMetadata(xCoord, yCoord - 3, zCoord) )
+		val stack = ItemStack(core, 1, worldObj.getBlockMetadata(xCoord, yCoord - 3, zCoord))
 		val tile = worldObj.getTileEntity(xCoord, yCoord - 3, zCoord) ?: return stack
 		stack.tagCompound = NBTTagCompound().also { tile.writeToNBT(it); it.removeTag("x"); it.removeTag("y"); it.removeTag("z") }
 		return stack
@@ -348,7 +350,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		worldObj.setBlockToAir(xCoord, yCoord - 3, zCoord)
 		worldObj.setBlock(xCoord, yCoord - 3, zCoord, recipe.out.block, recipe.out.meta, 3)
 		
-		if (ItemNBTHelper.getBoolean(recipe.out, TAG_SUFF_TILE, false)) run tile@ {
+		if (ItemNBTHelper.getBoolean(recipe.out, TAG_SUFF_TILE, false)) run tile@{
 			val copy = recipe.out.copy()
 			copy.tagCompound.removeTag(TAG_SUFF_TILE)
 			

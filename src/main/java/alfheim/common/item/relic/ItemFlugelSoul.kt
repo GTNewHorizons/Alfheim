@@ -3,13 +3,13 @@ package alfheim.common.item.relic
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.entity.item.*
 import alfheim.common.item.*
-import alexsocol.asjlib.security.InteractionSecurity
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*

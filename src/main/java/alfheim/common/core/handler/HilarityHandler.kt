@@ -30,10 +30,12 @@ object HilarityHandler {
 	
 	private val handlers: ArrayList<CraftHandler> = ArrayList()
 	
-	private fun registerHandler(playerName: String, cheatyString: String,
-								gender: String, chatColor: EnumChatFormatting,
-								neededItems: List<ItemStack>, normalString: String,
-								resourceItem: ItemStack, outputItem: ItemStack) {
+	private fun registerHandler(
+		playerName: String, cheatyString: String,
+		gender: String, chatColor: EnumChatFormatting,
+		neededItems: List<ItemStack>, normalString: String,
+		resourceItem: ItemStack, outputItem: ItemStack,
+	) {
 		
 		handlers.add(CraftHandler(playerName, cheatyString,
 								  gender, chatColor,
@@ -68,10 +70,12 @@ object HilarityHandler {
 						ItemStack(ModItems.elementiumSword, 1, OreDictionary.WILDCARD_VALUE), ItemStack(AlfheimItems.trisDagger))
 	}
 	
-	private class CraftHandler(val playerName: String, val cheatyString: String,
-							   val gender: String, val chatColor: EnumChatFormatting,
-							   val neededItems: List<ItemStack>, val normalString: String,
-							   val resourceItem: ItemStack, val outputItem: ItemStack) {
+	private class CraftHandler(
+		val playerName: String, val cheatyString: String,
+		val gender: String, val chatColor: EnumChatFormatting,
+		val neededItems: List<ItemStack>, val normalString: String,
+		val resourceItem: ItemStack, val outputItem: ItemStack,
+	) {
 		
 		fun execute(e: ServerChatEvent): Boolean {
 			val msg = e.message.trim()
@@ -123,10 +127,12 @@ object HilarityHandler {
 		}
 		
 		private class Pos(val x: Int, val y: Int, val z: Int) {
+			
 			fun getTileAt(world: World, x: Int, y: Int, z: Int): TileEntity? = world.getTileEntity(x + this.x, y + this.y, z + this.z)
 		}
 		
 		private class PosPair(val pos: Pos, val stack: ItemStack) {
+			
 			var flag = false
 		}
 		

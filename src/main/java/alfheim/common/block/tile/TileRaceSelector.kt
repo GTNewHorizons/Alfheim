@@ -18,7 +18,7 @@ class TileRaceSelector: ASJTile() {
 		if (!AlfheimConfigHandler.enableElvenStory) return false
 		if (!ModInfo.DEV && player.race != EnumRace.HUMAN) return false
 		
-		val race = EnumRace[rotation+1]
+		val race = EnumRace[rotation + 1]
 		selectRace(player, race)
 		
 		if (ASJUtilities.isServer) {
@@ -77,12 +77,11 @@ class TileRaceSelector: ASJTile() {
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
 		}
 		
-		
 		// remove when there will be genders
 		// if (getBlockMetadata() != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
 	}
 	
-	override fun getRenderBoundingBox() = AxisAlignedBB.getBoundingBox(xCoord -3.0, yCoord.D, zCoord -6.0, xCoord + 4.0, yCoord + 2.0, zCoord + 1.0)!!
+	override fun getRenderBoundingBox() = AxisAlignedBB.getBoundingBox(xCoord - 3.0, yCoord.D, zCoord - 6.0, xCoord + 4.0, yCoord + 2.0, zCoord + 1.0)!!
 	
 	val TAG_TIMER = "timer"
 	val TAG_GENDER = "gender"

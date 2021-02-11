@@ -56,7 +56,7 @@ class TileRagnarokCore: ASJTile(), ISparkAttachable {
 					otherSpark.registerTransfer(spark)
 			}
 		}
-		
+
 //		if (!worldObj.isRemote) ASJUtilities.chatLog("Got ${mana - prevMana} mana")
 		
 		if (mana >= MAX_MANA)
@@ -67,8 +67,8 @@ class TileRagnarokCore: ASJTile(), ISparkAttachable {
 	
 	fun checkStructure(stackOnly: Boolean): Boolean {
 		var relic: ItemStack? =
-		
-				(worldObj.getTileEntity(xCoord - 5, yCoord, zCoord) as? TileItemDisplay)?.get(0)
+			
+			(worldObj.getTileEntity(xCoord - 5, yCoord, zCoord) as? TileItemDisplay)?.get(0)
 		if (relic?.item === AlfheimModularItems.eventResource && relic.meta == EventResourcesMetas.SnowRelic) {
 			if (stackOnly) return true
 			

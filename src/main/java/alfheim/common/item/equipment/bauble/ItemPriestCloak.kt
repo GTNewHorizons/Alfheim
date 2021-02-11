@@ -25,6 +25,7 @@ import vazkii.botania.client.core.helper.RenderHelper
 class ItemPriestCloak: ItemBaubleCloak("priestCloak"), IManaUsingItem {
 	
 	companion object {
+		
 		lateinit var icons: Array<IIcon>
 		
 		fun getCloak(meta: Int, player: EntityPlayer): ItemStack? {
@@ -113,7 +114,8 @@ class ItemPriestCloak: ItemBaubleCloak("priestCloak"), IManaUsingItem {
 				if (key != null)
 					addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key), tooltip)
 			}
-		} catch (ignore: Throwable) {}
+		} catch (ignore: Throwable) {
+		}
 		
 		val cosmetic = getCosmeticItem(stack)
 		if (cosmetic != null)

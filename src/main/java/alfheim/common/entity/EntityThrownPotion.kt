@@ -17,21 +17,21 @@ import kotlin.math.sqrt
 
 class EntityThrownPotion: EntityThrowable {
 	
-	constructor(world: World) : super(world) {
+	constructor(world: World): super(world) {
 		stack = ItemStack(AlfheimItems.splashPotion)
 		effects = emptyList()
 		
 		color = 0xFFFFFF
 	}
 	
-	constructor(world: World, st: ItemStack) : super(world) {
+	constructor(world: World, st: ItemStack): super(world) {
 		stack = st
 		val brew = stack.item as ItemSplashPotion
 		effects = brew.getBrew(stack).getPotionEffects(stack)
 		color = brew.getColor(stack)
 	}
 	
-	constructor(player: EntityPlayer, st: ItemStack) : super(player.worldObj, player) {
+	constructor(player: EntityPlayer, st: ItemStack): super(player.worldObj, player) {
 		stack = st
 		val brew = stack.item as ItemSplashPotion
 		effects = brew.getBrew(stack).getPotionEffects(stack)

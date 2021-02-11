@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11
 /**
  * Created by wiiv.
  */
-class ModelFenrirArmor(val slot: Int) : ModelBiped() {
+class ModelFenrirArmor(val slot: Int): ModelBiped() {
 	
 	private val helmAnchor: ModelRenderer
 	private val helm: ModelRenderer

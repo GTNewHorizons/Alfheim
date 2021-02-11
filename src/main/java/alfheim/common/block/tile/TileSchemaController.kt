@@ -143,8 +143,8 @@ open class TileSchemaController: TileMod() {
 											 xCoord + (dir.offsetX * i) + .5,
 											 yCoord + (dir.offsetY * i) + .5,
 											 zCoord + (dir.offsetZ * i) + .5,
-                                             abs(dir.offsetY).F, abs(dir.offsetX).F,
-                                             abs(dir.offsetZ).F, 0.3f, -0.01f)
+											 abs(dir.offsetY).F, abs(dir.offsetX).F,
+											 abs(dir.offsetZ).F, 0.3f, -0.01f)
 					}
 			}
 			
@@ -200,22 +200,22 @@ open class TileSchemaController: TileMod() {
 	}
 	
 	fun getType(dir: ForgeDirection): Int {
-        return when (dir) {
-            ForgeDirection.UP, ForgeDirection.DOWN     -> 2
-            ForgeDirection.NORTH, ForgeDirection.SOUTH -> 3
-            ForgeDirection.EAST, ForgeDirection.WEST   -> 1
-            else                                       -> -1
-        }
+		return when (dir) {
+			ForgeDirection.UP, ForgeDirection.DOWN     -> 2
+			ForgeDirection.NORTH, ForgeDirection.SOUTH -> 3
+			ForgeDirection.EAST, ForgeDirection.WEST   -> 1
+			else                                       -> -1
+		}
 	}
 	
 	private fun Int.dif(i: Int): Int = abs(this - i) * if (this < i) 1 else -1
 	
 	private fun getPos(i: Int): Pos? {
-        return when (i) {
-            1    -> pos_x
-            2    -> pos_y
-            else -> pos_z
-        }
+		return when (i) {
+			1    -> pos_x
+			2    -> pos_y
+			else -> pos_z
+		}
 	}
 	
 	private fun setPos(i: Int, pos: Pos?) {
@@ -269,7 +269,7 @@ open class TileSchemaController: TileMod() {
 	}
 	
 	fun checkPos(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) =
-        abs(x) < abs(x2) || abs(y) < abs(y2) || abs(z) < abs(z2)
+		abs(x) < abs(x2) || abs(y) < abs(y2) || abs(z) < abs(z2)
 	
 	private fun getDir(pos1: Pos?, pos2: Pos?): ForgeDirection {
 		val x = pos1?.x ?: xCoord
@@ -347,6 +347,7 @@ open class TileSchemaController: TileMod() {
 	@Throws(IOException::class)
 	fun dumpTo(file: File) {
 		class LocationElement(val x: Int, val y: Int, val z: Int, val meta: Int, val nbt: NBTTagCompound?) {
+			
 			fun getJson(): JsonObject = JsonObject().apply {
 				addProperty("x", x)
 				addProperty("y", y)

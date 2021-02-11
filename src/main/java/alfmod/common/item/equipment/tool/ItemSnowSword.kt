@@ -19,6 +19,7 @@ class ItemSnowSword: ItemManasteelSword(snow, "SnowSword") {
 	lateinit var katanaIcon: IIcon
 	
 	companion object {
+		
 		val snow = EnumHelper.addToolMaterial("Snow", 0, 860, 15f, 4f, 16)!!
 		
 		lateinit var snice: IIcon

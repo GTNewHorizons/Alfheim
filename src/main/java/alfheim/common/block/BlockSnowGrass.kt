@@ -91,6 +91,7 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 	}
 	
 	companion object {
+		
 		var meltDelay = 20
 		
 		val canPlaceBlockOn = ASJReflectionHelper.getMethod(BlockBush::class.java, arrayOf("canPlaceBlockOn", "func_149854_a", "a"), arrayOf(Block::class.java)).also { it.isAccessible = true }

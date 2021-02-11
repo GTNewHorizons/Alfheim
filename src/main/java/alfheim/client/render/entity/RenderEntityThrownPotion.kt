@@ -16,17 +16,17 @@ object RenderEntityThrownPotion: Render() {
 	
 	override fun doRender(p_76986_1_: Entity, p_76986_2_: Double, p_76986_4_: Double, p_76986_6_: Double, p_76986_8_: Float, p_76986_9_: Float) {
 		val e = p_76986_1_ as EntityThrownPotion
-        val iicon = e.stack.item.getIcon(e.stack, 0)
-        if (iicon != null) {
-            glPushMatrix()
-            glTranslatef(p_76986_2_.F, p_76986_4_.F, p_76986_6_.F)
-            glEnable(GL_RESCALE_NORMAL)
-            glEnable(GL_BLEND)
+		val iicon = e.stack.item.getIcon(e.stack, 0)
+		if (iicon != null) {
+			glPushMatrix()
+			glTranslatef(p_76986_2_.F, p_76986_4_.F, p_76986_6_.F)
+			glEnable(GL_RESCALE_NORMAL)
+			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-	
+			
 			glScaled(0.5)
-            bindEntityTexture(p_76986_1_)
-            val tessellator = Tessellator.instance
+			bindEntityTexture(p_76986_1_)
+			val tessellator = Tessellator.instance
 			func_77026_a(tessellator, iicon, -1)
 			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(e.color, 255))
 			func_77026_a(tessellator, AlfheimItems.splashPotion.getIcon(e.stack, 1), 240)
@@ -35,7 +35,7 @@ object RenderEntityThrownPotion: Render() {
 			glDisable(GL_BLEND)
 			glDisable(GL_RESCALE_NORMAL)
 			glPopMatrix()
-        }
+		}
 	}
 	
 	override fun getEntityTexture(p_110775_1_: Entity) = TextureMap.locationItemsTexture!!

@@ -186,6 +186,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 }
 
 private object DummyPool: IManaPool {
+	
 	override fun isFull() = false
 	override fun recieveMana(mana: Int) = Unit
 	override fun canRecieveManaFromBursts() = false

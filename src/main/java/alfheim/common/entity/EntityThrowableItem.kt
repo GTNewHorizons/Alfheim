@@ -12,9 +12,9 @@ import kotlin.math.roundToLong
 
 class EntityThrowableItem: EntityThrowable {
 	
-	constructor(world: World) : super(world)
+	constructor(world: World): super(world)
 	
-	constructor(player: EntityPlayer) : super(player.worldObj, player)
+	constructor(player: EntityPlayer): super(player.worldObj, player)
 	
 	override fun onImpact(movingObject: MovingObjectPosition?) {
 		if (!worldObj.isRemote && movingObject != null) {
@@ -42,10 +42,10 @@ class EntityThrowableItem: EntityThrowable {
 			setDead()
 			
 			if (InteractionSecurity.canDoSomethingHere(thrower ?: return, i, j, k, worldObj))
-			
-			if (worldObj.isAirBlock(i, j, k) && Blocks.fire.canPlaceBlockAt(worldObj, i, j, k)) {
-				worldObj.setBlock(i, j, k, Blocks.fire)
-			}
+				
+				if (worldObj.isAirBlock(i, j, k) && Blocks.fire.canPlaceBlockAt(worldObj, i, j, k)) {
+					worldObj.setBlock(i, j, k, Blocks.fire)
+				}
 			
 			for (n in 0..36) {
 				i = posX.mfloor() + rand.nextInt(6) - 1

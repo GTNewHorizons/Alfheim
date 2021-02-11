@@ -1,17 +1,15 @@
 package gloomyfolken.hooklib.asm;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.*;
 
 import java.io.InputStream;
 
 public class ReadClassHelper {
-
-	public static InputStream getClassData(String className) {
-		String classResourceName = '/' + className.replace('.', '/') + ".class";
-		return ReadClassHelper.class.getResourceAsStream(classResourceName);
+	
+	public static void acceptVisitor(String className, ClassVisitor visitor) {
+		acceptVisitor(getClassData(className), visitor);
 	}
-
+	
 	public static void acceptVisitor(InputStream classData, ClassVisitor visitor) {
 		try {
 			ClassReader reader = new ClassReader(classData);
@@ -21,8 +19,9 @@ public class ReadClassHelper {
 			throw new RuntimeException(ex);
 		}
 	}
-
-	public static void acceptVisitor(String className, ClassVisitor visitor) {
-		acceptVisitor(getClassData(className), visitor);
+	
+	public static InputStream getClassData(String className) {
+		String classResourceName = '/' + className.replace('.', '/') + ".class";
+		return ReadClassHelper.class.getResourceAsStream(classResourceName);
 	}
 }

@@ -20,8 +20,9 @@ import java.util.*
 import kotlin.math.*
 
 class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet, internal val set: MultiblockSet, internal val achievement: Achievement): LexiconPage(unName) {
+	
 	internal lateinit var button: GuiButton
-	internal val mb  = set.getForIndex(0)
+	internal val mb = set.getForIndex(0)
 	internal val mbUn = setUn.getForIndex(0)
 	internal var ticksElapsed: Int = 0
 	

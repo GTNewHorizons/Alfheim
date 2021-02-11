@@ -35,7 +35,7 @@ open class EntityItemImmortal: Entity {
 	constructor(world: World): super(world) {
 		setSize(0.25f, 0.25f)
 		yOffset = height / 2f
-
+		
 		rotationYaw = (Math.random() * 360.0).F
 		isImmuneToFire = true
 //		motionX = (Math.random() * 0.20000000298023224 - 0.10000000149011612)

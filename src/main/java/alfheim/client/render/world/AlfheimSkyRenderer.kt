@@ -121,8 +121,6 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		var effCelAng = celAng
 		if (celAng > 0.5) effCelAng = 0.5f - (celAng - 0.5f)
 		
-		
-		
 		// === Planets
 		f10 = 20f
 		val lowA = max(0f, effCelAng - 0.3f) * f6
@@ -164,8 +162,6 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		}
 		glColor4f(1f, 1f, 1f, 1f)
 		glPopMatrix()
-		
-		
 		
 		// === Rays
 		mc.renderEngine.bindTexture(textureSkybox)
@@ -223,7 +219,6 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		}
 		glPopMatrix()
 		
-		
 		// === Rainbow
 		glPushMatrix()
 		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0)
@@ -262,15 +257,11 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		glColor4f(1f, 1f, 1f, (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
 		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE, 1, 0)
 		
-		
-		
 		// === Sun
 		glRotatef(world.getCelestialAngle(partialTicks) * 360f, 1f, 0f, 0f)
 		f10 = 60f
 		mc.renderEngine.bindTexture(textureSun)
 		drawObject(tessellator1, f10)
-		
-		
 		
 		// === Moon
 		f10 = 60f
@@ -288,8 +279,6 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		tessellator1.addVertexWithUV(f10.D, -100.0, -f10.D, f14.D, f15.D)
 		tessellator1.addVertexWithUV(-f10.D, -100.0, -f10.D, f16.D, f15.D)
 		tessellator1.draw()
-		
-		
 		
 		// === Stars
 		f6 = max(0.0025f, effCelAng - 0.25f - world.getRainStrength(partialTicks)) * 20 * (1f - insideVoid)

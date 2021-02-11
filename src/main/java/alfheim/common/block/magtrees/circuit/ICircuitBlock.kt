@@ -9,6 +9,7 @@ import net.minecraft.world.IBlockAccess
 interface ICircuitBlock {
 	
 	companion object {
+		
 		fun getPower(blockAccess: IBlockAccess, x: Int, y: Int, z: Int): Int {
 			for (i in 1..15)
 				if (blockAccess.getBlock(x, y + i, z) !is ICircuitBlock)

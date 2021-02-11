@@ -27,7 +27,7 @@ object RenderEntityWindBlade: Render() {
 		glPushMatrix()
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		glAlphaFunc(GL_GREATER, 1/255f)
+		glAlphaFunc(GL_GREATER, 1 / 255f)
 		glTranslated(x, y + 0.05, z)
 		val time = mc.theWorld.totalWorldTime + entity.ticksExisted - 1.0
 		glRotated(time + partialTick, 0.0, 1.0, 0.0)

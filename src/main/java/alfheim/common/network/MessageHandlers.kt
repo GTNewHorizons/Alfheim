@@ -22,7 +22,7 @@ import java.io.File
 import vazkii.botania.common.core.helper.Vector3 as BVector3
 
 class Message0dSHandler: IMessageHandler<Message0dS, IMessage?> {
-		
+	
 	override fun onMessage(message: Message0dS, ctx: MessageContext): IMessage? {
 		PacketHandler.handle(message, ctx)
 		return null
@@ -54,7 +54,7 @@ class Message1lHandler: IMessageHandler<Message1l, IMessage?> {
 }
 
 class Message2dHandler: IMessageHandler<Message2d, IMessage?> {
-
+	
 	override fun onMessage(message: Message2d, ctx: MessageContext): IMessage? {
 		PacketHandlerClient.handle(message)
 		return null
@@ -62,14 +62,14 @@ class Message2dHandler: IMessageHandler<Message2d, IMessage?> {
 }
 
 class Message3dHandler: IMessageHandler<Message3d, IMessage?> {
-
+	
 	override fun onMessage(message: Message3d, ctx: MessageContext): IMessage? {
 		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
-class MessageNIHandler:  IMessageHandler<MessageNI, IMessage?> {
+class MessageNIHandler: IMessageHandler<MessageNI, IMessage?> {
 	
 	override fun onMessage(message: MessageNI, ctx: MessageContext): IMessage? {
 		PacketHandlerClient.handle(message)
@@ -165,12 +165,13 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 }
 
 class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
+	
 	override fun onMessage(message: MessageEffect, ctx: MessageContext): IMessage? {
 		val e = ctx.clientHandler.clientWorldController.getEntityByID(message.entity)
 		if (e is EntityLivingBase) {
 			val pe = e.getActivePotionEffect(message.id)
 			when (message.state) {
-				1	/* add	*/	-> {
+				1    /* add	*/  -> {
 					if (pe == null) {
 						e.addPotionEffect(PotionEffect(message.id, message.dur, message.amp, true))
 						Potion.potionTypes[message.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), message.amp)
@@ -183,7 +184,7 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
 					}
 				}
 				
-				0	/* upd	*/	-> {
+				0    /* upd	*/  -> {
 					if (pe == null) {
 						e.addPotionEffect(PotionEffect(message.id, message.dur, message.amp, true))
 						Potion.potionTypes[message.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), message.amp)
@@ -196,7 +197,7 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
 					}
 				}
 				
-				-1	/* rem	*/	-> {
+				-1    /* rem	*/ -> {
 					if (pe != null) {
 						e.removePotionEffect(message.id)
 						Potion.potionTypes[message.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), message.amp)
@@ -238,7 +239,7 @@ class MessageHeimdallBlinkHandler: IMessageHandler<MessageHeimdallBlink, IMessag
 }
 
 class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage?> {
-
+	
 	override fun onMessage(message: MessageHotSpellC, ctx: MessageContext): IMessage? {
 		PacketHandlerClient.handle(message)
 		return null
@@ -246,7 +247,7 @@ class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage?> {
 }
 
 class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage?> {
-
+	
 	override fun onMessage(message: MessageHotSpellS, ctx: MessageContext): IMessage? {
 		HotSpellsSystem.setHotSpellID(ctx.serverHandler.playerEntity, message.slot, message.id)
 		return null
@@ -254,7 +255,7 @@ class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage?> {
 }
 
 class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage?> {
-
+	
 	override fun onMessage(message: MessageKeyBindS, ctx: MessageContext): IMessage? {
 		val player = ctx.serverHandler.playerEntity
 		
@@ -328,7 +329,7 @@ class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessag
 }
 
 class MessageTileItemHandler: IMessageHandler<MessageTileItem, IMessage?> {
-
+	
 	override fun onMessage(message: MessageTileItem, ctx: MessageContext): IMessage? {
 		PacketHandlerClient.handle(message)
 		return null
@@ -336,7 +337,7 @@ class MessageTileItemHandler: IMessageHandler<MessageTileItem, IMessage?> {
 }
 
 class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage?> {
-
+	
 	override fun onMessage(message: MessageTimeStop, ctx: MessageContext): IMessage? {
 		PacketHandlerClient.handle(message)
 		return null

@@ -59,7 +59,6 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 		oldLeftDown = mc.gameSettings.keyBindLeft.isKeyPressed
 		oldRightDown = mc.gameSettings.keyBindRight.isKeyPressed
 	}
-
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
 		val cd = getInt(stack, TAG_DODGE_COOLDOWN, 0)

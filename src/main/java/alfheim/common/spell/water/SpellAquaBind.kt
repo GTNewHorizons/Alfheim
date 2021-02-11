@@ -2,6 +2,7 @@ package alfheim.common.spell.water
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
@@ -10,7 +11,6 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
@@ -61,7 +61,7 @@ object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 		val y = if (mop.typeOfHit == MovingObjectType.BLOCK) 0.1 * (if (mop.sideHit == 0) -1.0 else 1.0) else 0.0
 		glDisable(GL_CULL_FACE)
 		//glDisable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 1/255f)
+		glAlphaFunc(GL_GREATER, 1 / 255f)
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		mc.renderEngine.bindTexture(LibResourceLocations.target)

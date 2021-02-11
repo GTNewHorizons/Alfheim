@@ -14,7 +14,10 @@ import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable
 
 class BlockPowerStone: BlockModContainerMeta(Material.rock, 5, ModInfo.MODID, "PowerStone", AlfheimTab), ILexiconable {
-	init { setBlockUnbreakable() }
+	init {
+		setBlockUnbreakable()
+	}
+	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float) = (world.getTileEntity(x, y, z) as? TilePowerStone)?.onBlockActivated(player) ?: false
 	override fun createNewTileEntity(world: World?, meta: Int) = TilePowerStone()
 	override fun isOpaqueCube() = false

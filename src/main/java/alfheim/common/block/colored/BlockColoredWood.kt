@@ -70,7 +70,7 @@ class BlockColoredWood(val colorSet: Int): BlockModRotatedPillar(Material.wood) 
 	}
 	
 	override fun canSustainLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = true
- 
+	
 	override fun isWood(world: IBlockAccess, x: Int, y: Int, z: Int) = true
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {
@@ -83,5 +83,5 @@ class BlockColoredWood(val colorSet: Int): BlockModRotatedPillar(Material.wood) 
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) =
-        AlfheimLexiconData.irisSapling
+		AlfheimLexiconData.irisSapling
 }

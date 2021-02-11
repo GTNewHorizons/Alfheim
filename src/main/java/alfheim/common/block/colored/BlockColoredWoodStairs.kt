@@ -13,7 +13,7 @@ import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 
 class BlockColoredWoodStairs(meta: Int, source: Block = AlfheimBlocks.irisPlanks):
-    BlockStairsMod(source, meta, source.unlocalizedName.replace("tile.".toRegex(), "") + "Stairs" + meta), ILexiconable {
+	BlockStairsMod(source, meta, source.unlocalizedName.replace("tile.".toRegex(), "") + "Stairs" + meta), ILexiconable {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getRenderColor(m: Int): Int {

@@ -30,6 +30,7 @@ class ItemVolcanoMace: ItemManasteelSword(volcano, "VolcanoMace") {
 		stack.item === AlfheimItems.elvenResource && stack.meta == ElvenResourcesMetas.MuspelheimEssence
 	
 	companion object {
+		
 		val volcano = EnumHelper.addToolMaterial("Volcano", 0, 1200, 6f, 6f, 6)!!
 	}
 }

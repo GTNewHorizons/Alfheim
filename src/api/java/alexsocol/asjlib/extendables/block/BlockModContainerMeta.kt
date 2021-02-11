@@ -5,8 +5,8 @@ import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.world.World
 
-abstract class	BlockModContainerMeta(mat: Material, subtypes: Int, modid: String, name: String, tab: CreativeTabs? = null, hard: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resist: Float = 5f):
-				BlockModMeta(mat, subtypes, modid, name, tab, hard, harvTool, harvLvl, resist), ITileEntityProvider {
+abstract class BlockModContainerMeta(mat: Material, subtypes: Int, modid: String, name: String, tab: CreativeTabs? = null, hard: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resist: Float = 5f):
+	BlockModMeta(mat, subtypes, modid, name, tab, hard, harvTool, harvLvl, resist), ITileEntityProvider {
 	
 	init {
 		isBlockContainer = true

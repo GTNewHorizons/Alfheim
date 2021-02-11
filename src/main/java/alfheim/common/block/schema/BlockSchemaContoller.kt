@@ -1,8 +1,8 @@
 package alfheim.common.block.schema
 
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileSchemaController
-import alfheim.client.core.helper.IconHelper
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer

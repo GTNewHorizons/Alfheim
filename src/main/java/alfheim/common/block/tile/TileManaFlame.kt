@@ -33,7 +33,8 @@ abstract class TileManaFlame: TileMod() {
 					Botania.proxy.wispFX(worldObj, x, y, z, r, g, b, s, -m)
 				}
 			}
-		} catch (e: NullPointerException) { }
+		} catch (e: NullPointerException) {
+		}
 	}
 	
 	fun getLightColor(): Int {

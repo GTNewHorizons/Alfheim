@@ -57,6 +57,7 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 		}
 		
 		class IridescentIslandType(name: String, rs: ResourceLocation, val colorIndex: Int): IFloatingFlower.IslandType(name, rs) {
+			
 			override fun getColor(): Int {
 				if (colorIndex == TYPES) {
 					return Color(rainbowColor()).darker().rgb

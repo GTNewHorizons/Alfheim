@@ -12,6 +12,7 @@ import java.io.File
 class ASJHookLoader: HookLoader() {
 	
 	companion object {
+		
 		val OBF = !ASJReflectionHelper.getStaticValue<CoreModManager, Boolean>(CoreModManager::class.java, "deobfuscatedEnvironment")
 		
 		init {

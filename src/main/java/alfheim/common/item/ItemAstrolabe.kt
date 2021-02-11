@@ -2,8 +2,8 @@ package alfheim.common.item
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.client.gui.ItemsRemainingRenderHandler
 import alexsocol.asjlib.security.InteractionSecurity
+import alfheim.client.gui.ItemsRemainingRenderHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.math.floor
 
 class ItemAstrolabe: ItemMod("Astrolabe") {
-
+	
 	init {
 		maxStackSize = 1
 	}

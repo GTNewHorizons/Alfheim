@@ -1,8 +1,8 @@
 package alfheim.common.block.colored.rainbow
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.common.block.AlfheimBlocks
 import alfheim.client.core.helper.InterpolatedIconHelper
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.AlfheimLexiconData
@@ -55,7 +55,7 @@ class BlockShimmerQuartz: BlockSpecialQuartz("Shimmer") {
 }
 
 class BlockShimmerQuartzSlab(val block: BlockShimmerQuartz, val full: Boolean): BlockSpecialQuartzSlab(block, full) {
- 
+	
 	init {
 		setCreativeTab(AlfheimTab)
 	}
@@ -72,7 +72,7 @@ class BlockShimmerQuartzSlab(val block: BlockShimmerQuartz, val full: Boolean): 
 }
 
 class BlockShimmerQuartzStairs(val block: BlockShimmerQuartz): BlockSpecialQuartzStairs(block) {
- 
+	
 	lateinit var unlocName: String
 	
 	init {

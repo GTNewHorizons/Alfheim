@@ -46,10 +46,12 @@ interface IFaithHandler {
 	
 	// if want to add more types, modify when expressions in IFaithHandler's
 	enum class FaithBauble {
+		
 		EMBLEM, CLOAK
 	}
 	
 	object DummyFaithHandler: IFaithHandler {
+		
 		override fun getGodPowerLevel(player: EntityPlayer) = 0
 		override fun doParticles(stack: ItemStack, player: EntityPlayer) = Unit
 	}

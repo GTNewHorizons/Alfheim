@@ -5,9 +5,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.api.item.equipment.bauble.IManaDiscountBauble
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler
 import baubles.api.BaubleType

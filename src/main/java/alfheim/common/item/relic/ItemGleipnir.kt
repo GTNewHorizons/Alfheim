@@ -2,11 +2,11 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.ItemNBTHelper.getBoolean
-import alexsocol.asjlib.ItemNBTHelper.getLong
 import alexsocol.asjlib.ItemNBTHelper.getInt
+import alexsocol.asjlib.ItemNBTHelper.getLong
 import alexsocol.asjlib.ItemNBTHelper.setBoolean
-import alexsocol.asjlib.ItemNBTHelper.setLong
 import alexsocol.asjlib.ItemNBTHelper.setInt
+import alexsocol.asjlib.ItemNBTHelper.setLong
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alexsocol.asjlib.render.ASJRenderHelper.discard

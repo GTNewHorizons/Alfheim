@@ -25,9 +25,9 @@ object MinetweakerAlfheimConfig {
 			""
 		else {
 			when (iStack) {
-				is IOreDictEntry  -> getString(iStack)
-				is IItemStack -> getStack(iStack)
-				else      -> ""
+				is IOreDictEntry -> getString(iStack)
+				is IItemStack    -> getStack(iStack)
+				else             -> ""
 			}
 		}
 	}

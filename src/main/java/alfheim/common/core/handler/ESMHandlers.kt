@@ -116,12 +116,12 @@ object ESMHandler {
 			event.world.setBlock(i, j, k, Blocks.flowing_water)
 			
 			val bowl = ItemStack(Items.bowl, 4)
-			
+
 //			if (equipped.stackSize <= 0)
 //				player.inventory[player.inventory.currentItem] = bowl
 //			else {
 //				if (!player.inventory.addItemStackToInventory(bowl))
-					player.dropPlayerItemWithRandomChoice(bowl, false)
+			player.dropPlayerItemWithRandomChoice(bowl, false)
 //			}
 		}
 	}

@@ -146,6 +146,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 	override fun onImpact(pos: MovingObjectPosition) = Unit
 	
 	companion object {
+		
 		private const val TAG_TIME = "time"
 	}
 }

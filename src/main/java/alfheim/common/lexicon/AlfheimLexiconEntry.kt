@@ -14,12 +14,12 @@ open class AlfheimLexiconEntry: LexiconEntry, IAddonEntry {
 	}
 	
 	constructor(unlocalizedName: String, category: LexiconCategory, block: Block): this(unlocalizedName, category, ItemStack(block))
-    
-    constructor(unlocalizedName: String, category: LexiconCategory, item: Item): this(unlocalizedName, category, ItemStack(item))
-    
-    constructor(unlocalizedName: String, category: LexiconCategory): this(unlocalizedName, category, null)
-    
-    override fun setLexiconPages(vararg pages: LexiconPage): LexiconEntry {
+	
+	constructor(unlocalizedName: String, category: LexiconCategory, item: Item): this(unlocalizedName, category, ItemStack(item))
+	
+	constructor(unlocalizedName: String, category: LexiconCategory): this(unlocalizedName, category, null)
+	
+	override fun setLexiconPages(vararg pages: LexiconPage): LexiconEntry {
 		for (page in pages) {
 			page.unlocalizedName = "${ModInfo.MODID}.page." + getLazyUnlocalizedName() + page.unlocalizedName
 			if (page is ITwoNamedPage) {

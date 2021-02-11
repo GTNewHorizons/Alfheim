@@ -59,13 +59,16 @@ object PacketHandlerClient {
 		when (m1d.values()[packet.type]) {
 			m1d.ESMABIL          -> PlayerSegmentClient.esmAbility = packet.data1 != 0.0
 			m1d.DEATH_TIMER      -> AlfheimConfigHandler.deathScreenAddTime = packet.data1.I
+			
 			m1d.ELVEN_FLIGHT_MAX -> {
 				AlfheimConfigHandler.flightTime = packet.data1.I
 				ElvenFlightHelper.max = packet.data1
 			}
+			
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.I]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.I)
 			m1d.GINNUNGAGAP      -> GinnungagapHandler.active = packet.data1 != 0.0
+			
 			m1d.RAGNAROK         -> {
 				RagnarokHandler.ragnarok = packet.data1 < 1
 				RagnarokHandler.fogFade = packet.data1.F
@@ -77,21 +80,21 @@ object PacketHandlerClient {
 	}
 	
 	fun handle(packet: Message1l) {
-		when(m1l.values()[packet.type]) {
-			m1l.SEED             -> mc.theWorld.worldInfo.randomSeed = packet.data1
+		when (m1l.values()[packet.type]) {
+			m1l.SEED -> mc.theWorld.worldInfo.randomSeed = packet.data1
 		}
 	}
 	
 	fun handle(packet: Message2d) {
 		when (m2d.values()[packet.type]) {
-			m2d.ATTRIBUTE -> {
+			m2d.ATTRIBUTE    -> {
 				when (packet.data1.I) {
 					0 -> mc.thePlayer.raceID = packet.data2.I
 					1 -> mc.thePlayer.flight = packet.data2
 				}
 			}
 			
-			m2d.COOLDOWN  -> {
+			m2d.COOLDOWN     -> {
 				when (if (packet.data2 > 0) SpellCastResult.OK else SpellCastResult.values()[(-packet.data2).I]) {
 					SpellCastResult.DESYNC    -> throw IllegalArgumentException("Client-server spells desynchronization. Not found spell for ${EnumRace[packet.data1.I shr 28 and 0xF]} with id ${packet.data1.I and 0xFFFFFFF}")
 					SpellCastResult.NOMANA    -> ASJUtilities.say(mc.thePlayer, "alfheimmisc.cast.momana")// TODO playSound "not enough mana"
@@ -106,9 +109,9 @@ object PacketHandlerClient {
 				}
 			}
 			
-			m2d.UUID      -> PlayerSegmentClient.party?.setUUID(packet.data2.I, packet.data1.I)
+			m2d.UUID         -> PlayerSegmentClient.party?.setUUID(packet.data2.I, packet.data1.I)
 			
-			m2d.MODES     -> {
+			m2d.MODES        -> {
 				if (packet.data1 > 0) ClientProxy.enableESM() else ClientProxy.disableESM()
 				if (packet.data2 > 0) ClientProxy.enableMMO() else ClientProxy.disableMMO()
 			}

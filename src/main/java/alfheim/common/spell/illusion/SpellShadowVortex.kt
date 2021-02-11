@@ -1,12 +1,12 @@
 package alfheim.common.spell.illusion
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.DamageSourceSpell
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 
@@ -33,7 +33,7 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SHADOW, it)
 						break
 					}
-				
+			
 		}
 		
 		return res

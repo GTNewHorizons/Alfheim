@@ -1,10 +1,10 @@
 package alfheim.common.item.equipment.tool.manasteel
 
 import alexsocol.asjlib.meta
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimTab
-import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.Event.Result
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -99,6 +99,7 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = Botani
 	}
 	
 	companion object {
+		
 		const val MANA_PER_DAMAGE = 60
 	}
 }

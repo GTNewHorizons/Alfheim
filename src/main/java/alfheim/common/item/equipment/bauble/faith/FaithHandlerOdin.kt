@@ -2,12 +2,12 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.handler.*
 import alfheim.common.entity.EntityThrownPotion
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
-import alexsocol.asjlib.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier

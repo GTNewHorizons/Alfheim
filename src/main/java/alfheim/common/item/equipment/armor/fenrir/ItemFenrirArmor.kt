@@ -3,9 +3,9 @@ package alfheim.common.item.equipment.armor.fenrir
 import alexsocol.asjlib.*
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.ModInfo
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.model.armor.ModelFenrirArmor
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.tool.ItemFenrirClaws
@@ -99,10 +99,12 @@ open class ItemFenrirArmor(slot: Int, name: String): ItemManasteelArmor(slot, na
 	override fun getIcon(stack: ItemStack?, pass: Int): IIcon? {
 		return when (pass) {
 			0    -> super.getIcon(stack, pass)
+			
 			1    -> {
 				ASJRenderHelper.setGlow()
 				overlay
 			}
+			
 			else -> { // without that part armor will glow :(
 				ASJRenderHelper.discard()
 				
@@ -127,7 +129,7 @@ open class ItemFenrirArmor(slot: Int, name: String): ItemManasteelArmor(slot, na
 		addStringToTooltip(StatCollector.translateToLocal("alfheim.armorset.fenrir.desc0"), list)
 		addStringToTooltip(StatCollector.translateToLocal("alfheim.armorset.fenrir.desc1"), list)
 	}
-	
+
 //	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slotID: Int, inHand: Boolean) {
 //		if (entity is EntityPlayer)
 //			onArmorTick(world, entity, stack)

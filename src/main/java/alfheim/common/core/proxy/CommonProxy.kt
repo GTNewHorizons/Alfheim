@@ -1,6 +1,7 @@
 package alfheim.common.core.proxy
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.*
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
@@ -13,7 +14,6 @@ import alfheim.common.integration.multipart.MultipartAlfheimConfig
 import alfheim.common.integration.thaumcraft.TCHandlerShadowFoxAspects
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.*
-import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.client.event.ConfigChangedEvent
 import cpw.mods.fml.common.*

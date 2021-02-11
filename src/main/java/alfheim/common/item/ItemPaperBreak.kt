@@ -1,9 +1,9 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.client.core.helper.IconHelper
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
@@ -13,8 +13,8 @@ import net.minecraft.world.World
 import vazkii.botania.common.core.helper.ItemNBTHelper.getCompound
 
 class ItemPaperBreak: ItemMod("PaperBreak") {
-
-	override fun getIconIndex(stack: ItemStack) = textures[if (stack.hasDisplayName()) 1 else 0]!!
+	
+	override fun getIconIndex(stack: ItemStack) = textures[if (stack.hasDisplayName()) 1 else 0]
 	
 	override fun getIcon(stack: ItemStack, pass: Int) = getIconIndex(stack)
 	

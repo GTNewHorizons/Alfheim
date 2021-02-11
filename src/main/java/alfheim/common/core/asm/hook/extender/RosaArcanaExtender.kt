@@ -50,7 +50,7 @@ object RosaArcanaExtender {
 			base.equals(AlfheimBlocks.alfStorage, 1) -> 3
 			base.equals(AlfheimBlocks.alfStorage, 0) -> 2
 			base.equals(ModBlocks.storage, 4)        -> 1
-			else -> 0
+			else                                     -> 0
 		}
 	}
 	

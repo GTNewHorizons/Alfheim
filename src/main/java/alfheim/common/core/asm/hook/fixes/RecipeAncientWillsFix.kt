@@ -26,7 +26,7 @@ object RecipeAncientWillsFix {
 				if (stack.item === ModItems.ancientWill) {
 					val meta = stack.meta
 					if (meta !in foundWill.indices) return false
-						if (foundWill[meta]) return false else foundWill[meta] = true
+					if (foundWill[meta]) return false else foundWill[meta] = true
 					
 				} else if (!foundItem) {
 					if (stack.item !is IAncientWillContainer) {

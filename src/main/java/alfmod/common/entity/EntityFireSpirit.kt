@@ -198,7 +198,7 @@ class EntityFireSpirit(world: World): EntityLiving(world) {
 		if (src?.entity is EntityPlayer) return false
 		val (x, y, z) = position
 		
-		val cout = min(4, PYLONS.sumBy { min(1, worldObj.getEntitiesWithinAABB(EntityFireSpirit::class.java, getBoundingBox(x + it[0] + 0.5, y + it[1] + if (master) 0.5 else -0.5, z + it[2] + 0.5).expand(0.5)).size) } )
+		val cout = min(4, PYLONS.sumBy { min(1, worldObj.getEntitiesWithinAABB(EntityFireSpirit::class.java, getBoundingBox(x + it[0] + 0.5, y + it[1] + if (master) 0.5 else -0.5, z + it[2] + 0.5).expand(0.5)).size) })
 		return super.attackEntityFrom(src, amount * (1 - cout * 0.25f))
 	}
 	

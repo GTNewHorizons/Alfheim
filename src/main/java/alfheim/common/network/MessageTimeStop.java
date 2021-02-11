@@ -5,7 +5,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import io.netty.buffer.ByteBuf;
 
 public class MessageTimeStop extends ASJPacket {
-
+	
 	public int id;
 	public double x, y, z;
 	public Party party;
@@ -19,13 +19,13 @@ public class MessageTimeStop extends ASJPacket {
 	}
 	
 	@Override
-	public void toCustomBytes(ByteBuf buf) {
-		buf.writeBoolean(party != null);
-		if (party != null) party.write(buf);
+	public void fromCustomBytes(ByteBuf buf) {
+		if (buf.readBoolean()) party = Party.Companion.read(buf);
 	}
 	
 	@Override
-	public void fromCustomBytes(ByteBuf buf) {
-		if (buf.readBoolean()) party = Party.Companion.read(buf);
+	public void toCustomBytes(ByteBuf buf) {
+		buf.writeBoolean(party != null);
+		if (party != null) party.write(buf);
 	}
 }

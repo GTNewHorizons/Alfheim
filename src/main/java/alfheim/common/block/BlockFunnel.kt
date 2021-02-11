@@ -3,9 +3,9 @@ package alfheim.common.block
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibRenderIDs
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileLivingwoodFunnel
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -34,6 +34,7 @@ class BlockFunnel: BlockContainerMod(Material.wood), IWandHUD, ILexiconable {
 	lateinit var outside_icon: IIcon
 	
 	companion object {
+		
 		@SideOnly(Side.CLIENT)
 		fun getHopperIcon(string: String): IIcon? {
 			return when (string) {

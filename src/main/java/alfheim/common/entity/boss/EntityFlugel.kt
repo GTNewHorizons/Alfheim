@@ -508,7 +508,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		if (invul <= 0) {
 			if (Vector3.pointDistanceSpace(posX, posY, posZ, sx, sy, sz) > RANGE) teleportTo(sx + 0.5, sy + 1.6, sz + 0.5)
 			if (isAggroed) {
-				worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
+				worldObj.getPlayerEntityByName(playersDamage.maxByOrNull { it.value }?.key ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
 				
 				if (aiTask == AITask.NONE) reUpdate()
 				if (aiTask != AITask.INVUL && health / maxHealth <= 0.6 && stage < STAGE_MAGIC) stage = STAGE_MAGIC

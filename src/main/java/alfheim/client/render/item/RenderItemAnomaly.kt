@@ -38,7 +38,7 @@ object RenderItemAnomaly: IItemRenderer {
 	
 	fun renderItemAnomaly(subtile: SubTileAnomalyBase) {
 		glPushMatrix()
-		glAlphaFunc(GL_GREATER, 1/255f)
+		glAlphaFunc(GL_GREATER, 1 / 255f)
 		glDepthMask(false)
 		glDisable(GL_CULL_FACE)
 		glEnable(GL_BLEND)

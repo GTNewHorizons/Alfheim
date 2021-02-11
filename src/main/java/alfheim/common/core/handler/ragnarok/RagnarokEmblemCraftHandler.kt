@@ -107,9 +107,11 @@ object RagnarokEmblemCraftHandler {
 		}
 	}
 	
-	fun walkPath(start: Vector3, world: World, max: Int, walked: Array<Vector3> = arrayOf(start),
-				 walkedConnections: Array<Vector3> = arrayOf((start.getTileEntity(world) as TileCracklingStar).pos),
-				 walkedColors: IntArray = intArrayOf((start.getTileEntity(world) as TileCracklingStar).color))
+	fun walkPath(
+		start: Vector3, world: World, max: Int, walked: Array<Vector3> = arrayOf(start),
+		walkedConnections: Array<Vector3> = arrayOf((start.getTileEntity(world) as TileCracklingStar).pos),
+		walkedColors: IntArray = intArrayOf((start.getTileEntity(world) as TileCracklingStar).color),
+	)
 		: Triple<Array<Vector3>, Array<Vector3>, IntArray> {
 		
 		if (walked.size > max) return Triple(walked, walkedConnections, walkedColors)

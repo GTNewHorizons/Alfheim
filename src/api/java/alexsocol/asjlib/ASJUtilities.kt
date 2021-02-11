@@ -874,7 +874,8 @@ object ASJUtilities {
 		get() = FMLCommonHandler.instance().effectiveSide == Side.SERVER
 	
 	@JvmStatic
-	val isClient get() = !isServer
+	val isClient
+		get() = !isServer
 	
 	@JvmStatic
 	fun toString(nbt: NBTTagCompound): String {

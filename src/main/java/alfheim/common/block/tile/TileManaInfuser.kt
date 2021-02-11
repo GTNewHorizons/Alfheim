@@ -46,7 +46,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	override fun updateEntity() {
 		if (isReadyToKillGaia) {
 			if (--soulParticlesTime > 0) soulParticles()
-			if(--deGaiaingTime > 0) return
+			if (--deGaiaingTime > 0) return
 		}
 		
 		var removeMana = true
@@ -151,7 +151,6 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 				v.set((-c[0]).D, (-c[1]).D, (-c[2]).D).normalize().mul(0.4)
 				Botania.proxy.wispFX(worldObj, xCoord.D + c[0].D + 0.5, yCoord.D + c[1].D + 0.65, zCoord.D + c[2].D + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.F, v.y.F, v.z.F, 0.5f)
 			}
-		
 		else
 			for (c in GAIAS) {
 				v.set(c[0].D, 0.0, c[2].D).normalize().mul(0.3)

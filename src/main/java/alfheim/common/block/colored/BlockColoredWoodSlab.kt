@@ -19,7 +19,7 @@ class BlockColoredWoodSlab(full: Boolean, meta: Int, source: Block = AlfheimBloc
 	BlockSlabMod(full, meta, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + meta), ILexiconable, IFuelHandler {
 	
 	init {
-        setResistance(10f)
+		setResistance(10f)
 		GameRegistry.registerFuelHandler(this)
 	}
 	

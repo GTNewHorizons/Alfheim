@@ -26,6 +26,7 @@ interface ITravellersGearSynced: ITravellersGear {
 	}
 	
 	companion object {
+		
 		const val TAG_EQUIPPED = "equipped" // damn it, next time check your sync!
 	}
 }

@@ -16,6 +16,7 @@ import java.util.*
 class ItemElementalFireLeggings: ElementalArmor(2, "ElementalFireLeggings") {
 	
 	companion object {
+		
 		val uuid = UUID.fromString("d162f3e4-87f5-43cc-b33e-85b8b4f4cb75")!!
 	}
 	

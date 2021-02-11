@@ -3,7 +3,7 @@ package alfheim.common.network;
 import alexsocol.asjlib.network.ASJPacket;
 
 public class Message1d extends ASJPacket {
-
+	
 	public int type;
 	public double data1;
 	

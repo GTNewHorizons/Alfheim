@@ -2,12 +2,12 @@ package alfheim.common.spell.sound
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.network.MessageEffect
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
 
@@ -29,7 +29,7 @@ object SpellDragonGrowl: SpellBase("dragongrowl", EnumRace.POOKA, 12000, 2400, 2
 		if (result != SpellCastResult.OK) return result
 		
 		for (living in list) {
-			if (PartySystem.mobsSameParty(caster, living) || Vector3.entityDistance(living, caster) > radius*2) continue
+			if (PartySystem.mobsSameParty(caster, living) || Vector3.entityDistance(living, caster) > radius * 2) continue
 			if (!InteractionSecurity.canDoSomethingWithEntity(caster, living)) continue
 			
 			living.addPotionEffect(PotionEffect(Potion.blindness.id, duration, 0, true))

@@ -31,7 +31,7 @@ class ItemFeedFlowerRing: ItemBauble("FeedFlower"), IManaUsingItem {
 								subt.addMana(manaToUse)
 						}
 					}
-		}
+				}
 	}
 	
 	override fun getBaubleType(stack: ItemStack?): BaubleType? {

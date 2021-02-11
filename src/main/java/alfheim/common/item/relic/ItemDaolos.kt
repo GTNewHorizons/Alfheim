@@ -33,7 +33,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 class ItemDaolos: ItemAxe(AlfheimAPI.RUNEAXE), IRelic {
 	
 	init {
-		setCreativeTab(AlfheimTab)
+		creativeTab = AlfheimTab
 		setMaxStackSize(1)
 		unlocalizedName = "Daolos"
 	}

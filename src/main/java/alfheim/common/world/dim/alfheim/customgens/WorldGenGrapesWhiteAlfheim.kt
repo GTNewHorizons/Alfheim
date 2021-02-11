@@ -23,7 +23,7 @@ class WorldGenGrapesWhiteAlfheim(val perChunk: Int, val block: Block): IWorldGen
 			val y = world.getTopLiquidBlock(x, z)
 			
 			if (block.canBlockStay(world, x, y, z))
- 				if (world.isAirBlock(x, y, z)) {
+				if (world.isAirBlock(x, y, z)) {
 					world.setBlock(x, y, z, block, 0, 3)
 				}
 		}

@@ -23,19 +23,19 @@ class RecipeElvenWeed: IRecipe {
 				if (founds[0]) return false
 				founds[0] = true
 			} else
-			if (stack.item === ModItems.manaResource && stack.meta == 8) {
-				if (founds[1]) return false
-				founds[1] = true
-			} else
-			if (stack.item === AlfheimBlocks.rainbowMushroom.toItem()) {
-				if (founds[2]) return false
-				founds[2] = true
-			} else
-			if (stack.item === Items.paper) {
-				if (founds[3]) return false
-				founds[3] = true
-			} else
-				return false
+				if (stack.item === ModItems.manaResource && stack.meta == 8) {
+					if (founds[1]) return false
+					founds[1] = true
+				} else
+					if (stack.item === AlfheimBlocks.rainbowMushroom.toItem()) {
+						if (founds[2]) return false
+						founds[2] = true
+					} else
+						if (stack.item === Items.paper) {
+							if (founds[3]) return false
+							founds[3] = true
+						} else
+							return false
 		}
 		
 		return founds.all { it }

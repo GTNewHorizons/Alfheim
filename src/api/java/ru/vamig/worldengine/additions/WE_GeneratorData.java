@@ -7,10 +7,11 @@ import net.minecraft.block.Block;
 import ru.vamig.worldengine.*;
 
 public class WE_GeneratorData {
+	
 	public final WE_ChunkProvider chunkProvider;
 	//-//
-	public final Block[] chunkBlocks    ;
-	public final byte [] chunkBlocksMeta;
+	public final Block[] chunkBlocks;
+	public final byte[] chunkBlocksMeta;
 	//-//
 	public final long chunk_X;
 	public final long chunk_Z;
@@ -24,7 +25,7 @@ public class WE_GeneratorData {
 	public WE_GeneratorData(WE_ChunkProvider cp, Block[] cb, byte[] cbm, long cx, long cz, WE_Biome[][] b, int x, int y, int z) {
 		chunkProvider = cp;
 		//-//
-		chunkBlocks     =  cb;
+		chunkBlocks = cb;
 		chunkBlocksMeta = cbm;
 		//-//
 		chunk_X = cx;

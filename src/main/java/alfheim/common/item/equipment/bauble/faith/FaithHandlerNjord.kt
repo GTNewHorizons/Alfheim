@@ -59,7 +59,7 @@ object FaithHandlerNjord: IFaithHandler {
 		ItemPriestEmblem.getEmblem(2, player) ?: return
 		if (getGodPowerLevel(player) < 3) return
 		if (player.isSneaking || !player.isInsideOfMaterial(Material.air)) return
-
+		
 		if (!InteractionSecurity.canDoSomethingHere(player, e.x, e.y, e.z))
 			return
 		

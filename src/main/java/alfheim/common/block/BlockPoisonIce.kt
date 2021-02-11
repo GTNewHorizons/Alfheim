@@ -94,7 +94,6 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 		}
 	}
 	
-	
 	override fun tickRate(world: World?) = 1
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.ruling

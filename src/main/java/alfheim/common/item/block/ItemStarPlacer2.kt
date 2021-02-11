@@ -23,6 +23,7 @@ import java.util.*
 class ItemStarPlacer2: ItemMod("starPlacer2") {
 	
 	companion object {
+		
 		const val TAG_COLOR = "color"
 		const val TAG_SIZE = "size"
 		
@@ -51,7 +52,7 @@ class ItemStarPlacer2: ItemMod("starPlacer2") {
 		
 		fun colorStack(color: Int): ItemStack {
 			val stack = ItemStack(AlfheimItems.starPlacer2)
-            setColor(stack, color)
+			setColor(stack, color)
 			return stack
 		}
 		

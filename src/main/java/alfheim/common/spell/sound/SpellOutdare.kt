@@ -2,10 +2,10 @@ package alfheim.common.spell.sound
 
 import alexsocol.asjlib.boundingBox
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.entity.boss.EntityFlugel
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.collections.set

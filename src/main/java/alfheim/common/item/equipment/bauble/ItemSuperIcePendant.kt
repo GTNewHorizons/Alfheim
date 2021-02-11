@@ -1,8 +1,8 @@
 package alfheim.common.item.equipment.bauble
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.util.DamageSourceSpell
 import alexsocol.asjlib.security.InteractionSecurity
+import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*

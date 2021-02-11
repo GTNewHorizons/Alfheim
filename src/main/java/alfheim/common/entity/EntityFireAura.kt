@@ -10,17 +10,13 @@ import vazkii.botania.common.entity.EntityThrowableCopy
 import kotlin.math.min
 
 class EntityFireAura: EntityThrowableCopy {
-
+	
 	constructor(worldObj: World?): super(worldObj) {
 		setSize(0f, 0f)
 	}
 	
 	constructor(worldObj: World?, player: EntityPlayer?): super(worldObj, player) {
 		setSize(0f, 0f)
-	}
-	
-	override fun entityInit() {
-		super.entityInit()
 	}
 	
 	override fun getGravityVelocity() = 0f

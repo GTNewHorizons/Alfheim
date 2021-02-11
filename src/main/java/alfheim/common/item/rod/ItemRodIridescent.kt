@@ -26,9 +26,12 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 	val COST = 150
 	
 	companion object {
-		fun place(stack: ItemStack, player: EntityPlayer, world: World,
-				  par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float,
-				  par10: Float, toPlace: ItemStack?, cost: Int, r: Float, g: Float, b: Float): Boolean {
+		
+		fun place(
+			stack: ItemStack, player: EntityPlayer, world: World,
+			par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float,
+			par10: Float, toPlace: ItemStack?, cost: Int, r: Float, g: Float, b: Float,
+		): Boolean {
 			
 			if (ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) {
 				val dir = ForgeDirection.getOrientation(par7)

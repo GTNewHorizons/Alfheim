@@ -105,7 +105,8 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.common.item.equipment.bauble.ItemMiningRing",
-			"vazkii.botania.common.item.equipment.bauble.ItemWaterRing"     -> {
+			"vazkii.botania.common.item.equipment.bauble.ItemWaterRing",
+			-> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -654,6 +655,7 @@ class AlfheimClassTransformer: IClassTransformer {
 		internal class `ItemLens$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			companion object {
+				
 				var left = 2
 			}
 			
@@ -871,6 +873,7 @@ class AlfheimClassTransformer: IClassTransformer {
 		}
 		
 		internal class `ClientEvents$GUIOverlay$renderHotbar$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
 			var aload1 = false
 			
 			override fun visitVarInsn(opcode: Int, operand: Int) {
@@ -888,6 +891,7 @@ class AlfheimClassTransformer: IClassTransformer {
 	}
 	
 	companion object {
+		
 		val moreLenses = 6
 	}
 }

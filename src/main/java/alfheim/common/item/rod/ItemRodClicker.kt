@@ -23,7 +23,7 @@ import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import vazkii.botania.api.item.*
 import vazkii.botania.common.block.tile.TileAvatar
-import vazkii.botania.common.core.helper.*
+import vazkii.botania.common.core.helper.InventoryHelper
 import java.util.*
 
 class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
@@ -147,8 +147,8 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 			
 			var stack = inv[i]?.copy()
 			if (stack != null && inv is ISidedInventory && !inv.canExtractItem(i, stack, 1))
-			
-			if (stack == null || stack.stackSize <= 0) stack = null
+				
+				if (stack == null || stack.stackSize <= 0) stack = null
 			inv[i] = null
 			
 			player.inventory[i] = stack

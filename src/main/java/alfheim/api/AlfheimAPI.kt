@@ -36,22 +36,31 @@ object AlfheimAPI {
 	
 	/** List of [RecipeElvenTrade] outputs banned for re'trading in Alfheim trade portal  */
 	val bannedRetrades = ArrayList<ItemStack>()
+	
 	/** List of recipies for mana infuser  */
 	val manaInfuserRecipes = ArrayList<RecipeManaInfuser>()
+	
 	/** List of all pink items with their relative pinkness  */
 	val pinkness = HashMap<ItemStack, Int>()
+	
 	/** List of all spells for all races  */
 	val spells = HashSet<SpellBase>()
+	
 	/** Map of elven spells associated with their race (affinity), sorted by name  */
 	val spellMapping = HashMap<EnumRace, HashSet<SpellBase>>()
+	
 	/** Map of anomaly types and their subtiles, specifying their behavior  */
 	val anomalies = HashMap<String, Class<out SubTileAnomalyBase>>()
+	
 	/** Map of anomaly types and their behavior for use in [TileAnomalyHarvester] */
 	val anomalyBehaviors = HashMap<String, ((TileAnomalyHarvester) -> Unit)>()
+	
 	/** Map of anomaly types and their subtile instances, used for render :o  */
 	val anomalyInstances = HashMap<String, SubTileAnomalyBase>()
+	
 	/** Petronia fuels map */
 	val fuelMap = HashMap<String, Pair<Int, Int>>()
+	
 	/** Ores for Orechid Endium */
 	var oreWeightsEnd = HashMap<String, Int>()
 	
@@ -79,7 +88,6 @@ object AlfheimAPI {
 			.firstOrNull { ItemStack.areItemStacksEqual(manaInfuserRecipes[it].output, result) }
 			?.let { manaInfuserRecipes.removeAt(it) }
 	
-	
 	/** Remove `output` from Alfheim trade portal  */
 	fun banRetrade(output: ItemStack) =
 		bannedRetrades.add(output)
@@ -99,7 +107,7 @@ object AlfheimAPI {
 	
 	/**
 	 * Registers spell for some race by affinity
-	 * 
+	 *
 	 * Note:
 	 * Salamander - Fire
 	 * Sylph - Wind
@@ -330,6 +338,7 @@ object AlfheimAPI {
 		treeVariants.firstOrNull { it.matchesSoil(soil, meta) }
 	
 	object FallbackAnomaly: SubTileAnomalyBase() {
+		
 		override val targets: List<Any> = emptyList()
 		override val rarity = EnumAnomalityRarity.COMMON
 		override val strip = 31

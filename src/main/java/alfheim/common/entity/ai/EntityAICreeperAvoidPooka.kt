@@ -13,10 +13,12 @@ import net.minecraft.util.Vec3
 class EntityAICreeperAvoidPooka(val creeper: EntityCreeper): EntityAIBase() {
 	
 	private var closestLivingEntity: Entity? = null
+	
 	/**
 	 * The PathEntity of our entity
 	 */
 	private var entityPathEntity: PathEntity? = null
+	
 	/**
 	 * The PathNavigate of our entity
 	 */
@@ -45,6 +47,7 @@ class EntityAICreeperAvoidPooka(val creeper: EntityCreeper): EntityAIBase() {
 		return when {
 			vec3 == null                                                                                        -> false
 			player.getDistanceSq(vec3.xCoord, vec3.yCoord, vec3.zCoord) < player.getDistanceSqToEntity(creeper) -> false
+			
 			else                                                                                                -> {
 				entityPathEntity = entityPathNavigate.getPathToXYZ(vec3.xCoord, vec3.yCoord, vec3.zCoord) ?: return false
 				

@@ -42,7 +42,7 @@ class BlockRainbowWood: BlockModRotatedPillar(Material.wood) {
 	}
 	
 	override fun canSustainLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = true
- 
+	
 	override fun isWood(world: IBlockAccess, x: Int, y: Int, z: Int) = true
 	
 	override fun isInterpolated() = true

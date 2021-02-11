@@ -143,9 +143,9 @@ class TileTradePortal: TileMod() {
 		val inputs = tradeRecipe!!.inputs
 		for (`in` in inputs) {
 			val stack = when (`in`) {
-				is String 		-> OreDictionary.getOres(`in`)[0]
-				is ItemStack	-> `in`.copy()
-				else			-> throw IllegalArgumentException("Invalid input")
+				is String    -> OreDictionary.getOres(`in`)[0]
+				is ItemStack -> `in`.copy()
+				else         -> throw IllegalArgumentException("Invalid input")
 			}
 			spawnItem(ItemStack(stack.item, 1, stack.meta))
 		}

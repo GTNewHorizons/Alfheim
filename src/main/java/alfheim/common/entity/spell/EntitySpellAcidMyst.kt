@@ -2,12 +2,12 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
-import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.spell.water.SpellAcidMyst
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer

@@ -32,18 +32,18 @@ object RenderTileBarrel: TileEntitySpecialRenderer() {
 		
 		glTranslatef(0f, (tile.wineLevel - 2) / -16f - 0.01f, 0f)
 		
-		 if (tile.wineStage <= TileBarrel.WINE_STAGE_MASH) {
-		 	if (tile.wineType == TileBarrel.WINE_TYPE_RED)
-		 		model.redMash.render(f5)
-
-		 	if (tile.wineType == TileBarrel.WINE_TYPE_WHITE)
-		 		model.greenMash.render(f5)
-		 }
+		if (tile.wineStage <= TileBarrel.WINE_STAGE_MASH) {
+			if (tile.wineType == TileBarrel.WINE_TYPE_RED)
+				model.redMash.render(f5)
+			
+			if (tile.wineType == TileBarrel.WINE_TYPE_WHITE)
+				model.greenMash.render(f5)
+		}
 		
 		if (tile.wineStage >= TileBarrel.WINE_STAGE_MASH) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			glTranslatef(0f, -1/64f, 0f)
+			glTranslatef(0f, -1 / 64f, 0f)
 			
 			val a = when (tile.wineStage) {
 				TileBarrel.WINE_STAGE_MASH   -> 0.5f

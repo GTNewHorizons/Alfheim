@@ -74,11 +74,12 @@ class ItemManaweaveGlove: ItemBauble("ManaweaveGlove" + if (AlfheimCore.Travelle
 	}
 	
 	companion object {
+		
 		@field:SideOnly(Side.CLIENT)
 		var model: ModelBiped? = null
-		@SideOnly(Side.CLIENT)
-		get() = field
-		@SideOnly(Side.CLIENT)
-		set(value) { field = value }
+			@SideOnly(Side.CLIENT)
+			get
+			@SideOnly(Side.CLIENT)
+			set
 	}
 }

@@ -91,6 +91,7 @@ class ItemElvenFood: ItemFood(0, 0f, false) {
 }
 
 object ElvenFoodMetas {
+	
 	var m = -1
 		get() {
 			field++

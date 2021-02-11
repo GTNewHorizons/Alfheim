@@ -76,7 +76,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 			var movingobjectposition: MovingObjectPosition? = worldObj.rayTraceBlocks(vec3, vec31)
 			
 			if (movingobjectposition == null) {
-				val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox.addCoord(motionX, motionY, motionZ).expand(1)) as  MutableList<EntityLivingBase>
+				val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox.addCoord(motionX, motionY, motionZ).expand(1)) as MutableList<EntityLivingBase>
 				l.remove(caster)
 				
 				for (e in l)

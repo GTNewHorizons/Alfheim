@@ -123,8 +123,8 @@ object EventHandlerClient {
 		
 		if (ContributorsPrivacyHelper.isCorrect(name, "AlexSocol"))
 			player.func_152121_a(Type.SKIN, LibResourceLocations.skin)
-			
-		run skin@ {
+		
+		run skin@{
 			val data = CardinalSystemClient.playerSkinsData[name] ?: return@skin
 			
 			if (player.raceID == 0 || player.raceID > 9) return@skin
@@ -132,10 +132,10 @@ object EventHandlerClient {
 			if (data.second) {
 				player.func_152121_a(Type.SKIN,
 									 if (data.first)
-										 LibResourceLocations.oldFemale[player.raceID-1]
+										 LibResourceLocations.oldFemale[player.raceID - 1]
 									 else
-										 LibResourceLocations.oldMale[player.raceID-1]
-									)
+										 LibResourceLocations.oldMale[player.raceID - 1]
+				)
 			}
 		}
 		
@@ -217,7 +217,7 @@ object EventHandlerClient {
 				glPushMatrix()
 				glDisable(GL_CULL_FACE)
 				//glDisable(GL_ALPHA_TEST);
-				glAlphaFunc(GL_GREATER, 1/255f)
+				glAlphaFunc(GL_GREATER, 1 / 255f)
 				glEnable(GL_BLEND)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 				if (target != mc.thePlayer) {

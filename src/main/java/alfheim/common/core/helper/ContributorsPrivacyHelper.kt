@@ -18,9 +18,9 @@ import kotlin.experimental.xor
 
 object ContributorsPrivacyHelper {
 	
-			//  contributor - username alias
-			val contributors = HashMap<String, String>()
-	private	val authCredits = HashMap<String, String>()
+	//  contributor - username alias
+	val contributors = HashMap<String, String>()
+	private val authCredits = HashMap<String, String>()
 	
 	val auras = HashMap<String, String>()
 	val shields = HashMap<String, Int>()

@@ -37,6 +37,7 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 	var dunIcon: IIcon? = null
 	
 	companion object {
+		
 		const val minBlockLength = 0
 		const val maxBlockLength = 20
 	}
@@ -135,7 +136,7 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 	}
 	
 	override fun getItemEnchantability() = toolMaterial.enchantability
- 
+	
 	override fun getIsRepairable(stack: ItemStack?, material: ItemStack?): Boolean {
 		val mat = toolMaterial.repairItemStack
 		return mat != null && OreDictionary.itemMatches(mat, material, false)

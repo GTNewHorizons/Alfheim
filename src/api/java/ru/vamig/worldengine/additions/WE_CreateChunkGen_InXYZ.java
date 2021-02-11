@@ -7,18 +7,21 @@ import net.minecraft.block.Block;
 import ru.vamig.worldengine.WE_Biome;
 
 public abstract class WE_CreateChunkGen_InXYZ {
+	
 	public abstract void gen(WE_GeneratorData data);
 	
-	public void  setBlock    (WE_GeneratorData data, Block block, byte meta) {
-		data       .chunkProvider.genSetBlock       (data.chunkBlocks, data.chunkBlocksMeta, data.cr_x, data.cr_y, data.cr_z, block, meta);
+	public void setBlock(WE_GeneratorData data, Block block, byte meta) {
+		data.chunkProvider.genSetBlock(data.chunkBlocks, data.chunkBlocksMeta, data.cr_x, data.cr_y, data.cr_z, block, meta);
 	}
+	
 	//-//
-	public Block getBlock    (WE_GeneratorData data                        ) {
-		return data.chunkProvider.genReturnBlock    (data.chunkBlocks                      , data.cr_x, data.cr_y, data.cr_z             );
+	public Block getBlock(WE_GeneratorData data) {
+		return data.chunkProvider.genReturnBlock(data.chunkBlocks, data.cr_x, data.cr_y, data.cr_z);
 	}
+	
 	//-//
-	public byte  getBlockMeta(WE_GeneratorData data                        ) {
-		return data.chunkProvider.genReturnBlockMeta(data.chunkBlocksMeta                  , data.cr_x, data.cr_y, data.cr_z             );
+	public byte getBlockMeta(WE_GeneratorData data) {
+		return data.chunkProvider.genReturnBlockMeta(data.chunkBlocksMeta, data.cr_x, data.cr_y, data.cr_z);
 	}
 	
 	public WE_Biome getBiome(WE_GeneratorData data) {

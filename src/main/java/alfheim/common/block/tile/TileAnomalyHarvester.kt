@@ -158,7 +158,7 @@ class TileAnomalyHarvester: TileMod() {
 		
 		for (i in 0 until size)
 			subTiles.add(nbt.getString("subtile$i"))
-			
+		
 		radius.set(nbt.getDouble("rX"), nbt.getDouble("rY"), nbt.getDouble("rZ"))
 		offset.set(nbt.getDouble("oX"), nbt.getDouble("oY"), nbt.getDouble("oZ"))
 		
@@ -178,7 +178,8 @@ object AnomalyHarvesterBehaviors {
 	
 	private fun doAntigrav(tile: TileAnomalyHarvester) {
 		val aabb = tile.getAoE()
-		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, aabb).forEach { it as Entity
+		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, aabb).forEach {
+			it as Entity
 			it.motionY += if (it.isSneaking) 0.05 else 0.085 + tile.power * 0.005
 			it.fallDistance = 0f
 		}
@@ -201,7 +202,8 @@ object AnomalyHarvesterBehaviors {
 		val y = tile.yCoord + tile.offset.y + 0.5// - tile.radius.y / 2
 		val z = tile.zCoord + tile.offset.z + 0.5
 		
-		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, tile.getAoE()).filter { it !is EntityPlayer }.forEach { it as Entity
+		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, tile.getAoE()).filter { it !is EntityPlayer }.forEach {
+			it as Entity
 			val v = Vector3(x, y, z).add(0.5).sub(Vector3.fromEntity(it)).normalize().mul(0.5 + tile.power * 0.1)
 			
 			it.motionX += v.x
@@ -220,12 +222,13 @@ object AnomalyHarvesterBehaviors {
 		val mZ = dir.offsetZ / 10f
 		
 		val aabb = tile.getAoE()
-		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, aabb).forEach { it as Entity
+		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, aabb).forEach {
+			it as Entity
 			it.motionX = mX * tile.power / 2f
 			it.motionY = mY * tile.power / 2f
 			it.motionZ = mZ * tile.power / 2f
 			it.fallDistance = 0f
-			
+
 //			if (it !is EntityPlayer) return@forEach
 //			
 //			val rotations = arrayOf(it.rotationYaw, it.rotationYaw, 180f, 0f, 90f, -90f)
@@ -253,7 +256,8 @@ object AnomalyHarvesterBehaviors {
 		val y = tile.yCoord + tile.offset.y + 0.5
 		val z = tile.zCoord + tile.offset.z + 0.5
 		
-		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, tile.getAoE()).forEach { it as Entity
+		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, tile.getAoE()).forEach {
+			it as Entity
 			if (it.attackEntityFrom(DamageSourceSpell.anomaly, (Math.random() * tile.power / 2 + tile.power / 2).F))
 				Botania.proxy.lightningFX(tile.worldObj, VVec3(x, y, z), VVec3.fromEntityCenter(it), 1f, tile.worldObj.rand.nextLong(), 0, 0xFF0000)
 		}

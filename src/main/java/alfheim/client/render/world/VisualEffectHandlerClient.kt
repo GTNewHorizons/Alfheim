@@ -10,7 +10,6 @@ import alfheim.common.block.tile.TileManaInfuser
 import alfheim.common.block.tile.sub.anomaly.SubTileManaVoid
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.relic.ItemHeimdallRing
 import alfheim.common.item.rod.ItemRodInterdiction
 import alfheim.common.spell.illusion.SpellSmokeScreen
 import alfheim.common.spell.water.*
@@ -20,7 +19,6 @@ import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.PotionEffect
 import vazkii.botania.common.Botania
-import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.entity.EntityManaBurst
 import java.awt.Color
 import kotlin.math.*

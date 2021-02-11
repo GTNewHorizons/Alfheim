@@ -131,9 +131,11 @@ object AlfheimItems {
 	val splashPotion: Item
 	val starPlacer: Item
 	val starPlacer2: Item
+	
 	//val storyToken: Item
 	val subspaceSpear: Item
 	val thinkingHand: Item
+	
 	//val toolbelt: Item
 	val trisDagger: Item
 	val triquetrum: Item
@@ -141,7 +143,7 @@ object AlfheimItems {
 	val wireAxe: Item
 	
 	val royalStaff: Item
-
+	
 	init {
 		akashicRecords = ItemAkashicRecords().WIP()
 		aesirCloak = ItemAesirCloak()
@@ -252,8 +254,6 @@ object AlfheimItems {
 		royalStaff = ItemRoyalStaff()
 		`DEV-NULL` = if (ModInfo.DEV && !ModInfo.OBF) TheRodOfTheDebug() else null
 		
-		
-		
 		// that's ok because there is check on first 6 array elements in the dice
 		ItemDice.relicStacks += arrayOf(ItemStack(flugelSoul),
 										ItemStack(mask),
@@ -283,7 +283,7 @@ object AlfheimItems {
 		OreDictionary.registerOre(LibOreDict.ARUNE[1], ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimRune))
 		OreDictionary.registerOre(LibOreDict.ARUNE[2], ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimRune))
 		OreDictionary.registerOre(LibOreDict.INFUSED_DREAM_TWIG, ItemStack(elvenResource, 1, ElvenResourcesMetas.InfusedDreamwoodTwig))
-	
+		
 		// Iridescense
 		
 		OreDictionary.registerOre(LibOreDict.TWIG_THUNDERWOOD, ItemStack(elvenResource, 1, ElvenResourcesMetas.ThunderwoodTwig))

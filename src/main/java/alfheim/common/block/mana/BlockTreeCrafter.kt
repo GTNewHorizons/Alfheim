@@ -2,10 +2,10 @@ package alfheim.common.block.mana
 
 import alexsocol.asjlib.toItem
 import alfheim.api.lib.LibRenderIDs
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.render.tile.MultipassRenderer
 import alfheim.common.block.base.*
 import alfheim.common.block.tile.TileTreeCrafter
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material

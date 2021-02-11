@@ -69,10 +69,12 @@ class ItemFenrirClaws: ItemManasteelSword(AlfheimAPI.FENRIR, "FenrirClaws") {
 	override fun getIcon(stack: ItemStack?, pass: Int): IIcon? {
 		return when (pass) {
 			0    -> getIconIndex(stack)
+			
 			1    -> {
 				ASJRenderHelper.setGlow()
 				overlay
 			}
+			
 			else -> { // without that part armor will glow :(
 				ASJRenderHelper.discard()
 				

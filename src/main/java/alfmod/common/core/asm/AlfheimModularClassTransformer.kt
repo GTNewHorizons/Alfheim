@@ -21,7 +21,7 @@ class AlfheimModularClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			else                                                            -> basicClass
+			else                                    -> basicClass
 		}
 	}
 	

@@ -35,6 +35,7 @@ class TilePowerStone: TileMod() {
 			2    -> makePlayerTank(player)
 			3    -> makePlayerNinja(player)
 			4    -> makePlayerOvermage(player)
+			
 			else -> {
 				worldObj.setBlockToAir(xCoord, yCoord, zCoord)
 				false

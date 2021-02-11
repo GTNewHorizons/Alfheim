@@ -16,9 +16,11 @@ abstract class LivingPotionEvent(entity: EntityLivingBase, val effect: PotionEff
 		class Post(entity: EntityLivingBase, pe: PotionEffect): Add(entity, pe)
 	}
 	
-	abstract class Change(entity: EntityLivingBase, pe: PotionEffect,
-						  /** Remove and add potion modifiers  */
-						  val update: Boolean): LivingPotionEvent(entity, pe) {
+	abstract class Change(
+		entity: EntityLivingBase, pe: PotionEffect,
+		/** Remove and add potion modifiers  */
+		val update: Boolean,
+	): LivingPotionEvent(entity, pe) {
 		
 		@Cancelable
 		@Deprecated("Unimplemented")

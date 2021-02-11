@@ -3,13 +3,13 @@ package alfheim.common.item.rod
 import alexsocol.asjlib.*
 import alexsocol.asjlib.command.CommandDimTP
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.EntityLolicorn
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -75,7 +75,7 @@ class ItemRodPortal: ItemMod("rodPortal") {
 		return stack
 	}
 	
-	fun isClearAllTheWayUp(world: World, x: Int, y: Int, z: Int, player: EntityPlayer) = InteractionSecurity.canDoSomethingHere(player, x, y, z) && world.canBlockSeeTheSky (x, y, z) && world.getPrecipitationHeight(x, z) <= y
+	fun isClearAllTheWayUp(world: World, x: Int, y: Int, z: Int, player: EntityPlayer) = InteractionSecurity.canDoSomethingHere(player, x, y, z) && world.canBlockSeeTheSky(x, y, z) && world.getPrecipitationHeight(x, z) <= y
 	
 	override fun getMaxItemUseDuration(stack: ItemStack?) = 120
 	
@@ -133,8 +133,9 @@ class ItemRodPortal: ItemMod("rodPortal") {
 				
 				try {
 					CommandDimTP.processCommand(player, arrayOf(pair.second.toString()))
-				} catch (ignore: Throwable) {}
-
+				} catch (ignore: Throwable) {
+				}
+				
 				break
 			}
 		
@@ -148,6 +149,7 @@ class ItemRodPortal: ItemMod("rodPortal") {
 	}
 	
 	companion object {
+		
 		const val TAG_X = "x"
 		const val TAG_Y = "y"
 		const val TAG_Z = "z"

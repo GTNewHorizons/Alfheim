@@ -27,7 +27,7 @@ class ItemRodElemental(name: String, private val barrier: () -> Block): ItemMod(
 		maxDamage = 1200
 		maxStackSize = 1
 	}
-
+	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
 		itemIcon = reg.registerIcon(ModInfo.MODID + ':'.toString() + unlocalizedName.substring(5))

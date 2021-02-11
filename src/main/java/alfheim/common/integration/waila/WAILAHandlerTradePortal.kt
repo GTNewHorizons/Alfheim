@@ -32,7 +32,7 @@ class WAILAHandlerTradePortal: IWailaDataProvider {
 	
 	override fun getWailaBody(itemStack: ItemStack, currenttip: MutableList<String>, accessor: IWailaDataAccessor, config: IWailaConfigHandler): List<String> {
 		val tag = accessor.nbtData
-		run get@ {
+		run get@{
 			if (tag.hasKey(TileTradePortal.TAG_RECIPE_MULT) && tag.hasKey(TileTradePortal.TAG_RECIPE_NUM)) {
 				val count = tag.getInteger(TileTradePortal.TAG_RECIPE_MULT)
 				if (count <= 0) return@get
@@ -45,9 +45,9 @@ class WAILAHandlerTradePortal: IWailaDataProvider {
 				currenttip.add(StatCollector.translateToLocal("alfheimmisc.waila.trade.results"))
 				for (o in recipe.inputs) {
 					when (o) {
-						is String        -> currenttip.add(getOreName(o))
+						is String    -> currenttip.add(getOreName(o))
 						is ItemStack -> currenttip.add(o.displayName + " x" + o.stackSize)
-						else     -> currenttip.add(o.toString())
+						else         -> currenttip.add(o.toString())
 					}
 				}
 				currenttip.add(StatCollector.translateToLocalFormatted("alfheimmisc.waila.trade.available", count))

@@ -89,8 +89,8 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				glDisable(GL_CULL_FACE)
 				glDisable(GL_LIGHTING)
 				glDepthMask(false)
-				glAlphaFunc(GL_GREATER, 1/255f)
-				glTranslated(cx + 0.5, cy + 1.4	, cz - 3)
+				glAlphaFunc(GL_GREATER, 1 / 255f)
+				glTranslated(cx + 0.5, cy + 1.4, cz - 3)
 				glRotatef(180f, 1f, 0f, 0f)
 				glTranslatef(0f, 0f, -2.4f)
 				

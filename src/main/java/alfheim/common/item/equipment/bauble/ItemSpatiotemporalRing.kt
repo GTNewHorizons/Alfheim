@@ -36,6 +36,7 @@ class ItemSpatiotemporalRing: ItemBauble("spatiotemporalRing") {
 	}
 	
 	companion object {
+		
 		const val TAG_ALWAYS_ON = "alwaysOn"
 		
 		fun hasProtection(player: EntityLivingBase): Boolean {

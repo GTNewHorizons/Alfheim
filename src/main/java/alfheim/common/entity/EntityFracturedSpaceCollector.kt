@@ -139,7 +139,7 @@ class EntityFracturedSpaceCollector(world: World): Entity(world) {
 		nbt.setInteger(ItemBlackHoleRod.TAG_Y, y)
 		nbt.setInteger(ItemBlackHoleRod.TAG_Z, z)
 		
-		(ownerUUID ?: UUID(0, 0) ).apply {
+		(ownerUUID ?: UUID(0, 0)).apply {
 			nbt.setLong(TAG_OWNER_MOST, mostSignificantBits)
 			nbt.setLong(TAG_OWNER_LEAST, leastSignificantBits)
 		}

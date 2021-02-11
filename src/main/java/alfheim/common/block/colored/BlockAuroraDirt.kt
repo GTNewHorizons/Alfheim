@@ -17,24 +17,27 @@ import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 import kotlin.math.roundToInt
 
-class BlockAuroraDirt : BlockMod(Material.ground), IGrowable, ILexiconable {
+class BlockAuroraDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 	
 	companion object {
 		private data class Vec3i(var x: Int, var y: Int, var z: Int)
 		
 		private data class Vec3d(var x: Double, var y: Double, var z: Double) {
+			
 			operator fun plus(v: Vec3d): Vec3d {
 				x += v.x
 				y += v.y
 				z += v.z
 				return this
 			}
+			
 			operator fun times(d: Double): Vec3d {
 				x *= d
 				y *= d
 				z *= d
 				return this
 			}
+			
 			constructor(v: Vec3i): this(v.x.D, v.y.D, v.z.D)
 		}
 		
@@ -112,7 +115,7 @@ class BlockAuroraDirt : BlockMod(Material.ground), IGrowable, ILexiconable {
 		
 		setBlockName("auroraDirt")
 	}
-	
+
 //	override fun addInformation(stack: ItemStack, player: World?, tooltip: MutableList<String>, advanced: ITooltipFlag) {
 //		addToTooltip(tooltip, "misc.${LibMisc.MOD_ID}.color.aurora")
 //	}

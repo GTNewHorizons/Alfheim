@@ -13,7 +13,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockAuroraLeaves : BlockLeavesMod(), ILexiconable {
+class BlockAuroraLeaves: BlockLeavesMod(), ILexiconable {
 	
 	init {
 		setBlockName("auroraLeaves")
@@ -32,7 +32,7 @@ class BlockAuroraLeaves : BlockLeavesMod(), ILexiconable {
 	
 	override fun decayBit(): Int = 0x8
 	
-	override fun getItemDropped(p_149650_1_: Int, p_149650_2_: Random?, p_149650_3_: Int) =	AlfheimBlocks.irisSapling.toItem()
+	override fun getItemDropped(p_149650_1_: Int, p_149650_2_: Random?, p_149650_3_: Int) = AlfheimBlocks.irisSapling.toItem()
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.aurora
 }

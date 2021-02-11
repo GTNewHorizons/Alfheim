@@ -33,7 +33,8 @@ object RenderItemSnowSword: IItemRenderer {
 			glTranslatef(-0.7f, 0.5f, -0.15f)
 			glRotatef(if (type == EQUIPPED_FIRST_PERSON) -5f else -15f, 1f, 0f, 0f)
 			
-			data.firstOrNull { it is EntityPlayer }?.let { it as EntityPlayer
+			data.firstOrNull { it is EntityPlayer }?.let {
+				it as EntityPlayer
 				if (it.isBlocking) {
 					glRotatef(-90f, 0f, 1f, 0f)
 					glTranslated(-0.1, -0.2, -0.15)
@@ -61,7 +62,7 @@ object RenderItemSnowSword: IItemRenderer {
 		
 		glRotatef(90f, 1f, 0f, 0f)
 		glRotatef(45f, 0f, 0f, 1f)
-		glTranslated(-0.5, -0.5, -0.4 + 1/16f)
+		glTranslated(-0.5, -0.5, -0.4 + 1 / 16f)
 		
 		if (!maru) {
 			if (type == INVENTORY) glEnable(GL_BLEND)

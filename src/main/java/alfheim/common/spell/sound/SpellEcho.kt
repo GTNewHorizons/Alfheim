@@ -2,13 +2,13 @@ package alfheim.common.spell.sound
 
 import alexsocol.asjlib.expand
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageVisualEffect
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.*
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.monster.IMob
@@ -25,7 +25,7 @@ object SpellEcho: SpellBase("echo", EnumRace.POOKA, 4000, 1500, 5) {
 		
 		val list = caster.worldObj.getEntitiesWithinAABB(Entity::class.java, caster.boundingBox.expand(radius)) as List<Entity>
 		for (e in list) {
-			if (Vector3.entityDistance(e, caster) > radius*2) continue
+			if (Vector3.entityDistance(e, caster) > radius * 2) continue
 			
 			if (!InteractionSecurity.canDoSomethingWithEntity(caster, e)) continue
 			

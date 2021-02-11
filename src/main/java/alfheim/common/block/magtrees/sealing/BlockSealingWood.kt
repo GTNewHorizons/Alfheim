@@ -20,7 +20,7 @@ class BlockSealingWood: BlockModRotatedPillar(Material.wood), ISoundSilencer {
 		blockHardness = 2f
 		setStepSound(soundTypeCloth)
 		if (ASJUtilities.isClient)
-            EventHandlerSealingOak.register()
+			EventHandlerSealingOak.register()
 	}
 	
 	override fun canSilence(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17) = dist <= 8

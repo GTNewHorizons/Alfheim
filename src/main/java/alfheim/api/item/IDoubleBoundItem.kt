@@ -146,7 +146,7 @@ object DoubleBoundItemRender {
 		val world: World = mc.theWorld
 		val block = world.getBlock(pos.posX, pos.posY, pos.posZ)
 		
-		run drawWireframe@ {
+		run drawWireframe@{
 			if (block != null) {
 				val axis: AxisAlignedBB = block.getSelectedBoundingBoxFromPool(world, pos.posX, pos.posY, pos.posZ) ?: return@drawWireframe
 				axis.minX -= pos.posX.D

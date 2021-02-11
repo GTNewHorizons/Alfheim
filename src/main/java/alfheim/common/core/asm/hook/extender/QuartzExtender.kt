@@ -42,8 +42,8 @@ object QuartzExtender {
 	@Hook(returnCondition = ON_NOT_NULL)
 	fun getIcon(block: BlockQuartz, side: Int, meta: Int): IIcon? {
 		return when (meta) {
-			5 -> iconInsertNether
-			6 -> iconSmoothNether
+			5    -> iconInsertNether
+			6    -> iconSmoothNether
 			else -> null
 		}
 	}

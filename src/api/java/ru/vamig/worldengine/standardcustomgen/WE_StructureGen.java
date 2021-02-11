@@ -16,7 +16,7 @@ public class WE_StructureGen implements IWorldGenerator {
 	
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for(StructureEntry a : sttngs) {
+		for (StructureEntry a : sttngs) {
 			if (rand.nextInt(a.rarity) != 0) continue;
 			int x = chunkX * 16 + rand.nextInt(16);
 			int z = chunkZ * 16 + rand.nextInt(16);
@@ -25,6 +25,7 @@ public class WE_StructureGen implements IWorldGenerator {
 	}
 	
 	public static class StructureEntry {
+		
 		public final StructureBaseClass str;
 		public final int rarity;
 		

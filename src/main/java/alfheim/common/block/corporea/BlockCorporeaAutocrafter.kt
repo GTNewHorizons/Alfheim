@@ -1,9 +1,9 @@
 package alfheim.common.block.corporea
 
 import alexsocol.asjlib.*
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.corporea.TileCorporeaAutocrafter
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material

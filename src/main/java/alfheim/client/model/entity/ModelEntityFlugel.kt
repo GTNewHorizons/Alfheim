@@ -207,6 +207,7 @@ class ModelEntityFlugel: ModelBipedNew() {
 	}
 	
 	companion object {
+		
 		val model1 = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku1.obj"))!!
 		val model2 = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku2.obj"))!!
 	}

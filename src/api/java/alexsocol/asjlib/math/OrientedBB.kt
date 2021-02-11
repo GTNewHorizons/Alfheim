@@ -27,9 +27,9 @@ import kotlin.math.*
 @Suppress("unused")
 open class OrientedBB() {
 	
-	val pos: Vector3 = Vector3(0.5, 0.5, 0.5)	// center
-	val size: Vector3 = Vector3(0.5, 0.5, 0.5)	// half size
-	val orient: Matrix4 = Matrix4()				// rotation (orientation) matrix
+	val pos: Vector3 = Vector3(0.5, 0.5, 0.5)    // center
+	val size: Vector3 = Vector3(0.5, 0.5, 0.5)    // half size
+	val orient: Matrix4 = Matrix4()                // rotation (orientation) matrix
 	
 	val a: Vector3 = Vector3(0.0, 0.0, 0.0)
 	val b: Vector3 = Vector3(1.0, 0.0, 0.0)
@@ -44,12 +44,12 @@ open class OrientedBB() {
 		fromAABB(aabb)
 	}
 	
-	constructor(length: Double, width: Double, height: Double): this(AxisAlignedBB.getBoundingBox(length/-2, width/-2, height/-2, length/2, width/2, height/2))
+	constructor(length: Double, width: Double, height: Double): this(AxisAlignedBB.getBoundingBox(length / -2, width / -2, height / -2, length / 2, width / 2, height / 2))
 	
 	/** Returns array of vertices for this BB  */
 	fun vertices() = arrayOf(a, b, c, d, e, f, g, h)
 	
-	fun fromParams(length: Double, width: Double, height: Double) = fromAABB(AxisAlignedBB.getBoundingBox(length/-2, width/-2, height/-2, length/2, width/2, height/2))
+	fun fromParams(length: Double, width: Double, height: Double) = fromAABB(AxisAlignedBB.getBoundingBox(length / -2, width / -2, height / -2, length / 2, width / 2, height / 2))
 	
 	fun fromAABB(aabb: AxisAlignedBB): OrientedBB {
 		pos.set(getAABBPosition(aabb))
@@ -72,7 +72,7 @@ open class OrientedBB() {
 		val xs = listOf(a.x, b.x, c.x, d.x, e.x, f.x, g.x, h.x)
 		val ys = listOf(a.y, b.y, c.y, d.y, e.y, f.y, g.y, h.y)
 		val zs = listOf(a.z, b.z, c.z, d.z, e.z, f.z, g.z, h.z)
-		return AxisAlignedBB.getBoundingBox(xs.min()!!, ys.min()!!, zs.min()!!, xs.max()!!, ys.max()!!, zs.max()!!)
+		return AxisAlignedBB.getBoundingBox(xs.minOrNull()!!, ys.minOrNull()!!, zs.minOrNull()!!, xs.maxOrNull()!!, ys.maxOrNull()!!, zs.maxOrNull()!!)
 	}
 	
 	/** Sets BB's center to this coords  */
@@ -202,6 +202,7 @@ open class OrientedBB() {
 	fun intersectsWith(obb: OrientedBB) = intersectsWith(this, obb)
 	
 	class Interval {
+		
 		var min = 0.0
 		var max = 0.0
 	}

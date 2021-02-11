@@ -176,7 +176,8 @@ object AlfheimModularLoader {
 				} else {
 					Thread.sleep(1000 * 60 * 60) // every hour
 				}
-			} catch (ignore: Throwable) {}
+			} catch (ignore: Throwable) {
+			}
 	}
 	
 	fun loadJSon(input: InputStream): Pair<Boolean, String> {

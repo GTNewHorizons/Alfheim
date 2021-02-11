@@ -1,7 +1,7 @@
 package alfheim.common.block.colored
 
-import alfheim.common.block.AlfheimBlocks
 import alfheim.client.core.helper.IconHelper
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemIridescentGrassMod
 import alfheim.common.lexicon.AlfheimLexiconData

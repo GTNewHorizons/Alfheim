@@ -68,7 +68,7 @@ object GodAttributesHooks {
 	fun addExhaustion(player: EntityPlayer, lvl: Float) {
 		if (!player.capabilities.disableDamage) {
 			if (!player.worldObj.isRemote) {
-				val dec = lvl / if (ItemPriestEmblem.getEmblem(5, player) != null) 4f else if (AlfheimCore.ENABLE_RAGNAROK && ItemRagnarokEmblem.getEmblem (player, 5) != null) 8f else 1f
+				val dec = lvl / if (ItemPriestEmblem.getEmblem(5, player) != null) 4f else if (AlfheimCore.ENABLE_RAGNAROK && ItemRagnarokEmblem.getEmblem(player, 5) != null) 8f else 1f
 				player.foodStats.addExhaustion(dec)
 			}
 		}

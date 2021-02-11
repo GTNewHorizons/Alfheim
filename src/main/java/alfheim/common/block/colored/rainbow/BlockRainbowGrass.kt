@@ -1,9 +1,9 @@
 package alfheim.common.block.colored.rainbow
 
 import alexsocol.asjlib.*
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockAuroraDirt
-import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.*
 import alfheim.common.item.block.ItemRainbowGrassMod
@@ -37,6 +37,7 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable, IPickupAchievement {
 	var glowingIcon: IIcon? = null
 	
 	companion object {
+		
 		const val GRASS = 0
 		const val AURORA = 1
 		const val FLOWER = 2

@@ -1,8 +1,8 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
-import alfheim.common.item.AlfheimItems
 import alexsocol.asjlib.security.InteractionSecurity
+import alfheim.common.item.AlfheimItems
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -69,7 +69,7 @@ class ItemSifRing: ItemRelicBauble("SifRing") {
 		for (e in list) {
 			if (!InteractionSecurity.canDoSomethingWithEntity(player, e))
 				return
-				
+			
 			if (!ManaItemHandler.requestManaExact(stack, player, 1, true))
 				return
 			

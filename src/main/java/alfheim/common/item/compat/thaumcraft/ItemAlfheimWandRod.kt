@@ -39,6 +39,7 @@ class ItemAlfheimWandRod: Item() {
 	}
 	
 	companion object {
+		
 		val textures = arrayOfNulls<IIcon>(3)
 	}
 }

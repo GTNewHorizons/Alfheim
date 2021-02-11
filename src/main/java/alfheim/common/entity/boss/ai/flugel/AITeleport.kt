@@ -11,10 +11,10 @@ class AITeleport(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	override fun continueExecuting(): Boolean {
 		if (flugel.aiTaskTimer % (if (flugel.isHardMode) if (flugel.isDying) 60 else 100 else if (flugel.isDying) 80 else 120) == 0)
 			tryToTP(flugel)
-
+		
 		return canContinue()
 	}
-
+	
 	companion object {
 		
 		fun tryToTP(flugel: EntityFlugel) {

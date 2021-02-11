@@ -2,9 +2,9 @@ package alfheim.common.spell.wind
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.util.MovingObjectPosition.MovingObjectType

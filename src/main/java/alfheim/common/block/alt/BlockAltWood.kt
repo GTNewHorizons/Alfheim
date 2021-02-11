@@ -5,7 +5,7 @@ import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.client.core.helper.*
 import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
-import alfheim.common.lexicon.*
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry

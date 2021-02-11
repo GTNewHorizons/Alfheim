@@ -44,7 +44,6 @@ class AlfheimHookLoader: HookLoader() {
 		registerHookContainer("alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapterHooks")
 		registerHookContainer("alfheim.common.integration.tinkersconstruct.TraitFairySpawner")
 		
-		
 		// if (ModInfo.OBF) ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler")
 	}
 }

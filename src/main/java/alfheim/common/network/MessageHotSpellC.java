@@ -4,7 +4,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 
 public class MessageHotSpellC implements IMessage {
-
+	
 	public int[] ids;
 	
 	public MessageHotSpellC() {
@@ -16,12 +16,12 @@ public class MessageHotSpellC implements IMessage {
 	}
 	
 	@Override
-	public void toBytes(ByteBuf buf) {
-		for (int id : ids) buf.writeInt(id);
+	public void fromBytes(ByteBuf buf) {
+		for (int i = 0; i < ids.length; i++) ids[i] = buf.readInt();
 	}
 	
 	@Override
-	public void fromBytes(ByteBuf buf) {
-		for (int i = 0; i < ids.length; i++) ids[i] = buf.readInt();
+	public void toBytes(ByteBuf buf) {
+		for (int id : ids) buf.writeInt(id);
 	}
 }

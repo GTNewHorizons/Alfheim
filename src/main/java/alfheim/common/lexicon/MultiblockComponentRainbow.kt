@@ -41,7 +41,7 @@ class MultiblockComponentRainbow(relPos: ChunkCoordinates, default: Block, varar
 		blockpairs.any { world.getBlock(x, y, z) == it.block }
 	
 	override fun copy() =
-        MultiblockComponentRainbow(relPos, block, *secondaryBlocks)
+		MultiblockComponentRainbow(relPos, block, *secondaryBlocks)
 	
 	private class BlockPair(val block: Block, val meta: Int)
 }

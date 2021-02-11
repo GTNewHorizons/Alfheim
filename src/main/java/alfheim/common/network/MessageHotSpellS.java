@@ -5,7 +5,7 @@ import alexsocol.asjlib.network.ASJPacket;
 import io.netty.buffer.ByteBuf;
 
 public class MessageHotSpellS extends ASJPacket {
-
+	
 	public int slot;
 	public int id;
 	

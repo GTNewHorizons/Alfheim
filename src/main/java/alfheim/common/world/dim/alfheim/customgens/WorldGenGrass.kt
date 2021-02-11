@@ -1,10 +1,9 @@
 package alfheim.common.world.dim.alfheim.customgens
 
-import alexsocol.asjlib.I
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alexsocol.asjlib.inn
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.block.*
 import net.minecraft.init.Blocks

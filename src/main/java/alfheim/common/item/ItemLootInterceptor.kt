@@ -2,8 +2,8 @@ package alfheim.common.item
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.ItemNBTHelper.getInt
-import alexsocol.asjlib.ItemNBTHelper.getNBT
 import alexsocol.asjlib.ItemNBTHelper.getIntArray
+import alexsocol.asjlib.ItemNBTHelper.getNBT
 import alexsocol.asjlib.ItemNBTHelper.setInt
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.entity.Entity
@@ -16,7 +16,7 @@ import vazkii.botania.api.mana.*
 import kotlin.math.min
 
 class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDisplay {
-
+	
 	init {
 		maxStackSize = 1
 		FMLCommonHandler.instance().bus().register(this)

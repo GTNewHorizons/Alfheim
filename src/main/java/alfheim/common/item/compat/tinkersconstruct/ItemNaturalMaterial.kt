@@ -15,7 +15,7 @@ class ItemNaturalMaterial: ItemMod("NaturalMaterial") {
 	
 	init {
 		setHasSubtypes(true)
-		creativeTab =  TConstructRegistry.materialTab
+		creativeTab = TConstructRegistry.materialTab
 	}
 	
 	override fun registerIcons(reg: IIconRegister) {

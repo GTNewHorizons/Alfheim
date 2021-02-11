@@ -1,34 +1,25 @@
 package gloomyfolken.hooklib.minecraft;
 
-import gloomyfolken.hooklib.asm.AsmHook;
-import gloomyfolken.hooklib.asm.HookClassTransformer;
-import gloomyfolken.hooklib.asm.HookInjectorClassVisitor;
+import gloomyfolken.hooklib.asm.*;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassWriter;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 /**
  * Этот трансформер занимается вставкой хуков с момента запуска майнкрафта. Здесь сосредоточены все костыли,
  * которые необходимы для правильной работы с обфусцированными названиями методов.
  */
 public class MinecraftClassTransformer extends HookClassTransformer implements IClassTransformer {
-
+	
 	static MinecraftClassTransformer instance;
+	private static final List<IClassTransformer> postTransformers = new ArrayList<IClassTransformer>();
 	private Map<Integer, String> methodNames;
-
-	private static List<IClassTransformer> postTransformers = new ArrayList<IClassTransformer>();
-
+	
 	public MinecraftClassTransformer() {
 		instance = this;
-
+		
 		if (HookLibPlugin.getObfuscated()) {
 			try {
 				long timeStart = System.currentTimeMillis();
@@ -39,14 +30,14 @@ public class MinecraftClassTransformer extends HookClassTransformer implements I
 				logger.severe("Can not load obfuscated method names", e);
 			}
 		}
-
+		
 		this.classMetadataReader = HookLoader.getDeobfuscationMetadataReader();
-
+		
 		this.hooksMap.putAll(PrimaryClassTransformer.instance.getHooksMap());
 		PrimaryClassTransformer.instance.getHooksMap().clear();
 		PrimaryClassTransformer.instance.registeredSecondTransformer = true;
 	}
-
+	
 	private HashMap<Integer, String> loadMethodNames() throws IOException {
 		InputStream resourceStream = getClass().getResourceAsStream("/methods.bin");
 		if (resourceStream == null) throw new IOException("Methods dictionary not found");
@@ -59,7 +50,14 @@ public class MinecraftClassTransformer extends HookClassTransformer implements I
 		input.close();
 		return map;
 	}
-
+	
+	/**
+	 * Регистрирует трансформер, который будет запущен после обычных, и в том числе после деобфусцирующего трансформера.
+	 */
+	public static void registerPostTransformer(IClassTransformer transformer) {
+		postTransformers.add(transformer);
+	}
+	
 	@Override
 	public byte[] transform(String oldName, String newName, byte[] bytecode) {
 		bytecode = transform(newName, bytecode);
@@ -68,7 +66,7 @@ public class MinecraftClassTransformer extends HookClassTransformer implements I
 		}
 		return bytecode;
 	}
-
+	
 	@Override
 	protected HookInjectorClassVisitor createInjectorClassVisitor(ClassWriter cw, List<AsmHook> hooks) {
 		return new HookInjectorClassVisitor(this, cw, hooks) {
@@ -84,11 +82,7 @@ public class MinecraftClassTransformer extends HookClassTransformer implements I
 			}
 		};
 	}
-
-	public Map<Integer, String> getMethodNames() {
-		return methodNames;
-	}
-
+	
 	public static int getMethodId(String srgName) {
 		if (srgName.startsWith("func_")) {
 			int first = srgName.indexOf('_');
@@ -98,11 +92,8 @@ public class MinecraftClassTransformer extends HookClassTransformer implements I
 			return -1;
 		}
 	}
-
-	/**
-	 * Регистрирует трансформер, который будет запущен после обычных, и в том числе после деобфусцирующего трансформера.
-	 */
-	public static void registerPostTransformer(IClassTransformer transformer) {
-		postTransformers.add(transformer);
+	
+	public Map<Integer, String> getMethodNames() {
+		return methodNames;
 	}
 }

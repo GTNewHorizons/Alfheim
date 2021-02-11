@@ -71,8 +71,7 @@ object ASJHookHandler {
 						if (ends) {
 							doBreak = true
 							sb.append(it)
-						}
-						else
+						} else
 							break
 					} else {
 						sb.append(it)

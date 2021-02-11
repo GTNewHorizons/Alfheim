@@ -16,7 +16,7 @@ open class ItemIridescentBlockMod(par2Block: Block): ItemBlockWithMetadata(par2B
 	}
 	
 	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-        super.getUnlocalizedNameInefficiently(par1ItemStack).replace("tile.", "tile.${ModInfo.MODID}:").replace("\\d+$".toRegex(), "")
+		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("tile.", "tile.${ModInfo.MODID}:").replace("\\d+$".toRegex(), "")
 	
 	fun addStringToTooltip(s: String, tooltip: MutableList<Any?>?) {
 		tooltip!!.add(s.replace("&".toRegex(), "\u00a7"))

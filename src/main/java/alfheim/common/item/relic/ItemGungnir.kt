@@ -86,6 +86,7 @@ class ItemGungnir: ItemRelic("Gungnir") {
 		set(value) = ItemNBTHelper.setInt(this, TAG_COOLDOWN, value)
 	
 	companion object {
+		
 		const val TAG_COOLDOWN = "cooldown"
 	}
 }

@@ -24,6 +24,7 @@ import kotlin.math.*
 class SubTileCrysanthermum: SubTileGenerating() {
 	
 	companion object {
+		
 		const val TAG_TEMPERATURE = "flowerHeat"
 		const val RANGE = 1
 		
@@ -149,8 +150,6 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		for (i in 0..7)
 			lastBlocks[i] = nbt.getInteger("last_$i")
 	}
-	
-	
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("crysanthermum").getIconForStack(null)
 }

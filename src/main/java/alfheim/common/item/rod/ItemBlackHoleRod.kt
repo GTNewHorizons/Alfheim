@@ -1,7 +1,6 @@
 package alfheim.common.item.rod
 
 import alexsocol.asjlib.*
-import alfheim.api.ModInfo
 import alfheim.common.entity.EntityFracturedSpaceCollector
 import alfheim.common.item.ItemMod
 import cpw.mods.fml.relauncher.*
@@ -103,6 +102,7 @@ class ItemBlackHoleRod: ItemMod("RodFracturedSpace"), IManaUsingItem, ICoordBoun
 	}
 	
 	companion object {
+		
 		const val TAG_D = "toD"
 		const val TAG_X = "toX"
 		const val TAG_Y = "toY"

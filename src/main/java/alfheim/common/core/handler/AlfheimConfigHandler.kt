@@ -9,20 +9,20 @@ import kotlin.math.*
 
 object AlfheimConfigHandler: ASJConfigHandler() {
 	
-	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "preload"
-	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
-	const val CATEGORY_INT_NEI		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "notenoughitems"
-	const val CATEGORY_INT_OF		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "optifine"
-	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "thaumcraft"
-	const val CATEGORY_INT_TiC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "tconstruct"
-	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
-	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "worldgen"
-	const val CATEGORY_ENTITIES		= CATEGORY_WORLDGEN		+ CATEGORY_SPLITTER + "entities"
-	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
-	const val CATEGORY_ESMODE		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "elvenstory"
-	const val CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo"
-	const val CATEGORY_MMOP			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "potions"
-	const val CATEGORY_HUD			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "hud"
+	const val CATEGORY_PRELOAD = CATEGORY_GENERAL + CATEGORY_SPLITTER + "preload"
+	const val CATEGORY_INTEGRATION = CATEGORY_GENERAL + CATEGORY_SPLITTER + "integration"
+	const val CATEGORY_INT_NEI = CATEGORY_INTEGRATION + CATEGORY_SPLITTER + "notenoughitems"
+	const val CATEGORY_INT_OF = CATEGORY_INTEGRATION + CATEGORY_SPLITTER + "optifine"
+	const val CATEGORY_INT_TC = CATEGORY_INTEGRATION + CATEGORY_SPLITTER + "thaumcraft"
+	const val CATEGORY_INT_TiC = CATEGORY_INTEGRATION + CATEGORY_SPLITTER + "tconstruct"
+	const val CATEGORY_DIMENSION = CATEGORY_GENERAL + CATEGORY_SPLITTER + "alfheim"
+	const val CATEGORY_WORLDGEN = CATEGORY_DIMENSION + CATEGORY_SPLITTER + "worldgen"
+	const val CATEGORY_ENTITIES = CATEGORY_WORLDGEN + CATEGORY_SPLITTER + "entities"
+	const val CATEGORY_POTIONS = CATEGORY_GENERAL + CATEGORY_SPLITTER + "potions"
+	const val CATEGORY_ESMODE = CATEGORY_GENERAL + CATEGORY_SPLITTER + "elvenstory"
+	const val CATEGORY_MMO = CATEGORY_ESMODE + CATEGORY_SPLITTER + "mmo"
+	const val CATEGORY_MMOP = CATEGORY_MMO + CATEGORY_SPLITTER + "potions"
+	const val CATEGORY_HUD = CATEGORY_MMO + CATEGORY_SPLITTER + "hud"
 	
 	var enableElvenStory: Boolean
 		get() = _enableElvenStory
@@ -40,144 +40,144 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 			config.save()
 		}
 	
-	private var _enableElvenStory	= true
-	private var _enableMMO			= true
+	private var _enableElvenStory = true
+	private var _enableMMO = true
 	
 	// PRELOAD
-	var elementiumClusterMeta	= 22
-	var gaiaBarOffset			= 1
-	var gaiaNameColor			= 0x00D5FF
-	var hpHooks					= true
-	var modularFilename			= ""
-	var modularThread			= false
-	var modularUpdate			= true
-	var modularUpdateConfirm	= false
+	var elementiumClusterMeta = 22
+	var gaiaBarOffset = 1
+	var gaiaNameColor = 0x00D5FF
+	var hpHooks = true
+	var modularFilename = ""
+	var modularThread = false
+	var modularUpdate = true
+	var modularUpdateConfirm = false
 	
 	// DIMENSION
-	var destroyPortal			= true
-	var dimensionIDAlfheim		= -105
-	var enableAlfheimRespawn	= true
-	var rainbowPolys			= 360
+	var destroyPortal = true
+	var dimensionIDAlfheim = -105
+	var enableAlfheimRespawn = true
+	var rainbowPolys = 360
 	
 	// WORLDGEN
-	var anomaliesDispersion		= 50
-	var anomaliesUpdate			= 6000
-	var citiesDistance			= 1000
-	var oregenMultiplier		= 3
-	var winterGrassReadyGen		= true
+	var anomaliesDispersion = 50
+	var anomaliesUpdate = 6000
+	var citiesDistance = 1000
+	var oregenMultiplier = 3
+	var winterGrassReadyGen = true
 	
 	// ENTITIES
-	var butterflySpawn			= intArrayOf(10, 1, 2)
-	var chickSpawn				= intArrayOf(10, 4, 4)
-	var cowSpawn				= intArrayOf( 8, 4, 4)
-	var elvesSpawn				= intArrayOf(10, 2, 4)
-	var pigSpawn				= intArrayOf(10, 4, 4)
-	var pixieSpawn				= intArrayOf(10, 1, 2)
-	var sheepSpawn				= intArrayOf(12, 4, 4)
-	var voidCreeper				= intArrayOf(4, 1, 3)
+	var butterflySpawn = intArrayOf(10, 1, 2)
+	var chickSpawn = intArrayOf(10, 4, 4)
+	var cowSpawn = intArrayOf(8, 4, 4)
+	var elvesSpawn = intArrayOf(10, 2, 4)
+	var pigSpawn = intArrayOf(10, 4, 4)
+	var pixieSpawn = intArrayOf(10, 1, 2)
+	var sheepSpawn = intArrayOf(12, 4, 4)
+	var voidCreeper = intArrayOf(4, 1, 3)
 	
 	// OHTER
-	var alfheimSleepExtraCheck	= true
-	var anyavilBlackList		= emptyArray<String>()
-	var authTimeout				= 200
-	var blackLotusDropRate		= 0.05
-	var fancies					= true
-	var floatingTrapDoors		= true
-	var flugelSwapBlackList		= emptyArray<String>()
-	var lightningsSpeed			= 20
-	var lolicornAlfheimOnly		= true
-	var lolicornCost			= 1000
-	var lolicornLife			= 600
-	var looniumOverseed			= false
-	var minimalGraphics			= false
-	var moonbowMaxDmg			= 20
-	var moonbowVelocity			= 0.5f
-	var multibaubleCount		= 6
-	var notifications			= true
-	var numericalMana			= true
-	var realLightning			= false
-	var rocketRide				= 2
-	var searchTabAlfheim		= true
-	var searchTabBotania		= true
-	var schemaArray				= IntArray(17) { -1 + it }
-	var schemaMaxSize			= 64
-	var soulSwordMaxLvl			= Int.MAX_VALUE
-	var storyLines				= 4
-	var tradePortalRate			= 1200
-	var triquetrumBlackList		= emptyArray<String>()
-	var triquetrumMaxDiagonal	= -1.0
-	var triquetrumTiles			= true
-	var uberBlaster				= true
-	var uberSpreaderCapacity	= 24000
-	var uberSpreaderSpeed		= 2400
-	var voidCreepBiomeBlackList	= intArrayOf(8, 9, 14, 15)
-	var wireoverpowered			= true
+	var alfheimSleepExtraCheck = true
+	var anyavilBlackList = emptyArray<String>()
+	var authTimeout = 200
+	var blackLotusDropRate = 0.05
+	var fancies = true
+	var floatingTrapDoors = true
+	var flugelSwapBlackList = emptyArray<String>()
+	var lightningsSpeed = 20
+	var lolicornAlfheimOnly = true
+	var lolicornCost = 1000
+	var lolicornLife = 600
+	var looniumOverseed = false
+	var minimalGraphics = false
+	var moonbowMaxDmg = 20
+	var moonbowVelocity = 0.5f
+	var multibaubleCount = 6
+	var notifications = true
+	var numericalMana = true
+	var realLightning = false
+	var rocketRide = 2
+	var searchTabAlfheim = true
+	var searchTabBotania = true
+	var schemaArray = IntArray(17) { -1 + it }
+	var schemaMaxSize = 64
+	var soulSwordMaxLvl = Int.MAX_VALUE
+	var storyLines = 4
+	var tradePortalRate = 1200
+	var triquetrumBlackList = emptyArray<String>()
+	var triquetrumMaxDiagonal = -1.0
+	var triquetrumTiles = true
+	var uberBlaster = true
+	var uberSpreaderCapacity = 24000
+	var uberSpreaderSpeed = 2400
+	var voidCreepBiomeBlackList = intArrayOf(8, 9, 14, 15)
+	var wireoverpowered = true
 	
 	// INTEGRATION
-	var chatLimiters			= "%s"
-	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
+	var chatLimiters = "%s"
+	var poolRainbowCapacity = 1000000 // TilePool.MAX_MANA
 	
 	// NEI
-	var blacklistWither			= true
+	var blacklistWither = true
 	
 	// TC INTEGRATION
-	var addAspectsToBotania		= true
-	var addTincturemAspect		= true
-	var thaumTreeSuffusion		= true
+	var addAspectsToBotania = true
+	var addTincturemAspect = true
+	var thaumTreeSuffusion = true
 	
 	// TiC INTEGRATION
-	var materialIDs				= intArrayOf(50, 51, 52, 53, 54, 55, 56, 57, 3, 4)
-	var modifierIDs				= intArrayOf(20)
+	var materialIDs = intArrayOf(50, 51, 52, 53, 54, 55, 56, 57, 3, 4)
+	var modifierIDs = intArrayOf(20)
 	
 	// POTIONS
-	var potionID___COUNTER		= 30
-	var potionIDBerserk			= potionID___COUNTER++
-	var potionIDBleeding		= potionID___COUNTER++
-	var potionIDButterShield	= potionID___COUNTER++
-	var potionIDDeathMark		= potionID___COUNTER++
-	var potionIDDecay			= potionID___COUNTER++
-	var potionIDEternity		= potionID___COUNTER++
-	var potionIDGoldRush		= potionID___COUNTER++
-	var potionIDIceLens			= potionID___COUNTER++
-	var potionIDLeftFlame		= potionID___COUNTER++
-	var potionIDLightningShield	= potionID___COUNTER++
-	var potionIDManaVoid		= potionID___COUNTER++
-	var potionIDNineLifes		= potionID___COUNTER++
-	var potionIDNinja			= potionID___COUNTER++
-	var potionIDNoclip			= potionID___COUNTER++
-	var potionIDOvermage		= potionID___COUNTER++
-	var potionIDPossession		= potionID___COUNTER++
-	var potionIDQuadDamage		= potionID___COUNTER++
-	var potionIDSacrifice		= potionID___COUNTER++
-	var potionIDShowMana		= potionID___COUNTER++
-	var potionIDSoulburn		= potionID___COUNTER++
-	var potionIDStoneSkin		= potionID___COUNTER++
-	var potionIDTank			= potionID___COUNTER++
-	var potionIDThrow			= potionID___COUNTER++
-	var potionIDWellOLife		= potionID___COUNTER++
+	var potionID___COUNTER = 30
+	var potionIDBerserk = potionID___COUNTER++
+	var potionIDBleeding = potionID___COUNTER++
+	var potionIDButterShield = potionID___COUNTER++
+	var potionIDDeathMark = potionID___COUNTER++
+	var potionIDDecay = potionID___COUNTER++
+	var potionIDEternity = potionID___COUNTER++
+	var potionIDGoldRush = potionID___COUNTER++
+	var potionIDIceLens = potionID___COUNTER++
+	var potionIDLeftFlame = potionID___COUNTER++
+	var potionIDLightningShield = potionID___COUNTER++
+	var potionIDManaVoid = potionID___COUNTER++
+	var potionIDNineLifes = potionID___COUNTER++
+	var potionIDNinja = potionID___COUNTER++
+	var potionIDNoclip = potionID___COUNTER++
+	var potionIDOvermage = potionID___COUNTER++
+	var potionIDPossession = potionID___COUNTER++
+	var potionIDQuadDamage = potionID___COUNTER++
+	var potionIDSacrifice = potionID___COUNTER++
+	var potionIDShowMana = potionID___COUNTER++
+	var potionIDSoulburn = potionID___COUNTER++
+	var potionIDStoneSkin = potionID___COUNTER++
+	var potionIDTank = potionID___COUNTER++
+	var potionIDThrow = potionID___COUNTER++
+	var potionIDWellOLife = potionID___COUNTER++
 	
 	// Elven Story
-	var bonusChest				= false
-	var bothSpawnStructures		= false
-	var flightTime				= 12000
-	var flightRecover			= 1.0
-	var wingsBlackList			= IntArray(0)
-	val zones					= Array(9) { Vector3(0.0) }
+	var bonusChest = false
+	var bothSpawnStructures = false
+	var flightTime = 12000
+	var flightRecover = 1.0
+	var wingsBlackList = IntArray(0)
+	val zones = Array(9) { Vector3(0.0) }
 	
 	// MMO
-	var deathScreenAddTime		= 1200
-	var disabledSpells			= emptyArray<String>()
-	var disableWireframe		= false
-	var frienldyFire			= false
-	var raceManaMult			= 2.toByte()
-	var maxPartyMembers			= 5
-	var superSpellBosses		= false
+	var deathScreenAddTime = 1200
+	var disabledSpells = emptyArray<String>()
+	var disableWireframe = false
+	var frienldyFire = false
+	var raceManaMult = 2.toByte()
+	var maxPartyMembers = 5
+	var superSpellBosses = false
 	
 	// MMO HUD
-	var partyHUDScale			= 1.0
-	var selfHealthUI			= true
-	var spellsFadeOut			= false
-	var targetUI				= true
+	var partyHUDScale = 1.0
+	var selfHealthUI = true
+	var spellsFadeOut = false
+	var targetUI = true
 	
 	override fun addCategories() {
 		addCategory(CATEGORY_PRELOAD, "Alfheim coremod and preload settings")

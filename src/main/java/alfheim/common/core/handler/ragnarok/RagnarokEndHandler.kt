@@ -136,16 +136,16 @@ object RagnarokEndHandler {
 	
 	private val stars = arrayOf(
 		arrayOf(
-				arrayOf(2, 2),
-				arrayOf(2, -2),
-				arrayOf(-2, -2),
-				arrayOf(-2, 2)
+			arrayOf(2, 2),
+			arrayOf(2, -2),
+			arrayOf(-2, -2),
+			arrayOf(-2, 2)
 		) to 5079193,
 		arrayOf(
-				arrayOf(7, 0),
-				arrayOf(0, 7),
-				arrayOf(-7, 0),
-				arrayOf(0, -7)
+			arrayOf(7, 0),
+			arrayOf(0, 7),
+			arrayOf(-7, 0),
+			arrayOf(0, -7)
 		) to 1710618)
 	
 	private fun checkItems(world: World, x: Int, y: Int, z: Int): Boolean {

@@ -164,6 +164,7 @@ class ItemExcaliber: ItemManasteelSword(AlfheimAPI.EXCALIBER, "Excaliber"), IRel
 	override fun getRarity(sta: ItemStack) = BotaniaAPI.rarityRelic!!
 	
 	companion object {
+		
 		val uuid = UUID.fromString("7d5ddaf0-15d2-435c-8310-bdfc5fd1522d")!!
 		
 		const val TAG_ATTACKER_USERNAME = "attackerUsername"

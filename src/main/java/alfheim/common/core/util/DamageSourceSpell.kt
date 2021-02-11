@@ -11,20 +11,28 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		
 		/** Any anomaly */
 		val anomaly = DamageSource("anomaly").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		
 		/** Decay Spell */
 		val bleeding = DamageSourceSpell("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
+		
 		/** Priest emblem damage */
 		val faith = DamageSource("lackOfFaith").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		
 		/** Death Mark Spell */
 		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		
 		/** Regular poison */
 		val poison = DamageSource("poison").setDamageBypassesArmor()!!
+		
 		/** Magical poison */
 		val poisonMagic = DamageSourceSpell("poison").setDamageBypassesArmor()!!
+		
 		/** Tank Mask */
 		val possession = DamageSource("possession").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		
 		/** Sacrifice Spell */
 		val sacrifice = DamageSourceSpell("sacrifice").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		
 		/** Red Flame */
 		val soulburn = DamageSource("soulburn").setDamageBypassesArmor().setMagicDamage()!!
 		

@@ -56,6 +56,7 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 	override fun getRenderTexture() = LibResourceLocations.cloakBalance
 	
 	companion object {
+		
 		lateinit var iconHoly: IIcon
 		lateinit var iconUnholy: IIcon
 	}

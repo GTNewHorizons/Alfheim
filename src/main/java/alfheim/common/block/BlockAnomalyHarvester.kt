@@ -15,6 +15,7 @@ import vazkii.botania.api.wand.IWandable
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import kotlin.math.max
+
 class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 	
 	init {

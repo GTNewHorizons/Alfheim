@@ -18,7 +18,7 @@ public abstract class WE_WorldProvider extends WorldProvider {
 	public void registerWorldChunkManager() {
 		if (cp == null) cp = new WE_ChunkProvider(this);
 		worldChunkMgr = new WE_WorldChunkManager(new WE_Biome(we_id, true), cp, rainfall);
-    }
+	}
 	
 	@Override
 	public IChunkProvider createChunkGenerator() {
@@ -26,12 +26,12 @@ public abstract class WE_WorldProvider extends WorldProvider {
 		return cp;
 	}
 	
-	public abstract void genSettings(WE_ChunkProvider cp);
-	
 	@Override
 	public BiomeGenBase getBiomeGenForCoords(int x, int z) {
 		//worldObj.getChunkProvider()
 		if (cp == null) cp = new WE_ChunkProvider(this);
 		return WE_Biome.getBiomeAt(cp, x, z);
 	}
+	
+	public abstract void genSettings(WE_ChunkProvider cp);
 }

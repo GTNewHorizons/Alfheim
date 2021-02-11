@@ -39,7 +39,7 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
-		blockIcon = reg.registerIcon(getTextureName());
+		blockIcon = reg.registerIcon(getTextureName())
 	}
 	
 	override fun renderAsNormalBlock() = false
@@ -136,5 +136,6 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 		val tile = world.getTileEntity(x, y, z)
 		if (tile is TileAnyavil) tile.renderHUD(res)
 	}
+	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.anyavil
 }

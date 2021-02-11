@@ -62,6 +62,7 @@ class SubTileSpeedUp: SubTileAnomalyBase() {
 	override fun typeBits() = TIME
 	
 	companion object {
+		
 		const val radius = 8
 	}
 }

@@ -172,6 +172,7 @@ class EntityRook(world: World): EntityCreature(world), IBotaniaBossWithName { //
 		
 		@SideOnly(Side.CLIENT)
 		private var barRect: Rectangle? = null
+		
 		@SideOnly(Side.CLIENT)
 		private var hpBarRect: Rectangle? = null
 	}

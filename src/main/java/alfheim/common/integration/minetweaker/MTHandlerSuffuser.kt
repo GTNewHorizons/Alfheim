@@ -56,7 +56,7 @@ object MTHandlerSuffuser {
 	
 	private class Remove(private val output: ItemStack): IUndoableAction {
 		
-		internal val removed = ArrayList<RecipeTreeCrafting>()
+		val removed = ArrayList<RecipeTreeCrafting>()
 		
 		override fun apply() {
 			var rec = AlfheimAPI.removeTreeRecipe(output)

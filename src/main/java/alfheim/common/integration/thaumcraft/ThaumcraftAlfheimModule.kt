@@ -138,13 +138,13 @@ object ThaumcraftAlfheimModule {
 		registerRecipes()
 		reigsterResearches()
 		registerOreDict()
-
+		
 		if (Botania.thaumcraftLoaded) {
 			ModItems.elementiumHelmRevealing.creativeTab = tcnTab
 			ModItems.manasteelHelmRevealing.creativeTab = tcnTab
 			ModItems.terrasteelHelmRevealing.creativeTab = tcnTab
 		}
-
+		
 		addSpecialMiningResult(ItemStack(alfheimThaumOre, 1, 0), ItemStack(ConfigItems.itemNugget, 1, 21), 0.9f)
 		addSpecialMiningResult(ItemStack(AlfheimBlocks.elvenOre, 1, 1), ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta), 1f)
 	}

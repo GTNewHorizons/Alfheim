@@ -20,9 +20,9 @@ class RecipeHelmetElvorium(out: Item, helm: Item): ShapedOreRecipe(out, "TRT", "
 		val helmCopy = inv[4]?.copy()
 		
 		val newHelm = when (helmCopy?.item) {
-			ModItems.terrasteelHelm -> ItemStack(AlfheimItems.elvoriumHelmet)
+			ModItems.terrasteelHelm          -> ItemStack(AlfheimItems.elvoriumHelmet)
 			ModItems.terrasteelHelmRevealing -> ItemStack(AlfheimItems.elvoriumHelmetRevealing)
-			else -> return null
+			else                             -> return null
 		}
 		
 		// Copy Ancient Wills

@@ -67,6 +67,7 @@ class ItemWiltedLotus: ItemMod("wiltedLotus"), IManaDissolvable {
 	}
 	
 	companion object {
+		
 		const val MANA_PER = 8000
 		const val MANA_PER_T2 = 100000
 	}

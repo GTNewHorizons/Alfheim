@@ -104,6 +104,7 @@ class ASJSyntheticMethodsInjector: IClassTransformer {
 	}
 	
 	companion object {
+		
 		val doLog = System.getProperty("asjlib.asm.errorlog", "off") == "on"
 	}
 }

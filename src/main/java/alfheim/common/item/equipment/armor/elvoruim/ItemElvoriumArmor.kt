@@ -68,7 +68,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 		val stack = player.inventory.armorInventory[3 - i] ?: return false
 		
 		when (i) {
-			0 -> return stack.item === AlfheimItems.elvoriumHelmet || AlfheimItems.elvoriumHelmetRevealing?.let {stack.item === it } ?: false
+			0 -> return stack.item === AlfheimItems.elvoriumHelmet || AlfheimItems.elvoriumHelmetRevealing?.let { stack.item === it } ?: false
 			1 -> return stack.item === AlfheimItems.elvoriumChestplate
 			2 -> return stack.item === AlfheimItems.elvoriumLeggings
 			3 -> return stack.item === AlfheimItems.elvoriumBoots

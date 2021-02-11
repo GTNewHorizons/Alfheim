@@ -94,6 +94,7 @@ open class RecipeHandlerTreeCrafting: TemplateRecipeHandler() {
 	}
 	
 	open inner class CachedTreeRecipe(recipe: RecipeTreeCrafting): CachedRecipe() {
+		
 		var inputs: MutableList<PositionedStack> = ArrayList()
 		var output: PositionedStack
 		var manaUsage = 0

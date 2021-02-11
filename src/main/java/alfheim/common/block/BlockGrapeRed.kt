@@ -19,7 +19,7 @@ import java.util.*
 class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable, ILexiconable {
 	
 	init {
-		setBlockName("RedGrape${stage+1}")
+		setBlockName("RedGrape${stage + 1}")
 		setCreativeTab(if (stage == 0) AlfheimTab else null)
 		setHardness(0.2f)
 		setLightOpacity(0)
@@ -71,8 +71,10 @@ class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable, ILexiconable {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBlockColor() = 0xFFFFFF
+	
 	@SideOnly(Side.CLIENT)
 	override fun getRenderColor(meta: Int) = 0xFFFFFF
+	
 	@SideOnly(Side.CLIENT)
 	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = 0xFFFFFF
 	

@@ -22,7 +22,7 @@ class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaIte
 		maxStackSize = 1
 		setNoRepair()
 	}
-
+	
 	override fun getSubItems(par1: Item, par2CreativeTabs: CreativeTabs?, par3List: MutableList<Any?>) {
 		par3List.add(ItemStack(par1, 1, 1000))
 		/*ItemStack full = new ItemStack(par1, 1, 1);
@@ -72,6 +72,7 @@ class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaIte
 	}
 	
 	companion object {
+		
 		const val TAG_MANA = "mana"
 		
 		fun setMana(stack: ItemStack, mana: Int) {

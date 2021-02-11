@@ -17,6 +17,7 @@ class EntityUpdateEvent(val entity: Entity): Event() {
 		
 		/** Used in ASM because I'm dumb */
 		@JvmStatic
-		fun stub() {}
+		fun stub() {
+		}
 	}
 }

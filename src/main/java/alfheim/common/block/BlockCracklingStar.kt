@@ -91,6 +91,7 @@ class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexicon
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.frozenStar
 	
 	companion object {
+		
 		val playerPositions = mutableMapOf<UUID, DimWithPos>()
 	}
 	
@@ -118,11 +119,12 @@ class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexicon
 	}
 	
 	data class DimWithPos(val dim: Int, val x: Int, val y: Int, val z: Int) {
-		constructor(world: World, x: Int, y: Int, z: Int) : this(world.provider.dimensionId, x, y, z)
+		constructor(world: World, x: Int, y: Int, z: Int): this(world.provider.dimensionId, x, y, z)
 		
 		override fun toString() = "$dim:$x:$y:$z"
 		
 		companion object {
+			
 			@JvmStatic
 			fun fromString(s: String): DimWithPos {
 				val split = s.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()

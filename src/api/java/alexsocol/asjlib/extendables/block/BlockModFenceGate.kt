@@ -11,7 +11,7 @@ class BlockModFenceGate(val src: Block, val meta: Int): BlockFenceGate() {
 	}
 	
 	override fun getIcon(side: Int, meta: Int) = src.getIcon(side, this.meta)!!
-
+	
 	override fun setBlockName(name: String): Block {
 		GameRegistry.registerBlock(this, ItemBlock::class.java, name)
 		return super.setBlockName(name)

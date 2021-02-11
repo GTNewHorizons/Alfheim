@@ -15,7 +15,7 @@ import net.minecraftforge.event.terraingen.TerrainGen
 import java.util.*
 
 class BlockLightningSapling: BlockColoredSapling(name = "lightningSapling") {
- 
+	
 	override fun growTree(world: World?, x: Int, y: Int, z: Int, random: Random?) {
 		if (world != null) {
 			

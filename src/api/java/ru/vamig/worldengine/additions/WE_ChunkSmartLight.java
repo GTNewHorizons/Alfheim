@@ -18,19 +18,19 @@ public class WE_ChunkSmartLight extends Chunk {
 		int i = getTopFilledSegment();
 		heightMapMinimum = Integer.MAX_VALUE;
 		//-//
-		for(int j = 0; j < 16; ++j) {
-			for(int k = 0; k < 16; ++k) {
+		for (int j = 0; j < 16; ++j) {
+			for (int k = 0; k < 16; ++k) {
 				precipitationHeightMap[j + (k << 4)] = -999;
 				
-				for(int l = i + 16; l > 0; --l)
-					if(func_150808_b(j, l - 1, k) != 0) {
+				for (int l = i + 16; l > 0; --l)
+					if (func_150808_b(j, l - 1, k) != 0) {
 						heightMap[k << 4 | j] = l;
-						if(l < heightMapMinimum)
+						if (l < heightMapMinimum)
 							heightMapMinimum = l;
 						break;
 					}
 				
-				if(!worldObj.provider.hasNoSky) {
+				if (!worldObj.provider.hasNoSky) {
 					int k1 = 15, i1 = i + 15;
 					do {
 						int j1 = func_150808_b(j, i1, k);

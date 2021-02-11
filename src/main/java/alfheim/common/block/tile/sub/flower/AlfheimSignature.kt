@@ -37,6 +37,7 @@ class AlfheimSignature(val name: String): SubTileSignature() {
 	}
 	
 	companion object {
+		
 		val SubTileEntity.isOnSpecialSoil
 			get() = (supertile as? TileSpecialFlower)?.isOnSpecialSoil == true
 	}

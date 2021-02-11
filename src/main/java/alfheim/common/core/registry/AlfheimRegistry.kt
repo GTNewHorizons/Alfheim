@@ -158,7 +158,7 @@ object AlfheimRegistry {
 		registerTile(TileManaInfuser::class.java, "ManaInfuser")
 		registerTile(TilePowerStone::class.java, "PowerStone")
 		registerTile(TileRaceSelector::class.java, "RaceSelector")
-		if (AlfheimCore.ENABLE_RAGNAROK) registerTile (TileRagnarokCore::class.java, "RagnarokCore")
+		if (AlfheimCore.ENABLE_RAGNAROK) registerTile(TileRagnarokCore::class.java, "RagnarokCore")
 		registerTile(TileTradePortal::class.java, "TradePortal")
 		
 		registerAnomalies()
