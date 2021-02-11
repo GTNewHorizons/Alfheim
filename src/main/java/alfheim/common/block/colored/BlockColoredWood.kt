@@ -41,8 +41,8 @@ class BlockColoredWood(val colorSet: Int): BlockModRotatedPillar(Material.wood) 
 		}
 	}
 	
-	override fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemIridescentWoodMod::class.java, par1Str)
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemIridescentWoodMod::class.java, name)
 	}
 	
 	@SideOnly(Side.CLIENT)

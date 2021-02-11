@@ -63,11 +63,11 @@ class ItemBlockAnomaly(block: Block): ItemBlock(block) {
 		}
 		
 		fun ofType(stack: ItemStack, type: String?): ItemStack {
-			var type = type
-			if (type == null || type.isEmpty()) type = TYPE_UNDEFINED
-			setString(stack, TAG_SUBTILE_MAIN, type)
+			var t = type
+			if (type == null || type.isEmpty()) t = TYPE_UNDEFINED
+			setString(stack, TAG_SUBTILE_MAIN, t)
 			setInt(stack, TAG_SUBTILE_COUNT, 1)
-			setString(stack, TAG_SUBTILE_NAME + "1", type)
+			setString(stack, TAG_SUBTILE_NAME + "1", t)
 			
 			return stack
 		}

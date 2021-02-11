@@ -23,7 +23,7 @@ class PotionSoulburn: PotionAlfheim(AlfheimConfigHandler.potionIDSoulburn, "soul
 	companion object {
 		
 		@SideOnly(Side.CLIENT)
-		fun renderFireInFirstPerson(partialTicks: Float) {
+		fun renderFireInFirstPerson() {
 			val tessellator = Tessellator.instance
 			glColor4f(1f, 1f, 1f, 0.9f)
 			glEnable(GL_BLEND)

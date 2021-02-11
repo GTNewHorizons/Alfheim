@@ -34,7 +34,7 @@ object FaithHandlerHeimdall: IFaithHandler {
 	override fun onWornTick(stack: ItemStack, player: EntityPlayer, type: IFaithHandler.FaithBauble) {
 		when (type) {
 			EMBLEM -> onEmblemWornTick(stack, player)
-			CLOAK  -> onCloakWornTick(stack, player)
+			CLOAK  -> onCloakWornTick(player)
 		}
 	}
 	
@@ -47,7 +47,7 @@ object FaithHandlerHeimdall: IFaithHandler {
 		bifrostPlatform(player, stack)
 	}
 	
-	fun onCloakWornTick(stack: ItemStack, player: EntityPlayer) {
+	fun onCloakWornTick(player: EntityPlayer) {
 		if (player.worldObj.isRemote && player.isSprinting && player.jumpTicks == 10) {
 			val look = player.lookVec
 			val dist = 6.0

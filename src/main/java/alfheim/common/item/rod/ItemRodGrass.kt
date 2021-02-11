@@ -49,7 +49,7 @@ class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
 					if (!world.isAirBlock(x + i, y + j + 1, z + k)) continue
 					for (id in OreDictionary.getOreIDs(ItemStack(world.getBlock(x + i, y + j, z + k), 1, world.getBlockMetadata(x + i, y + j, z + k))))
 						if (validBlocks.contains(OreDictionary.getOreName(id)))
-							if (place(stack, player, world, x + i, y + j, z + k, 1, 0.5f, 1f, 0.5f, Blocks.grass, if (world.canBlockSeeTheSky(x + i, y + j, z + k)) 30 else 50, 0f, 1f, 0f)) done = true
+							if (place(stack, player, world, x + i, y + j, z + k, Blocks.grass, if (world.canBlockSeeTheSky(x + i, y + j, z + k)) 30 else 50, 0f, 1f, 0f)) done = true
 				}
 			}
 			if (done) break
@@ -62,7 +62,7 @@ class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
 		
 		internal val validBlocks = listOf("dirt", "mycelium", "podzol")
 		
-		fun place(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
+		fun place(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
 			if (!ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) return false
 			if (!InteractionSecurity.canDoSomethingHere(player, x, y, z, world)) return false
 			

@@ -195,10 +195,10 @@ class TileTradePortal: TileMod() {
 			return
 		
 		for (pos in PYLON_POSITIONS) {
-			var pos = pos
-			converters?.forEach { pos = it?.apply(pos) ?: pos }
+			var p = pos
+			converters?.forEach { p = it?.apply(p) ?: p }
 			
-			val tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
+			val tile = worldObj.getTileEntity(xCoord + p[0], yCoord + p[1], zCoord + p[2])
 			if (tile is TileAlfheimPylon) {
 				tile.activated = true
 				tile.centerX = xCoord
@@ -210,11 +210,11 @@ class TileTradePortal: TileMod() {
 	
 	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, converters: Array<Function<IntArray, IntArray>?>?): Boolean {
 		for (pos in positions) {
-			var pos = pos
+			var p = pos
 			
-			converters?.forEach { pos = it?.apply(pos) ?: pos }
+			converters?.forEach { p = it?.apply(p) ?: p }
 			
-			if (!checkPosition(pos, block, meta))
+			if (!checkPosition(p, block, meta))
 				return true
 		}
 		return false

@@ -31,7 +31,7 @@ class BlockBarrel: BlockContainerMod(Material.wood), ILexiconable {
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		val ret = onBlockActivated2(world, x, y, z, player, side, hitX, hitY, hitZ)
+		val ret = onBlockActivated2(world, x, y, z, player)
 		
 		if (ret && !world.isRemote) {
 			world.getTileEntity(x, y, z)?.let { ASJUtilities.dispatchTEToNearbyPlayers(it) }
@@ -40,7 +40,7 @@ class BlockBarrel: BlockContainerMod(Material.wood), ILexiconable {
 		return ret
 	}
 	
-	fun onBlockActivated2(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+	fun onBlockActivated2(world: World, x: Int, y: Int, z: Int, player: EntityPlayer): Boolean {
 		val tile = world.getTileEntity(x, y, z) as? TileBarrel ?: return false
 		val stack = player.heldItem
 		

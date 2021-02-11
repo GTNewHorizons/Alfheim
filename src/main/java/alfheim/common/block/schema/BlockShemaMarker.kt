@@ -21,7 +21,7 @@ class BlockShemaMarker: BlockMod(Material.wood) {
 	
 	override fun isOpaqueCube() = false
 	
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) = Unit
+	override fun registerBlockIcons(reg: IIconRegister) = Unit
 	
 	override fun getIcon(side: Int, meta: Int) = ModBlocks.manaBeacon.getIcon(side, meta)!!
 }

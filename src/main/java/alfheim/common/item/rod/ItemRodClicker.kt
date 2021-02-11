@@ -147,8 +147,7 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 			
 			var stack = inv[i]?.copy()
 			if (stack != null && inv is ISidedInventory && !inv.canExtractItem(i, stack, 1))
-				
-				if (stack == null || stack.stackSize <= 0) stack = null
+				if (stack.stackSize <= 0) stack = null
 			inv[i] = null
 			
 			player.inventory[i] = stack

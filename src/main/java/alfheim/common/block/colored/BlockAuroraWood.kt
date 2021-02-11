@@ -22,8 +22,8 @@ class BlockAuroraWood: BlockModRotatedPillar(Material.wood) {
 		stepSound = soundTypeWood
 	}
 	
-	override fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemBlockAurora::class.java, name)
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemBlockAurora::class.java, this.name)
 	}
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block, fortune: Int) {

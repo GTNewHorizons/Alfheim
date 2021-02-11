@@ -522,14 +522,11 @@ class ModelEntityRook: ModelBase() {
 	}
 	
 	override fun setRotationAngles(time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float, entity: Entity?) {
-		var amplitude = amplitude
-		amplitude /= 2f
-		
-		righ_arm1.rotateAngleX = MathHelper.cos(time * 0.6662f + Math.PI.F) * 2f * amplitude * 0.5f - Math.toRadians(7.0).F
+		righ_arm1.rotateAngleX = MathHelper.cos(time * 0.6662f + Math.PI.F) * 2f * amplitude * 0.25f - Math.toRadians(7.0).F
 		righ_arm1.rotateAngleZ = Math.toRadians(13.0).F
 		lef_arm1.rotateAngleZ = Math.toRadians(-13.0).F
-		righ_leg1.rotateAngleX = MathHelper.cos(time * 0.6662f) * 1.4f * amplitude + Math.toRadians(7.0).F
-		lef_leg1.rotateAngleX = MathHelper.cos(time * 0.6662f + Math.PI.F) * 1.4f * amplitude + Math.toRadians(7.0).F
+		righ_leg1.rotateAngleX = MathHelper.cos(time * 0.6662f) * 1.4f * amplitude * 0.5f + Math.toRadians(7.0).F
+		lef_leg1.rotateAngleX = MathHelper.cos(time * 0.6662f + Math.PI.F) * 1.4f * amplitude * 0.5f + Math.toRadians(7.0).F
 		righ_leg1.rotateAngleZ = Math.toRadians(9.0).F
 		lef_leg1.rotateAngleZ = Math.toRadians(-9.0).F
 	}

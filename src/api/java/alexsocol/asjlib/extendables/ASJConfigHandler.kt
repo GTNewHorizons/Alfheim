@@ -57,7 +57,7 @@ abstract class ASJConfigHandler {
 	}
 	
 	fun loadProp(category: String, propName: String, default: Int, restart: Boolean, desc: String, min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Int {
-		val prop = config.get(category, propName, default, desc)
+		val prop = config.get(category, propName, default, desc, min, max)
 		prop.setRequiresMcRestart(restart)
 		return prop.getInt(default)
 	}

@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.Potion
 import net.minecraft.util.ResourceLocation
-import net.minecraftforge.client.event.RenderPlayerEvent
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.common.Botania
@@ -25,7 +24,7 @@ object RenderWings {
 	val textures: Map<String, ResourceLocation> by lazy { ContributorsPrivacyHelper.wings.map { (k, v) -> k to ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/$v.png") }.toMap() }
 	
 	@SideOnly(Side.CLIENT)
-	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
+	fun render(player: EntityPlayer) {
 		// player.sendPlayerAbilities()
 		
 		val match = ContributorsPrivacyHelper.wings.keys.firstOrNull { ContributorsPrivacyHelper.isCorrect(player, it) }

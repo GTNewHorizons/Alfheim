@@ -29,13 +29,13 @@ class WorldGenGrapesWhiteAlfheim(val perChunk: Int, val block: Block): IWorldGen
 		}
 	}
 	
-	fun World.getTopLiquidBlock(x: Int, y: Int): Int {
-		val chunk = getChunkFromBlockCoords(x, y)
+	fun World.getTopLiquidBlock(x: Int, z: Int): Int {
+		val chunk = getChunkFromBlockCoords(x, z)
+		val i = x and 15
 		var j = chunk.topFilledSegment + 15
-		val x = x and 15
-		val y = y and 15
+		val k = z and 15
 		while (j > 0) {
-			val block = chunk.getBlock(x, j, y)
+			val block = chunk.getBlock(i, j, k)
 			if (block.material.isLiquid)
 				return j + 1
 			

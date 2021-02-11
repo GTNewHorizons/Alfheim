@@ -126,7 +126,6 @@ object SpellVisualizations {
 	 * @author thKaguya
 	 */
 	internal fun renderSphere(tessellator: Tessellator, width: Float) {
-		var width = width
 		val maxWidth = width / 2f
 		val zAngleDivNum = 18
 		var angleZ: Double
@@ -142,22 +141,23 @@ object SpellVisualizations {
 		var yPosOld: Float
 		var xPos2Old: Float
 		var yPos2Old: Float
+		var w: Float
 		var angle = -PI.F / 2f
 		val angleSpan = PI.F / zDivNum.F
 		angle += angleSpan
 		var widthOld = 0f
 		for (j in 0 until zDivNum) {
 			zPos = sin(angle.D) * maxWidth
-			width = cos(angle.D).F * maxWidth
+			w = cos(angle.D).F * maxWidth
 			angleZ = 0.0
-			xPosOld = cos(angleZ).F * width
-			yPosOld = sin(angleZ).F * width
+			xPosOld = cos(angleZ).F * w
+			yPosOld = sin(angleZ).F * w
 			xPos2Old = cos(angleZ).F * widthOld
 			yPos2Old = sin(angleZ).F * widthOld
 			angleZ = angleSpanZ
 			for (i in 1..zAngleDivNum) {
-				xPos = cos(angleZ).F * width
-				yPos = sin(angleZ).F * width
+				xPos = cos(angleZ).F * w
+				yPos = sin(angleZ).F * w
 				xPos2 = cos(angleZ).F * widthOld
 				yPos2 = sin(angleZ).F * widthOld
 				tessellator.startDrawingQuads()
@@ -176,7 +176,7 @@ object SpellVisualizations {
 			}
 			zPosOld = zPos
 			angle += angleSpan
-			widthOld = width
+			widthOld = w
 		}
 	}
 	

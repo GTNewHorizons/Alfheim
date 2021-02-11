@@ -14,8 +14,8 @@ import vazkii.botania.common.item.lens.Lens
 
 class LensSmelt: Lens() {
 	
-	override fun collideBurst(burst: IManaBurst, entity: EntityThrowable, pos: MovingObjectPosition?, isManaBlock: Boolean, dead: Boolean, stack: ItemStack?): Boolean {
-		var dead = dead
+	override fun collideBurst(burst: IManaBurst, entity: EntityThrowable, pos: MovingObjectPosition?, isManaBlock: Boolean, isDead: Boolean, stack: ItemStack?): Boolean {
+		var dead = isDead
 		val world: World = entity.worldObj
 		
 		if (world.isRemote || pos == null || pos.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return false

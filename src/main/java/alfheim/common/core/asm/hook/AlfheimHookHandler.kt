@@ -926,7 +926,7 @@ object AlfheimHookHandler {
 	fun renderOverlays(renderer: ItemRenderer, partialTicks: Float) {
 		if (mc.thePlayer.isPotionActive(AlfheimConfigHandler.potionIDSoulburn)) {
 			glDisable(GL_ALPHA_TEST)
-			PotionSoulburn.renderFireInFirstPerson(partialTicks)
+			PotionSoulburn.renderFireInFirstPerson()
 			glEnable(GL_ALPHA_TEST)
 		}
 	}
