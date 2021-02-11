@@ -51,7 +51,7 @@ public abstract class HookInjectorFactory {
 
 	static class LineNumber extends HookInjectorFactory {
 
-		private final int lineNumber;
+		private int lineNumber;
 
 		public LineNumber(int lineNumber) {
 			this.lineNumber = lineNumber;

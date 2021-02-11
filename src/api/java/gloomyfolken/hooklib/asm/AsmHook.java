@@ -1,9 +1,14 @@
 package gloomyfolken.hooklib.asm;
 
-import gloomyfolken.hooklib.asm.HookInjectorFactory.*;
-import org.objectweb.asm.*;
+import gloomyfolken.hooklib.asm.HookInjectorFactory.MethodEnter;
+import gloomyfolken.hooklib.asm.HookInjectorFactory.MethodExit;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.objectweb.asm.Opcodes.*;
 import static org.objectweb.asm.Type.*;
@@ -21,14 +26,14 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 
 	private String targetClassName; // через точки
 	private String targetMethodName;
-	private final List<Type> targetMethodParameters = new ArrayList<Type>(2);
+	private List<Type> targetMethodParameters = new ArrayList<Type>(2);
 	private Type targetMethodReturnType; //если не задано, то не проверяется
 
 	private String hooksClassName; // через точки
 	private String hookMethodName;
 	// -1 - значение return
-	private final List<Integer> transmittableVariableIds = new ArrayList<Integer>(2);
-	private final List<Type> hookMethodParameters = new ArrayList<Type>(2);
+	private List<Integer> transmittableVariableIds = new ArrayList<Integer>(2);
+	private List<Type> hookMethodParameters = new ArrayList<Type>(2);
 	private Type hookMethodReturnType = Type.VOID_TYPE;
 	private boolean hasReturnValueParameter; // если в хук-метод передается значение из return
 
@@ -285,11 +290,11 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 		sb.append(hooksClassName).append('#').append(hookMethodName);
 		sb.append(hookMethodDescription);
 
-		sb.append(", ReturnCondition=").append(returnCondition);
-		sb.append(", ReturnValue=").append(returnValue);
-		if (returnValue == ReturnValue.PRIMITIVE_CONSTANT) sb.append(", Constant=").append(primitiveConstant);
-		sb.append(", InjectorFactory: ").append(injectorFactory.getClass().getName());
-		sb.append(", CreateMethod = ").append(createMethod);
+		sb.append(", ReturnCondition=" + returnCondition);
+		sb.append(", ReturnValue=" + returnValue);
+		if (returnValue == ReturnValue.PRIMITIVE_CONSTANT) sb.append(", Constant=" + primitiveConstant);
+		sb.append(", InjectorFactory: " + injectorFactory.getClass().getName());
+		sb.append(", CreateMethod = " + createMethod);
 
 		return sb.toString();
 	}
@@ -359,7 +364,9 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 		 * @see TypeHelper
 		 */
 		public Builder addTargetMethodParameters(Type... parameterTypes) {
-			AsmHook.this.targetMethodParameters.addAll(Arrays.asList(parameterTypes));
+			for (Type type : parameterTypes) {
+				AsmHook.this.targetMethodParameters.add(type);
+			}
 			return this;
 		}
 

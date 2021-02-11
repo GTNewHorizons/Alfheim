@@ -2,7 +2,9 @@ package gloomyfolken.hooklib.minecraft;
 
 import cpw.mods.fml.common.asm.transformers.DeobfuscationTransformer;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-import gloomyfolken.hooklib.asm.*;
+import gloomyfolken.hooklib.asm.AsmHook;
+import gloomyfolken.hooklib.asm.ClassMetadataReader;
+import gloomyfolken.hooklib.asm.HookClassTransformer;
 
 import java.util.Map;
 
@@ -12,14 +14,11 @@ import java.util.Map;
  */
 public abstract class HookLoader implements IFMLLoadingPlugin {
 
-	static DeobfuscationTransformer deobfuscationTransformer;
+	private static DeobfuscationTransformer deobfuscationTransformer;
 
-	private static final ClassMetadataReader deobfuscationMetadataReader;
+	private static ClassMetadataReader deobfuscationMetadataReader;
 
 	static {
-		if (HookLibPlugin.getObfuscated()) {
-			deobfuscationTransformer = new DeobfuscationTransformer();
-		}
 		deobfuscationMetadataReader = new DeobfuscationMetadataReader();
 	}
 
@@ -44,6 +43,13 @@ public abstract class HookLoader implements IFMLLoadingPlugin {
 
 	public static ClassMetadataReader getDeobfuscationMetadataReader() {
 		return deobfuscationMetadataReader;
+	}
+	
+	static DeobfuscationTransformer getDeobfuscationTransformer() {
+		if (HookLibPlugin.getObfuscated() && deobfuscationTransformer == null) {
+			deobfuscationTransformer = new DeobfuscationTransformer();
+		}
+		return deobfuscationTransformer;
 	}
 
 	// 1.6.x only

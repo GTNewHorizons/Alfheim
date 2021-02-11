@@ -1,6 +1,7 @@
 package gloomyfolken.hooklib.asm;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 
 /**
  * Чтобы сделать метод хуком, нужно повесить над ним эту аннотацию и зарегистрировать класс с хуком.
@@ -116,7 +117,7 @@ public @interface Hook {
 
 	float floatReturnConstant() default 0.0F;
 
-	double doubleReturnConstant() default 0.0;
+	double doubleReturnConstant() default 0.0D;
 
 	char charReturnConstant() default 0;
 

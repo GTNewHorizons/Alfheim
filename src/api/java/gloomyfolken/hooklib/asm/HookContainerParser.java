@@ -1,7 +1,7 @@
 package gloomyfolken.hooklib.asm;
 
+import gloomyfolken.hooklib.asm.Hook.LocalVariable;
 import gloomyfolken.hooklib.asm.Hook.ReturnValue;
-import gloomyfolken.hooklib.asm.Hook.*;
 import org.objectweb.asm.*;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 public class HookContainerParser {
 
-	private final HookClassTransformer transformer;
+	private HookClassTransformer transformer;
 	private String currentClassName;
 	private String currentMethodName;
 	private String currentMethodDesc;
@@ -25,7 +25,7 @@ public class HookContainerParser {
 	Ключ - номер параметра, значение - номер локальной переменной для перехвата
 	или -1 для перехвата значения наверху стека.
 	 */
-	private final HashMap<Integer, Integer> parameterAnnotations = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Integer> parameterAnnotations = new HashMap<Integer, Integer>();
 
 	private boolean inHookAnnotation;
 

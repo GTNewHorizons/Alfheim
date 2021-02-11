@@ -1,6 +1,9 @@
 package gloomyfolken.hooklib.asm;
 
-import org.objectweb.asm.*;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.AdviceAdapter;
 
 /**
@@ -80,7 +83,7 @@ public abstract class HookInjectorMethodVisitor extends AdviceAdapter {
 	 */
 	public static class LineNumber extends HookInjectorMethodVisitor {
 
-		private final int lineNumber;
+		private int lineNumber;
 
 		public LineNumber(MethodVisitor mv, int access, String name, String desc,
 						  AsmHook hook, HookInjectorClassVisitor cv, int lineNumber) {

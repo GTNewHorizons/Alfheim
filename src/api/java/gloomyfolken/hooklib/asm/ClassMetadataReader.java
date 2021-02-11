@@ -5,7 +5,8 @@ import org.objectweb.asm.*;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Позволяет при помощи велосипеда из костылей искать методы внутри незагруженных классов

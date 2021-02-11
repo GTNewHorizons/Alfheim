@@ -3,11 +3,12 @@ package gloomyfolken.hooklib.asm;
 import org.objectweb.asm.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VariableIdHelper {
 
-	private static final ClassMetadataReader classMetadataReader = new ClassMetadataReader();
+	private static ClassMetadataReader classMetadataReader = new ClassMetadataReader();
 
 	public static List<String> listLocalVariables(byte[] classData, final String methodName, Type... argTypes) {
 		final List<String> localVariables = new ArrayList<String>();
