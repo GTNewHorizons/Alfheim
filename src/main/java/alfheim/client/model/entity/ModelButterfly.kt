@@ -9,7 +9,7 @@ import net.minecraft.util.MathHelper
  * ModelButterfly - AlexSocol
  * Created using Tabula 4.1.1
  */
-class ModelButterfly: ModelBase() {
+class ModelButterfly(val pass: Int): ModelBase() {
 	
 	var shape1: ModelRenderer
 	var shape2: ModelRenderer
@@ -39,10 +39,13 @@ class ModelButterfly: ModelBase() {
 	override fun render(entity: Entity, f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity)
 		
-		shape2.render(f5)
-		shape3.render(f5)
-		shape1.render(f5)
-		shape4.render(f5)
+		if (pass == 0) {
+			shape1.render(f5)
+			shape4.render(f5)
+		} else {
+			shape2.render(f5)
+			shape3.render(f5)
+		}
 	}
 	
 	/**

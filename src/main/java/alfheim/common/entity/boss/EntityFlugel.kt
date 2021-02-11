@@ -206,8 +206,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		playSoundAtEntity("random.explode", 20f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 		worldObj.spawnParticle("hugeexplosion", posX, posY, posZ, 1.0, 0.0, 0.0)
 		
+		for (player in playersAround)
+			player.triggerAchievement(if (isHardMode) AlfheimAchievements.flugelHardKill else AlfheimAchievements.flugelKill)
+		
 		if (isHardMode) {
-			for (player in playersAround) player.triggerAchievement(AlfheimAchievements.flugelHardKill)
 			
 			if (worldObj.isRemote) return
 			
@@ -257,6 +259,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 														   AlfheimAchievements.gungnir to AlfheimItems.gungnir,
 														   AlfheimAchievements.akashic to AlfheimItems.akashicRecords,
 														   AlfheimAchievements.gleipnir to AlfheimItems.gleipnir,
+														   AlfheimAchievements.gjallarhorn to AlfheimItems.gjallarhorn,
+														   AlfheimAchievements.daolos to AlfheimItems.daolos,
 														   AlfheimAchievements.ringSif to AlfheimItems.priestRingSif,
 														   AlfheimAchievements.ringNjord to AlfheimItems.priestRingNjord,
 														   AlfheimAchievements.ringHeimdall to AlfheimItems.priestRingHeimdall)
@@ -919,7 +923,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 				return false
 			}
 			
-			if ((hard && !player.hasAchievement(AlfheimAchievements.flugelSoul)) || (ultra && !player.hasAchievement(AlfheimAchievements.mask))) {
+			if ((hard && !player.hasAchievement(AlfheimAchievements.flugelKill)) || (ultra && !player.hasAchievement(AlfheimAchievements.flugelHardKill))) {
 				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.tooweak.$ultra")
 				return false
 			}

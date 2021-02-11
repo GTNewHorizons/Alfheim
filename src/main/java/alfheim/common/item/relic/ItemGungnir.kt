@@ -34,7 +34,7 @@ class ItemGungnir: ItemRelic("Gungnir") {
 			if (player.capabilities.isCreativeMode)
 				stack.cooldown = 0
 			else if (ManaItemHandler.requestManaExact(stack, player, 50, true))
-				stack.cooldown -= 1
+				--stack.cooldown
 		}
 	}
 	

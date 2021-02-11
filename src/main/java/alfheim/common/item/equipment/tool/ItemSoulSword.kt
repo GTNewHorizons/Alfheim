@@ -79,7 +79,9 @@ class ItemSoulSword: ItemSword(AlfheimAPI.SOUL), IManaUsingItem {
 		
 		private fun getMaxUsesFromLevel(stack: ItemStack) = max(100, stack.level / 10)
 		
-		private fun repair(stack: ItemStack, amount: Int) = stack.setItemDamage(max(0, stack.getItemDamage() - amount))
+		private fun repair(stack: ItemStack, amount: Int) {
+			stack.meta = max(0, stack.meta - amount)
+		}
 		
 		init {
 			eventForge()

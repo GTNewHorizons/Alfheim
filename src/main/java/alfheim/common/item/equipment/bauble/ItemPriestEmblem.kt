@@ -3,9 +3,9 @@ package alfheim.common.item.equipment.bauble
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.item.equipment.bauble.IManaDiscountBauble
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler.Companion.getFaithHandler
@@ -39,8 +39,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		lateinit var baubleIcons: Array<IIcon>
 		
 		fun getEmblem(meta: Int, player: EntityPlayer?): ItemStack? {
-			val baubles = PlayerHandler.getPlayerBaubles(player ?: return null)
-			val stack = baubles[0] ?: return null
+			val stack = PlayerHandler.getPlayerBaubles(player ?: return null)[0] ?: return null
 			return if (((stack.item === AlfheimItems.priestEmblem && (meta == -1 || stack.meta == meta)) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
 		}
 		

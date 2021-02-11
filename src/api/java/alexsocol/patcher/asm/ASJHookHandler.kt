@@ -13,6 +13,7 @@ import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
+import net.minecraft.command.*
 import net.minecraft.command.server.CommandSummon
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.*
@@ -31,6 +32,7 @@ import org.lwjgl.opengl.*
 import java.nio.FloatBuffer
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 import kotlin.math.min
 
 @Suppress("UNUSED_PARAMETER")
@@ -40,6 +42,51 @@ object ASJHookHandler {
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun func_147182_d(c: CommandSummon): Array<String> {
 		return (EntityList.stringToClassMapping.keys as Set<String>).toTypedArray()
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	fun addTabCompletionOptions(c: CommandSummon, sender: ICommandSender?, args: Array<String?>): MutableList<*>? {
+		if (args.size != 1) return null
+		
+		val last = args[0]!!
+		val sb = StringBuilder()
+		
+		try {
+			var fullNames: Iterable<String> = func_147182_d(c).toList()
+			val ends = last.matches(Regex(".*\\W$"))
+			if (last.isNotEmpty()) fullNames = fullNames.filter { it.startsWith(last, true) }
+			
+			fullNames = fullNames.mapTo(HashSet()) { mob ->
+				sb.setLength(0)
+				
+				var doBreak = false
+				for ((id, it) in mob.withIndex()) {
+					if (id < last.length) {
+						sb.append(it)
+						continue
+					} else if ("$it".matches(Regex("\\W"))) {
+						if (doBreak) break
+						
+						if (ends) {
+							doBreak = true
+							sb.append(it)
+						}
+						else
+							break
+					} else {
+						sb.append(it)
+					}
+				}
+				
+				sb.toString()
+			}
+			
+			return CommandBase.getListOfStringsMatchingLastWord(args, *fullNames.toTypedArray())
+		} catch (e: Throwable) {
+			e.printStackTrace()
+			return null
+		}
 	}
 	
 	@JvmStatic

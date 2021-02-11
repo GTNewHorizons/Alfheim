@@ -30,7 +30,7 @@ object RenderEntityFenrir: RenderLiving(ModelFenrir, 2f) {
 	
 	override fun handleRotationFloat(entity: EntityLivingBase, ticks: Float) = (entity as? EntityFenrir)?.getTailRotation() ?: 0f
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
+	override fun getEntityTexture(entity: Entity?): ResourceLocation {
 		if (entity is EntityFenrir && Vector3.fromEntity(entity) != Vector3.zero) BossBarHandler.setCurrentBoss(entity)
 		
 		glScaled(10.0)

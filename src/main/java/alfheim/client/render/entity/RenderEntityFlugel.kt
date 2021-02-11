@@ -15,7 +15,7 @@ import vazkii.botania.client.core.helper.ShaderHelper
 
 object RenderEntityFlugel: RenderLiving(ModelEntityFlugel(), 0.25f) {
 	
-	override fun getEntityTexture(entity: Entity) =
+	override fun getEntityTexture(entity: Entity?) =
 		if (entity is EntityFlugel) getEntityTexture(entity) else LibResourceLocations.jibril
 	
 	fun getEntityTexture(flugel: EntityFlugel): ResourceLocation {

@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.*
 import vazkii.botania.common.block.tile.TileMod
 
-// FIXME change to TileItemContainer
+// change to TileItemContainer ???
 class TileItemDisplay: TileMod(), ISidedInventory {
  
 	private val slots = intArrayOf(0)

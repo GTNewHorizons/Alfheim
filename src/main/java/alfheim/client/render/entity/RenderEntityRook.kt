@@ -11,7 +11,7 @@ import vazkii.botania.client.core.handler.BossBarHandler
 
 object RenderEntityRook: RenderLiving(ModelEntityRook(), 1.5f) {
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
+	override fun getEntityTexture(entity: Entity?): ResourceLocation {
 		if (entity is EntityRook && Vector3.fromEntity(entity) != Vector3.zero) BossBarHandler.setCurrentBoss(entity)
 		
 		return LibResourceLocations.rook

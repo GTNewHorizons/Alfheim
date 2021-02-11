@@ -28,10 +28,11 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 	
 	override fun effectOnDamage(event: LivingHurtEvent, player: EntityPlayer, stack: ItemStack?): Boolean {
 		if (!event.source.isMagicDamage) {
+			if (event.source.entity === player) return false
+			
 			event.ammount /= 2f
 			
-			if (event.source.entity != null)
-				event.source.entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), event.ammount)
+			event.source.entity?.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), event.ammount)
 			
 			if (event.ammount > player.health)
 				event.ammount = player.health - 1

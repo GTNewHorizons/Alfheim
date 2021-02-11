@@ -4,7 +4,7 @@ import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.*
 import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
 import net.minecraft.server.MinecraftServer
@@ -21,6 +21,7 @@ class ItemGjallarhorn: ItemRelic("Gjallarhorn") {
 		if (!AlfheimCore.ENABLE_RAGNAROK) return stack
 		if (!RagnarokHandler.ragnarok) return stack
 		
+		// TODO play woo-oo sound
 		player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
 	}
@@ -29,15 +30,16 @@ class ItemGjallarhorn: ItemRelic("Gjallarhorn") {
 	
 	override fun getItemUseAction(stack: ItemStack?) = EnumAction.bow
 	
-	override fun onEaten(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack {
+	override fun onEaten(stack: ItemStack, world: World, player: EntityPlayer?): ItemStack {
+		if (world.isRemote) return stack
+		
 		// TODO consume mana?
-		MinecraftServer.getServer().worldServers.forEach { ws ->
-			ws.playerEntities.forEach { pl ->
-				pl as EntityPlayer
-				if (ItemPriestEmblem.getEmblem(-1, pl) != null) // TODO blessing effect
-					pl.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDBerserk, 100))
-			}
+		MinecraftServer.getServer().configurationManager.playerEntityList.forEach { pl ->
+			pl as EntityPlayerMP
+			if (ItemPriestEmblem.getEmblem(-1, pl) != null) // TODO blessing effect
+				pl.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDBerserk, 100))
 		}
+		
 		return stack
 	}
 }

@@ -3,10 +3,10 @@ package alfheim.common.entity
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.api.AlfheimAPI
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.faith.*
 import alfheim.common.spell.illusion.SpellShadowVortex
 import alfheim.common.spell.wind.SpellFenrirStorm
@@ -17,15 +17,15 @@ import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityLargeFireball
-import net.minecraft.init.Blocks
-import net.minecraft.item.ItemStack
+import net.minecraft.init.*
+import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.*
 import net.minecraft.util.DamageSource
 import net.minecraft.village.*
 import net.minecraft.world.World
 
-class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
+class EntityElf(world: World, priestType: Int = -1): EntityCreature(world), IMerchant, INpc {
 	
 	var priestType
 		get() = dataWatcher.getWatchableObjectInt(12)
@@ -33,6 +33,7 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 			dataWatcher.updateObject(12, value)
 			
 			getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = if (isPriest) (60 + rng.nextInt(40)).D else (25 + rng.nextInt(15)).D
+			health = getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue.F
 		}
 	
 	val isPriest
@@ -49,9 +50,23 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 		tasks.addTask(7, EntityAIWatchClosest(this, EntityPlayer::class.java, 6f))
 		tasks.addTask(7, EntityAIWatchClosest(this, EntityElf::class.java, 6f))
 		tasks.addTask(8, EntityAILookIdle(this))
-		if (AlfheimCore.ENABLE_RAGNAROK) targetTasks.addTask(1, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 0, false, false, RagnarSelector))
 		targetTasks.addTask(2, EntityAIHurtByTarget(this, false))
 		targetTasks.addTask(3, EntityAINearestAttackableTarget(this, EntityLiving::class.java, 0, false, true, IMob.mobSelector))
+		
+		if (AlfheimCore.ENABLE_RAGNAROK) {
+			targetTasks.addTask(1, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 0, false, false, RagnarSelector))
+			this.priestType = priestType
+			
+			if (isPriest) {
+				setCurrentItemOrArmor(0, ItemStack(AlfheimItems.realitySword))
+				setCurrentItemOrArmor(1, ItemStack(AlfheimItems.elvoriumBoots))
+				setCurrentItemOrArmor(2, ItemStack(AlfheimItems.elvoriumLeggings))
+				setCurrentItemOrArmor(3, ItemStack(AlfheimItems.elvoriumChestplate))
+				setCurrentItemOrArmor(4, ItemStack(AlfheimItems.elvoriumHelmet))
+				
+				equipmentDropChances.fill(0f)
+			}
+		}
 	}
 	
 	override fun entityInit() {
@@ -209,8 +224,26 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 		return target.attackEntityFrom(damage, amount)
 	}
 	
-	override fun getTotalArmorValue() =
-		if (isPriest) (0 until 4).sumBy { AlfheimAPI.ElvoriumArmor.getDamageReductionAmount(it) } else 0
+	override fun getTotalArmorValue(): Int {
+		var i = 0
+		
+		lastActiveItems.forEachIndexed { id, it ->
+			if (id == 0) return@forEachIndexed
+			
+			i += if (it?.item is ItemArmor)
+				(it.item as ItemArmor).damageReduceAmount
+			else
+				when (id) {
+					4    -> Items.iron_helmet.damageReduceAmount
+					3    -> Items.leather_chestplate.damageReduceAmount + 1
+					2    -> Items.leather_leggings.damageReduceAmount
+					1    -> Items.leather_boots.damageReduceAmount
+					else -> 0
+				}
+		}
+		
+		return i
+	}
 	
 	override fun writeEntityToNBT(nbt: NBTTagCompound) {
 		super.writeEntityToNBT(nbt)
@@ -219,7 +252,7 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 	
 	override fun readEntityFromNBT(nbt: NBTTagCompound) {
 		super.readEntityFromNBT(nbt)
-		priestType = nbt.getInteger(TAG_PRIEST)
+		priestType = if (nbt.hasKey(TAG_PRIEST)) nbt.getInteger(TAG_PRIEST) else -1
 	}
 	
 	override fun isAIEnabled() = true
@@ -237,6 +270,7 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 		const val TAG_PRIEST = "priest"
 		
 		object RagnarSelector: IEntitySelector {
+			
 			override fun isEntityApplicable(target: Entity?) =
 				target is EntityPlayer && ItemRagnarokEmblem.getEmblem(target) != null
 		}

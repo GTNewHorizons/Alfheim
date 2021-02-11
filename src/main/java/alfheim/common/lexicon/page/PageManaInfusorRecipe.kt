@@ -18,6 +18,7 @@ import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.lexicon.page.PageRecipe
 
 class PageManaInfusorRecipe(unlocalizedName: String, private val recipe: RecipeManaInfuser): PageRecipe(unlocalizedName) {
+	
 	private var ticksElapsed = 0
 	
 	override fun onPageAdded(entry: LexiconEntry?, index: Int) = LexiconRecipeMappings.map(recipe.output, entry!!, index)

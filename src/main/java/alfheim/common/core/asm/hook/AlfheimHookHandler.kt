@@ -54,9 +54,10 @@ import travellersgear.api.TravellersGearAPI
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.api.internal.IManaBurst
+import vazkii.botania.api.item.IManaDissolvable
 import vazkii.botania.api.lexicon.*
 import vazkii.botania.api.mana.*
-import vazkii.botania.api.recipe.RecipePureDaisy
+import vazkii.botania.api.recipe.*
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.*
 import vazkii.botania.client.core.helper.IconHelper
@@ -534,6 +535,63 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun collideEntityItem(tile: TilePool, item: EntityItem): Boolean {
+		if (item.isDead) return false
+		
+		var didChange = false
+		val stack = item.entityItem ?: return false
+		
+		if (stack.item is IManaDissolvable) {
+			(stack.item as IManaDissolvable).onDissolveTick(tile, stack, item)
+			if (stack.stackSize == 0)
+				item.setDead()
+		}
+		
+		if (item.age in 101..129 || !tile.catalystsRegistered) return false
+		
+		for (recipe in BotaniaAPI.manaInfusionRecipes) {
+			if (recipe.matches(stack) && (!recipe.isAlchemy || tile.alchemy) && (!recipe.isConjuration || tile.conjuration)) {
+				val mana = recipe.manaToConsume
+				if (tile.currentMana >= mana) {
+					tile.recieveMana(-mana)
+					
+					if (!tile.worldObj.isRemote) {
+						stack.stackSize -= recipe.inputSize
+						if (stack.stackSize == 0) item.setDead()
+						val output = recipe.output.copy()
+						val outputItem = EntityItem(tile.worldObj, tile.xCoord + 0.5, tile.yCoord + 1.5, tile.zCoord + 0.5, output)
+						outputItem.age = 105
+						tile.worldObj.spawnEntityInWorld(outputItem)
+					}
+					
+					tile.craftingFanciness()
+					didChange = true
+				}
+				
+				break
+			}
+		}
+		
+		return didChange
+	}
+	
+	val RecipeManaInfusion.inputSize get() = if (input is ItemStack) (input as ItemStack).stackSize else 1
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE, injectOnExit = true, returnAnotherMethod = "sizeCheck")
+	fun matches(recipe: RecipeManaInfusion, stack: ItemStack, @ReturnValue matches: Boolean): Boolean {
+		if (!matches) return false
+		if (recipe.input !is ItemStack) return false
+		return true
+	}
+	
+	@JvmStatic
+	fun sizeCheck(recipe: RecipeManaInfusion, stack: ItemStack, @ReturnValue matches: Boolean): Boolean {
+		return stack.stackSize >= recipe.inputSize
+	}
+	
+	@JvmStatic
 	@Hook(targetMethod = "updateEntity")
 	fun `TilePylon$updateEntity`(tile: TilePylon) {
 		updatingTile = tile.worldObj.isRemote
@@ -824,8 +882,8 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
 	fun canFit(item: ItemManaResource, stack: ItemStack, apothecary: IInventory?): Boolean {
-		return stack.meta == 9 ||	// Dragonstone
-			   stack.meta == 15		// Ender Air Bottle
+		return stack.meta == 9 ||    // Dragonstone
+			   stack.meta == 15        // Ender Air Bottle
 	}
 	
 	@JvmStatic

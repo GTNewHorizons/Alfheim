@@ -303,6 +303,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (elvenResource)
 		addItem (elvenFood)
 		addItem (wiltedLotus)
+		addItem (ModItems.ancientWill, 6)
 		addItem (flugelHead)
 		addItem (flugelDisc)
 		

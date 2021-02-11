@@ -22,7 +22,9 @@ object ContributorsPrivacyHelper {
 			val contributors = HashMap<String, String>()
 	private	val authCredits = HashMap<String, String>()
 	
+	val auras = HashMap<String, String>()
 	val shields = HashMap<String, Int>()
+	val wings = HashMap<String, String>()
 	
 	init {
 		this.eventFML()
@@ -31,20 +33,36 @@ object ContributorsPrivacyHelper {
 	
 	private fun download() {
 		try {
-			URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/hashes.txt").openConnection().also { it.connectTimeout = 5000; it.readTimeout = 5000 }.getInputStream().bufferedReader().readLines().paired().forEach { (k, v) -> register(k, v) }
+			connect("hashes.txt") { paired().forEach { (k, v) -> register(k, v) } }
 		} catch (e: Throwable) {
 			ASJUtilities.error("Failed to register contributors, using default parameters")
 			// default username:password pairs just in case
-			register("AlexSocol", "C483AC3FF3031172FD8D1EB5A727B186C4059B927C38C0A19C202D748D2D0428")
+			register("AlexSocol", "FAD66A8AE739A30F66325679CB4CFF0B21428912D1DDBE45EA1692AB87DC1822")
 			register("GedeonGrays", "B2612EA4C009B2C3FDDCAA7D6C1FFB8DD6C9C7ECFFD785DCD1A08BB41CAD47C0")
 			register("KAIIIAK", "D761FAABD0C7F4042189C0CE308FDAD79566B198416BFDE23361EBA8DCB0BB96")
 		}
 		
 		try {
-			URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/patrons.txt").openConnection().also { it.connectTimeout = 5000; it.readTimeout = 5000 }.getInputStream().bufferedReader().readLines().forEach { it.split(":").also { (k, v) -> shields[k] = v.toIntOrNull() ?: -1 } }
+			connect("auras.txt") { forEach { it.split(":").also { (k, v) -> auras[k] = v } } }
+		} catch (e: Throwable) {
+			ASJUtilities.error("Failed to register custom auras")
+		}
+		
+		try {
+			connect("patrons.txt") { forEach { it.split(":").also { (k, v) -> shields[k] = v.toIntOrNull() ?: 0 } } }
 		} catch (e: Throwable) {
 			ASJUtilities.error("Failed to register patrons")
 		}
+		
+		try {
+			connect("wings.txt") { forEach { it.split(":").also { (k, v) -> wings[k] = v } } }
+		} catch (e: Throwable) {
+			ASJUtilities.error("Failed to register custom wings")
+		}
+	}
+	
+	private fun connect(file: String, action: List<String>.() -> Unit) {
+		URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/$file").openConnection().also { it.connectTimeout = 5000; it.readTimeout = 5000 }.getInputStream().bufferedReader().readLines().also { action(it) }
 	}
 	
 	private fun register(contributor: String, passwordHash: String) {

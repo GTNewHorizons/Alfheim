@@ -54,6 +54,6 @@ object RenderEntityGrieferCreeper : RenderCreeper() {
         return -1
     }
     
-    override fun getEntityTexture(entity: Entity) = creeperTextures
-    override fun getEntityTexture(entity: EntityCreeper) = creeperTextures
+    override fun getEntityTexture(entity: Entity?) = creeperTextures
+    override fun getEntityTexture(entity: EntityCreeper?) = creeperTextures
 }

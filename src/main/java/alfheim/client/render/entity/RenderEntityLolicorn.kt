@@ -39,7 +39,7 @@ object RenderEntityLolicorn: RenderLiving(ModelEntityLolicorn(), 0.5f) {
 		}
 	}
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
+	override fun getEntityTexture(entity: Entity?): ResourceLocation {
 		if (entity is EntityLolicorn) {
 			if (entity.type == 1) return LibResourceLocations.sleipnir
 			if (entity.owner == "KAIIIAK") return LibResourceLocations.roricorn

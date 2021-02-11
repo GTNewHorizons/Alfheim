@@ -566,8 +566,8 @@ alfheim.tagline.ration=A second mouth
 alfheim.page.ration0=Having plunged headlong into amazing magical experiments or being in the heat of battle, it is difficult to maintain your satiety at the proper level, especially if any unnecessary movement threatens your life. It is good that elf masters have long invented a &1Traveller's Ration Belt&0 capable of feeding its owner with food lying in hotbar.
 alfheim.page.ration1=Strength before weakness
 
-alfheim.page.judgementCloaks1n=The &1Cloak of Virtue&0 will, when active, block the full extent of a piece of damage taken.<br>The &1Cloak of Sin&0 will damage all nearby hostile mobs for the same amount of damage that was taken.<br>The &1Cloak of Balance&0 will evenly split the damage between the attacker and the target. It also prevents the target from dying.
-alfheim.page.judgementCloaks4=Pain split
+botania.page.judgementCloaks1n=The &1Cloak of Virtue&0 will, when active, block the full extent of a piece of damage taken.<br>The &1Cloak of Sin&0 will damage all nearby hostile mobs for the same amount of damage that was taken.<br>The &1Cloak of Balance&0 will evenly split the damage between the attacker and the target. It also prevents the target from dying.
+botania.page.judgementCloaks4=Pain split
 
 ################################################################ EBT ################################################################
 

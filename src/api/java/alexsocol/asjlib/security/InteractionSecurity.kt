@@ -10,8 +10,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.DamageSource
 import net.minecraft.world.World
 import net.minecraft.world.WorldSettings.GameType
-import net.minecraftforge.common.ForgeHooks
-import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.common.*
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 
 /** Map of security managers by name */
@@ -63,7 +62,7 @@ private object BlockSecurityManager: ISecurityManager {
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = canDoSomethingHere(performer, x.mfloor(), y.mfloor(), z.mfloor(), world)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World): Boolean {
 		if (performer !is EntityPlayerMP) return true
-		if (MinecraftServer.getServer().isSinglePlayer) return true
+		if (MinecraftServer.getServer()?.isSinglePlayer == true) return true
 		
 		// fuck you worldguard
 		ASJHookHandler.sendToClient = false
@@ -79,18 +78,23 @@ private object MixedSecurityManager: ISecurityManager {
 	override fun canDoSomethingHere(performer: EntityLivingBase) = BlockSecurityManager.canDoSomethingHere(performer)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = BlockSecurityManager.canDoSomethingHere(performer, x, y, z, world)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = BlockSecurityManager.canDoSomethingHere(performer, x, y, z, world)
-
-//	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity) = if (MinecraftServer.getServer()?.isSinglePlayer == true) true else target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
-//	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
 	
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity) = if (target is EntityLivingBase) canHurtEntity(performer, target) else true
-	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = if (MinecraftServer.getServer()?.isSinglePlayer == true) true else !MinecraftForge.EVENT_BUS.post(LivingAttackEvent(target, DamageSource.causeMobDamage(attacker), 0f))
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity) = when {
+		performer !is EntityPlayerMP                        -> true
+		MinecraftServer.getServer()?.isSinglePlayer == true -> true
+		target !is EntityLivingBase                         -> target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
+		else                                                -> canHurtEntity(performer, target)
+	}
 
-//	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = when {
-//		MinecraftServer.getServer()?.isSinglePlayer == true -> true
-//		performer is EntityPlayer -> !MinecraftForge.EVENT_BUS.post(EntityInteractEvent(performer, target))
-//		else -> true
+//	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity): Boolean {
+//		if (performer !is EntityPlayerMP) return true
+//		if (MinecraftServer.getServer()?.isSinglePlayer == true) return true
+//		val e = EntityInteractEvent(performer, target)
+//		return !MinecraftForge.EVENT_BUS.post(e) && e.result != Event.Result.DENY
 //	}
+	
+	//	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
+	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = if (MinecraftServer.getServer()?.isSinglePlayer == true) true else !MinecraftForge.EVENT_BUS.post(LivingAttackEvent(target, DamageSource.causeMobDamage(attacker), 0f))
 }
 
 interface ISecurityManager {

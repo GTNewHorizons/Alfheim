@@ -19,7 +19,7 @@ object RenderEntitySnowSprite: RenderLiving(ModelSnowSprite(), 0.25f) {
 		shadowSize = 0f
 	}
 	
-	override fun getEntityTexture(entity: Entity) = texture
+	override fun getEntityTexture(entity: Entity?) = texture
 	
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, pitch: Float) {
 		if (entity.isInvisible) return
