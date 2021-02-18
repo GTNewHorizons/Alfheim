@@ -17,7 +17,7 @@ import net.minecraft.item.*
 import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
+import vazkii.botania.common.core.helper.ItemNBTHelper.getNBT
 import java.util.*
 
 class BlockAnomaly: BlockContainerMod(anomaly), ILexiconable {
@@ -51,7 +51,6 @@ class BlockAnomaly: BlockContainerMod(anomaly), ILexiconable {
 	
 	override fun getPickBlock(target: MovingObjectPosition, world: World, x: Int, y: Int, z: Int, player: EntityPlayer?): ItemStack {
 		val anomaly = ItemStack(AlfheimBlocks.anomaly)
-		initNBT(anomaly)
 		(world.getTileEntity(x, y, z) as TileAnomaly).writeCustomNBT(getNBT(anomaly))
 		return anomaly
 	}

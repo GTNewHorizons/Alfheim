@@ -43,12 +43,12 @@ object RenderItemFlugelHead {
 			when (player.getCurrentArmor(3)?.item) {
 				is ItemHeadFlugel -> {
 					mc.renderEngine.bindTexture(LibResourceLocations.jibril)
-					ModelBipedNew.model.head.render(0.0625f)
+					ModelBipedNew.INSTANCE.head.render(0.0625f)
 				}
 				
 				is ItemHeadMiku   -> {
 					mc.renderEngine.bindTexture(LibResourceLocations.miku0)
-					ModelBipedNew.model.head.render(0.0625f)
+					ModelBipedNew.INSTANCE.head.render(0.0625f)
 					
 					if (ModelEntityFlugel.model2 != null) {
 						mc.renderEngine.bindTexture(LibResourceLocations.miku2)

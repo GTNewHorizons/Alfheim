@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.api.AlfheimAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.common.block.AlfheimBlocks
@@ -12,7 +13,6 @@ import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ChunkCoordinates
 import net.minecraft.world.World
 import org.lwjgl.opengl.*
@@ -23,12 +23,11 @@ import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.client.core.helper.RenderHelper
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
-import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import java.util.*
 import kotlin.math.*
 
-class TileTreeCrafter: TileMod(), ISparkAttachable {
+class TileTreeCrafter: ASJTile(), ISparkAttachable {
 	
 	companion object {
 		
@@ -320,18 +319,18 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		return items
 	}
 	
-	override fun writeCustomNBT(nbttagcompound: NBTTagCompound) {
-		nbttagcompound.setInteger("mana", mana)
-		nbttagcompound.setInteger("manaRequired", manaRequired)
-		nbttagcompound.setInteger("stage", stage)
-		nbttagcompound.setInteger("stageTicks", stageTicks)
+	override fun writeCustomNBT(nbt: NBTTagCompound) {
+		nbt.setInteger("mana", mana)
+		nbt.setInteger("manaRequired", manaRequired)
+		nbt.setInteger("stage", stage)
+		nbt.setInteger("stageTicks", stageTicks)
 	}
 	
-	override fun readCustomNBT(nbttagcompound: NBTTagCompound) {
-		mana = nbttagcompound.getInteger("mana")
-		manaRequired = nbttagcompound.getInteger("manaRequired")
-		stage = nbttagcompound.getInteger("stage")
-		stageTicks = nbttagcompound.getInteger("stageTicks")
+	override fun readCustomNBT(nbt: NBTTagCompound) {
+		mana = nbt.getInteger("mana")
+		manaRequired = nbt.getInteger("manaRequired")
+		stage = nbt.getInteger("stage")
+		stageTicks = nbt.getInteger("stageTicks")
 	}
 	
 	fun advanceStage() {
@@ -354,7 +353,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			val copy = recipe.out.copy()
 			copy.tagCompound.removeTag(TAG_SUFF_TILE)
 			
-			val tile = TileEntity.createAndLoadEntity(copy.tagCompound) ?: return@tile
+			val tile = createAndLoadEntity(copy.tagCompound) ?: return@tile
 			
 			tile.xCoord = xCoord
 			tile.yCoord = yCoord - 3

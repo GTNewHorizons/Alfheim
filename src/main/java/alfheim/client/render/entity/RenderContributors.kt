@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.render.*
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.model.entity.ModelEntityFlugel
+import alfheim.client.model.entity.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.material.ItemElvenResource
@@ -277,6 +277,36 @@ object RenderContributors {
 			glScaled(0.1)
 			mc.renderEngine.bindTexture(LibResourceLocations.palette)
 			book.renderAll()
+			glPopMatrix()
+		}
+		
+		if (ContributorsPrivacyHelper.isCorrect(player, "Sonata")) {
+			glPushMatrix()
+			glColor4f(1f, 1f, 1f, 1f)
+			mc.renderEngine.bindTexture(LibResourceLocations.mimis)
+			
+			glPushMatrix()
+			glTranslatef(1/32f, 0f, 0f)
+			Helper.rotateIfSneaking(e.entityPlayer)
+			ModelNekomimi.renderTail(0.0625f)
+			glPopMatrix()
+			
+			glPushMatrix()
+			
+			val yaw: Float = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
+			val yawOffset: Float = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
+			val pitch: Float = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
+			
+			glRotatef(yawOffset, 0f, -1f, 0f)
+			glRotatef(yaw - 270, 0f, 1f, 0f)
+			glRotatef(pitch, 0f, 0f, 1f)
+			Helper.translateToHeadLevel(e.entityPlayer)
+			glRotatef(90f, 0f, -1f, 0f)
+			
+			glTranslatef(0f, 2/16f, 0f)
+			ModelNekomimi.renderMimi(0.0625f)
+			glPopMatrix()
+			
 			glPopMatrix()
 		}
 		

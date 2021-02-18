@@ -1,17 +1,15 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alexsocol.asjlib.math.Vector3
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.network.*
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity
 import vazkii.botania.common.Botania
-import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.integration.coloredlights.ColoredLightHelper
 import java.awt.Color
 import java.util.*
 
-class TileCracklingStar: TileMod() {
+class TileCracklingStar: ASJTile() {
 	
 	var pos: Vector3 = Vector3(0.0, -1.0, 0.0)
 	val rand = Random()
@@ -40,17 +38,6 @@ class TileCracklingStar: TileMod() {
 		val g = (color shr 8 and 255).F / 255f
 		val b = (color and 255).F / 255f
 		return ColoredLightHelper.makeRGBLightValue(r, g, b, 1f)
-	}
-	
-	override fun getDescriptionPacket(): Packet {
-		val nbttagcompound = NBTTagCompound()
-		writeCustomNBT(nbttagcompound)
-		return S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound)
-	}
-	
-	override fun onDataPacket(net: NetworkManager?, pkt: S35PacketUpdateTileEntity?) {
-		super.onDataPacket(net, pkt)
-		readCustomNBT(pkt!!.func_148857_g())
 	}
 	
 	override fun updateEntity() {

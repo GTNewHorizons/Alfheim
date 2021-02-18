@@ -109,7 +109,8 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 		try {
 			// code from Thaumic Tinkerer by Vazkii
 			// TODO add events
-			if (leftClick && entities.isNotEmpty()) {
+			if (leftClick) run {
+				if (entities.isEmpty()) return@run
 				player.getAttributeMap().applyAttributeModifiers(player.heldItem.attributeModifiers)
 				entities.firstOrNull {
 					it !is EntityItem && !it.isDead && (it as? EntityLivingBase)?.isEntityAlive != false
@@ -191,7 +192,7 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 		}
 		
 		fun getFake(dim: Int): FakePlayer {
-			return FakePlayerFactory.get(MinecraftServer.getServer().worldServerForDimension(dim), GameProfile(UUID.randomUUID(), "Avatar-Clicker_$dim"))
+			return FakePlayerFactory.get(MinecraftServer.getServer().worldServerForDimension(dim), GameProfile(UUID(dim.toLong(), dim.toLong()), "Avatar-Clicker_$dim"))
 		}
 		
 		fun isFakeNotAvatar(player: EntityPlayer) = player.commandSenderName.startsWith("Avatar-Clicker_") || EntityFlugel.isTruePlayer(player)

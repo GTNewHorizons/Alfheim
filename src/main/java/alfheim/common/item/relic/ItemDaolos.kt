@@ -2,6 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.*
 import alfheim.api.event.PlayerInteractAdequateEvent
 import alfheim.client.core.helper.IconHelper
@@ -65,6 +66,8 @@ class ItemDaolos: ItemAxe(AlfheimAPI.RUNEAXE), IRelic {
 			
 			for (entity in list) {
 				if (world.getBlock(entity) !== block) continue
+				
+				if (!InteractionSecurity.canHurtEntity(e.player, entity)) continue
 				
 				if (ManaItemHandler.requestManaExact(stack, e.player, if (world.isRaining) 25 else 100, true))
 					entity.attackEntityFrom(DamageSource.wither, 3f)

@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.core.asm.hook.AlfheimHookHandler
@@ -15,7 +16,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.core.helper.Vector3 as VVec3
 
-class TileAnomalyHarvester: TileMod() {
+class TileAnomalyHarvester: ASJTile() {
 	
 	var radius = Vector3(1.0)
 	var offset = Vector3()

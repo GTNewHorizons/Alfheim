@@ -49,7 +49,6 @@ abstract class ShadedObject(val shaderID: Int, val materialID: Int, val texture:
 	}
 	
 	companion object {
-		
 		private val usableBuffer = BufferUtils.createFloatBuffer(32)
 	}
 }

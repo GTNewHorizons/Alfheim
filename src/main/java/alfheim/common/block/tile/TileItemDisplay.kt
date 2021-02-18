@@ -1,14 +1,14 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.ISidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.*
-import vazkii.botania.common.block.tile.TileMod
 
 // change to TileItemContainer ???
-class TileItemDisplay: TileMod(), ISidedInventory {
+class TileItemDisplay: ASJTile(), ISidedInventory {
 	
 	private val slots = intArrayOf(0)
 	

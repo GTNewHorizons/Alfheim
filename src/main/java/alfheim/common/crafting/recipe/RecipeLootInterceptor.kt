@@ -13,36 +13,34 @@ class RecipeLootInterceptor: IRecipe {
 		var inter = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.get(i)
-			if (stack != null) {
-				if (stack.item is ItemLootInterceptor)
-					inter = true
-				else if (inter) return true
-			}
+			val stack = inv[i] ?: continue
+			
+			if (stack.item is ItemLootInterceptor && !inter)
+				inter = true
+			else if (inter)
+				return true
 		}
 		
 		return false
 	}
 	
 	override fun getCraftingResult(inv: InventoryCrafting): ItemStack? {
-		var inter: ItemStack? = null
+		var id = -1
 		
-		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.get(i)
-			if (stack != null && stack.item is ItemLootInterceptor) {
-				if (inter == null)
-					inter = stack.copy()
-				else
-					return null
+		for (i in 0 until inv.sizeInventory)
+			if (inv[i]?.item is ItemLootInterceptor) {
+				id = i
+				break
 			}
-		}
 		
-		if (inter == null) return null
+		if (id == -1) return null
+		val inter = inv[id]?.copy() ?: return null
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.get(i)
-			if (stack != null && stack.item !is ItemLootInterceptor)
-				ItemLootInterceptor.add(inter, stack.item.id, stack.meta)
+			if (i == id) continue
+			
+			val stack = inv[i] ?: continue
+			ItemLootInterceptor.add(inter, stack.item.id, stack.meta)
 		}
 		
 		return inter

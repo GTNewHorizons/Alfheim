@@ -83,8 +83,8 @@ class SubTilePetronia: SubTileGenerating() {
 	override fun acceptsRedstone() = true
 	
 	@SideOnly(Side.CLIENT)
-	override fun getRadius(): RadiusDescriptor? {
-		return Square(toChunkCoordinates(), 1)
+	override fun getRadius(): RadiusDescriptor {
+		return Square(toChunkCoordinates().apply { --posY }, 1)
 	}
 	
 	override fun getColor() = Color.BLACK.rgb

@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.extendables.block.TileItemContainer
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
@@ -15,7 +15,6 @@ import net.minecraft.inventory.ISidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
-import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.World
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.client.core.handler.HUDHandler
@@ -32,11 +31,11 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 	fun onBurstCollision(burst: IManaBurst, world: World) {
 		val item = item
 		if (burst.isFake) return
-		if (item == null) return
+		if (item == null || !item.item.isRepairable) return
 		if (GameRegistry.findUniqueIdentifierFor(item.item)?.toString() ?: "null:null" in AlfheimConfigHandler.anyavilBlackList) return
 		if (burst.color != -0xd7f5a) return
 		
-		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((xCoord - 1).D, yCoord.D, (zCoord - 1).D, (xCoord + 2).D, (yCoord + 2).D, (zCoord + 2).D).expand(5.0, 3.0, 5.0))
+		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, boundingBox(3))
 		for (eitem in eitems) {
 			eitem as EntityItem
 			if (eitem.isDead) continue

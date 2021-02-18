@@ -1,9 +1,9 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.extendables.block.ASJTile
 import vazkii.botania.api.internal.IManaBurst
-import vazkii.botania.common.block.tile.TileMod
 
-class TileManaTuner: TileMod() {
+class TileManaTuner: ASJTile() {
 	
 	fun onBurstCollision(burst: IManaBurst) {
 	

@@ -24,7 +24,7 @@ import vazkii.botania.common.Botania
 import java.util.*
 
 @Suppress("UNUSED_PARAMETER")
-@Mod(modid = MODID, version = "BETA", useMetadata = true, guiFactory = "$MODID.client.gui.GUIFactory")
+@Mod(modid = MODID, version = "BETA", dependencies = "required-after:Botania", useMetadata = true, guiFactory = "$MODID.client.gui.GUIFactory")
 class AlfheimCore {
 	
 	companion object {

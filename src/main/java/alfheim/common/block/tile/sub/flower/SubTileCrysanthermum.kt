@@ -69,7 +69,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		
 		val remote = supertile.worldObj.isRemote
 		val biomeStone = ModFluffBlocks.biomeStoneA.toItem()
-		val items = supertile.worldObj.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((supertile.xCoord - RANGE).D, (supertile.yCoord - RANGE).D, (supertile.zCoord - RANGE).D, (supertile.xCoord + RANGE + 1).D, (supertile.yCoord + RANGE + 1).D, (supertile.zCoord + RANGE + 1).D))
+		val items = supertile.worldObj.getEntitiesWithinAABB(EntityItem::class.java, supertile.boundingBox(1))
 		val slowdown = slowdownFactor
 		
 		if (ticksExisted % 600 == 0) {

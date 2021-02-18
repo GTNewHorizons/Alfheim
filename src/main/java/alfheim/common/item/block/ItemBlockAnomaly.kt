@@ -35,10 +35,12 @@ class ItemBlockAnomaly(block: Block): ItemBlock(block) {
 	
 	override fun placeBlockAt(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, metadata: Int): Boolean {
 		val placed = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata)
+		
 		if (placed) {
 			val te = world.getTileEntity(x, y, z)
 			if (te is TileAnomaly) {
 				te.readCustomNBT(getNBT(stack))
+				te.lock(x, y, z, world.provider.dimensionId)
 				
 				if (!world.isRemote) {
 					world.markBlockForUpdate(x, y, z)

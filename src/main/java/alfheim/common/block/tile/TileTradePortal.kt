@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.api.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -10,7 +11,6 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.BotaniaAPI
@@ -18,10 +18,9 @@ import vazkii.botania.api.lexicon.multiblock.*
 import vazkii.botania.api.recipe.RecipeElvenTrade
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
-import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.core.handler.ConfigHandler
 
-class TileTradePortal: TileMod() {
+class TileTradePortal: ASJTile() {
 	
 	internal var tradeRecipe: RecipeElvenTrade? = null
 	internal var recipeMult = 0
@@ -242,7 +241,7 @@ class TileTradePortal: TileMod() {
 	}
 	
 	override fun getRenderBoundingBox(): AxisAlignedBB {
-		return TileEntity.INFINITE_EXTENT_AABB
+		return INFINITE_EXTENT_AABB
 	}
 	
 	companion object {

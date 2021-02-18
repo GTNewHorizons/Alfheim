@@ -24,8 +24,9 @@ import net.minecraft.potion.*
 import net.minecraft.util.DamageSource
 import net.minecraft.village.*
 import net.minecraft.world.World
+import net.minecraftforge.common.ISpecialArmor.ArmorProperties
 
-class EntityElf(world: World, priestType: Int = -1): EntityCreature(world), IMerchant, INpc {
+class EntityElf @JvmOverloads constructor(world: World, priestType: Int = -1): EntityCreature(world), IMerchant, INpc {
 	
 	var priestType
 		get() = dataWatcher.getWatchableObjectInt(12)
@@ -224,25 +225,34 @@ class EntityElf(world: World, priestType: Int = -1): EntityCreature(world), IMer
 		return target.attackEntityFrom(damage, amount)
 	}
 	
-	override fun getTotalArmorValue(): Int {
-		var i = 0
+	fun getHackyEquip(): Array<ItemStack?> {
+		val equip = Array<ItemStack?>(4) { lastActiveItems[it + 1] }
 		
-		lastActiveItems.forEachIndexed { id, it ->
-			if (id == 0) return@forEachIndexed
-			
-			i += if (it?.item is ItemArmor)
-				(it.item as ItemArmor).damageReduceAmount
-			else
+		equip.forEachIndexed { id, it ->
+			if (it == null) equip[id] = ItemStack(
 				when (id) {
-					4    -> Items.iron_helmet.damageReduceAmount
-					3    -> Items.leather_chestplate.damageReduceAmount + 1
-					2    -> Items.leather_leggings.damageReduceAmount
-					1    -> Items.leather_boots.damageReduceAmount
-					else -> 0
-				}
+					3    -> Items.iron_helmet
+					2    -> Items.leather_chestplate
+					1    -> Items.leather_leggings
+					0    -> Items.leather_boots
+					else -> Blocks.stone.toItem()!!
+				})
 		}
 		
-		return i
+		return equip
+	}
+	
+	override fun applyArmorCalculations(src: DamageSource, dmg: Float): Float {
+		return ArmorProperties.ApplyArmor(this, getHackyEquip(), src, dmg.D)
+	}
+	
+	override fun getTotalArmorValue(): Int {
+		return getHackyEquip().sumBy {
+			if (it?.item is ItemArmor)
+				(it.item as ItemArmor).damageReduceAmount
+			else
+				0
+		}
 	}
 	
 	override fun writeEntityToNBT(nbt: NBTTagCompound) {

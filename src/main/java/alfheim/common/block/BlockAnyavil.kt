@@ -1,7 +1,7 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.extendables.block.TileItemContainer
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnyavil

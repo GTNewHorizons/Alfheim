@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
-import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.extendables.block.TileItemContainer
 import alfheim.AlfheimCore
 import alfheim.common.network.MessageTileItem
 import net.minecraft.entity.item.EntityItem

@@ -1,22 +1,24 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.extendables.block.TileImmobile
 import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
-import vazkii.botania.common.block.tile.TileMod
 import java.util.*
 
-class TileAnomaly: TileMod() {
+class TileAnomaly: TileImmobile() {
 	
 	val subTiles = HashMap<String, SubTileAnomalyBase>()
 	var mainSubTile: String? = null
 	var compatibilityBit = 0 // not serializing because will be recalculated on load
 	
 	override fun updateEntity() {
+		super.updateEntity()
+		
 		val main = mainSubTile
 		if (main == null || main.isEmpty() || subTiles[main] == null) return
 		
@@ -52,24 +54,24 @@ class TileAnomaly: TileMod() {
 		return compatibilityBit and sub.typeBits() == 0
 	}
 	
-	override fun writeCustomNBT(cmp: NBTTagCompound?) {
-		super.writeCustomNBT(cmp)
+	override fun writeCustomNBT(nbt: NBTTagCompound) {
+		super.writeCustomNBT(nbt)
 		
 		if (mainSubTile == null) return
 		
 		try {
-			cmp!!.setString(TAG_SUBTILE_MAIN, mainSubTile!!)
+			nbt.setString(TAG_SUBTILE_MAIN, mainSubTile!!)
 			
 			var c = subTiles.keys.size
-			cmp.setInteger(TAG_SUBTILE_COUNT, c)
+			nbt.setInteger(TAG_SUBTILE_COUNT, c)
 			
 			var subCmp: NBTTagCompound
 			
 			for (name in subTiles.keys) {
-				cmp.setString(TAG_SUBTILE_NAME + c, name)
+				nbt.setString(TAG_SUBTILE_NAME + c, name)
 				
 				subCmp = NBTTagCompound()
-				cmp.setTag(TAG_SUBTILE_CMP + c--, subCmp)
+				nbt.setTag(TAG_SUBTILE_CMP + c--, subCmp)
 				
 				subTiles[name]!!.writeToNBT(subCmp)
 			}
@@ -80,22 +82,22 @@ class TileAnomaly: TileMod() {
 		
 	}
 	
-	override fun readCustomNBT(cmp: NBTTagCompound?) {
-		super.readCustomNBT(cmp)
+	override fun readCustomNBT(nbt: NBTTagCompound) {
+		super.readCustomNBT(nbt)
 		
-		mainSubTile = cmp!!.getString(TAG_SUBTILE_MAIN)
+		mainSubTile = nbt.getString(TAG_SUBTILE_MAIN)
 		
-		var c = cmp.getInteger(TAG_SUBTILE_COUNT)
+		var c = nbt.getInteger(TAG_SUBTILE_COUNT)
 		
 		var subTileName: String
 		var subCmp: NBTTagCompound
 		var subTile: SubTileAnomalyBase?
 		
 		while (c > 0) {
-			subTileName = cmp.getString(TAG_SUBTILE_NAME + c)
+			subTileName = nbt.getString(TAG_SUBTILE_NAME + c)
 			subTile = SubTileAnomalyBase.forName(subTileName)
 			
-			subCmp = cmp.getCompoundTag(TAG_SUBTILE_CMP + c)
+			subCmp = nbt.getCompoundTag(TAG_SUBTILE_CMP + c)
 			if (subTile != null && !subCmp.hasNoTags())
 				subTile.readFromNBT(subCmp)
 			

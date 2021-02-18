@@ -21,19 +21,17 @@ class RecipeRingDyes: IRecipe {
 		var colors = 0
 		
 		for (i in 0 until inventory.sizeInventory) {
-			val tempstack = inventory.get(i)
+			val tempstack = inventory[i] ?: continue
 			
-			if (tempstack != null) {
-				if (tempstack.item is ItemColorOverride) {
-					if (itemstack != null)
-						return false
-					itemstack = tempstack
-					if ((itemstack.item as ItemColorOverride).hasColor(tempstack)) colors++
-				} else if (tempstack.item == BotaniaItems.dye)
-					colors++
-				else
+			if (tempstack.item is ItemColorOverride) {
+				if (itemstack != null)
 					return false
-			}
+				itemstack = tempstack
+				if ((itemstack.item as ItemColorOverride).hasColor(tempstack)) colors++
+			} else if (tempstack.item == BotaniaItems.dye)
+				colors++
+			else
+				return false
 		}
 		return colors > 0 && itemstack != null
 	}
@@ -53,37 +51,35 @@ class RecipeRingDyes: IRecipe {
 		var b = 0
 		
 		for (k in 0 until inventory.sizeInventory) {
-			val tempstack = inventory.get(k)
+			val tempstack = inventory[k] ?: continue
 			
-			if (tempstack != null) {
-				if (tempstack.item is ItemColorOverride) {
-					colorOverride = tempstack.item as ItemColorOverride
-					
-					if (itemstack != null)
-						return null
-					
-					itemstack = tempstack.copy()
-					itemstack.stackSize = 1
-					
-					if (colorOverride.hasColor(tempstack)) {
-						val color = Color(colorOverride.getColor(itemstack))
-						colors++
-						r += color.red
-						g += color.green
-						b += color.blue
-					}
-				} else {
-					if (tempstack.item != BotaniaItems.dye)
-						return null
-					
-					val dyecolortable = EntitySheep.fleeceColorTable[tempstack.meta]
-					val dyecolor = Color(dyecolortable[0], dyecolortable[1], dyecolortable[2])
+			if (tempstack.item is ItemColorOverride) {
+				colorOverride = tempstack.item as ItemColorOverride
+				
+				if (itemstack != null)
+					return null
+				
+				itemstack = tempstack.copy()
+				itemstack.stackSize = 1
+				
+				if (colorOverride.hasColor(tempstack)) {
+					val color = Color(colorOverride.getColor(itemstack))
 					colors++
-					r += dyecolor.red
-					g += dyecolor.green
-					b += dyecolor.blue
-					resetcolor = false
+					r += color.red
+					g += color.green
+					b += color.blue
 				}
+			} else {
+				if (tempstack.item != BotaniaItems.dye)
+					return null
+				
+				val dyecolortable = EntitySheep.fleeceColorTable[tempstack.meta]
+				val dyecolor = Color(dyecolortable[0], dyecolortable[1], dyecolortable[2])
+				colors++
+				r += dyecolor.red
+				g += dyecolor.green
+				b += dyecolor.blue
+				resetcolor = false
 			}
 		}
 		if (colorOverride != null && itemstack != null && colors > 0) {

@@ -16,7 +16,7 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 		
 		Tessellator.instance.setColorOpaque_I(0xFFFFFF)
 		Tessellator.instance.setBrightness(240)
-		renderAllSides(world, x, y, z, block, renderer, false) { s, m -> (block as IGlowingLayerBlock).getGlowIcon(s, m) }
+		renderAllSides(world, x, y, z, block, renderer, false) { s, m -> (block as IGlowingLayerBlock).getGlowIcon(s, m)}
 		
 		return true
 	}

@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11.glRotated
  * Rook  - XJustaguyX
  * Created using Tabula 4.1.1
  */
-class ModelEntityRook: ModelBase() {
+object ModelEntityRook: ModelBase() {
 	
 	val lef_side_bodypiece: ModelRenderer
 	val head2: ModelRenderer

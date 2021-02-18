@@ -1,6 +1,6 @@
 package alfheim.common.block.mana
 
-import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.extendables.block.TileItemContainer
 import alexsocol.asjlib.mfloor
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod

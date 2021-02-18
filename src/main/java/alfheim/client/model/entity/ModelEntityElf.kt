@@ -4,11 +4,7 @@ import alfheim.common.entity.EntityElf
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
 
-/**
- * ModelEntityElf - Either Mojang or a mod author
- * Created using Tabula 4.1.1
- */
-class ModelEntityElf: ModelBiped(0f, 0f, 128, 64) {
+object ModelEntityElf: ModelBiped(0f, 0f, 128, 64) {
 	
 	var rightboot: ModelRenderer
 	var leftboot: ModelRenderer
@@ -211,9 +207,6 @@ class ModelEntityElf: ModelBiped(0f, 0f, 128, 64) {
 		super.render(entity, f, f1, f2, f3, f4, f5)
 	}
 	
-	/**
-	 * This is a helper function from Tabula to set the rotation of model parts
-	 */
 	fun setRotateAngle(modelRenderer: ModelRenderer, x: Float, y: Float, z: Float) {
 		modelRenderer.rotateAngleX = x
 		modelRenderer.rotateAngleY = y

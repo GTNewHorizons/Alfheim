@@ -4,6 +4,7 @@ import alexsocol.patcher.PatcherConfigHandler
 import alexsocol.patcher.asm.ASJHookLoader.Companion.OBF
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
+import org.objectweb.asm.Opcodes.*
 
 class ASJClassTransformer: IClassTransformer {
 	
@@ -11,6 +12,15 @@ class ASJClassTransformer: IClassTransformer {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		
 		return when (transformedName) {
+			"codechicken.nei.api.ItemInfo"                       -> {
+				println("Transforming $transformedName")
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `ItemInfo$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
+				cw.toByteArray()
+			}
+			
 			"net.minecraft.client.network.NetHandlerPlayClient"  -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
@@ -69,8 +79,28 @@ class ASJClassTransformer: IClassTransformer {
 		}
 	}
 	
+	// crash when adding eggs
+	internal class `ItemInfo$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "load") {
+				println("Visiting ItemInfo#load: $name$desc")
+				return `ItemInfo$load$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `ItemInfo$load$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitMethodInsn(opcode: Int, owner: String, name: String, desc: String?, itf: Boolean) {
+				if (opcode != INVOKESTATIC || owner != "codechicken/nei/api/ItemInfo" || name != "addSpawnEggs")
+					super.visitMethodInsn(opcode, owner, name, desc, itf)
+			}
+		}
+	}
+	
 	// wrong RangedAttribute#minimumValue fix
-	internal class `NetHandlerPlayClient$ClassVisitor`(cv: ClassVisitor): ClassVisitor(Opcodes.ASM5, cv) {
+	internal class `NetHandlerPlayClient$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "handleEntityProperties" || (name == "a" && desc == "(Lil;)V")) {
@@ -80,7 +110,7 @@ class ASJClassTransformer: IClassTransformer {
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `NetHandlerPlayClient$handleEntityProperties$MethodVisitor`(mv: MethodVisitor): MethodVisitor(Opcodes.ASM5, mv) {
+		internal class `NetHandlerPlayClient$handleEntityProperties$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitLdcInsn(cst: Any?) {
 				if (cst == java.lang.Double.MIN_NORMAL)
@@ -92,7 +122,7 @@ class ASJClassTransformer: IClassTransformer {
 	}
 	
 	// More Particles
-	internal class `EffectRenderer$ClassVisitor`(cv: ClassVisitor): ClassVisitor(Opcodes.ASM5, cv) {
+	internal class `EffectRenderer$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "addEffect" || name == "a" && desc == "(Lbkm;)V") {
@@ -102,13 +132,13 @@ class ASJClassTransformer: IClassTransformer {
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `EffectRenderer$addEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(Opcodes.ASM5, mv) {
+		internal class `EffectRenderer$addEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitIntInsn(opcode: Int, operand: Int) {
-				if (opcode == Opcodes.SIPUSH && operand == 4000) {
+				if (opcode == SIPUSH && operand == 4000) {
 					when (PatcherConfigHandler.maxParticles) {
-						in Byte.MIN_VALUE..Byte.MAX_VALUE   -> super.visitIntInsn(Opcodes.BIPUSH, PatcherConfigHandler.maxParticles)
-						in Short.MIN_VALUE..Short.MAX_VALUE -> super.visitIntInsn(Opcodes.SIPUSH, PatcherConfigHandler.maxParticles)
+						in Byte.MIN_VALUE..Byte.MAX_VALUE   -> super.visitIntInsn(BIPUSH, PatcherConfigHandler.maxParticles)
+						in Short.MIN_VALUE..Short.MAX_VALUE -> super.visitIntInsn(SIPUSH, PatcherConfigHandler.maxParticles)
 						else                                -> super.visitLdcInsn(Integer(PatcherConfigHandler.maxParticles))
 					}
 				} else
@@ -118,7 +148,7 @@ class ASJClassTransformer: IClassTransformer {
 	}
 	
 	// Non-null fire extinguishing
-	internal class `ItemInWorldManager$ClassVisitor`(cv: ClassVisitor): ClassVisitor(Opcodes.ASM5, cv) {
+	internal class `ItemInWorldManager$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "onBlockClicked" || name == "a" && desc == "(IIII)V") {
@@ -128,19 +158,19 @@ class ASJClassTransformer: IClassTransformer {
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `ItemRelic$onBlockClicked$MethodVisitor`(mv: MethodVisitor): MethodVisitor(Opcodes.ASM5, mv) {
+		internal class `ItemRelic$onBlockClicked$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitInsn(opcode: Int) {
-				if (opcode == Opcodes.ACONST_NULL) {
-					visitVarInsn(Opcodes.ALOAD, 0)
-					visitFieldInsn(Opcodes.GETFIELD, if (OBF) "mx" else "net/minecraft/server/management/ItemInWorldManager", if (OBF) "b" else "thisPlayerMP", if (OBF) "Lmw;" else "Lnet/minecraft/entity/player/EntityPlayerMP;")
+				if (opcode == ACONST_NULL) {
+					visitVarInsn(ALOAD, 0)
+					visitFieldInsn(GETFIELD, if (OBF) "mx" else "net/minecraft/server/management/ItemInWorldManager", if (OBF) "b" else "thisPlayerMP", if (OBF) "Lmw;" else "Lnet/minecraft/entity/player/EntityPlayerMP;")
 				} else {
 					super.visitInsn(opcode)
 				}
 			}
 			
 			override fun visitTypeInsn(opcode: Int, type: String) {
-				if (opcode != Opcodes.CHECKCAST || type != (if (OBF) "yz" else "net/minecraft/entity/player/EntityPlayer")) {
+				if (opcode != CHECKCAST || type != (if (OBF) "yz" else "net/minecraft/entity/player/EntityPlayer")) {
 					super.visitTypeInsn(opcode, type)
 				}
 			}
@@ -148,7 +178,7 @@ class ASJClassTransformer: IClassTransformer {
 	}
 	
 	// saving more than Short.MAX_VALUE amount of fuel
-	internal class `TileEntityFurnace$ClassVisitor`(cv: ClassVisitor): ClassVisitor(Opcodes.ASM5, cv) {
+	internal class `TileEntityFurnace$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "readFromNBT" || (name == "a" && desc == "(Ldh;)V")) {
@@ -162,7 +192,7 @@ class ASJClassTransformer: IClassTransformer {
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `TileEntityFurnace$readFromNBT$MethodVisitor`(mv: MethodVisitor): MethodVisitor(Opcodes.ASM5, mv) {
+		internal class `TileEntityFurnace$readFromNBT$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
 				if (name == "getShort" || (name == "e" && desc == "(Ljava/lang/String;)S")) {
@@ -172,7 +202,7 @@ class ASJClassTransformer: IClassTransformer {
 			}
 		}
 		
-		internal class `TileEntityFurnace$writeToNBT$MethodVisitor`(mv: MethodVisitor): MethodVisitor(Opcodes.ASM5, mv) {
+		internal class `TileEntityFurnace$writeToNBT$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
 				if (name == "setShort" || (name == "a" && desc == "(Ljava/lang/String;S)V")) {
@@ -182,13 +212,13 @@ class ASJClassTransformer: IClassTransformer {
 			}
 			
 			override fun visitInsn(opcode: Int) {
-				if (opcode != Opcodes.I2S) super.visitInsn(opcode)
+				if (opcode != I2S) super.visitInsn(opcode)
 			}
 		}
 	}
 	
 	// Firing any entity update event
-	internal class `World$ClassVisitor`(cv: ClassVisitor): ClassVisitor(Opcodes.ASM5, cv) {
+	internal class `World$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "updateEntityWithOptionalForce" || name == "a" && desc == "(Lsa;Z)V") {
@@ -198,22 +228,22 @@ class ASJClassTransformer: IClassTransformer {
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `World$updateEntityWithOptionalForce$MethodVisitor`(mv: MethodVisitor): MethodVisitor(Opcodes.ASM5, mv) {
+		internal class `World$updateEntityWithOptionalForce$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitMethodInsn(opcode: Int, owner: String, name: String, desc: String, itf: Boolean) {
-				if (opcode == Opcodes.INVOKEVIRTUAL && owner == (if (OBF) "sa" else "net/minecraft/entity/Entity") && (name == (if (OBF) "ab" else "updateRidden") || name == if (OBF) "h" else "onUpdate") && desc == "()V" && !itf) {
-					mv.visitMethodInsn(Opcodes.INVOKESTATIC, "alexsocol/patcher/event/EntityUpdateEvent", "instantiate", if (OBF) "(Lsa;)Lalexsocol/patcher/event/EntityUpdateEvent;" else "(Lnet/minecraft/entity/Entity;)Lalexsocol/patcher/event/EntityUpdateEvent;", false)
-					mv.visitVarInsn(Opcodes.ASTORE, 8)
-					mv.visitFieldInsn(Opcodes.GETSTATIC, "net/minecraftforge/common/MinecraftForge", "EVENT_BUS", "Lcpw/mods/fml/common/eventhandler/EventBus;")
-					mv.visitVarInsn(Opcodes.ALOAD, 8)
-					mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "cpw/mods/fml/common/eventhandler/EventBus", "post", "(Lcpw/mods/fml/common/eventhandler/Event;)Z", false)
+				if (opcode == INVOKEVIRTUAL && owner == (if (OBF) "sa" else "net/minecraft/entity/Entity") && (name == (if (OBF) "ab" else "updateRidden") || name == if (OBF) "h" else "onUpdate") && desc == "()V" && !itf) {
+					mv.visitMethodInsn(INVOKESTATIC, "alexsocol/patcher/event/EntityUpdateEvent", "instantiate", if (OBF) "(Lsa;)Lalexsocol/patcher/event/EntityUpdateEvent;" else "(Lnet/minecraft/entity/Entity;)Lalexsocol/patcher/event/EntityUpdateEvent;", false)
+					mv.visitVarInsn(ASTORE, 8)
+					mv.visitFieldInsn(GETSTATIC, "net/minecraftforge/common/MinecraftForge", "EVENT_BUS", "Lcpw/mods/fml/common/eventhandler/EventBus;")
+					mv.visitVarInsn(ALOAD, 8)
+					mv.visitMethodInsn(INVOKEVIRTUAL, "cpw/mods/fml/common/eventhandler/EventBus", "post", "(Lcpw/mods/fml/common/eventhandler/Event;)Z", false)
 					val label = Label()
-					mv.visitJumpInsn(Opcodes.IFNE, label)
-					mv.visitVarInsn(Opcodes.ALOAD, 1)
-					mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, if (OBF) "sa" else "net/minecraft/entity/Entity", name, "()V", false)
+					mv.visitJumpInsn(IFNE, label)
+					mv.visitVarInsn(ALOAD, 1)
+					mv.visitMethodInsn(INVOKEVIRTUAL, if (OBF) "sa" else "net/minecraft/entity/Entity", name, "()V", false)
 					mv.visitLabel(label)
-					mv.visitFrame(Opcodes.F_APPEND, 1, arrayOf<Any>("alexsocol/patcher/event/EntityUpdateEvent"), 0, null)
-					mv.visitMethodInsn(Opcodes.INVOKESTATIC, "alexsocol/patcher/event/EntityUpdateEvent", "stub", "()V", false)
+					mv.visitFrame(F_APPEND, 1, arrayOf<Any>("alexsocol/patcher/event/EntityUpdateEvent"), 0, null)
+					mv.visitMethodInsn(INVOKESTATIC, "alexsocol/patcher/event/EntityUpdateEvent", "stub", "()V", false)
 				} else
 					super.visitMethodInsn(opcode, owner, name, desc, itf)
 			}
@@ -221,7 +251,7 @@ class ASJClassTransformer: IClassTransformer {
 	}
 	
 	// Fix for entropy ore being without black hit particles
-	internal class `BlockCustomOre$ClassVisitor`(cv: ClassVisitor): ClassVisitor(Opcodes.ASM5, cv) {
+	internal class `BlockCustomOre$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "addHitEffects") {
@@ -232,10 +262,10 @@ class ASJClassTransformer: IClassTransformer {
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `BlockCustomOre$addHitEffects$MethodVisitor`(mv: MethodVisitor): MethodVisitor(Opcodes.ASM5, mv) {
+		internal class `BlockCustomOre$addHitEffects$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitIntInsn(opcode: Int, operand: Int) {
-				if (opcode == Opcodes.BIPUSH && operand == 6) super.visitIntInsn(opcode, 7)
+				if (opcode == BIPUSH && operand == 6) super.visitIntInsn(opcode, 7)
 				else super.visitIntInsn(opcode, operand)
 			}
 		}

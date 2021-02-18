@@ -309,7 +309,6 @@ class Matrix4 {
 	}
 	
 	companion object {
-		
 		private val glBuf = ByteBuffer.allocateDirect(16 * 8).order(ByteOrder.nativeOrder()).asDoubleBuffer()
 	}
 }

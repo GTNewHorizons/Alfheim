@@ -16,7 +16,7 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IAncientWillContainer
-import vazkii.botania.api.mana.*
+import vazkii.botania.api.mana.IManaGivingItem
 import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.core.helper.ItemNBTHelper
 
@@ -38,7 +38,8 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 			val food = player.foodStats.foodLevel
 			if (food in 1..17 && player.shouldHeal() && player.ticksExisted % 80 == 0)
 				player.heal(1f)
-			ManaItemHandler.dispatchManaExact(stack, player, 2, true)
+			
+//			ManaItemHandler.dispatchManaExact(stack, player, 2, true)
 		}
 	}
 	

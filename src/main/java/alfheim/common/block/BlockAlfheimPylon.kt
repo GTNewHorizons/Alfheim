@@ -38,7 +38,7 @@ class BlockAlfheimPylon: BlockModContainerMeta(Material.iron, 3, ModInfo.MODID, 
 	override fun getRenderType() = LibRenderIDs.idPylon
 	override fun createNewTileEntity(world: World, meta: Int) = TileAlfheimPylon()
 	override fun canStabaliseInfusion(world: World, x: Int, y: Int, z: Int) = ConfigHandler.enableThaumcraftStablizers
-	override fun getEnchantPowerBonus(world: World, x: Int, y: Int, z: Int) = if (world.getBlockMetadata(x, y, z) == 0) 7.5f else 15f // pink 8; orange and red 15
+	override fun getEnchantPowerBonus(world: World, x: Int, y: Int, z: Int) = if (world.getBlockMetadata(x, y, z) == 0) 10f else 18f // pink 10; orange and red 15
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
 		val meta = world.getBlockMetadata(x, y, z)

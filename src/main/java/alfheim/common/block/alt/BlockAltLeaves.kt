@@ -120,7 +120,7 @@ class BlockAltLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 		}
 	}
 	
-	override fun getRenderType() = RenderGlowingLayerBlock.glowBlockID
+	override fun getRenderType() = if (ASJUtilities.isClient) RenderGlowingLayerBlock.glowBlockID else -1
 	
 	override fun getGlowIcon(side: Int, meta: Int) = if (meta % 8 == 7) glowIcon else null
 	

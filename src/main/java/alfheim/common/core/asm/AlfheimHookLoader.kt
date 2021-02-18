@@ -14,13 +14,13 @@ class AlfheimHookLoader: HookLoader() {
 	
 	init {
 		ModInfo.OBF = !ASJReflectionHelper.getStaticValue<CoreModManager, Boolean>(CoreModManager::class.java, "deobfuscatedEnvironment")
-		ModInfo.DEV = true
+		ModInfo.DEV = false
 		
 		AlfheimConfigHandler.loadConfig(File("config/Alfheim/Alfheim.cfg"))
 		AlfheimModularLoader
 	}
 	
-	override fun getASMTransformerClass(): Array<String>? {
+	override fun getASMTransformerClass(): Array<String> {
 		return arrayOf(AlfheimClassTransformer::class.java.name, ASJPacketCompleter::class.java.name, ASJASM::class.java.name)
 	}
 	

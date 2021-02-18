@@ -52,9 +52,15 @@ repositories {
 	mavenCentral()
 }
 
-version = mainMod ? "BETA-pre38.6" : "12"
 group = "main"
+version = mainMod ? "BETA-38" : "11"
 archivesBaseName = mainMod ? "Alfheim" : "Alfheim-Modular"
+def modid = mainMod ? "alfheim" : "alfmod"
+def desc = mainMod ? "Botania addon alowing you to travel to Alfheim" : "Alfheim time-limited events"
+def cred = mainMod ? "see credits.txt in mod file" : ""
+def logo = mainMod ? "alfheim_logo.png" : ""
+def reqM = mainMod ? "\"Botania\"" : "\"Botania\",\"alfheim\""
+def deps = mainMod ? "\"Botania\",\"MineTweaker3\",\"Thaumcraft\"" : "\"Botania\",\"alfheim\",\"Thaumcraft\""
 
 minecraft {
 	version = "1.7.10-10.13.4.1614-1.7.10"
@@ -68,10 +74,10 @@ configurations {
 
 dependencies {
 	
-//	compile "codechicken:CodeChickenLib:1.7.10-1.1.3.140:dev"
-//	compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
-//	compile "codechicken:ForgeMultipart:1.7.10-1.2.0.345:dev"
-//	compile "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
+	compile "codechicken:CodeChickenLib:1.7.10-1.1.3.140:dev"
+	compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
+	compile "codechicken:ForgeMultipart:1.7.10-1.2.0.345:dev"
+	compile "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
 //	compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
 	
 //	compile name: "MineTweaker3", group: "minetweaker", version: "1.7.10-3.0.10B", classifier: "Dev-Full"
@@ -117,24 +123,22 @@ jar {
 		exclude ("alfmod/**")
 		exclude ("assets/alfmod/**")
 		exclude ("META-INF/alfmod_at.cfg")
-	} /*else {
-		exclude ("alexsocol/**")
-		exclude ("alfheim/**")
-		exclude ("gloomyfolken/**")
-		exclude ("ru/vamig/**")
+	} else {
+		// exclude ("alfheim/**")
 		exclude ("vazkii/**")
 		
 		exclude ("assets/alfheim/**")
 		exclude ("assets/botania/**")
+		exclude ("assets/etfuturum/**")
 		exclude ("assets/minecraft/**")
 		exclude ("assets/thaumcraft/**")
+		exclude ("assets/tinker/**")
 				
 		exclude ("META-INF/alfheim_at.cfg")
 		
 		exclude ("alfheim_logo.png")
 		exclude ("credits.txt")
-		exclude ("methods.bin")
-	}*/
+	}
 }
 
 processResources {
@@ -143,7 +147,7 @@ processResources {
 
 	from(sourceSets.main.resources.srcDirs) {
 		include 'mcmod.info'
-		expand 'version':project.version, 'mcversion':project.minecraft.version
+		expand 'version':project.version, 'mcversion':project.minecraft.version, 'name':project.archivesBaseName, 'modid':modid, 'desc':desc, 'cred':cred, 'logo':logo, 'reqM':reqM, 'deps':deps
 	}
 		
 	from(sourceSets.main.resources.srcDirs) {

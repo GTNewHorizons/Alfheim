@@ -20,7 +20,10 @@ import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
 import kotlin.math.sin
 
-class ModelEntityFlugel: ModelBipedNew() {
+object ModelEntityFlugel: ModelBipedNew() {
+	
+	val model1 = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku1.obj"))!!
+	val model2 = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku2.obj"))!!
 	
 	override fun render(entity: Entity, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
 		if (entity.dataWatcher?.getWatchableObjectString(10) == "Hatsune Miku") {
@@ -204,11 +207,5 @@ class ModelEntityFlugel: ModelBipedNew() {
 			
 			AlfheimCore.proxy.featherFX(flugel.worldObj, v.x, v.y, v.z, 0x240935, 5f, (Math.random() * 0.5 + 1).F, 64f)
 		}
-	}
-	
-	companion object {
-		
-		val model1 = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku1.obj"))!!
-		val model2 = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku2.obj"))!!
 	}
 }

@@ -10,17 +10,17 @@ import cpw.mods.fml.relauncher.FMLInjectionData
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.common.Botania
-import vazkii.botania.common.block.tile.TileMod
 import java.awt.Color
 import java.io.*
 import java.util.*
 import kotlin.math.abs
 
-open class TileSchemaController: TileMod() {
+open class TileSchemaController: TileEntity() {
 	
 	private var ticksAlive: Int = 0
 	private var lastDump: Int = 0
@@ -405,8 +405,4 @@ open class TileSchemaController: TileMod() {
 			lambda.invoke()
 		}
 	}
-	
-	override fun writeCustomNBT(nbttagcompound: NBTTagCompound) = Unit
-	
-	override fun readCustomNBT(nbttagcompound: NBTTagCompound) = Unit
 }

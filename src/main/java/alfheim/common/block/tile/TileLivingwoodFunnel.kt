@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.common.block.BlockFunnel
 import net.minecraft.block.*
 import net.minecraft.client.Minecraft
@@ -16,12 +17,10 @@ import net.minecraft.tileentity.*
 import net.minecraft.util.*
 import net.minecraft.world.World
 import org.lwjgl.opengl.GL11
-import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.lib.LibMisc
 import kotlin.math.min
 
-@Suppress("SameParameterValue")
-class TileLivingwoodFunnel: TileMod(), IHopper {
+class TileLivingwoodFunnel: ASJTile(), IHopper {
 	
 	private var inventory = arrayOfNulls<ItemStack>(1)
 	
@@ -426,8 +425,8 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	
 	override fun hasCustomInventoryName() = false
 	
-	override fun readCustomNBT(nbttagcompound: NBTTagCompound) {
-		val nbttaglist = nbttagcompound.getTagList("Items", 10)
+	override fun readCustomNBT(nbt: NBTTagCompound) {
+		val nbttaglist = nbt.getTagList("Items", 10)
 		inventory = arrayOfNulls(sizeInventory)
 		
 		for (i in 0 until nbttaglist.tagCount()) {
@@ -441,7 +440,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 		}
 	}
 	
-	override fun writeCustomNBT(nbttagcompound: NBTTagCompound) {
+	override fun writeCustomNBT(nbt: NBTTagCompound) {
 		val nbttaglist = NBTTagList()
 		
 		for (i in inventory.indices) {
@@ -453,7 +452,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 			}
 		}
 		
-		nbttagcompound.setTag("Items", nbttaglist)
+		nbt.setTag("Items", nbttaglist)
 	}
 	
 	override fun getXPos() = xCoord.D

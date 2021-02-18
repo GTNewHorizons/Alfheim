@@ -95,8 +95,10 @@ class ItemSoulSword: ItemSword(AlfheimAPI.SOUL), IManaUsingItem {
 			val stack = attacker.heldItem ?: return
 			if (stack.item !== AlfheimItems.soulSword) return
 			if (!ManaItemHandler.requestManaExact(stack, attacker, 1, true)) return
-			stack.level = min(AlfheimConfigHandler.soulSwordMaxLvl, stack.level + 1)
 			repair(stack, 1)
+			
+			if (stack.level + 1 < stack.level) return
+			stack.level = min(AlfheimConfigHandler.soulSwordMaxLvl, stack.level + 1)
 		}
 	}
 }

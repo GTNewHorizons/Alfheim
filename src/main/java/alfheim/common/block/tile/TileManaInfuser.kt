@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
@@ -20,12 +21,10 @@ import vazkii.botania.api.mana.spark.*
 import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
-import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.block.tile.mana.TilePool
 import kotlin.math.*
 
-@Suppress("ConstantConditionIf")
-class TileManaInfuser: TileMod(), ISparkAttachable {
+class TileManaInfuser: ASJTile(), ISparkAttachable {
 	
 	var mana = 0
 	var manaRequest = 0

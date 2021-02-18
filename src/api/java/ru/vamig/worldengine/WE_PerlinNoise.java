@@ -3,6 +3,8 @@
 
 package ru.vamig.worldengine;
 
+import org.apache.commons.lang3.builder.*;
+
 public class WE_PerlinNoise {
 	
 	public static double PerlinNoise2D(long seed, double x, double y, double persistence, int number_of_octaves) {

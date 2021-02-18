@@ -308,22 +308,16 @@ class Vector3: Serializable {
 		
 		@Transient
 		val fallback = Vector3(-1, -1, -1)
-		
 		@Transient
 		val zero = Vector3()
-		
 		@Transient
 		val one = Vector3(1, 1, 1)
-		
 		@Transient
 		val center = Vector3(0.5, 0.5, 0.5)
-		
 		@Transient
 		val oX = Vector3(1, 0, 0)
-		
 		@Transient
 		val oY = Vector3(0, 1, 0)
-		
 		@Transient
 		val oZ = Vector3(0, 0, 1)
 		
@@ -339,9 +333,9 @@ class Vector3: Serializable {
 		
 		fun vecEntityDistance(v: Vector3, e: Entity) = sqrt((v.x - e.posX).pow(2) + (v.y - e.posYp).pow(2) + (v.z - e.posZ).pow(2))
 		
-		fun vecTileDistance(v: Vector3, te: TileEntity) = sqrt((v.x - te.xCoord).pow(2) + (v.y - te.yCoord).pow(2) + (v.z - te.zCoord).pow(2))
+		fun vecTileDistance(v: Vector3, te: TileEntity) = sqrt((v.x - te.xCoord + 0.5).pow(2) + (v.y - te.yCoord + 0.5).pow(2) + (v.z - te.zCoord + 0.5).pow(2))
 		
-		fun entityTileDistance(e: Entity, te: TileEntity) = sqrt((e.posX - te.xCoord).pow(2) + (e.posYp - te.yCoord).pow(2) + (e.posZ - te.zCoord).pow(2))
+		fun entityTileDistance(e: Entity, te: TileEntity) = sqrt((e.posX - te.xCoord + 0.5).pow(2) + (e.posYp - te.yCoord + 0.5).pow(2) + (e.posZ - te.zCoord + 0.5).pow(2))
 		
 		fun entityDistance(e1: Entity, e2: Entity) = sqrt((e1.posX - e2.posX).pow(2) + (e1.posYp - e2.posYp).pow(2) + (e1.posZ - e2.posZ).pow(2))
 		

@@ -76,7 +76,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 					glRotatef(180f, 1f, 0f, 0f)
 					glRotatef((seg - tile.rotation) * 40 - 90f - adRot, 0f, 1f, 0f)
 					glTranslatef(0f, -0.75f, 0f)
-					ModelBipedNew.model.render(0.0625f)
+					ModelBipedNew.INSTANCE.render(0.0625f)
 					glPopMatrix()
 				}
 				

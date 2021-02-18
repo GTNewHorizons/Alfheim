@@ -299,7 +299,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModFluffBlocks.lavenderQuartzSlab), 2)
 		addPink(ItemStack(ModFluffBlocks.lavenderQuartzStairs), 4)
 		
-		addPink(ItemStack(ModItems.aesirRing), 6000)
+//		addPink(ItemStack(ModItems.aesirRing), 6000)
 		addPink(ItemStack(ModItems.baubleBox), 5)
 		addPink(ItemStack(ModItems.blackHoleTalisman), 36)
 		addPink(ItemStack(ModItems.corporeaSpark), 9)
@@ -322,8 +322,8 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.elementiumShovel), 9)
 		addPink(ItemStack(ModItems.elementiumSword), 18)
 		addPink(ItemStack(ModItems.lens, 1, 14), 18)
-		addPink(ItemStack(ModItems.lokiRing), 1000)
-		addPink(ItemStack(ModItems.odinRing), 1000)
+//		addPink(ItemStack(ModItems.lokiRing), 1000)
+//		addPink(ItemStack(ModItems.odinRing), 1000)
 		addPink(ItemStack(ModItems.openBucket), 27)
 		addPink(ItemStack(ModItems.petal, 1, 6), 1)
 		addPink(ItemStack(ModItems.pinkinator), 100)
@@ -336,7 +336,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.slimeBottle), 45)
 		addPink(ItemStack(ModItems.starSword), 20)
 		addPink(ItemStack(ModItems.superTravelBelt), 27) // was 38
-		addPink(ItemStack(ModItems.thorRing), 1000)
+//		addPink(ItemStack(ModItems.thorRing), 1000)
 		
 		
 		
@@ -377,9 +377,9 @@ object AlfheimRegistry {
 		addPink(ItemStack(AlfheimItems.multibauble), 18)
 		addPink(ItemStack(AlfheimItems.pixieAttractor), 54)
 		addPink(ItemStack(AlfheimItems.priestEmblem, 1, 3), 18)
-		addPink(ItemStack(AlfheimItems.priestRingHeimdall), 1000)
-		addPink(ItemStack(AlfheimItems.priestRingNjord), 1000)
-		addPink(ItemStack(AlfheimItems.priestRingSif), 1000)
+//		addPink(ItemStack(AlfheimItems.priestRingHeimdall), 1000)
+//		addPink(ItemStack(AlfheimItems.priestRingNjord), 1000)
+//		addPink(ItemStack(AlfheimItems.priestRingSif), 1000)
 		addPink(ItemStack(AlfheimItems.rodClicker), 29)
 		addPink(ItemStack(AlfheimItems.rodColorfulSkyDirt), 27)
 		addPink(ItemStack(AlfheimItems.spatiotemporalRing), 54)

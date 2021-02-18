@@ -64,6 +64,7 @@ object LibResourceLocations {
 	val miku0 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku0.png")
 	val miku1 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku1.png")
 	val miku2 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku2.png")
+	val mimis = ResourceLocation(ModInfo.MODID, "textures/model/entity/mimis.png")
 	val mine1 = ResourceLocation(ModInfo.MODID, "textures/model/entity/1.png")
 	val mine2 = ResourceLocation(ModInfo.MODID, "textures/model/entity/2.png")
 	val mine3 = ResourceLocation(ModInfo.MODID, "textures/model/entity/3.png")

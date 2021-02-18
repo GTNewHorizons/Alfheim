@@ -51,7 +51,7 @@ object RenderTileHeadFlugel: TileEntitySkullRenderer() {
 		glScaled(-1.0, -1.0, 1.0)
 		glEnable(GL_ALPHA_TEST)
 		glRotated(rotation.D, 0.0, 1.0, 0.0)
-		ModelBipedNew.model.head.render(0.0625f)
+		ModelBipedNew.INSTANCE.head.render(0.0625f)
 		
 		glPopMatrix()
 	}

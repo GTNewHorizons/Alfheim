@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.ASJTile
+import alexsocol.asjlib.extendables.block.ASJTile
 import net.minecraft.entity.player.*
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack

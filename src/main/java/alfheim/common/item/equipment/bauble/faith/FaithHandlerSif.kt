@@ -44,7 +44,7 @@ object FaithHandlerSif: IFaithHandler {
 		if (ItemPriestCloak.getCloak(1, player) == null) return
 		if (getGodPowerLevel(player) < 4) return
 		
-		if (Vector3(player.lookVec).angle(Vector3(attacker.lookVec).rotate(180, Vector3.oY)) > Math.PI / 6)
+		if (ASJUtilities.isNotInFieldOfVision(attacker, player))
 			e.isCanceled = true
 	}
 	

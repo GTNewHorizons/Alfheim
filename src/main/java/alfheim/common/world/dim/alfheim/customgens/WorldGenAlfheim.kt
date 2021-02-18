@@ -88,6 +88,8 @@ object WorldGenAlfheim: IWorldGenerator {
 		world.setBlock(x, y, z, AlfheimBlocks.anomaly)
 		val te = world.getTileEntity(x, y, z)
 		if (te is TileAnomaly) {
+			te.lock(x, y, z, world.provider.dimensionId)
+			
 			val sub = SubTileAnomalyBase.forName(type) ?: return
 			sub.worldGen = true
 			

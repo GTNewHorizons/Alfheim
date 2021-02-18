@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.IIcon
 import vazkii.botania.api.BotaniaAPI
+import vazkii.botania.api.subtile.RadiusDescriptor
 import vazkii.botania.api.subtile.signature.PassiveFlower
 import vazkii.botania.common.block.subtile.generating.SubTilePassiveGenerating
 
@@ -20,8 +21,8 @@ class SubTileStormFlower: SubTilePassiveGenerating() {
 	override fun canGeneratePassively(): Boolean {
 		if (--cooldown > 0) return false
 		
-		for (i in supertile.worldObj.weatherEffects.indices) {
-			val e = supertile.worldObj.weatherEffects[i] as? Entity ?: continue
+		for (e in supertile.worldObj.weatherEffects) {
+			e as? Entity ?: continue
 			
 			if ((e is EntityLightningBolt || e is FakeLightning) && !e.isDead && Vector3.entityTileDistance(e, supertile) < 2) {
 				e.setDead()
@@ -47,6 +48,10 @@ class SubTileStormFlower: SubTilePassiveGenerating() {
 	
 	override fun getColor(): Int {
 		return 0x53DFDF
+	}
+	
+	override fun getRadius(): RadiusDescriptor {
+		return RadiusDescriptor.Circle(toChunkCoordinates(), 2.0)
 	}
 	
 	override fun writeToPacketNBT(nbt: NBTTagCompound) {

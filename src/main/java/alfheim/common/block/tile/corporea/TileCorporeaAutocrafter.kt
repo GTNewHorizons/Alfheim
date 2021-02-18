@@ -1,7 +1,7 @@
 package alfheim.common.block.tile.corporea
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.ASJTile
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.common.core.helper.CorporeaAdvancedHelper.getFilters
 import alfheim.common.core.helper.CorporeaAdvancedHelper.putOrDrop
 import alfheim.common.core.helper.CorporeaAdvancedHelper.requestMatches

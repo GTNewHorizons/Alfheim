@@ -1,7 +1,7 @@
 package alfheim.client.core.handler
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.extendables.block.TileItemContainer
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
 import alfheim.api.spell.SpellBase.SpellCastResult

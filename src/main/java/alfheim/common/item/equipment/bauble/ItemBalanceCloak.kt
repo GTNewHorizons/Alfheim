@@ -55,6 +55,8 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 	@SideOnly(Side.CLIENT)
 	override fun getRenderTexture() = LibResourceLocations.cloakBalance
 	
+	override fun getIconFromDamage(meta: Int) = itemIcon
+	
 	companion object {
 		
 		lateinit var iconHoly: IIcon

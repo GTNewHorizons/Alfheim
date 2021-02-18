@@ -1,20 +1,21 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.extendables.block.TileImmobile
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.PotionEffect
-import vazkii.botania.common.block.tile.TileMod
 import kotlin.math.max
 
-class TilePowerStone: TileMod() {
+class TilePowerStone: TileImmobile() {
 	
-	val TAG_COOLDOWN = "cooldown"
 	var cooldown: Int = 0
 	
 	override fun updateEntity() {
+		super.updateEntity()
+		
 		cooldown = max(0, --cooldown)
 	}
 	
@@ -89,5 +90,9 @@ class TilePowerStone: TileMod() {
 		super.readCustomNBT(nbt)
 		
 		cooldown = nbt.getInteger(TAG_COOLDOWN)
+	}
+	
+	companion object {
+		const val TAG_COOLDOWN = "cooldown"
 	}
 }

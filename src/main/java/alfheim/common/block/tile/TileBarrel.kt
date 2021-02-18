@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.ASJTile
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.common.item.material.ElvenFoodMetas
 import net.minecraft.nbt.NBTTagCompound
 

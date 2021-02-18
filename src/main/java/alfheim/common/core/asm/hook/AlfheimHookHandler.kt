@@ -42,7 +42,7 @@ import net.minecraft.init.*
 import net.minecraft.inventory.*
 import net.minecraft.item.*
 import net.minecraft.potion.*
-import net.minecraft.tileentity.TileEntity
+import net.minecraft.tileentity.*
 import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraft.world.biome.*
@@ -305,6 +305,8 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
 	fun spawn(gaia: EntityDoppleganger?, player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, hard: Boolean): Boolean {
+		if (world.getTileEntity(x, y, z) !is TileEntityBeacon) return true
+		
 		for (i in -1..1)
 			for (k in -1..1)
 				if (!world.getBlock(x + i, y - 1, z + k).isBeaconBase(world, x + i, y - 1, z + k, x, y, z)) {
@@ -334,10 +336,10 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(targetMethod = "attackEntityFrom", injectOnExit = true)
-	fun noDupePost(gaia: EntityDoppleganger, src: DamageSource, dmg: Float): Boolean {
+	fun noDupePost(gaia: EntityDoppleganger, src: DamageSource, dmg: Float, @ReturnValue result: Boolean): Boolean {
 		val player = src.entity as? EntityPlayer ?: return false
 		if (!hadPlayer) gaia.playersWhoAttacked.remove(player.commandSenderName)
-		return false
+		return result
 	}
 	
 	@SideOnly(Side.CLIENT)

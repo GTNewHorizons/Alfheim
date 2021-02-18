@@ -16,13 +16,11 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 		var foundGoggles = false
 		var foundHelm = false
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv[i]
-			if (stack != null) {
-				when {
-					checkHelm(stack)       -> foundHelm = true
-					stack.item === goggles -> foundGoggles = true
-					else                   -> return false
-				} // Found an invalid item, breaking the recipe
+			val stack = inv[i] ?: continue
+			when {
+				checkHelm(stack)       -> foundHelm = true
+				stack.item === goggles -> foundGoggles = true
+				else                   -> return false // Found an invalid item, breaking the recipe
 			}
 		}
 		return foundGoggles && foundHelm
@@ -41,9 +39,8 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 			return null
 		
 		val helmCopy = helm.copy()
-		val newHelm: ItemStack
 		
-		newHelm = when {
+		val newHelm = when {
 			helmCopy.item === AlfheimItems.elementalHelmet -> AlfheimItems.elementalHelmetRevealing?.let { ItemStack(it) } ?: return null
 			helmCopy.item === AlfheimItems.elvoriumHelmet  -> AlfheimItems.elvoriumHelmetRevealing?.let { ItemStack(it) } ?: return null
 			else                                           -> return null

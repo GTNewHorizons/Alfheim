@@ -117,7 +117,6 @@ class ASJPacketCompleter: IClassTransformer {
 	}
 	
 	companion object {
-		
 		val descriptors: List<String> = Lists.newArrayList("Z", "B", "C", "D", "F", "I", "J", "S", "Ljava/lang/String;", "Lnet/minecraft/item/ItemStack;", "Lnet/minecraft/nbt/NBTTagCompound;")
 		val doLog = System.getProperty("asjlib.asm.errorlog", "off") == "on"
 	}

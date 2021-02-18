@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.raceID
 import alfheim.common.block.AlfheimBlocks
@@ -26,7 +27,7 @@ import vazkii.botania.common.core.handler.ConfigHandler
 import java.util.*
 import kotlin.math.*
 
-class TileAlfheimPortal: TileMod() {
+class TileAlfheimPortal: ASJTile() {
 	
 	var activated = false
 	var ticksOpen = 0

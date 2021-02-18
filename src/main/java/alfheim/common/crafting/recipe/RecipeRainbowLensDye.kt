@@ -24,20 +24,19 @@ class RecipeRainbowLensDye: IRecipe {
 		var foundDye = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv[i]
-			if (stack != null) {
-				if (stack.item is ILens && !foundLens) {
-					foundLens = true
-				} else {
-					if (foundDye) {
-						return false
-					}
-					
-					if (!isRainbow(stack))
-						return false
-					
-					foundDye = true
+			val stack = inv[i] ?: continue
+			
+			if (stack.item is ILens && !foundLens) {
+				foundLens = true
+			} else {
+				if (foundDye) {
+					return false
 				}
+				
+				if (!isRainbow(stack))
+					return false
+				
+				foundDye = true
 			}
 		}
 		
@@ -57,12 +56,10 @@ class RecipeRainbowLensDye: IRecipe {
 		var lens: ItemStack? = null
 		
 		for (lensCopy in 0 until var1.sizeInventory) {
-			val stack = var1[lensCopy]
-			if (stack != null) {
-				if (stack.item is ILens && lens == null) {
-					lens = stack
-				}
-			}
+			val stack = var1[lensCopy] ?: continue
+			
+			if (stack.item is ILens && lens == null)
+				lens = stack
 		}
 		
 		return if (lens!!.item is ILens) {

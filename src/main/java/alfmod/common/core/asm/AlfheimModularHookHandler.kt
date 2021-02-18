@@ -79,13 +79,13 @@ object AlfheimModularHookHandler {
 	
 	@JvmStatic
 	@Hook
-	fun render(model: ModelEntityFlugel, entity: Entity, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
+	fun render(model: ModelEntityFlugel?, entity: Entity, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
 		(HELLISH_VACATION && entity.dataWatcher?.getWatchableObjectString(10) != "Hatsune Miku").also {
-			model.chest.showModel = it
-			model.rightglove.showModel = it
-			model.leftglove.showModel = it
-			model.rightboot.showModel = it
-			model.leftboot.showModel = it
+			ModelEntityFlugel.chest.showModel = it
+			ModelEntityFlugel.rightglove.showModel = it
+			ModelEntityFlugel.leftglove.showModel = it
+			ModelEntityFlugel.rightboot.showModel = it
+			ModelEntityFlugel.leftboot.showModel = it
 		}
 	}
 }

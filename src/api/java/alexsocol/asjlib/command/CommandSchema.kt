@@ -32,7 +32,6 @@ object CommandSchema: CommandBase() {
 		when (args[0]) {
 			"pos1" -> poses[name]!!.left = pos
 			"pos2" -> poses[name]!!.right = pos
-			
 			"save" -> {
 				if (poses[name]!!.left == null) return
 				if (poses[name]!!.right == null) return
@@ -43,11 +42,13 @@ object CommandSchema: CommandBase() {
 	
 	override fun addTabCompletionOptions(sender: ICommandSender?, args: Array<String>): MutableList<Any?>? {
 		return when (args.size) {
-			1    -> getListOfStringsMatchingLastWord(args, "pos1", "pos2", "save")
-			2    -> getListOfStringsFromIterableMatchingLastWord(args, Block.blockRegistry.keys)
+			1 -> getListOfStringsMatchingLastWord(args, "pos1", "pos2", "save")
+			2 -> getListOfStringsFromIterableMatchingLastWord(args, Block.blockRegistry.keys)
 			else -> null
 		}
 	}
+	
+	
 	
 	// copy from Alfheim:
 	
@@ -81,7 +82,6 @@ object CommandSchema: CommandBase() {
 	@Throws(IOException::class)
 	fun dumpTo(file: File, player: EntityPlayer, filler: String?) {
 		class LocationElement(val x: Int, val y: Int, val z: Int, val meta: Int, val nbt: NBTTagCompound?) {
-			
 			fun getJson(): JsonObject = JsonObject().apply {
 				addProperty("x", x)
 				addProperty("y", y)

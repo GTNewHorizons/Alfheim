@@ -17,8 +17,13 @@ import net.minecraft.command.*
 import net.minecraft.command.server.CommandSummon
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.*
+import net.minecraft.entity.EntityList.EntityEggInfo
+import net.minecraft.entity.boss.*
+import net.minecraft.entity.effect.EntityLightningBolt
+import net.minecraft.entity.monster.*
 import net.minecraft.entity.passive.EntityMooshroom
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.projectile.EntityArrow
 import net.minecraft.inventory.*
 import net.minecraft.item.*
 import net.minecraft.network.*
@@ -32,11 +37,42 @@ import org.lwjgl.opengl.*
 import java.nio.FloatBuffer
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashSet
 import kotlin.math.min
 
 @Suppress("UNUSED_PARAMETER")
 object ASJHookHandler {
+	
+	@JvmStatic
+	@Hook(targetMethod = "<clinit>", injectOnExit = true)
+	fun `EntityList$clinit`(e: EntityList?) {
+		addEntityEgg(EntityGiantZombie::class.java, 0x00AFAF, 0x4D6341) // Giant
+		addEntityEgg(EntityDragon::class.java, 0x0E0E0E, 0xCC00FA) // Ender Dragon
+		addEntityEgg(EntityWither::class.java, 0x141414, 0x5C5C5C) // Wither Boss
+		addEntityEgg(EntitySnowman::class.java, 0xEEFFFF, 0xFFA221) // Snowman
+		addEntityEgg(EntityIronGolem::class.java, 0xC5C2C1, 0xFFE1CC) // Iron Golem
+		
+		if (PatcherConfigHandler.lightningID != -1)
+			EntityList.addMapping(EntityLightningBolt::class.java, "LightningBolt", PatcherConfigHandler.lightningID)
+	}
+	
+	// NEI function copy, added check
+	fun addEntityEgg(entity: Class<*>, i: Int, j: Int) {
+		val id = EntityList.classToIDMapping[entity] as Int
+		if (EntityList.entityEggs[id] != null) return
+		EntityList.entityEggs[id] = EntityEggInfo(id, i, j)
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true)
+	fun getCommandAliases(c: CommandGameMode): List<String> {
+		return listOf("gm")
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true)
+	fun getCommandAliases(c: CommandDefaultGameMode): List<String>? {
+		return null
+	}
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
@@ -45,47 +81,10 @@ object ASJHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun addTabCompletionOptions(c: CommandSummon, sender: ICommandSender?, args: Array<String?>): MutableList<*>? {
-		if (args.size != 1) return null
-		
-		val last = args[0]!!
-		val sb = StringBuilder()
-		
-		try {
-			var fullNames: Iterable<String> = func_147182_d(c).toList()
-			val ends = last.matches(Regex(".*\\W$"))
-			if (last.isNotEmpty()) fullNames = fullNames.filter { it.startsWith(last, true) }
-			
-			fullNames = fullNames.mapTo(HashSet()) { mob ->
-				sb.setLength(0)
-				
-				var doBreak = false
-				for ((id, it) in mob.withIndex()) {
-					if (id < last.length) {
-						sb.append(it)
-						continue
-					} else if ("$it".matches(Regex("\\W"))) {
-						if (doBreak) break
-						
-						if (ends) {
-							doBreak = true
-							sb.append(it)
-						} else
-							break
-					} else {
-						sb.append(it)
-					}
-				}
-				
-				sb.toString()
-			}
-			
-			return CommandBase.getListOfStringsMatchingLastWord(args, *fullNames.toTypedArray())
-		} catch (e: Throwable) {
-			e.printStackTrace()
-			return null
-		}
+	@Hook
+	fun onCollideWithPlayer(arrow: EntityArrow, player: EntityPlayer) {
+		if (arrow.canBePickedUp == 0 && player.capabilities.isCreativeMode)
+			arrow.canBePickedUp = 2
 	}
 	
 	@JvmStatic

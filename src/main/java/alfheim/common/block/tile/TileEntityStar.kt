@@ -1,31 +1,29 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.F
+import alexsocol.asjlib.extendables.block.ASJTile
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.network.*
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity
-import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.integration.coloredlights.ColoredLightHelper
 
 /**
  * @author WireSegal
  * Created at 9:32 PM on 2/6/16.
  */
-class TileEntityStar: TileMod() {
+class TileEntityStar: ASJTile() {
 	
 	private val TAG_COLOR = "color"
 	private val TAG_SIZE = "size"
 	var starColor = -1
 	var size = 0.05f
 	
-	override fun writeCustomNBT(nbttagcompound: NBTTagCompound) {
-		nbttagcompound.setInteger(TAG_COLOR, starColor)
-		nbttagcompound.setFloat(TAG_SIZE, size)
+	override fun writeCustomNBT(nbt: NBTTagCompound) {
+		nbt.setInteger(TAG_COLOR, starColor)
+		nbt.setFloat(TAG_SIZE, size)
 	}
 	
-	override fun readCustomNBT(nbttagcompound: NBTTagCompound) {
-		starColor = nbttagcompound.getInteger(TAG_COLOR)
-		size = nbttagcompound.getFloat(TAG_SIZE)
+	override fun readCustomNBT(nbt: NBTTagCompound) {
+		starColor = nbt.getInteger(TAG_COLOR)
+		size = nbt.getFloat(TAG_SIZE)
 	}
 	
 	fun getColor() = starColor
@@ -35,16 +33,5 @@ class TileEntityStar: TileMod() {
 		val g = (getColor() shr 8 and 255).F / 255f
 		val b = (getColor() and 255).F / 255f
 		return ColoredLightHelper.makeRGBLightValue(r, g, b, 1f)
-	}
-	
-	override fun getDescriptionPacket(): Packet {
-		val nbttagcompound = NBTTagCompound()
-		writeCustomNBT(nbttagcompound)
-		return S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound)
-	}
-	
-	override fun onDataPacket(net: NetworkManager?, pkt: S35PacketUpdateTileEntity?) {
-		super.onDataPacket(net, pkt)
-		readCustomNBT(pkt!!.func_148857_g())
 	}
 }

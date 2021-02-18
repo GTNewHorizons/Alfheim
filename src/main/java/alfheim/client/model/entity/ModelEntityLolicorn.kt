@@ -12,7 +12,7 @@ import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
 import kotlin.math.*
 
 @Suppress("MemberVisibilityCanBePrivate")
-class ModelEntityLolicorn: ModelBase() {
+object ModelEntityLolicorn: ModelBase() {
 	
 	val head: ModelRenderer
 	val hair: ModelRenderer

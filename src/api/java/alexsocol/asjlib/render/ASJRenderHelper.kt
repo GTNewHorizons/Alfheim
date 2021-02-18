@@ -199,11 +199,11 @@ object ASJRenderHelper {
 			glow = false
 		}
 		if (cull) {
-			glEnable(GL_CULL_FACE)
+			glEnable (GL_CULL_FACE)
 			cull = false
 		}
 		if (alfa) {
-			glDisable(GL_BLEND)
+			glDisable (GL_BLEND)
 			alfa = false
 		}
 	}

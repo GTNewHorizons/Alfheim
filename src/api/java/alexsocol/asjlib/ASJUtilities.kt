@@ -10,6 +10,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.block.material.Material.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
+import net.minecraft.command.ICommandSender
 import net.minecraft.entity.*
 import net.minecraft.entity.player.*
 import net.minecraft.init.Blocks
@@ -381,32 +382,32 @@ object ASJUtilities {
 		}
 	
 	/**
-	 * Checks whether `e1` is in FOV of `e2`
+	 * Checks whether [target] is NOT in FOV of [observer]
 	 * @author a_dizzle (minecraftforum.net)
 	 */
 	@JvmStatic
-	fun isNotInFieldOfVision(e1: EntityLivingBase, e2: EntityLivingBase): Boolean {
+	fun isNotInFieldOfVision(target: EntityLivingBase, observer: EntityLivingBase): Boolean {
 		//save Entity 2's original rotation variables
-		var rotationYawPrime = e2.rotationYaw
-		var rotationPitchPrime = e2.rotationPitch
+		var rotationYawPrime = observer.rotationYaw
+		var rotationPitchPrime = observer.rotationPitch
 		//make Entity 2 directly face Entity 1
-		faceEntity(e2, e1, 360f, 360f)
+		faceEntity(observer, target, 360f, 360f)
 		//switch values of prime rotation variables with current rotation variables
-		val f = e2.rotationYaw
-		val f1 = e2.rotationPitch
-		e2.rotationYaw = rotationYawPrime
-		e2.rotationPitch = rotationPitchPrime
+		val f = observer.rotationYaw
+		val f1 = observer.rotationPitch
+		observer.rotationYaw = rotationYawPrime
+		observer.rotationPitch = rotationPitchPrime
 		rotationYawPrime = f
 		rotationPitchPrime = f1
 		val x = 60f //this is only a guess, I don't know the actual range
 		val y = 60f //this is only a guess, I don't know the actual range
-		val yawFOVMin = e2.rotationYaw - x
-		val yawFOVMax = e2.rotationYaw + x
-		val pitchFOVMin = e2.rotationPitch - y
-		val pitchFOVMax = e2.rotationPitch + y
+		val yawFOVMin = observer.rotationYaw - x
+		val yawFOVMax = observer.rotationYaw + x
+		val pitchFOVMin = observer.rotationPitch - y
+		val pitchFOVMax = observer.rotationPitch + y
 		val flag1 = yawFOVMin < 0f && (rotationYawPrime >= yawFOVMin + 360f || rotationYawPrime <= yawFOVMax) || yawFOVMax >= 360f && (rotationYawPrime <= yawFOVMax - 360f || rotationYawPrime >= yawFOVMin) || yawFOVMax < 360f && yawFOVMin >= 0f && rotationYawPrime <= yawFOVMax && rotationYawPrime >= yawFOVMin
 		val flag2 = pitchFOVMin <= -180f && (rotationPitchPrime >= pitchFOVMin + 360f || rotationPitchPrime <= pitchFOVMax) || pitchFOVMax > 180f && (rotationPitchPrime <= pitchFOVMax - 360f || rotationPitchPrime >= pitchFOVMin) || pitchFOVMax < 180f && pitchFOVMin >= -180f && rotationPitchPrime <= pitchFOVMax && rotationPitchPrime >= pitchFOVMin
-		return !flag1 || !flag2 || !e2.canEntityBeSeen(e1)
+		return !flag1 || !flag2 || !observer.canEntityBeSeen(target)
 	}
 	
 	/**
@@ -843,12 +844,12 @@ object ASJUtilities {
 	}
 	
 	@JvmStatic
-	fun say(player: EntityPlayer?, message: String, vararg format: Any) {
-		player ?: return
+	fun say(sender: ICommandSender?, message: String, vararg format: Any) {
+		sender ?: return
 		
 		val text = StatCollector.translateToLocalFormatted(message, *format).replace('&', '\u00a7')
-		player.addChatMessage(ChatComponentText(text))
-		log("[${player.commandSenderName}!] $text")
+		sender.addChatMessage(ChatComponentText(text))
+		log("[${sender.commandSenderName}!] $text")
 	}
 	
 	@JvmStatic
@@ -874,8 +875,7 @@ object ASJUtilities {
 		get() = FMLCommonHandler.instance().effectiveSide == Side.SERVER
 	
 	@JvmStatic
-	val isClient
-		get() = !isServer
+	val isClient get() = !isServer
 	
 	@JvmStatic
 	fun toString(nbt: NBTTagCompound): String {

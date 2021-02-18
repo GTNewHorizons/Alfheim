@@ -13,16 +13,14 @@ class RecipeLootInterceptorClear: IRecipe {
 		var inter = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv[i]
-			if (stack != null) {
-				if (stack.item is ItemLootInterceptor) {
-					if (!inter)
-						inter = true
-					else
-						return false
-				} else
-					return false // Found an invalid item, breaking the recipe
-			}
+			val stack = inv[i] ?: continue
+			if (stack.item is ItemLootInterceptor) {
+				if (!inter)
+					inter = true
+				else
+					return false
+			} else
+				return false
 		}
 		
 		return inter
