@@ -1,5 +1,8 @@
 Links to all Alfheim versions. Compiled by @theJ89#6206
 
+BETA-38:
+    Feb 18, 2021 8:15:02 PM (UTC)
+    https://bitbucket.org/AlexSocol/alfheim/raw/908a09c37165448848620633fd0ca48ebab81dd5/release/Alfheim-BETA-38.jar
 BETA-37:
     Aug 30, 2020 7:43:06 PM (UTC)
     https://bitbucket.org/AlexSocol/alfheim/raw/5c50a90d75e6229f00d646ff69c2bb9e871de769/release/Alfheim-BETA-37.jar

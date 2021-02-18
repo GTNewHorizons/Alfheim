@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-37</val>
+		<val>BETA-38</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -10,7 +10,7 @@
 	<version id="UNIVERSAL">
 		<val>$json["Official Alfheim Discord server is here! *",{"text":"click","color":"gold","hoverEvent":{"action":"show_text","value":{"text":"Join discord server","color":"gold"}},"clickEvent":{"action":"open_url","value":"https://discord.gg/dqQXZHq"}},"*"]</val>	</version>
 	<version id="MODULAR">
-		<val>https://bitbucket.org/AlexSocol/alfheim/raw/13e2da59d8ea4ab44a167ea164363def14b83438/modular/Alfheim-Modular-10.jar</val>
+		<val>https://bitbucket.org/AlexSocol/alfheim/raw/48c300ceae3b48c5e03583c8fd2a79a2d8ab19bc/release/Alfheim-Modular-11.jar</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
@@ -107,5 +107,8 @@
 	</version>
 	<version id="BETA-36">
 		<val>Lexicon documentations and some fixes, yay :D</val>
+	</version>
+	<version id="BETA-37">
+		<val>Dupes, bugs, security issues - fixed! And some new stuff :3</val>
 	</version>
 </news>
