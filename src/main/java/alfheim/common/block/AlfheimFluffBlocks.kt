@@ -2,9 +2,9 @@ package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.*
 import alfheim.api.ModInfo
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.AlfheimBlocks.setHarvestLevelI
 import alfheim.common.block.base.BlockStairsMod
-import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
@@ -77,7 +77,10 @@ object AlfheimFluffBlocks {
 		shrineRock = BlockModMeta(Material.rock, 16, ModInfo.MODID, "ShrineRock", AlfheimTab, 10f, harvLvl = 2, resist = 10000f, folder = "decor/")
 		shrinePillar = BlockShrinePillar()
 		shrineRockWhiteStairs = object: BlockStairsMod(shrineRock, 0, "ShrineRockWhiteStairs") {
-			override fun register() { GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name) }
+			override fun register() {
+				GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
+			}
+			
 			override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = null
 		}
 		shrineRockWhiteSlab = BlockRockShrineWhiteSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
@@ -117,7 +120,7 @@ object AlfheimFluffBlocks {
 		shrinePanel = object: BlockPaneMeta(Material.glass, 4, "ShrinePanel", "decor/") {
 			override fun getRenderBlockPass() = 1
 			override fun canPaneConnectTo(world: IBlockAccess, x: Int, y: Int, z: Int, dir: ForgeDirection) = super.canPaneConnectTo(world, x, y, z, dir) || world.getBlock(x, y, z) == shrineGlass
-		}	.setBlockName("ShrinePanel")
+		}.setBlockName("ShrinePanel")
 			.setCreativeTab(AlfheimTab)
 			.setLightOpacity(0)
 			.setHardness(1f)

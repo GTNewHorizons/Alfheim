@@ -1,7 +1,6 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import net.minecraft.entity.player.EntityPlayer
@@ -10,7 +9,7 @@ import net.minecraft.world.World
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 
 class ItemPeacePipe: ItemMod("PeacePipe") {
-
+	
 	init {
 		setFull3D()
 	}

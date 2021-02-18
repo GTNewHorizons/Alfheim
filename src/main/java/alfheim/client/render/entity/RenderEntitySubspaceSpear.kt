@@ -15,8 +15,6 @@ import org.lwjgl.opengl.GL12
 
 object RenderEntitySubspaceSpear: Render() {
 	
-	val subspace = ModelSubspaceSpear()
-	
 	override fun doRender(weapon: Entity, d0: Double, d1: Double, d2: Double, par8: Float, par9: Float) {
 		weapon as EntitySubspaceSpear
 		
@@ -31,7 +29,7 @@ object RenderEntitySubspaceSpear: Render() {
 			glRotatef(weapon.pitch, 1f, 0f, 0f)
 			glScalef(1f, -1f, -1f)
 			mc.renderEngine.bindTexture(getEntityTexture(weapon))
-			subspace.render(0.0625f)
+			ModelSubspaceSpear.render(0.0625f)
 		} else {
 			glPushMatrix()
 			glDisable(GL_CULL_FACE)

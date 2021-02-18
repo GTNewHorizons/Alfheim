@@ -9,20 +9,20 @@ import kotlin.math.*
 
 object AlfheimConfigHandler: ASJConfigHandler() {
 	
-	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "preload"
-	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
-	const val CATEGORY_INT_NEI		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "notenoughitems"
-	const val CATEGORY_INT_OF		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "optifine"
-	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "thaumcraft"
-	const val CATEGORY_INT_TiC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "tconstruct"
-	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
-	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "worldgen"
-	const val CATEGORY_ENTITIES		= CATEGORY_WORLDGEN		+ CATEGORY_SPLITTER + "entities"
-	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
-	const val CATEGORY_ESMODE		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "elvenstory"
-	const val CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo"
-	const val CATEGORY_MMOP			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "potions"
-	const val CATEGORY_HUD			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "hud"
+	const val CATEGORY_PRELOAD = CATEGORY_GENERAL + CATEGORY_SPLITTER + "preload"
+	const val CATEGORY_INTEGRATION = CATEGORY_GENERAL + CATEGORY_SPLITTER + "integration"
+	const val CATEGORY_INT_NEI = CATEGORY_INTEGRATION + CATEGORY_SPLITTER + "notenoughitems"
+	const val CATEGORY_INT_OF = CATEGORY_INTEGRATION + CATEGORY_SPLITTER + "optifine"
+	const val CATEGORY_INT_TC = CATEGORY_INTEGRATION + CATEGORY_SPLITTER + "thaumcraft"
+	const val CATEGORY_INT_TiC = CATEGORY_INTEGRATION + CATEGORY_SPLITTER + "tconstruct"
+	const val CATEGORY_DIMENSION = CATEGORY_GENERAL + CATEGORY_SPLITTER + "alfheim"
+	const val CATEGORY_WORLDGEN = CATEGORY_DIMENSION + CATEGORY_SPLITTER + "worldgen"
+	const val CATEGORY_ENTITIES = CATEGORY_WORLDGEN + CATEGORY_SPLITTER + "entities"
+	const val CATEGORY_POTIONS = CATEGORY_GENERAL + CATEGORY_SPLITTER + "potions"
+	const val CATEGORY_ESMODE = CATEGORY_GENERAL + CATEGORY_SPLITTER + "elvenstory"
+	const val CATEGORY_MMO = CATEGORY_ESMODE + CATEGORY_SPLITTER + "mmo"
+	const val CATEGORY_MMOP = CATEGORY_MMO + CATEGORY_SPLITTER + "potions"
+	const val CATEGORY_HUD = CATEGORY_MMO + CATEGORY_SPLITTER + "hud"
 	
 	var enableElvenStory: Boolean
 		get() = _enableElvenStory
@@ -40,152 +40,144 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 			config.save()
 		}
 	
-	private var _enableElvenStory	= true
-	private var _enableMMO			= true
+	private var _enableElvenStory = true
+	private var _enableMMO = true
 	
 	// PRELOAD
-	var elementiumClusterMeta	= 22
-	var gaiaBarOffset			= 1
-	var gaiaNameColor			= 0x00D5FF
-	var hpHooks					= true
-	var maxParticles			= 4000
-	var modularFilename			= ""
-	var modularThread			= false
-	var modularUpdate			= true
-	var modularUpdateConfirm	= false
-	var primaryClassTransformer	= true
+	var elementiumClusterMeta = 22
+	var gaiaBarOffset = 1
+	var gaiaNameColor = 0x00D5FF
+	var hpHooks = true
+	var modularFilename = ""
+	var modularThread = false
+	var modularUpdate = true
+	var modularUpdateConfirm = false
 	
 	// DIMENSION
-	var biomeIDAlfheim			= 152
-	var destroyPortal			= true
-	var dimensionIDAlfheim		= -105
-	var enableAlfheimRespawn	= true
-	var rainbowPolys			= 360
+	var destroyPortal = true
+	var dimensionIDAlfheim = -105
+	var enableAlfheimRespawn = true
+	var rainbowPolys = 360
 	
 	// WORLDGEN
-	var anomaliesDispersion		= 50
-	var anomaliesUpdate			= 6000
-	var citiesDistance			= 1000
-	var oregenMultiplier		= 3
-	var winterGrassReadyGen		= true
+	var anomaliesDispersion = 50
+	var anomaliesUpdate = 6000
+	var citiesDistance = 1000
+	var oregenMultiplier = 3
+	var winterGrassReadyGen = true
 	
 	// ENTITIES
-	var globalEntityIDs			= true
-	var butterflySpawn			= intArrayOf(10, 1, 2)
-	var chickSpawn				= intArrayOf(10, 4, 4)
-	var cowSpawn				= intArrayOf( 8, 4, 4)
-	var elvesSpawn				= intArrayOf(10, 2, 4)
-	var pigSpawn				= intArrayOf(10, 4, 4)
-	var pixieSpawn				= intArrayOf(10, 1, 2)
-	var sheepSpawn				= intArrayOf(12, 4, 4)
-	var voidCreeper				= intArrayOf(4, 1, 3)
+	var butterflySpawn = intArrayOf(10, 1, 2)
+	var chickSpawn = intArrayOf(10, 4, 4)
+	var cowSpawn = intArrayOf(8, 4, 4)
+	var elvesSpawn = intArrayOf(10, 2, 4)
+	var pigSpawn = intArrayOf(10, 4, 4)
+	var pixieSpawn = intArrayOf(10, 1, 2)
+	var sheepSpawn = intArrayOf(12, 4, 4)
+	var voidCreeper = intArrayOf(4, 1, 3)
 	
 	// OHTER
-	var alfheimSleepExtraCheck	= true
-	var anyavilBlackList		= emptyArray<String>()
-	var authTimeout				= 200
-	var blackLotusDropRate		= 0.05
-	var fancies					= true
-	var floatingTrapDoors		= true
-	var flugelSwapBlackList		= emptyArray<String>()
-	var lightningsSpeed			= 20
-	var lolicornAlfheimOnly		= true
-	var lolicornCost			= 1000
-	var lolicornLife			= 600
-	var looniumOverseed			= false
-	var minimalGraphics			= false
-	var moonbowMaxDmg			= 20
-	var moonbowVelocity			= 0.5f
-	var multibaubleCount		= 6
-	var notifications			= true
-	var numericalMana			= true
-	var realLightning			= false
-	var rocketRide				= 2
-	var searchTabAlfheim		= true
-	var searchTabBotania		= true
-	var schemaArray				= IntArray(17) { -1 + it }
-	var schemaMaxSize			= 64
-	var soulSwordMaxLvl			= Int.MAX_VALUE
-	var storyLines				= 4
-	var tradePortalRate			= 1200
-	var triquetrumBlackList		= emptyArray<String>()
-	var triquetrumMaxDiagonal	= -1.0
-	var triquetrumTiles			= true
-	var uberBlaster				= true
-	var uberSpreaderCapacity	= 24000
-	var uberSpreaderSpeed		= 2400
-	var voidCreepBiomeBlackList	= intArrayOf(8, 9, 14, 15)
-	var wireoverpowered			= true
+	var alfheimSleepExtraCheck = true
+	var anyavilBlackList = emptyArray<String>()
+	var authTimeout = 200
+	var blackLotusDropRate = 0.05
+	var fancies = true
+	var floatingTrapDoors = true
+	var flugelSwapBlackList = emptyArray<String>()
+	var lightningsSpeed = 20
+	var lolicornAlfheimOnly = true
+	var lolicornCost = 1000
+	var lolicornLife = 600
+	var looniumOverseed = false
+	var minimalGraphics = false
+	var moonbowMaxDmg = 20
+	var moonbowVelocity = 0.5f
+	var multibaubleCount = 6
+	var notifications = true
+	var numericalMana = true
+	var realLightning = false
+	var rocketRide = 2
+	var searchTabAlfheim = true
+	var searchTabBotania = true
+	var schemaArray = IntArray(17) { -1 + it }
+	var schemaMaxSize = 64
+	var soulSwordMaxLvl = Int.MAX_VALUE
+	var storyLines = 4
+	var tradePortalRate = 1200
+	var triquetrumBlackList = emptyArray<String>()
+	var triquetrumMaxDiagonal = -1.0
+	var triquetrumTiles = true
+	var uberBlaster = true
+	var uberSpreaderCapacity = 24000
+	var uberSpreaderSpeed = 2400
+	var voidCreepBiomeBlackList = intArrayOf(8, 9, 14, 15)
+	var wireoverpowered = true
 	
 	// INTEGRATION
-	var chatLimiters			= "%s"
-	var interactionSecurity 	= "default"
-	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
+	var chatLimiters = "%s"
+	var poolRainbowCapacity = 1000000 // TilePool.MAX_MANA
 	
 	// NEI
-	var blacklistWither			= true
-	
-	// OptiFine override
-	var clearWater				= false
-	var voidFog					= true
+	var blacklistWither = true
 	
 	// TC INTEGRATION
-	var addAspectsToBotania		= true
-	var addTincturemAspect		= true
-	var thaumTreeSuffusion		= true
+	var addAspectsToBotania = true
+	var addTincturemAspect = true
+	var thaumTreeSuffusion = true
 	
 	// TiC INTEGRATION
-	var materialIDs				= intArrayOf(50, 51, 52, 53, 54, 55, 56, 57, 3, 4)
-	var modifierIDs				= intArrayOf(20)
+	var materialIDs = intArrayOf(50, 51, 52, 53, 54, 55, 56, 57, 3, 4)
+	var modifierIDs = intArrayOf(20)
 	
 	// POTIONS
-	var potionID___COUNTER		= 30
-	var potionIDBerserk			= potionID___COUNTER++
-	var potionIDBleeding		= potionID___COUNTER++
-	var potionIDButterShield	= potionID___COUNTER++
-	var potionIDDeathMark		= potionID___COUNTER++
-	var potionIDDecay			= potionID___COUNTER++
-	var potionIDEternity		= potionID___COUNTER++
-	var potionIDGoldRush		= potionID___COUNTER++
-	var potionIDIceLens			= potionID___COUNTER++
-	var potionIDLeftFlame		= potionID___COUNTER++
-	var potionIDLightningShield	= potionID___COUNTER++
-	var potionIDManaVoid		= potionID___COUNTER++
-	var potionIDNineLifes		= potionID___COUNTER++
-	var potionIDNinja			= potionID___COUNTER++
-	var potionIDNoclip			= potionID___COUNTER++
-	var potionIDOvermage		= potionID___COUNTER++
-	var potionIDPossession		= potionID___COUNTER++
-	var potionIDQuadDamage		= potionID___COUNTER++
-	var potionIDSacrifice		= potionID___COUNTER++
-	var potionIDShowMana		= potionID___COUNTER++
-	var potionIDSoulburn		= potionID___COUNTER++
-	var potionIDStoneSkin		= potionID___COUNTER++
-	var potionIDTank			= potionID___COUNTER++
-	var potionIDThrow			= potionID___COUNTER++
-	var potionIDWellOLife		= potionID___COUNTER++
+	var potionID___COUNTER = 30
+	var potionIDBerserk = potionID___COUNTER++
+	var potionIDBleeding = potionID___COUNTER++
+	var potionIDButterShield = potionID___COUNTER++
+	var potionIDDeathMark = potionID___COUNTER++
+	var potionIDDecay = potionID___COUNTER++
+	var potionIDEternity = potionID___COUNTER++
+	var potionIDGoldRush = potionID___COUNTER++
+	var potionIDIceLens = potionID___COUNTER++
+	var potionIDLeftFlame = potionID___COUNTER++
+	var potionIDLightningShield = potionID___COUNTER++
+	var potionIDManaVoid = potionID___COUNTER++
+	var potionIDNineLifes = potionID___COUNTER++
+	var potionIDNinja = potionID___COUNTER++
+	var potionIDNoclip = potionID___COUNTER++
+	var potionIDOvermage = potionID___COUNTER++
+	var potionIDPossession = potionID___COUNTER++
+	var potionIDQuadDamage = potionID___COUNTER++
+	var potionIDSacrifice = potionID___COUNTER++
+	var potionIDShowMana = potionID___COUNTER++
+	var potionIDSoulburn = potionID___COUNTER++
+	var potionIDStoneSkin = potionID___COUNTER++
+	var potionIDTank = potionID___COUNTER++
+	var potionIDThrow = potionID___COUNTER++
+	var potionIDWellOLife = potionID___COUNTER++
 	
 	// Elven Story
-	var bonusChest				= false
-	var bothSpawnStructures		= false
-	var flightTime				= 12000
-	var flightRecover			= 1.0
-	var wingsBlackList			= IntArray(0)
-	val zones					= Array(9) { Vector3(0.0) }
+	var bonusChest = false
+	var bothSpawnStructures = false
+	var flightTime = 12000
+	var flightRecover = 1.0
+	var wingsBlackList = IntArray(0)
+	val zones = Array(9) { Vector3(0.0) }
 	
 	// MMO
-	var deathScreenAddTime		= 1200
-	var disabledSpells			= emptyArray<String>()
-	var frienldyFire			= false
-	var raceManaMult			= 2.toByte()
-	var maxPartyMembers			= 5
-	var superSpellBosses		= false
+	var deathScreenAddTime = 1200
+	var disabledSpells = emptyArray<String>()
+	var disableWireframe = false
+	var frienldyFire = false
+	var raceManaMult = 2.toByte()
+	var maxPartyMembers = 5
+	var superSpellBosses = false
 	
 	// MMO HUD
-	var partyHUDScale			= 1.0
-	var selfHealthUI			= true
-	var spellsFadeOut			= false
-	var targetUI				= true
+	var partyHUDScale = 1.0
+	var selfHealthUI = true
+	var spellsFadeOut = false
+	var targetUI = true
 	
 	override fun addCategories() {
 		addCategory(CATEGORY_PRELOAD, "Alfheim coremod and preload settings")
@@ -195,7 +187,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		addCategory(CATEGORY_POTIONS, "Potion IDs")
 		addCategory(CATEGORY_INTEGRATION, "Cross-mods and modpacks integration")
 		addCategory(CATEGORY_INT_NEI, "NEI integration")
-		addCategory(CATEGORY_INT_OF, "OptiFine integration")
+		addCategory(CATEGORY_INT_OF, "OptiFine override")
 		addCategory(CATEGORY_INT_TC, "Thaumcraft integration")
 		addCategory(CATEGORY_INT_TiC, "Tinkers' Construct integration")
 		addCategory(CATEGORY_ESMODE, "Elvenstory Mode optional features")
@@ -204,7 +196,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		addCategory(CATEGORY_MMOP, "Potion IDs")
 	}
 	
-	override fun syncConfig() {
+	override fun readProperties() {
 		_enableElvenStory = loadProp(CATEGORY_PRELOAD, "enableElvenStory", _enableElvenStory, true, "Set this to false to disable ESM and MMO")
 		_enableMMO = _enableElvenStory && loadProp(CATEGORY_PRELOAD, "enableMMO", _enableMMO, true, "Set this to false to disable MMO")
 		
@@ -212,14 +204,11 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		gaiaBarOffset = loadProp(CATEGORY_PRELOAD, "gaiaBarOffset", gaiaBarOffset, true, "Gaia hp and bg boss bar variant (from default texture pairs)")
 		gaiaNameColor = loadProp(CATEGORY_PRELOAD, "gaiaNameColor", gaiaNameColor, false, "Gaia name color on boss bar")
 		hpHooks = loadProp(CATEGORY_PRELOAD, "hpHooks", hpHooks, true, "Toggles hooks to vanilla health system. Set this to false if you have any issues with other systems")
-		maxParticles = loadProp(CATEGORY_PRELOAD, "maxParticles", maxParticles, true, "How many [any] particles can there be at one time (defaults to vanilla value)")
 		modularFilename = loadProp(CATEGORY_PRELOAD, "modularFilename", modularFilename, true, "Custom name for Alfheim Modular .jar file")
 		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
 		modularUpdate = loadProp(CATEGORY_PRELOAD, "modularUpdate", modularUpdate, true, "[HIGHLY !NOT! RECOMMENDED - can cause me be angry at you] Set this to false if you REALLY don't want Alfheim Modular to be downloaded/updated automatically")
 		modularUpdateConfirm = loadProp(CATEGORY_PRELOAD, "modularUpdateConfirm", modularUpdateConfirm, true, "Set this to true if you are totally 146% sure you don't want modular auto updates")
-		primaryClassTransformer = loadProp(CATEGORY_PRELOAD, "primaryClassTransformer", primaryClassTransformer, true, "Set this to false if some mod in your modpack is also using GloomyFolken's hooklib and there are conflicts")
 		
-		biomeIDAlfheim = loadProp(CATEGORY_DIMENSION, "biomeIDAlfheim", biomeIDAlfheim, true, "Biome ID for standart biome")
 		destroyPortal = loadProp(CATEGORY_DIMENSION, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
 		dimensionIDAlfheim = loadProp(CATEGORY_DIMENSION, "dimensionIDAlfheim", dimensionIDAlfheim, true, "Dimension ID for Alfheim")
 		enableAlfheimRespawn = loadProp(CATEGORY_DIMENSION, "enableAlfheimRespawn", enableAlfheimRespawn, false, "Set this to false to disable respawning in Alfheim")
@@ -231,7 +220,6 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
 		winterGrassReadyGen = loadProp(CATEGORY_WORLDGEN, "winterGrassReadyGen", winterGrassReadyGen, false, "Set this to false to prevent ready generation snow grass instead of regular")
 		
-		globalEntityIDs = loadProp(CATEGORY_ENTITIES, "globalEntityIDs", globalEntityIDs, true, "Set this to false to use local mod entity IDs")
 		butterflySpawn = loadProp(CATEGORY_ENTITIES, "butterflySpawn", butterflySpawn, false, "Butterfly spawn weight (chance), min and max group count")
 		cowSpawn = loadProp(CATEGORY_ENTITIES, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
 		chickSpawn = loadProp(CATEGORY_ENTITIES, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
@@ -246,7 +234,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		authTimeout = loadProp(CATEGORY_GENERAL, "authTimeout", authTimeout, false, "Time limit for client to send authentication credentials", 100, 600)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
-		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to false forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")
+		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to false to forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")
 		flugelSwapBlackList = loadProp(CATEGORY_GENERAL, "flugelSwapBlackList", flugelSwapBlackList, false, "Blacklist for items that flugel can't swap [modid:name]", false)
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
@@ -265,7 +253,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, false, "Which schemas are allowed to be generated", false)
 		schemaMaxSize = loadProp(CATEGORY_GENERAL, "schemaMaxSize", schemaMaxSize, false, "Max schema cuboid side length")
-		soulSwordMaxLvl = loadProp(CATEGORY_GENERAL, "soulSwordMaxLvl", soulSwordMaxLvl, false, "Soul Sword max level")
+		soulSwordMaxLvl = loadProp(CATEGORY_GENERAL, "soulSwordMaxLvl", soulSwordMaxLvl, false, "Sword of Ragnarok max level")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
 		triquetrumBlackList = loadProp(CATEGORY_GENERAL, "triquetrumBlackList", triquetrumBlackList, false, "Blacklist for blocks that triquetrum can't swap [modid:name]", false)
@@ -278,20 +266,16 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
-		interactionSecurity = loadProp(CATEGORY_INTEGRATION, "interactionSecurity", interactionSecurity, false, "Region security manager. Visit Alfheim wiki for more info")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity (for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools)")
 		
-		clearWater = loadProp(CATEGORY_INT_OF, "clearWater", clearWater, false, "[OF override] Set this to true for clear, transparent water")
-		voidFog = loadProp(CATEGORY_INT_OF, "voidFog", voidFog, false, "[OF override] Set this to false to disable void fog")
+		blacklistWither = loadProp(CATEGORY_INT_NEI, "NEI.blacklistWither", blacklistWither, true, "Set this to false to make Wither spawner visible")
 		
-		blacklistWither = loadProp(CATEGORY_INT_NEI, "NEI.blacklistWither", blacklistWither, true, "[NEI] Set this to false to make Wither spawner visible")
+		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "Set this to false to disable adding aspects to Botania")
+		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "Set this to false to use Sensus instead of Color aspect")
+		thaumTreeSuffusion = loadProp(CATEGORY_INT_TC, "TC.treeCrafting", thaumTreeSuffusion, true, "[GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
 		
-		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")
-		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
-		thaumTreeSuffusion = loadProp(CATEGORY_INT_TC, "TC.treeCrafting", thaumTreeSuffusion, true, "[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
-		
-		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Livingrock, Redstring, Manastring materials respectively")
-		modifierIDs = loadProp(CATEGORY_INT_TiC, "TiC.modifierIDs", modifierIDs, true, "[TiC] IDs for ManaCore modifiers respectively")
+		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Livingrock, Redstring, Manastring materials respectively")
+		modifierIDs = loadProp(CATEGORY_INT_TiC, "TiC.modifierIDs", modifierIDs, true, "IDs for ManaCore modifiers respectively")
 		
 		potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")
 		potionIDBleeding = loadProp(CATEGORY_MMOP, "potionIDBleeding", potionIDBleeding, true, "Potion id for Bleeding")
@@ -326,6 +310,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
 		disabledSpells = loadProp(CATEGORY_MMO, "disabledSpells", disabledSpells, true, "List of spell name IDs that won't be registered", false)
+		disableWireframe = loadProp(CATEGORY_MMO, "disableWireframe", disableWireframe, false, "Set this to true to disable rendering block wireframe in noclip mode")
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
 		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult.I, false, "Mana cost multiplier for spells with not your affinity").toByte()
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")
@@ -335,10 +320,6 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		selfHealthUI = loadProp(CATEGORY_HUD, "selfHealthUI", selfHealthUI, false, "Set this to false to hide player's healthbar")
 		spellsFadeOut = loadProp(CATEGORY_HUD, "spellsFadeOut", spellsFadeOut, false, "Set this to true to make spell UI fade out when not active")
 		targetUI = loadProp(CATEGORY_HUD, "targethUI", targetUI, false, "Set this to false to hide target's healthbar")
-		
-		if (config.hasChanged()) {
-			config.save()
-		}
 	}
 	
 	fun initWorldCoordsForElvenStory(save: String) {

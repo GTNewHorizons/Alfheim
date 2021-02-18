@@ -1,10 +1,10 @@
 package alfheim
 
-import alexsocol.asjlib.command.CommandDimTP
 import alfheim.api.ModInfo.MODID
 import alfheim.common.core.asm.AlfheimModularLoader
 import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
+import alfheim.common.core.handler.ragnarok.RagnarokHandler
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.core.util.*
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
@@ -12,7 +12,6 @@ import alfheim.common.integration.thaumcraft.*
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig
 import alfheim.common.integration.waila.WAILAAlfheimConfig
-import alfheim.common.item.relic.ItemGleipnir
 import alfheim.common.network.*
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.Mod.*
@@ -25,10 +24,12 @@ import vazkii.botania.common.Botania
 import java.util.*
 
 @Suppress("UNUSED_PARAMETER")
-@Mod(modid = MODID, version = "BETA", useMetadata = true, guiFactory = "$MODID.client.gui.GUIFactory")
+@Mod(modid = MODID, version = "BETA", dependencies = "required-after:Botania", useMetadata = true, guiFactory = "$MODID.client.gui.GUIFactory")
 class AlfheimCore {
 	
 	companion object {
+		
+		const val ENABLE_RAGNAROK = false
 		
 		@Instance(MODID)
 		lateinit var instance: AlfheimCore
@@ -51,10 +52,13 @@ class AlfheimCore {
 		var TravellersGearLoaded = false
 		
 		val jingleTheBells: Boolean
-		val winter: Boolean
+		
+		// do not reassign this unless you know what you are doing
+		var winter: Boolean
 		
 		/** Today's month */
 		val month: Int
+		
 		/** Today's day of month */
 		val date: Int
 		
@@ -117,18 +121,17 @@ class AlfheimCore {
 	fun starting(e: FMLServerStartingEvent) {
 		save = e.server.entityWorld.saveHandler.worldDirectory.absolutePath
 		if (AlfheimConfigHandler.enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
-		ItemGleipnir.loadLeases(save)
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
-		e.registerServerCommand(CommandAlfheim())
-		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo())
-		CommandDimTP.register(e)
+		if (ENABLE_RAGNAROK) RagnarokHandler.load(save)
+		e.registerServerCommand(CommandAlfheim)
+		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo)
 	}
 	
 	@EventHandler
 	fun stopping(e: FMLServerStoppingEvent) {
 		CardinalSystem.save(save)
-		ItemGleipnir.saveLeases(save)
+		if (ENABLE_RAGNAROK) RagnarokHandler.save(save)
 	}
 	
 	fun registerPackets() {

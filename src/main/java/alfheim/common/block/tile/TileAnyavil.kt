@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.extendables.block.TileItemContainer
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
@@ -15,7 +15,6 @@ import net.minecraft.inventory.ISidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
-import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.World
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.client.core.handler.HUDHandler
@@ -32,11 +31,11 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 	fun onBurstCollision(burst: IManaBurst, world: World) {
 		val item = item
 		if (burst.isFake) return
-		if (item == null) return
+		if (item == null || !item.item.isRepairable) return
 		if (GameRegistry.findUniqueIdentifierFor(item.item)?.toString() ?: "null:null" in AlfheimConfigHandler.anyavilBlackList) return
 		if (burst.color != -0xd7f5a) return
 		
-		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((xCoord - 1).D, yCoord.D, (zCoord - 1).D, (xCoord + 2).D, (yCoord + 2).D, (zCoord + 2).D).expand(5.0, 3.0, 5.0))
+		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, boundingBox(3))
 		for (eitem in eitems) {
 			eitem as EntityItem
 			if (eitem.isDead) continue
@@ -69,7 +68,7 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 		for (i in 0..23) Botania.proxy.wispFX(world, xCoord.D + 0.5 + (worldObj.rand.nextFloat() / 5f - 0.1f).D, yCoord + 1.5, zCoord.D + 0.5 + (worldObj.rand.nextFloat() / 5f - 0.1f).D, col[0], col[1], col[2], 0.25f, 0f, worldObj.rand.nextFloat() * 0.2f - 0.1f, 0f)
 	}
 	
-	fun onWanded(player: EntityPlayer?, wand: ItemStack): Boolean {
+	fun onWanded(player: EntityPlayer?): Boolean {
 		if (player == null) return false
 		
 		if (!worldObj.isRemote) {
@@ -79,7 +78,7 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 			if (player is EntityPlayerMP) player.playerNetServerHandler.sendPacket(S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound))
 		}
 		
-		worldObj.playSoundAtEntity(player, "botania:ding", 0.11f, 1f)
+		player.playSoundAtEntity("botania:ding", 0.11f, 1f)
 		
 		return true
 	}

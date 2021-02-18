@@ -75,7 +75,7 @@ class BlockAnimatedTorch: BlockContainerMod(Material.circuits), IHourglassTrigge
 	override fun getRenderType() = LibRenderIDs.idAniTorch
 	override fun isOpaqueCube() = false
 	override fun isNormalCube() = false
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.aniTorch
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.animatedTorch
 	override fun createNewTileEntity(p_149915_1_: World, p_149915_2_: Int) = TileAnimatedTorch()
 	
 	override fun onBlockDestroyedByPlayer(world: World, x: Int, y: Int, z: Int, meta: Int) {

@@ -78,10 +78,10 @@ object CardinalSystemClient {
 			if (PlayerSegmentClient.party == null) PlayerSegmentClient.party = Party(mc.thePlayer)
 			
 			//while (true) {
-				PlayerSegmentClient.partyIndex = ++PlayerSegmentClient.partyIndex % PlayerSegmentClient.party!!.count
-				val team = PlayerSegmentClient.party!![PlayerSegmentClient.partyIndex]
-				PlayerSegmentClient.target = team
-				// if (team != null && Vector3.entityDistancePlane(mc.thePlayer, PlayerSegmentClient.target!!) < (if (team is IBossDisplayData) 128 else 32)) break
+			PlayerSegmentClient.partyIndex = ++PlayerSegmentClient.partyIndex % PlayerSegmentClient.party!!.count
+			val team = PlayerSegmentClient.party!![PlayerSegmentClient.partyIndex]
+			PlayerSegmentClient.target = team
+			// if (team != null && Vector3.entityDistancePlane(mc.thePlayer, PlayerSegmentClient.target!!) < (if (team is IBossDisplayData) 128 else 32)) break
 			//}
 			
 			return PlayerSegmentClient.isParty
@@ -134,6 +134,7 @@ object CardinalSystemClient {
 		
 		val coolDown = HashMap<String, Int>()
 		var hotSpells = IntArray(12)
+		
 		// current and max spell init time (for blue bar)
 		var init: Int = 0
 		var initM: Int = 0

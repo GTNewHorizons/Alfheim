@@ -63,9 +63,9 @@ import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
 import alfheim.common.item.AlfheimItems.pixieAttractor
 import alfheim.common.item.AlfheimItems.realitySword
-import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
-import alfheim.common.item.AlfheimItems.rodIce
+import alfheim.common.item.AlfheimItems.rodMuspelheim
+import alfheim.common.item.AlfheimItems.rodNiflheim
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.Loader
 import net.minecraft.block.Block
@@ -94,7 +94,7 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimThaumOre, 1, 4), AspectList().add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("terra"), 3).add(Aspect.getAspect("vitreus"), 2))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimThaumOre, 1, 5), AspectList().add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("ordo"), 3).add(Aspect.getAspect("vitreus"), 2))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimThaumOre, 1, 6), AspectList().add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("perditio"), 3).add(Aspect.getAspect("vitreus"), 2))
-
+		
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenOre, 1, 0), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("lucrum"), 3).add(Aspect.getAspect("vitreus"), 3))    // dragonstone
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenOre, 1, 1), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("metallum"), 3))                                                // elementium
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenOre, 1, 2), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("vitreus"), 3))                                                // quartz
@@ -119,7 +119,7 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimPylon, 1, 0), AspectList().add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("vitreus"), 4))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimPylon, 1, 1), AspectList().add(Aspect.getAspect("auram"), 2).add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("potentia"), 2).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("vitreus"), 4))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimPylon, 1, 2), AspectList().add(Aspect.getAspect("spiritus"), 2).add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("potentia"), 6).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("vitreus"), 4).add(Aspect.getAspect("alienis"), 3))
-
+		
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 0), AspectList().add(Aspect.getAspect("alienis"), 8).add(Aspect.getAspect("iter"), 4).add(Aspect.getAspect("lux"), 8).add(Aspect.getAspect("ordo"), 8).add(Aspect.getAspect("praecantatio"), 8))                                                // Intercore
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 1), AspectList().add(Aspect.getAspect("lucrum"), 4).add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("potentia"), 4).add(Aspect.getAspect("praecantatio"), 6))                                                                                            // Infuscore
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 2), AspectList().add(Aspect.getAspect("alienis"), 1).add(Aspect.getAspect("lucrum"), 3).add(Aspect.getAspect("metallum"), 4).add(Aspect.getAspect("praecantatio"), 8))                                                                                            // Elvorium
@@ -136,20 +136,20 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 13), AspectList().add(Aspect.getAspect("auram"), 3).add(Aspect.getAspect("praecantatio"), 16).add(Aspect.getAspect("terra"), 2).add(Aspect.getAspect("gelum"), 12))                                                                                            // Ice rune
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 14), AspectList().add(Aspect.getAspect("arbor"), 1).add(Aspect.getAspect("praecantatio"), 2))                                                                                            // Twig
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalHelmet), AspectList().add(Aspect.getAspect("metallum"), 15).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("tutamen"), 5).add(Aspect.getAspect("aqua"), 8))
-
+		
 		elementalHelmetRevealing?.let {
 			ThaumcraftApi.registerObjectTag(ItemStack(it), AspectList().add(Aspect.getAspect("metallum"), 15).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("tutamen"), 5).add(Aspect.getAspect("aqua"), 8).add(Aspect.getAspect("sensus"), 4))
 		}
-
+		
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalChestplate), AspectList().add(Aspect.getAspect("metallum"), 24).add(Aspect.getAspect("praecantatio"), 18).add(Aspect.getAspect("tutamen"), 8).add(Aspect.getAspect("terra"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalLeggings), AspectList().add(Aspect.getAspect("metallum"), 21).add(Aspect.getAspect("praecantatio"), 16).add(Aspect.getAspect("tutamen"), 7).add(Aspect.getAspect("ignis"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalBoots), AspectList().add(Aspect.getAspect("metallum"), 12).add(Aspect.getAspect("praecantatio"), 10).add(Aspect.getAspect("tutamen"), 4).add(Aspect.getAspect("aer"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumHelmet), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 35).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 15).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
-
+		
 		elvoriumHelmetRevealing?.let {
 			ThaumcraftApi.registerObjectTag(ItemStack(it), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 35).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 15).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
 		}
-
+		
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumChestplate), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 56).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 24).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumLeggings), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 49).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 21).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumBoots), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 28).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 12).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
@@ -157,8 +157,8 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(livingrockPickaxe), AspectList().add(Aspect.getAspect("arbor"), 1).add(Aspect.getAspect("perditio"), 2).add(Aspect.getAspect("perfodio"), 2).add(Aspect.getAspect("terra"), 2))
 		ThaumcraftApi.registerObjectTag(ItemStack(manasteelHoe), AspectList().add(Aspect.getAspect("meto"), 4).add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("praecantatio"), 1))
 		ThaumcraftApi.registerObjectTag(ItemStack(elementiumHoe), AspectList().add(Aspect.getAspect("meto"), 4).add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("praecantatio"), 4))
-		ThaumcraftApi.registerObjectTag(ItemStack(rodFire), AspectList().add(Aspect.getAspect("auram"), 32).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("potentia"), 24).add(Aspect.getAspect("instrumentum"), 8).add(Aspect.getAspect("metallum"), 8).add(Aspect.getAspect("ignis"), 16))
-		ThaumcraftApi.registerObjectTag(ItemStack(rodIce), AspectList().add(Aspect.getAspect("auram"), 32).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("potentia"), 24).add(Aspect.getAspect("instrumentum"), 8).add(Aspect.getAspect("metallum"), 8).add(Aspect.getAspect("gelum"), 16))
+		ThaumcraftApi.registerObjectTag(ItemStack(rodMuspelheim), AspectList().add(Aspect.getAspect("auram"), 32).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("potentia"), 24).add(Aspect.getAspect("instrumentum"), 8).add(Aspect.getAspect("metallum"), 8).add(Aspect.getAspect("ignis"), 16))
+		ThaumcraftApi.registerObjectTag(ItemStack(rodNiflheim), AspectList().add(Aspect.getAspect("auram"), 32).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("potentia"), 24).add(Aspect.getAspect("instrumentum"), 8).add(Aspect.getAspect("metallum"), 8).add(Aspect.getAspect("gelum"), 16))
 		ThaumcraftApi.registerObjectTag(ItemStack(excaliber), AspectList().add(Aspect.getAspect("motus"), 16).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("praecantatio"), 16).add(Aspect.getAspect("telum"), 16))
 		ThaumcraftApi.registerObjectTag(ItemStack(mask), AspectList().add(Aspect.getAspect("alienis"), 16).add(Aspect.getAspect("fames"), 16).add(Aspect.getAspect("sano"), 16).add(Aspect.getAspect("tenebrae"), 16).add(Aspect.getAspect("tutamen"), 16).add(Aspect.getAspect("vacuos"), 16))
 		ThaumcraftApi.registerObjectTag(ItemStack(flugelSoul), AspectList().add(Aspect.getAspect("auram"), 16).add(Aspect.getAspect("alienis"), 16).add(Aspect.getAspect("iter"), 16).add(Aspect.getAspect("ordo"), 16).add(Aspect.getAspect("praecantatio"), 16).add(Aspect.getAspect("spiritus"), 16))
@@ -820,6 +820,7 @@ object BotaniaTCAspects {
 object TCHandlerShadowFoxAspects {
 	
 	class RainbowAspect(name: String, components: Array<Aspect>, texture: ResourceLocation, blend: Int): Aspect(name, 0xFFFFFF, components, texture, blend) {
+		
 		override fun getColor(): Int = ItemIridescent.rainbowColor()
 	}
 	

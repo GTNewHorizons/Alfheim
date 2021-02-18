@@ -95,7 +95,7 @@ object SoulRestructurizationHandler {
 	fun onGaiaDied(e: LivingDeathEvent) {
 		val gaia = e.entity as? EntityDoppleganger ?: return
 		val world = gaia.worldObj
-		val (x, y, z) = arrayOf(gaia.source.posX, gaia.source.posY, gaia.source.posZ)
+		val (x, y, z) = gaia.source
 		val infuser = world.getTileEntity(x, y + 2, z) as? TileManaInfuser ?: return
 		
 		if (infuser.blockMetadata != 2) return
@@ -104,7 +104,7 @@ object SoulRestructurizationHandler {
 		
 		run exp@{
 			if (!world.isRemote) {
-				val soul = brewer.get(0)
+				val soul = brewer[0]
 				
 				if (soul?.item === AlfheimItems.flugelSoul) {
 					if (ItemFlugelSoul.getBlocked(soul) > 0) {

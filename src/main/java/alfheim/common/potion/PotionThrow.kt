@@ -1,12 +1,11 @@
 package alfheim.common.potion
 
-import alexsocol.asjlib.*
+import alexsocol.asjlib.expand
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellThrow
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.DamageSource
@@ -18,7 +17,7 @@ class PotionThrow: PotionAlfheim(AlfheimConfigHandler.potionIDThrow, "throw", fa
 	override fun performEffect(target: EntityLivingBase, mod: Int) {
 		if (!AlfheimConfigHandler.enableMMO) return
 		
-		val v = Vector3(target.lookVec).mul((mod + 1).D)
+		val v = Vector3(target.lookVec).mul(mod + 1)
 		target.motionX = v.x
 		target.motionY = v.y
 		target.motionZ = v.z

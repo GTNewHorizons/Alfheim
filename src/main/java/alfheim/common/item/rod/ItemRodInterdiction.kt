@@ -1,16 +1,16 @@
 package alfheim.common.item.rod
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
-import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -82,16 +82,16 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 			if (player != null && !InteractionSecurity.canDoSomethingWithEntity(player, entity)) continue
 			
 			val xDif = entity.posX - x
-				val yDif = entity.posY - (y + 1)
-				val zDif = entity.posZ - z
-				val dist = sqrt(xDif * xDif + yDif * yDif + zDif * zDif)
-				if (dist <= range) {
-					entity.motionX = velocity * xDif
-					entity.motionY = velocity * yDif
-					entity.motionZ = velocity * zDif
-					entity.fallDistance = 0f
-					flag = true
-				}
+			val yDif = entity.posY - (y + 1)
+			val zDif = entity.posZ - z
+			val dist = sqrt(xDif * xDif + yDif * yDif + zDif * zDif)
+			if (dist <= range) {
+				entity.motionX = velocity * xDif
+				entity.motionY = velocity * yDif
+				entity.motionZ = velocity * zDif
+				entity.fallDistance = 0f
+				flag = true
+			}
 		}
 		return flag
 	}
@@ -120,20 +120,20 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 			val entities = world.getEntitiesWithinAABBExcludingEntity(exclude, AxisAlignedBB.getBoundingBox(x - range, y - range, z - range, x + range, y + range, z + range), PLAYER_SELECTOR) as List<Entity>
 			
 			if (pushEntities(x, y, z, range, velocity, player, entities)) {
-				if (count % 3 == 0) world.playSoundAtEntity(player, "${ModInfo.MODID}:wind", 0.4F, 1F)
+				if (count % 3 == 0) player.playSoundAtEntity("${ModInfo.MODID}:wind", 0.4F, 1F)
 				ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
 			}
 		}
 	}
- 
+	
 	fun getCost(prowess: Boolean, priest: Boolean) =
-        COST + if (prowess) PROWESS_COST else 0 + if (priest) PRIEST_COST else 0
+		COST + if (prowess) PROWESS_COST else 0 + if (priest) PRIEST_COST else 0
 	
 	fun getVelocity(prowess: Boolean, priest: Boolean) =
 		VELOCITY + if (prowess) PROWESS_VELOCITY else 0.0 + if (priest) PRIEST_VELOCITY else 0.0
 	
 	fun getRange(prowess: Boolean, priest: Boolean) =
-        RANGE + if (prowess) PROWESS_RANGE else 0 + if (priest) PRIEST_RANGE else 0
+		RANGE + if (prowess) PROWESS_RANGE else 0 + if (priest) PRIEST_RANGE else 0
 	
 	override fun onAvatarUpdate(tile: IAvatarTile, stack: ItemStack) {
 		val te = tile as TileEntity
@@ -174,11 +174,13 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 		const val PRIEST_RANGE = 2
 		
 		object PLAYER_SELECTOR: IEntitySelector {
+			
 			override fun isEntityApplicable(e: Entity) =
 				(e is EntityLivingBase && (e !is EntityDoppleganger || e !is EntityFlugel)) || (e is IProjectile && e !is IManaBurst)
 		}
 		
 		object AVATAR_SELECTOR: IEntitySelector {
+			
 			override fun isEntityApplicable(e: Entity) =
 				e is EntityLivingBase && e !is EntityPlayer && e !is EntityDoppleganger && e !is EntityFlugel
 		}

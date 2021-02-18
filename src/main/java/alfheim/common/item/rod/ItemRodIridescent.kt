@@ -26,9 +26,12 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 	val COST = 150
 	
 	companion object {
-		fun place(stack: ItemStack, player: EntityPlayer, world: World,
-				  par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float,
-				  par10: Float, toPlace: ItemStack?, cost: Int, r: Float, g: Float, b: Float): Boolean {
+		
+		fun place(
+			stack: ItemStack, player: EntityPlayer, world: World,
+			par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float,
+			par10: Float, toPlace: ItemStack?, cost: Int, r: Float, g: Float, b: Float,
+		): Boolean {
 			
 			if (ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) {
 				val dir = ForgeDirection.getOrientation(par7)
@@ -73,7 +76,7 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 				if (stack.meta >= 17) stack.meta = 0 else stack.meta++
 				damage = stack.meta
 			} else if (damage >= 17) damage = 0 else damage++
-			world.playSoundAtEntity(player, "botania:ding", 0.1F, 1F)
+			player.playSoundAtEntity("botania:ding", 0.1F, 1F)
 			blockstack = dirtStack(damage)
 			blockstack!!.setStackDisplayName(StatCollector.translateToLocal("misc.${ModInfo.MODID}.color.$damage"))
 			ItemsRemainingRenderHandler.set(blockstack, -2)

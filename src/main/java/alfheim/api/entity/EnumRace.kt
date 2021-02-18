@@ -82,7 +82,7 @@ enum class EnumRace {
 			if (0 > id || id > values().size) HUMAN else values()[id.I]
 		
 		fun ensureExistance(player: EntityPlayer) {
-			if (player.getAttributeMap().getAttributeInstanceByName(RACE.attributeUnlocalizedName) == null) registerRace(player)
+			if (player.getEntityAttribute(RACE) == null) registerRace(player)
 		}
 		
 		private fun registerRace(player: EntityPlayer) {

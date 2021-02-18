@@ -11,7 +11,7 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.util.ForgeDirection
 
-object RenderBlockShrinePanel : ISimpleBlockRenderingHandler {
+object RenderBlockShrinePanel: ISimpleBlockRenderingHandler {
 	
 	override fun renderWorldBlock(world: IBlockAccess?, x: Int, y: Int, z: Int, block: Block?, modelId: Int, renderer: RenderBlocks?) =
 		(world != null && block is BlockPaneMeta && renderer != null) && renderBlockStainedGlassPane(world, block, x, y, z, renderer)

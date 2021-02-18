@@ -2,7 +2,7 @@ package alfheim.common.block
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.magtrees.sealing.ISoundSilencer
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -22,5 +22,5 @@ class BlockAmplifier: BlockMod(Material.wood), ISoundSilencer, ILexiconable {
 	
 	override fun getVolumeMultiplier(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17): Float = 5f
 	
-	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.amplifier
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.amplifier
 }

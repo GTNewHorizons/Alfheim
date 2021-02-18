@@ -6,7 +6,7 @@ import alfheim.api.spell.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellWindBlades
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer

@@ -2,6 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.api.AlfheimAPI
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
@@ -18,7 +19,6 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.stats.Achievement
 import net.minecraft.util.*
 import net.minecraft.world.World
-import net.minecraftforge.common.util.EnumHelper
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.item.IRelic
@@ -33,7 +33,7 @@ import java.util.*
  * This code is completely copied from 208th Botania version and fully made by Vazkii or whoever... :D<br></br>
  * Hope all required stuff is already done by Botania using iterfaces and stuff...
  */
-class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILensEffect {
+class ItemExcaliber: ItemManasteelSword(AlfheimAPI.EXCALIBER, "Excaliber"), IRelic, ILensEffect {
 	
 	internal lateinit var achievement: Achievement
 	
@@ -51,11 +51,13 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 				if (!world.isRemote && inHand && player.swingProgress == check && ManaItemHandler.requestManaExact(stack, player, 1, true)) {
 					val burst = getBurst(player, stack!!)
 					world.spawnEntityInWorld(burst)
-					world.playSoundAtEntity(player, "botania:terraBlade", 0.4f, 1.4f)
+					player.playSoundAtEntity("botania:terraBlade", 0.4f, 1.4f)
 				}
 			}
 		}
 	}
+	
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack?) = false
 	
 	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, infoList: List<Any?>, advTooltip: Boolean) =
 		ItemRelic.addBindInfo(infoList, stack, player)
@@ -141,7 +143,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 					val mana = burst.mana
 					if (mana >= cost) {
 						burst.mana = mana - cost
-						var damage = 4f + toolMaterial.damageVsEntity
+						var damage = 4f + AlfheimAPI.EXCALIBER.damageVsEntity
 						if (!burst.isFake && !entity.worldObj.isRemote) {
 							val player = living.worldObj.getPlayerEntityByName(attacker)
 							val mod = player?.getAttributeMap()?.getAttributeInstance(SharedMonsterAttributes.attackDamage)?.attributeValue?.F
@@ -162,11 +164,10 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	override fun getRarity(sta: ItemStack) = BotaniaAPI.rarityRelic!!
 	
 	companion object {
+		
 		val uuid = UUID.fromString("7d5ddaf0-15d2-435c-8310-bdfc5fd1522d")!!
 		
 		const val TAG_ATTACKER_USERNAME = "attackerUsername"
 		const val TAG_HOME_ID = "homeID"
-		
-		val toolMaterial = EnumHelper.addToolMaterial("B_EXCALIBER", 3, -1, 6.2f, 6f, 40)!!
 	}
 }

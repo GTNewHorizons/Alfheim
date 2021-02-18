@@ -6,21 +6,21 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import com.google.gson.*
 import cpw.mods.fml.common.registry.*
-import cpw.mods.fml.relauncher.*
+import cpw.mods.fml.relauncher.FMLInjectionData
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.common.Botania
-import vazkii.botania.common.block.tile.TileMod
 import java.awt.Color
 import java.io.*
 import java.util.*
 import kotlin.math.abs
 
-open class TileSchemaController: TileMod() {
+open class TileSchemaController: TileEntity() {
 	
 	private var ticksAlive: Int = 0
 	private var lastDump: Int = 0
@@ -143,8 +143,8 @@ open class TileSchemaController: TileMod() {
 											 xCoord + (dir.offsetX * i) + .5,
 											 yCoord + (dir.offsetY * i) + .5,
 											 zCoord + (dir.offsetZ * i) + .5,
-                                             abs(dir.offsetY).F, abs(dir.offsetX).F,
-                                             abs(dir.offsetZ).F, 0.3f, -0.01f)
+											 abs(dir.offsetY).F, abs(dir.offsetX).F,
+											 abs(dir.offsetZ).F, 0.3f, -0.01f)
 					}
 			}
 			
@@ -200,22 +200,22 @@ open class TileSchemaController: TileMod() {
 	}
 	
 	fun getType(dir: ForgeDirection): Int {
-        return when (dir) {
-            ForgeDirection.UP, ForgeDirection.DOWN     -> 2
-            ForgeDirection.NORTH, ForgeDirection.SOUTH -> 3
-            ForgeDirection.EAST, ForgeDirection.WEST   -> 1
-            else                                       -> -1
-        }
+		return when (dir) {
+			ForgeDirection.UP, ForgeDirection.DOWN     -> 2
+			ForgeDirection.NORTH, ForgeDirection.SOUTH -> 3
+			ForgeDirection.EAST, ForgeDirection.WEST   -> 1
+			else                                       -> -1
+		}
 	}
 	
 	private fun Int.dif(i: Int): Int = abs(this - i) * if (this < i) 1 else -1
 	
 	private fun getPos(i: Int): Pos? {
-        return when (i) {
-            1    -> pos_x
-            2    -> pos_y
-            else -> pos_z
-        }
+		return when (i) {
+			1    -> pos_x
+			2    -> pos_y
+			else -> pos_z
+		}
 	}
 	
 	private fun setPos(i: Int, pos: Pos?) {
@@ -269,7 +269,7 @@ open class TileSchemaController: TileMod() {
 	}
 	
 	fun checkPos(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) =
-        abs(x) < abs(x2) || abs(y) < abs(y2) || abs(z) < abs(z2)
+		abs(x) < abs(x2) || abs(y) < abs(y2) || abs(z) < abs(z2)
 	
 	private fun getDir(pos1: Pos?, pos2: Pos?): ForgeDirection {
 		val x = pos1?.x ?: xCoord
@@ -347,6 +347,7 @@ open class TileSchemaController: TileMod() {
 	@Throws(IOException::class)
 	fun dumpTo(file: File) {
 		class LocationElement(val x: Int, val y: Int, val z: Int, val meta: Int, val nbt: NBTTagCompound?) {
+			
 			fun getJson(): JsonObject = JsonObject().apply {
 				addProperty("x", x)
 				addProperty("y", y)
@@ -369,6 +370,9 @@ open class TileSchemaController: TileMod() {
 					worldObj.getTileEntity(x, y, z)?.let {
 						nbt = NBTTagCompound()
 						it.writeToNBT(nbt)
+						nbt!!.removeTag("x")
+						nbt!!.removeTag("y")
+						nbt!!.removeTag("z")
 					}
 					
 					if (map.containsKey(key))
@@ -393,10 +397,7 @@ open class TileSchemaController: TileMod() {
 	}
 	
 	internal fun getUniqueName(block: Block): String {
-		val name = GameData.getBlockRegistry().getNameForObject(block)
-		val ui = GameRegistry.UniqueIdentifier(name)
-		
-		return "${ui.modId}:${ui.name}"
+		return GameRegistry.findUniqueIdentifierFor(block).toString()
 	}
 	
 	fun Int.tickDelay(lambda: () -> Any) {
@@ -404,8 +405,4 @@ open class TileSchemaController: TileMod() {
 			lambda.invoke()
 		}
 	}
-	
-	override fun writeCustomNBT(nbttagcompound: NBTTagCompound) = Unit
-	
-	override fun readCustomNBT(nbttagcompound: NBTTagCompound) = Unit
 }

@@ -136,7 +136,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			if (!world.isRemote)
 				world.spawnEntityInWorld(arrow)
 			
-			world.playSoundAtEntity(player, "random.bow", 1f, 1f / (Item.itemRand.nextFloat() * 0.4f + 1.2f) + 0.5f)
+			player.playSoundAtEntity("random.bow", 1f, 1f / (Item.itemRand.nextFloat() * 0.4f + 1.2f) + 0.5f)
 		}
 	}
 	

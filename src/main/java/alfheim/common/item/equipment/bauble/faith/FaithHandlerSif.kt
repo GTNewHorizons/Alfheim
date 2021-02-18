@@ -2,6 +2,7 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
@@ -20,6 +21,7 @@ import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
+import vazkii.botania.common.item.ModItems
 import java.awt.Color
 
 object FaithHandlerSif: IFaithHandler {
@@ -35,12 +37,14 @@ object FaithHandlerSif: IFaithHandler {
 	
 	@SubscribeEvent
 	fun onLivingAttacked(e: LivingAttackEvent) {
+		if (e.source.isUnblockable) return
+		
 		val attacker = e.source.entity as? EntityLivingBase ?: return
 		val player = e.entityLiving as? EntityPlayer ?: return
 		if (ItemPriestCloak.getCloak(1, player) == null) return
 		if (getGodPowerLevel(player) < 4) return
 		
-		if (Vector3(player.lookVec).angle(Vector3(attacker.lookVec).rotate(180, Vector3.oY)) > Math.PI / 6)
+		if (ASJUtilities.isNotInFieldOfVision(attacker, player))
 			e.isCanceled = true
 	}
 	
@@ -76,7 +80,6 @@ object FaithHandlerSif: IFaithHandler {
 		bonemeal(world, pair.second, x, y, z, player, stack, 10)
 		
 		grow.clear()
-		
 	}
 	
 	@SubscribeEvent
@@ -86,10 +89,11 @@ object FaithHandlerSif: IFaithHandler {
 		if (e.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) return
 		val emblem = ItemPriestEmblem.getEmblem(1, player) ?: return
 		
-		val lvl = getGodPowerLevel(player)
-		
 		val cooldown = getInt(emblem, TAG_COOLDOWN, 0)
 		if (cooldown != 0 || e.entityPlayer.isSneaking || player.heldItem != null || !ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 50, false)) return
+		
+		if (!InteractionSecurity.canDoSomethingHere(player, e.x, e.y, e.z, e.world))
+			return
 		
 		val world = e.world
 		val block = world.getBlock(e.x, e.y, e.z)
@@ -98,7 +102,9 @@ object FaithHandlerSif: IFaithHandler {
 			if (!world.isRemote && !player.capabilities.isCreativeMode) setInt(emblem, TAG_COOLDOWN, COOLDOWN_PLANT)
 		}
 		
-		if (lvl >= 6) {
+		val lvl = getGodPowerLevel(player)
+		
+		if (lvl > 5) {
 			if (!world.isRemote && block === Blocks.grass && e.face == 1 && world.getBlock(e.x, e.y + 1, e.z).isAir(world, e.x, e.y + 1, e.z) &&
 				(!world.provider.hasNoSky || e.y < 255) && ModBlocks.flower.canBlockStay(world, e.x, e.y + 1, e.z) && ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 500, true) &&
 				world.setBlock(e.x, e.y + 1, e.z, ModBlocks.flower, world.rand.nextInt(16), 3))
@@ -109,6 +115,9 @@ object FaithHandlerSif: IFaithHandler {
 	}
 	
 	fun bonemeal(world: World, block: IGrowable, x: Int, y: Int, z: Int, player: EntityPlayer, stack: ItemStack, cost: Int): Boolean {
+		if (!InteractionSecurity.canDoSomethingHere(player, x, y, z, world))
+			return false
+		
 		if (world.isRemote) {
 			world.playAuxSFX(2005, x, y, z, 0)
 			return true
@@ -124,6 +133,7 @@ object FaithHandlerSif: IFaithHandler {
 	override fun getGodPowerLevel(player: EntityPlayer): Int {
 		var lvl = 0
 		
+		if (player.inventory.hasItemStack(ItemStack(ModItems.infiniteFruit))) lvl += 4
 		if (ItemPriestCloak.getCloak(1, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(1, player) != null) lvl += 2
 		if (ItemSifRing.getSifRing(player) != null) lvl += 1

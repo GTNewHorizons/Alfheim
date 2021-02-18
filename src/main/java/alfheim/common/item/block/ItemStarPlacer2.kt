@@ -1,5 +1,6 @@
 package alfheim.common.item.block
 
+import alexsocol.asjlib.safeGet
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileCracklingStar
@@ -22,6 +23,7 @@ import java.util.*
 class ItemStarPlacer2: ItemMod("starPlacer2") {
 	
 	companion object {
+		
 		const val TAG_COLOR = "color"
 		const val TAG_SIZE = "size"
 		
@@ -50,11 +52,11 @@ class ItemStarPlacer2: ItemMod("starPlacer2") {
 		
 		fun colorStack(color: Int): ItemStack {
 			val stack = ItemStack(AlfheimItems.starPlacer2)
-            setColor(stack, color)
+			setColor(stack, color)
 			return stack
 		}
 		
-		fun forColor(colorVal: Int) = colorStack(defaultColors[colorVal % defaultColors.size])
+		fun forColor(index: Int) = colorStack(defaultColors.safeGet(index))
 	}
 	
 	override fun addInformation(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, par4: Boolean) {

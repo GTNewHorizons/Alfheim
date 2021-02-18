@@ -2,12 +2,11 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.*
-import alfheim.AlfheimCore
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.spell.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.fire.SpellFirewall
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*

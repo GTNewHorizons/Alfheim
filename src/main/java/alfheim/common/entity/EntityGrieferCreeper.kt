@@ -9,6 +9,7 @@ import vazkii.botania.common.entity.EntityManaStorm
 class EntityGrieferCreeper(world: World): EntityCreeper(world) {
 	
 	private var lastActiveTime: Int = 0
+	
 	/** The amount of time since the creeper was close enough to the player to ignite  */
 	private var timeSinceIgnited: Int = 0
 	private var explosionRadius = 6

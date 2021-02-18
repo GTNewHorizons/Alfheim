@@ -1,9 +1,9 @@
 package alfheim.common.block.colored
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -38,6 +38,7 @@ class BlockColoredLamp: BlockMod(Material.redstoneLight), ILexiconable {
 	}
 	
 	companion object {
+		
 		fun powerLevel(world: IBlockAccess, x: Int, y: Int, z: Int): Int {
 			var ret = getBlockPowerLevel(world, x, y, z)
 			for (dir in ForgeDirection.VALID_DIRECTIONS) {
@@ -54,25 +55,25 @@ class BlockColoredLamp: BlockMod(Material.redstoneLight), ILexiconable {
 		
 		fun blockProvidingPower(world: IBlockAccess, x: Int, y: Int, z: Int): Int {
 			val b0 = 0
-   
+			
 			var l = max(b0, world.isBlockProvidingPowerTo(x, y - 1, z, 0))
 			if (l >= 15) return l
 			
-            l = max(l, world.isBlockProvidingPowerTo(x, y + 1, z, 1))
-            if (l >= 15) return l
-            
-            l = max(l, world.isBlockProvidingPowerTo(x, y, z - 1, 2))
-            if (l >= 15) return l
-            
-            l = max(l, world.isBlockProvidingPowerTo(x, y, z + 1, 3))
-            if (l >= 15) return l
-            
-            l = max(l, world.isBlockProvidingPowerTo(x - 1, y, z, 4))
-            if (l >= 15) return l
-            
-            l = max(l, world.isBlockProvidingPowerTo(x + 1, y, z, 5))
-            return if (l >= 15) l else l
-        }
+			l = max(l, world.isBlockProvidingPowerTo(x, y + 1, z, 1))
+			if (l >= 15) return l
+			
+			l = max(l, world.isBlockProvidingPowerTo(x, y, z - 1, 2))
+			if (l >= 15) return l
+			
+			l = max(l, world.isBlockProvidingPowerTo(x, y, z + 1, 3))
+			if (l >= 15) return l
+			
+			l = max(l, world.isBlockProvidingPowerTo(x - 1, y, z, 4))
+			if (l >= 15) return l
+			
+			l = max(l, world.isBlockProvidingPowerTo(x + 1, y, z, 5))
+			return if (l >= 15) l else l
+		}
 		
 		fun powerColor(power: Int): Int {
 			if (power == 0) return 0x191616
@@ -105,13 +106,13 @@ class BlockColoredLamp: BlockMod(Material.redstoneLight), ILexiconable {
 	}
 	
 	override fun damageDropped(meta: Int) = 0
- 
+	
 	override fun getPickBlock(target: MovingObjectPosition?, world: World, x: Int, y: Int, z: Int) = ItemStack(this, 1, 0)
- 
+	
 	override fun createStackedBlock(meta: Int) = ItemStack(this, 1, 0)
 	
 	override fun getLightValue() = 15
- 
+	
 	override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int): Int {
 		val level = powerLevel(world, x, y, z)
 		if (Loader.isModLoaded("easycoloredlights")) {
@@ -126,5 +127,5 @@ class BlockColoredLamp: BlockMod(Material.redstoneLight), ILexiconable {
 	@SideOnly(Side.CLIENT)
 	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int): Int = getRenderColor(world.getBlockMetadata(x, y, z))
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.lamp
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.lamp
 }

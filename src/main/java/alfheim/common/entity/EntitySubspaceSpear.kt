@@ -103,10 +103,7 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 		const val TAG_PITCH = "pitch"
 		
 		fun attackedFrom(target: EntityLivingBase, player: EntityLivingBase, i: Float) {
-			if (player is EntityPlayer)
-				target.attackEntityFrom(DamageSource.causePlayerDamage(player), i)
-			else
-				target.attackEntityFrom(DamageSource.causeMobDamage(player), i)
+			target.attackEntityFrom((if (player is EntityPlayer) DamageSource.causePlayerDamage(player) else DamageSource.causeMobDamage(player)).setDamageBypassesArmor(), i)
 		}
 	}
 }

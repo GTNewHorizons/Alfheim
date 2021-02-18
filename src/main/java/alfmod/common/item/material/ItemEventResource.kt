@@ -64,6 +64,7 @@ class ItemEventResource: ItemMod("EventResource") {
 	}
 	
 	companion object {
+		
 		val subItems = arrayOf("SnowRelic", "VolcanoRelic", "LavaMelon")
 	}
 }

@@ -20,13 +20,11 @@ class RecipeThrowablePotion: IRecipe {
 		var foundVial = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv[i]
-			if (stack != null) {
-				when {
-					stack.item === Items.gunpowder   -> foundGunpowder = true
-					stack.item === ModItems.brewVial -> foundVial = true
-					else                             -> return false // Found an invalid item, breaking the recipe
-				}
+			val stack = inv[i] ?: continue
+			when {
+				stack.item === Items.gunpowder   -> foundGunpowder = true
+				stack.item === ModItems.brewVial -> foundVial = true
+				else                             -> return false // Found an invalid item, breaking the recipe
 			}
 		}
 		

@@ -1,7 +1,8 @@
 package alfheim.common.item.creator
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.helper.*
+import alfheim.client.core.helper.*
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -77,6 +78,7 @@ class ItemRoyalStaff: ItemMod("RoyalStaff") {
 	}
 	
 	companion object {
+		
 		lateinit var orn: IIcon
 		var dep: IIcon? = null
 	}

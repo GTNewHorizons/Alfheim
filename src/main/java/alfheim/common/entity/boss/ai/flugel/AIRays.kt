@@ -24,7 +24,7 @@ class AIRays(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 			flugel.worldObj.spawnEntityInWorld(getBurst(flugel, i))
 			i += more
 		}
-		flugel.worldObj.playSoundAtEntity(flugel, "botania:terraBlade", 0.4f, 1.4f)
+		flugel.playSoundAtEntity("botania:terraBlade", 0.4f, 1.4f)
 	}
 	
 	fun getBurst(flugel: EntityFlugel, i: Int): EntityManaBurst {

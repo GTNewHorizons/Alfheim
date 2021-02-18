@@ -2,7 +2,7 @@ package alfheim.common.item.equipment.bauble
 
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import cpw.mods.fml.relauncher.*
@@ -21,7 +21,6 @@ import vazkii.botania.client.core.proxy.ClientProxy
 import vazkii.botania.client.lib.LibResources
 import vazkii.botania.client.model.ModelTinyPotato
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
-import kotlin.properties.Delegates
 
 class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 	

@@ -3,11 +3,10 @@ package alfheim.common.item.rod
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import alfheim.common.network.MessageEffectLightning
@@ -133,23 +132,22 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 							chainLightning(stack, target, player, thor, prowess, priest, color, innerColor)
 						}
 					}
-					
 				}
 			}
 		}
 	}
 	
 	fun getCost(thor: Boolean, prowess: Boolean, priest: Boolean) =
-        COST + (if (thor) THOR_COST else 0) + (if (prowess) PROWESS_COST else 0) + (if (priest) PRIEST_COST else 0)
+		COST + (if (thor) THOR_COST else 0) + (if (prowess) PROWESS_COST else 0) + (if (priest) PRIEST_COST else 0)
 	
 	fun getSpeed(thor: Boolean, prowess: Boolean, priest: Boolean) =
-        SPEED - (if (thor) THOR_SPEEDUP else 0) - (if (prowess) PROWESS_SPEEDUP else 0) - (if (priest) PRIEST_SPEEDUP else 0)
+		SPEED - (if (thor) THOR_SPEEDUP else 0) - (if (prowess) PROWESS_SPEEDUP else 0) - (if (priest) PRIEST_SPEEDUP else 0)
 	
 	fun getDamage(thor: Boolean, prowess: Boolean, priest: Boolean) =
-        DAMAGE + (if (thor) THOR_POWERUP else 0f) + (if (prowess) PROWESS_POWERUP else 0f) + (if (priest) PRIEST_POWERUP else 0f)
+		DAMAGE + (if (thor) THOR_POWERUP else 0f) + (if (prowess) PROWESS_POWERUP else 0f) + (if (priest) PRIEST_POWERUP else 0f)
 	
 	fun getRange(thor: Boolean, prowess: Boolean, priest: Boolean) =
-        CHAINRANGE + (if (thor) THOR_RANGEUP else 0f) + (if (prowess) PROWESS_RANGEUP else 0f) + (if (priest) PRIEST_RANGEUP else 0f)
+		CHAINRANGE + (if (thor) THOR_RANGEUP else 0f) + (if (prowess) PROWESS_RANGEUP else 0f) + (if (priest) PRIEST_RANGEUP else 0f)
 	
 	fun getTargetCap(thor: Boolean, prowess: Boolean, priest: Boolean) =
 		TARGETS + (if (thor) THOR_TARGETS else 0) + (if (prowess) PROWESS_TARGETS else 0) + (if (priest) PRIEST_TARGETS else 0)

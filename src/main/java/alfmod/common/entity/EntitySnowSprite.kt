@@ -15,7 +15,6 @@ import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import ru.vamig.worldengine.*
 import vazkii.botania.common.Botania
@@ -23,7 +22,7 @@ import vazkii.botania.common.entity.EntityFlyingCreature
 import kotlin.math.*
 
 class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
-
+	
 	private var spawnPosition: ChunkCoordinates? = null
 	
 	init {
@@ -128,10 +127,6 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 object SpriteKillHandler {
 	
 	val regions = HashMap<Pair<Int, Int>, Int>()
-	
-	init {
-		MinecraftForge.EVENT_BUS.register(this)
-	}
 	
 	@SubscribeEvent
 	fun onSpriteKilled(e: LivingDeathEvent) {

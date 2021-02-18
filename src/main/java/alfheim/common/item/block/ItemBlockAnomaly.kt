@@ -35,10 +35,12 @@ class ItemBlockAnomaly(block: Block): ItemBlock(block) {
 	
 	override fun placeBlockAt(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, metadata: Int): Boolean {
 		val placed = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata)
+		
 		if (placed) {
 			val te = world.getTileEntity(x, y, z)
 			if (te is TileAnomaly) {
 				te.readCustomNBT(getNBT(stack))
+				te.lock(x, y, z, world.provider.dimensionId)
 				
 				if (!world.isRemote) {
 					world.markBlockForUpdate(x, y, z)
@@ -63,11 +65,11 @@ class ItemBlockAnomaly(block: Block): ItemBlock(block) {
 		}
 		
 		fun ofType(stack: ItemStack, type: String?): ItemStack {
-			var type = type
-			if (type == null || type.isEmpty()) type = TYPE_UNDEFINED
-			setString(stack, TAG_SUBTILE_MAIN, type)
+			var t = type
+			if (type == null || type.isEmpty()) t = TYPE_UNDEFINED
+			setString(stack, TAG_SUBTILE_MAIN, t)
 			setInt(stack, TAG_SUBTILE_COUNT, 1)
-			setString(stack, TAG_SUBTILE_NAME + "1", type)
+			setString(stack, TAG_SUBTILE_NAME + "1", t)
 			
 			return stack
 		}

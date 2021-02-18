@@ -1,6 +1,9 @@
 package alfheim.common.item.equipment.bauble
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.ItemNBTHelper.getInt
+import alexsocol.asjlib.ItemNBTHelper.setInt
+import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.network.Message0dS
@@ -18,7 +21,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.MathHelper
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.ClientTickHandler
-import vazkii.botania.common.core.helper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 class ItemDodgeRing: ItemBauble("DodgeRing") {
@@ -39,7 +41,7 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 				return
 		}
 		
-		if (ItemNBTHelper.getInt(ringStack, TAG_DODGE_COOLDOWN, 0) > 0) return
+		if (getInt(ringStack, TAG_DODGE_COOLDOWN, 0) > 0) return
 		
 		val threshold = 4
 		if (mc.gameSettings.keyBindLeft.isKeyPressed && !oldLeftDown) {
@@ -57,11 +59,10 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 		oldLeftDown = mc.gameSettings.keyBindLeft.isKeyPressed
 		oldRightDown = mc.gameSettings.keyBindRight.isKeyPressed
 	}
-
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
-		val cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0)
-		if (cd > 0) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, cd - 1)
+		val cd = getInt(stack, TAG_DODGE_COOLDOWN, 0)
+		if (cd > 0) setInt(stack, TAG_DODGE_COOLDOWN, cd - 1)
 	}
 	
 	override fun getBaubleType(arg0: ItemStack) = BaubleType.RING
@@ -82,8 +83,8 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 			val yaw = player.rotationYaw
 			val x = MathHelper.sin(-yaw * 0.017453292f - Math.PI.F)
 			val z = MathHelper.cos(-yaw * 0.017453292f - Math.PI.F)
-			val lookVec = Vector3(x.D, 0.0, z.D)
-			val sideVec = lookVec.crossProduct(Vector3(0.0, (if (left) 1 else -1).D, 0.0)).multiply(1.25)
+			val lookVec = Vector3(x, 0, z)
+			val sideVec = lookVec.crossProduct(Vector3(0, (if (left) 1 else -1), 0)).mul(1.25)
 			
 			player.motionX = sideVec.x
 			player.motionY = sideVec.y
@@ -91,7 +92,7 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 			
 			AlfheimCore.network.sendToServer(Message0dS(m0ds.DODGE))
 			// stupid singleplayer NBT autosync -_-
-			if (!mc.isSingleplayer) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, MAX_CD)
+			if (!mc.isSingleplayer) setInt(stack, TAG_DODGE_COOLDOWN, MAX_CD)
 		}
 		
 		@SideOnly(Side.CLIENT)
@@ -100,7 +101,7 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 			val y = resolution.scaledHeight / 2 + 20
 			
 			if (!player.capabilities.isFlying) {
-				val cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0)
+				val cd = getInt(stack, TAG_DODGE_COOLDOWN, 0)
 				val width = ((cd - pticks) * 2).I.coerceAtMost(40)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
 				if (width > 0) {

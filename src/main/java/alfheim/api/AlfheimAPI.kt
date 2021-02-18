@@ -2,15 +2,18 @@ package alfheim.api
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.block.tile.SubTileAnomalyBase
-import alfheim.api.crafting.recipe.RecipeManaInfuser
+import alfheim.api.crafting.recipe.*
 import alfheim.api.entity.EnumRace
+import alfheim.api.item.ThrowableCollidingItem
 import alfheim.api.lib.LibResourceLocations
-import alfheim.api.security.ISecurityManager
 import alfheim.api.spell.SpellBase
+import alfheim.api.trees.*
 import alfheim.common.block.tile.TileAnomalyHarvester
 import com.google.common.collect.Lists
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog
+import net.minecraft.block.Block
+import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
 import org.apache.logging.log4j.Level
@@ -20,33 +23,51 @@ import kotlin.collections.HashMap
 
 object AlfheimAPI {
 	
-	val ElvoriumArmor = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)!!
-	val elvoriumToolMaterial = EnumHelper.addToolMaterial("ELVORIUM", 4, 2400, 9.5f, 3f, 30)!!
-	val ElementalArmor = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)!!
-	val mauftriumToolmaterial = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 40)!!
+	val ElvoriumArmor = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)
+	val elvoriumToolMaterial = EnumHelper.addToolMaterial("ELVORIUM", 4, 2400, 9.5f, 3f, 30)
+	val ElementalArmor = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)
+	val mauftriumToolmaterial = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 40)
+	
+	// relic
+	val EXCALIBER = EnumHelper.addToolMaterial("EXCALIBER", 3, -1, 6.2f, 6f, 40)
+	val FENRIR = EnumHelper.addToolMaterial("FENRIR", 0, 2000, 0f, 3.0f, 14)
+	var RUNEAXE = EnumHelper.addToolMaterial("RUNEAXE", 4, 1561, 8f, 2f, 50)
+	val SOUL = EnumHelper.addToolMaterial("SOUL", -1, -1, -1f, -1f, -1) // ragnarok sword
 	
 	/** List of [RecipeElvenTrade] outputs banned for re'trading in Alfheim trade portal  */
 	val bannedRetrades = ArrayList<ItemStack>()
+	
 	/** List of recipies for mana infuser  */
 	val manaInfuserRecipes = ArrayList<RecipeManaInfuser>()
+	
 	/** List of all pink items with their relative pinkness  */
 	val pinkness = HashMap<ItemStack, Int>()
+	
 	/** List of all spells for all races  */
 	val spells = HashSet<SpellBase>()
+	
 	/** Map of elven spells associated with their race (affinity), sorted by name  */
 	val spellMapping = HashMap<EnumRace, HashSet<SpellBase>>()
+	
 	/** Map of anomaly types and their subtiles, specifying their behavior  */
 	val anomalies = HashMap<String, Class<out SubTileAnomalyBase>>()
+	
 	/** Map of anomaly types and their behavior for use in [TileAnomalyHarvester] */
 	val anomalyBehaviors = HashMap<String, ((TileAnomalyHarvester) -> Unit)>()
+	
 	/** Map of anomaly types and their subtile instances, used for render :o  */
 	val anomalyInstances = HashMap<String, SubTileAnomalyBase>()
-	/** Map of security managers by name */
-	val securityManagers = HashMap<String, ISecurityManager>()
+	
 	/** Petronia fuels map */
 	val fuelMap = HashMap<String, Pair<Int, Int>>()
+	
 	/** Ores for Orechid Endium */
 	var oreWeightsEnd = HashMap<String, Int>()
+	
+	var treeRecipes: MutableList<RecipeTreeCrafting> = ArrayList()
+	var treeVariants: MutableList<IIridescentSaplingVariant> = ArrayList()
+	var collidingItemHashMap: MutableMap<String, ThrowableCollidingItem> = LinkedHashMap()
+	var fallbackTcl = ThrowableCollidingItem("shadowfox_fallback", ItemStack(Items.blaze_rod)) { _, _ -> }
 	
 	fun addInfuserRecipe(rec: RecipeManaInfuser?): RecipeManaInfuser? {
 		if (rec != null) manaInfuserRecipes.add(rec)
@@ -67,7 +88,6 @@ object AlfheimAPI {
 			.firstOrNull { ItemStack.areItemStacksEqual(manaInfuserRecipes[it].output, result) }
 			?.let { manaInfuserRecipes.removeAt(it) }
 	
-	
 	/** Remove `output` from Alfheim trade portal  */
 	fun banRetrade(output: ItemStack) =
 		bannedRetrades.add(output)
@@ -87,7 +107,7 @@ object AlfheimAPI {
 	
 	/**
 	 * Registers spell for some race by affinity
-	 * 
+	 *
 	 * Note:
 	 * Salamander - Fire
 	 * Sylph - Wind
@@ -160,14 +180,6 @@ object AlfheimAPI {
 	
 	fun getAnomalyInstance(name: String) = anomalyInstances[name] ?: FallbackAnomaly
 	
-	fun registerSecurityManager(man: ISecurityManager, name: String) {
-		if (name.isBlank()) throw IllegalArgumentException("Name should not be blank")
-		if (securityManagers.containsKey(name)) throw IllegalArgumentException("Security Manager \"$name\" is already registered")
-		
-		ASJUtilities.log("Registering security manager with name \"$name\"")
-		securityManagers[name] = man
-	}
-	
 	fun registerFuel(name: String, burnTime: Int, manaPerTick: Int) {
 		fuelMap[name] = burnTime to manaPerTick
 	}
@@ -195,7 +207,138 @@ object AlfheimAPI {
 //		oreWeightsEnd[ore] = weight
 //	}
 	
+	/**
+	 * Adds a tree crafting recipe to the registry.
+	 *
+	 * @param recipe - The recipe to add.
+	 * @return The recipe that was added to the registry.
+	 */
+	fun addTreeRecipe(recipe: RecipeTreeCrafting) =
+		recipe.also { treeRecipes.add(it) }
+	
+	/**
+	 * Adds a tree crafting recipe with the specified parameters to the registry.
+	 *
+	 * @param mana   - The mana cost for the recipe.
+	 * @param out    - The block that is created from the recipe.
+	 * @param core   - The core block in center that will be changed.
+	 * @param inputs - The items used in the infusion.
+	 * @return The recipe that was added to the registry.
+	 */
+	fun addTreeRecipe(mana: Int, out: ItemStack, core: ItemStack, vararg inputs: Any) =
+		addTreeRecipe(RecipeTreeCrafting(mana, out, core, *inputs))
+	
+	/**
+	 * Adds a tree crafting recipe with the specified parameters to the registry.
+	 *
+	 * @param mana     - The mana cost for the recipe.
+	 * @param out      - The block that is created from the recipe.
+	 * @param core     - The core block in center that will be changed.
+	 * @param inputs   - The items used in the infusion.
+	 * @param throttle - The maximum mana that can be absorbed per tick for this recipe.
+	 * @return The recipe that was added to the registry.
+	 */
+	fun addTreeRecipe(mana: Int, out: ItemStack, core: ItemStack, throttle: Int, vararg inputs: Any) =
+		addTreeRecipe(RecipeTreeCrafting(mana, out, core, throttle, *inputs))
+	
+	fun removeTreeRecipe(rec: RecipeTreeCrafting?): RecipeTreeCrafting? =
+		if (rec != null && treeRecipes.remove(rec)) rec else null
+	
+	fun removeTreeRecipe(result: ItemStack): RecipeTreeCrafting? =
+		treeRecipes.indices
+			.firstOrNull { ItemStack.areItemStacksEqual(treeRecipes[it].output, result) }
+			?.let { treeRecipes.removeAt(it) }
+	
+	/**
+	 * Adds an Iridescent Sapling variant to the registry.
+	 *
+	 * @param variant - The variant to add.
+	 * @return The variant added to the registry.
+	 */
+	fun addTreeVariant(variant: IIridescentSaplingVariant) =
+		variant.also { treeVariants.add(it) }
+	
+	/**
+	 * Adds an Iridescent Sapling variant with the specified parameters to the registry, ignoring metadata.
+	 *
+	 * @param soil   - The soil block the variant uses.
+	 * @param wood   - The wood block the variant uses.
+	 * @param leaves - The leaves block the variant uses.
+	 * @return The variant that was added to the registry.
+	 */
+	fun addTreeVariant(soil: Block, wood: Block, leaves: Block) =
+		addTreeVariant(IridescentSaplingBaseVariant(soil, wood, leaves))
+	
+	/**
+	 * Adds an Iridescent Sapling variant with the specified parameters to the registry, with a specific metadata.
+	 *
+	 * @param soil   - The soil block the variant uses.
+	 * @param wood   - The wood block the variant uses.
+	 * @param leaves - The leaves block the variant uses.
+	 * @param meta   - The metadata of the soil the variant uses.
+	 * @return The variant that was added to the registry.
+	 */
+	fun addTreeVariant(soil: Block, wood: Block, leaves: Block, meta: Int) =
+		addTreeVariant(IridescentSaplingBaseVariant(soil, wood, leaves, meta))
+	
+	/**
+	 * Adds an Iridescent Sapling variant with the specified parameters to the registry, using a range of metadata.
+	 *
+	 * @param soil    - The soil block the variant uses.
+	 * @param wood    - The wood block the variant uses.
+	 * @param leaves  - The leaves block the variant uses.
+	 * @param metaMin - The minimum meta value of the soil the variant uses.
+	 * @param metaMax - The maximum meta value of the soil the variant uses.
+	 * @return The variant that was added to the registry.
+	 */
+	fun addTreeVariant(soil: Block, wood: Block, leaves: Block, metaMin: Int, metaMax: Int) =
+		addTreeVariant(IridescentSaplingBaseVariant(soil, wood, leaves, metaMin, metaMax))
+	
+	/**
+	 * Adds an Iridescent Sapling variant with the specified parameters to the registry, using a range of metadata.
+	 *
+	 * @param soil      - The soil block the variant uses.
+	 * @param wood      - The wood block the variant uses.
+	 * @param leaves    - The leaves block the variant uses.
+	 * @param metaMin   - The minimum meta value of the soil the variant uses.
+	 * @param metaMax   - The maximum meta value of the soil the variant uses.
+	 * @param metaShift - The amount to subtract from the soil's metadata value to make the leaf metadata.
+	 * @return The variant that was added to the registry.
+	 */
+	fun addTreeVariant(soil: Block, wood: Block, leaves: Block, metaMin: Int, metaMax: Int, metaShift: Int) =
+		addTreeVariant(IridescentSaplingBaseVariant(soil, wood, leaves, metaMin, metaMax, metaShift))
+	
+	fun registerThrowable(tcl: ThrowableCollidingItem) =
+		tcl.also { collidingItemHashMap[it.key] = it }
+	
+	fun getThrowableFromKey(key: String) =
+		collidingItemHashMap[key] ?: fallbackTcl
+	
+	/**
+	 * Gets a list of all acceptable Iridescent Sapling soils.
+	 *
+	 * @return A list of all Iridescent Sapling soils.
+	 */
+	fun getIridescentSoils(): List<Block> {
+		val soils = ArrayList<Block>()
+		for (variant in treeVariants) {
+			soils.addAll(variant.acceptableSoils)
+		}
+		return soils
+	}
+	
+	/**
+	 * Gets the variant for a given soil.
+	 *
+	 * @param soil - The block the sapling is placed on.
+	 * @param meta - The meta of the block the sapling is on.
+	 * @return The variant, if there is one.
+	 */
+	fun getTreeVariant(soil: Block, meta: Int) =
+		treeVariants.firstOrNull { it.matchesSoil(soil, meta) }
+	
 	object FallbackAnomaly: SubTileAnomalyBase() {
+		
 		override val targets: List<Any> = emptyList()
 		override val rarity = EnumAnomalityRarity.COMMON
 		override val strip = 31

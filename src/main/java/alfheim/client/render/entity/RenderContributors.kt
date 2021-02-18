@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.render.*
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.model.entity.ModelEntityFlugel
+import alfheim.client.model.entity.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.material.ItemElvenResource
@@ -29,11 +29,7 @@ import kotlin.math.sin
 
 object RenderContributors {
 	
-	val customAura =		arrayOf("KAIIIAK",						"1_Lucifer_9",						"lie4me")
-	val customTextures =	arrayOf(LibResourceLocations.auraBird,	LibResourceLocations.auraGreece,	LibResourceLocations.auraDemonic)
-	val auraMap = customAura.zip(customTextures).toMap()
-	
-//	val balls = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/balls.obj"))
+	val auraTextures: Map<String, ResourceLocation> by lazy { ContributorsPrivacyHelper.auras.map { (k, v) -> k to ResourceLocation(ModInfo.MODID, "textures/model/entity/auras/$v.png") }.toMap() }
 	val book = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mudrbook.obj"))
 	
 	val so: ShadedObject = object: ShadedObject(ShaderHelper.halo, RenderPostShaders.nextAvailableRenderObjectMaterialID, LibResourceLocations.babylon) {
@@ -165,7 +161,7 @@ object RenderContributors {
 			}
 		}
 		
-		if (ContributorsPrivacyHelper.isCorrect(player, "DmitryWS")) run dws@ {
+		if (ContributorsPrivacyHelper.isCorrect(player, "DmitryWS")) run dws@{
 			if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0) return@dws
 			
 			glPushMatrix()
@@ -182,9 +178,9 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		val match = customAura.indexOfFirst { ContributorsPrivacyHelper.isCorrect(player, it) }
+		val match = ContributorsPrivacyHelper.auras.keys.firstOrNull { ContributorsPrivacyHelper.isCorrect(player, it) }
 		
-		if (match != -1) run aura@ {
+		if (match != null) run aura@{
 			if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0) return@aura
 			
 			glPushMatrix()
@@ -192,7 +188,7 @@ object RenderContributors {
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glDisable(GL_CULL_FACE)
 			glDisable(GL_LIGHTING)
-			glAlphaFunc(GL_GREATER, 1/255f)
+			glAlphaFunc(GL_GREATER, 1 / 255f)
 			
 			val lastX = OpenGlHelper.lastBrightnessX
 			val lastY = OpenGlHelper.lastBrightnessY
@@ -204,13 +200,10 @@ object RenderContributors {
 			glRotated(mc.theWorld.totalWorldTime / 2.0 + mc.timer.renderPartialTicks, 0.0, 1.0, 0.0)
 			glScalef(player.width * 10 / 3)
 			
-			if (match == 0)
-				ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
-			else
-				glColor4f(1f, 1f, 1f, 1f)
-			mc.renderEngine.bindTexture(auraMap[customAura[match]])
+			ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
+			mc.renderEngine.bindTexture(auraTextures[match])
 			
-			if (match != 0) glScaled(0.5)
+			glScaled(0.5)
 			
 			val tes = Tessellator.instance
 			tes.startDrawingQuads()
@@ -230,7 +223,7 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (ModelEntityFlugel.model1!= null && ModelEntityFlugel.model2 != null && ContributorsPrivacyHelper.isCorrect(player, "Hyper_Miko")) {
+		if (ModelEntityFlugel.model1 != null && ModelEntityFlugel.model2 != null && ContributorsPrivacyHelper.isCorrect(player, "Hyper_Miko")) {
 			glPushMatrix()
 			glRotatef(180f, 1f, 0f, 0f)
 			glTranslatef(0f, -1.5f, 0f)
@@ -287,17 +280,35 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-//		if (player.commandSenderName == "ne1deal") {
-//			glPushMatrix()
-//			glColor4f(0.2f, 0.2f, 0.2f, 1f)
-//			glDisable(GL_TEXTURE_2D)
-//			glRotatef(180f, 1f, 0f, 0f)
-//			glRotatef(90f, 0f, 1f, 0f)
-//			glTranslatef(0f, -1.5f, 0f)
-//			balls.renderAll()
-//			glEnable(GL_TEXTURE_2D)
-//			glPopMatrix()
-//		}
+		if (ContributorsPrivacyHelper.isCorrect(player, "Sonata")) {
+			glPushMatrix()
+			glColor4f(1f, 1f, 1f, 1f)
+			mc.renderEngine.bindTexture(LibResourceLocations.mimis)
+			
+			glPushMatrix()
+			glTranslatef(1/32f, 0f, 0f)
+			Helper.rotateIfSneaking(e.entityPlayer)
+			ModelNekomimi.renderTail(0.0625f)
+			glPopMatrix()
+			
+			glPushMatrix()
+			
+			val yaw: Float = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
+			val yawOffset: Float = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
+			val pitch: Float = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
+			
+			glRotatef(yawOffset, 0f, -1f, 0f)
+			glRotatef(yaw - 270, 0f, 1f, 0f)
+			glRotatef(pitch, 0f, 0f, 1f)
+			Helper.translateToHeadLevel(e.entityPlayer)
+			glRotatef(90f, 0f, -1f, 0f)
+			
+			glTranslatef(0f, 2/16f, 0f)
+			ModelNekomimi.renderMimi(0.0625f)
+			glPopMatrix()
+			
+			glPopMatrix()
+		}
 		
 		glColor4f(1f, 1f, 1f, 1f)
 	}

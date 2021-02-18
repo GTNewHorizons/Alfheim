@@ -1,10 +1,10 @@
 package alfheim.common.item.equipment.tool.manasteel
 
 import alexsocol.asjlib.meta
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.Event.Result
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -83,9 +83,8 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = Botani
 			stack.meta = stack.meta - 1
 	}
 	
-	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack): Boolean {
-		return par2ItemStack.item === ModItems.manaResource && par2ItemStack.meta == 0 || super.getIsRepairable(par1ItemStack, par2ItemStack)
-	}
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack) =
+		material.item === ModItems.manaResource && material.meta == 0
 	
 	override fun usesMana(stack: ItemStack): Boolean {
 		return true
@@ -100,6 +99,7 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = Botani
 	}
 	
 	companion object {
+		
 		const val MANA_PER_DAMAGE = 60
 	}
 }

@@ -35,7 +35,7 @@ open class EntityItemImmortal: Entity {
 	constructor(world: World): super(world) {
 		setSize(0.25f, 0.25f)
 		yOffset = height / 2f
-
+		
 		rotationYaw = (Math.random() * 360.0).F
 		isImmuneToFire = true
 //		motionX = (Math.random() * 0.20000000298023224 - 0.10000000149011612)
@@ -162,7 +162,7 @@ open class EntityItemImmortal: Entity {
 			val i = itemstack.stackSize
 			
 			if (delayBeforeCanPickup <= 0 /*&& lifespan - age <= 200*/ && (i <= 0 || player.inventory.addItemStackToInventory(itemstack))) {
-				worldObj.playSoundAtEntity(player, "random.pop", 0.2f, ((rand.nextFloat() - rand.nextFloat()) * 0.7f + 1f) * 2f)
+				player.playSoundAtEntity("random.pop", 0.2f, ((rand.nextFloat() - rand.nextFloat()) * 0.7f + 1f) * 2f)
 				
 				if (!worldObj.isRemote) {
 					val entitytracker = (worldObj as WorldServer).entityTracker

@@ -3,7 +3,8 @@ yrsegal, L0neKitsune    -    Botanical Addons and Natural Pledge content (Irides
 DmitryWS                -    lore and most of textures
 Vamig Aliev             -    worldgen
 ExtraMeteorP, CKATEPTb  -    ExtraBotany content (Spear, Bow, Multibauble ring and relic cleaner)
-pandorarose22           -    wings textures
+pandorarose22           -    Race wings textures
+The_most_phenomenal     -    Alv wings textures
 anonymous..es           -    sylph(m), salamander(m), cait-sith(m,f), Jibril skins
 AdovayaBaba             -    gnome(m,f) base skins
 Inga Akuma              -    spriggan(m), salamander(f) base skins
@@ -24,9 +25,15 @@ JustAGod                -    for ObjectWeb ASM tutorial and explaining some feat
 Vazkii                  -    for making Botania, 'cause without it Alfheim would never have existed
 
 Donators:
-1_Lucifer_9
+a1marI
+besenok
 DemnaGvasalia
 dudas
+Eifel Mine
+Frenze GMR
+Gertchenxd Mullmensch
 lie4me
 mkrtes
+MonoShiki
+Savy
 Yada Kristo

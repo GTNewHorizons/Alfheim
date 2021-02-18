@@ -7,7 +7,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.spell.tech.SpellDriftingMine
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
@@ -76,7 +76,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 			var movingobjectposition: MovingObjectPosition? = worldObj.rayTraceBlocks(vec3, vec31)
 			
 			if (movingobjectposition == null) {
-				val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox.addCoord(motionX, motionY, motionZ).expand(1)) as  MutableList<EntityLivingBase>
+				val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox.addCoord(motionX, motionY, motionZ).expand(1)) as MutableList<EntityLivingBase>
 				l.remove(caster)
 				
 				for (e in l)

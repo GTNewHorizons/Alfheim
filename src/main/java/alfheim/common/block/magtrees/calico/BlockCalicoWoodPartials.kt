@@ -21,6 +21,7 @@ class BlockCalicoWoodSlab(full: Boolean, source: Block = AlfheimBlocks.calicoPla
 }
 
 class BlockCalicoWoodStairs(source: Block = AlfheimBlocks.calicoPlanks): BlockRainbowWoodStairs(source), IExplosionDampener {
+	
 	override fun register() {
 		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}

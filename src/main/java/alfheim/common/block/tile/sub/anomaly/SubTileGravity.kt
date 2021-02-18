@@ -77,6 +77,7 @@ class SubTileGravity: SubTileAnomalyBase() {
 	override fun typeBits() = MOTION
 	
 	companion object {
+		
 		const val TAG_POWER = "power"
 	}
 }

@@ -2,6 +2,8 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
+import alfheim.AlfheimCore
 import alfheim.api.event.PlayerInteractAdequateEvent.RightClick
 import alfheim.api.event.PlayerInteractAdequateEvent.RightClick.Action.*
 import alfheim.api.item.ColorOverrideHelper
@@ -49,7 +51,7 @@ object FaithHandlerNjord: IFaithHandler {
 	}
 	
 	@SubscribeEvent
-	fun onPlayerClick(e: RightClick) {
+	fun onPlayerClickLiquid(e: RightClick) {
 		if (e.action != RIGHT_CLICK_LIQUID) return
 		
 		val player = e.player
@@ -57,7 +59,10 @@ object FaithHandlerNjord: IFaithHandler {
 		ItemPriestEmblem.getEmblem(2, player) ?: return
 		if (getGodPowerLevel(player) < 3) return
 		if (player.isSneaking || !player.isInsideOfMaterial(Material.air)) return
-
+		
+		if (!InteractionSecurity.canDoSomethingHere(player, e.x, e.y, e.z))
+			return
+		
 		val state = player.worldObj.getBlock(e.x, e.y, e.z)
 		
 		if (state.material.isLiquid) {
@@ -95,10 +100,8 @@ object FaithHandlerNjord: IFaithHandler {
 			if (!player.capabilities.isCreativeMode) emblem.cooldown = 50
 			
 			player.isSprinting = true
-			val increase = min(0.07f * 200 + 0.67f, 0.9f)
-			
-			player.motionY += increase.D
-			val speed = min(0.12f * 200 + 1.1f, 1.825f)
+			player.motionY += 0.9
+			val speed = 1.825
 			player.motionX = (-sin(player.rotationYaw * Math.PI / 180) * cos(player.rotationPitch * Math.PI / 180) * speed)
 			player.motionZ = (cos(player.rotationYaw * Math.PI / 180) * cos(player.rotationPitch * Math.PI / 180) * speed)
 		}
@@ -108,7 +111,8 @@ object FaithHandlerNjord: IFaithHandler {
 	@SubscribeEvent
 	fun onPlayerAttack(e: AttackEntityEvent) {
 		val player = e.entityPlayer
-		val emblem = ItemPriestEmblem.getEmblem(2, player) ?: return
+		var emblem = ItemPriestEmblem.getEmblem(2, player)
+		if (emblem == null) if (AlfheimCore.ENABLE_RAGNAROK) emblem = ItemRagnarokEmblem.getEmblem(player, 2) ?: return else return
 		
 		val entity = e.target
 		if (entity is EntityLivingBase)
@@ -149,7 +153,7 @@ object FaithHandlerNjord: IFaithHandler {
 	override fun doParticles(stack: ItemStack, player: EntityPlayer) {
 		if (player.ticksExisted % 10 == 0) {
 			for (i in 0..6) {
-				val vec = IFaithHandler.getHeadOrientation(player).multiply(0.52)
+				val vec = IFaithHandler.getHeadOrientation(player).mul(0.52)
 				val color = Color(ColorOverrideHelper.getColor(player, 0x0101FF))
 				val r = color.red.F / 255F
 				val g = color.green.F / 255F

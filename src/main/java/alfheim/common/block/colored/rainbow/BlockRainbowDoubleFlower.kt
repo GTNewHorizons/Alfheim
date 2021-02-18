@@ -2,11 +2,11 @@ package alfheim.common.block.colored.rainbow
 
 import alexsocol.asjlib.*
 import alfheim.api.lib.LibRenderIDs
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.block.base.IDoublePlant
-import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemRainbowDoubleGrassMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -160,7 +160,7 @@ class BlockRainbowDoubleFlower: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
 	override fun isShearable(item: ItemStack, world: IBlockAccess, x: Int, y: Int, z: Int) = true
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, stack: ItemStack?) = ShadowFoxLexiconData.rainbowFlora
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, stack: ItemStack?) = AlfheimLexiconData.rainbowFlora
 	
 	override fun getBottomIcon(lowerMeta: Int) = bottomFlowerIcon
 	

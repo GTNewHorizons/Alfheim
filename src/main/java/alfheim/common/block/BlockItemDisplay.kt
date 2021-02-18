@@ -1,11 +1,11 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.*
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileItemDisplay
-import alfheim.common.core.helper.IconHelper
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -164,7 +164,7 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 	override fun createTileEntity(world: World?, meta: Int) = TileItemDisplay()
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) =
-		ShadowFoxLexiconData.itemDisplay
+		AlfheimLexiconData.itemDisplay
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 150 else 0
 }

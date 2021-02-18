@@ -25,6 +25,7 @@ import vazkii.botania.api.item.IManaProficiencyArmor
 import vazkii.botania.api.mana.IManaDiscountArmor
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
 import java.util.*
 
@@ -46,13 +47,13 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 	}
 	
 	override fun getIsRepairable(armor: ItemStack?, material: ItemStack): Boolean {
-		return material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.ElvoriumIngot || super.getIsRepairable(armor, material)
+		return material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.ElvoriumIngot
 	}
 	
-	override fun getAttributeModifiers(stack: ItemStack): Multimap<*, *> {
+	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeModifier> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
 		val uuid = UUID(unlocalizedName.hashCode().toLong(), 0)
-		multimap.put(SharedMonsterAttributes.knockbackResistance.attributeUnlocalizedName, AttributeModifier(uuid, "Terrasteel modifier $type", getArmorDisplay(null, ItemStack(this), type).D / 20, 0))
+		multimap.put(SharedMonsterAttributes.knockbackResistance.attributeUnlocalizedName, AttributeModifier(uuid, "Elvorium modifier $type", getArmorDisplay(null, ItemStack(this), type).D / 20, 0))
 		return multimap
 	}
 	
@@ -67,7 +68,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 		val stack = player.inventory.armorInventory[3 - i] ?: return false
 		
 		when (i) {
-			0 -> return stack.item === AlfheimItems.elvoriumHelmet || AlfheimItems.elvoriumHelmetRevealing?.let {stack.item === it } ?: false
+			0 -> return stack.item === AlfheimItems.elvoriumHelmet || AlfheimItems.elvoriumHelmetRevealing?.let { stack.item === it } ?: false
 			1 -> return stack.item === AlfheimItems.elvoriumChestplate
 			2 -> return stack.item === AlfheimItems.elvoriumLeggings
 			3 -> return stack.item === AlfheimItems.elvoriumBoots
@@ -99,21 +100,20 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 		addStringToTooltip(StatCollector.translateToLocal("botania.armorset.terrasteel.desc2"), list)    // Passive mana regen
 	}
 	
-	override fun onUpdate(stack: ItemStack?, world: World?, entity: Entity?, slotID: Int, inHand: Boolean) {
+	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slotID: Int, inHand: Boolean) {
 		if (entity is EntityPlayer)
-			onArmorTick(world!!, entity as EntityPlayer?, stack)
+			onArmorTick(world, entity, stack)
 	}
 	
-	override fun onArmorTick(world: World, player: EntityPlayer?, stack: ItemStack?) {
+	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
 		super.onArmorTick(world, player, stack)
-		if (!stack!!.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
-		if (player != null) stack.stackTagCompound.setBoolean("SET", hasArmorSet(player))
+		if (!stack.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
+		ItemNBTHelper.setBoolean(stack, "SET", hasArmorSet(player))
 	}
 	
 	@Optional.Method(modid = "Thaumcraft")
 	override fun getRunicCharge(stack: ItemStack): Int {
-		if (!stack.hasTagCompound()) stack.stackTagCompound = NBTTagCompound()
-		return if (stack.stackTagCompound.getBoolean("SET")) 2 else 0
+		return if (ItemNBTHelper.getBoolean(stack, "SET", false)) 2 else 0
 	}
 	
 	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer): Float {

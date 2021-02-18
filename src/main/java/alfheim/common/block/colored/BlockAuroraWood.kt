@@ -2,7 +2,7 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.item.block.ItemBlockAurora
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -22,8 +22,8 @@ class BlockAuroraWood: BlockModRotatedPillar(Material.wood) {
 		stepSound = soundTypeWood
 	}
 	
-	override fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemBlockAurora::class.java, name)
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemBlockAurora::class.java, this.name)
 	}
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block, fortune: Int) {
@@ -48,5 +48,5 @@ class BlockAuroraWood: BlockModRotatedPillar(Material.wood) {
 	
 	override fun isWood(world: IBlockAccess, x: Int, y: Int, z: Int) = true
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.aurora
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.aurora
 }

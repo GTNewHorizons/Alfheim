@@ -2,6 +2,7 @@ package alfheim.common.block
 
 import alexsocol.asjlib.ASJUtilities.setBurnable
 import alexsocol.asjlib.extendables.block.BlockModMeta
+import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.alt.*
@@ -93,6 +94,7 @@ object AlfheimBlocks {
 	val poisonIce: Block
 	val powerStone: Block
 	val raceSelector: Block
+	val ragnarokCore: Block
 	val rainbowDirt: Block
 	val rainbowFlame: Block
 	val rainbowGrass: Block
@@ -250,6 +252,7 @@ object AlfheimBlocks {
 		poisonIce = BlockPoisonIce()
 		powerStone = BlockPowerStone()
 		raceSelector = BlockRaceSelector()
+		ragnarokCore = if (AlfheimCore.ENABLE_RAGNAROK) BlockRagnarokCore() else Blocks.stone
 		rainbowDirt = BlockRainbowDirt()
 		rainbowFlame = BlockManaFlame("rainbowFlame", TileRainbowManaFlame::class.java)
 		rainbowLeaves = BlockRainbowLeaves()
@@ -633,19 +636,19 @@ object AlfheimBlocks {
 		addSubFlower(SubTileStormFlower::class.java, "stormFlower")
 		addSubFlower(SubTileWindFlower::class.java, "windFlower")
 		
-		ShadowFoxAPI.addTreeVariant(irisDirt, irisWood0, irisLeaves0, 0, 3)
-		ShadowFoxAPI.addTreeVariant(irisDirt, irisWood1, irisLeaves0, 4, 7)
-		ShadowFoxAPI.addTreeVariant(irisDirt, irisWood2, irisLeaves1, 8, 11, 8)
-		ShadowFoxAPI.addTreeVariant(irisDirt, irisWood3, irisLeaves1, 12, 15, 8)
-		ShadowFoxAPI.addTreeVariant(rainbowDirt, rainbowWood, rainbowLeaves)
-		ShadowFoxAPI.addTreeVariant(auroraDirt, auroraWood, auroraLeaves)
-		ShadowFoxAPI.addTreeVariant(ModBlocks.altGrass, altWood0, altLeaves, 0, 3)
-		ShadowFoxAPI.addTreeVariant(ModBlocks.altGrass, altWood1, altLeaves, 4, 5)
+		AlfheimAPI.addTreeVariant(irisDirt, irisWood0, irisLeaves0, 0, 3)
+		AlfheimAPI.addTreeVariant(irisDirt, irisWood1, irisLeaves0, 4, 7)
+		AlfheimAPI.addTreeVariant(irisDirt, irisWood2, irisLeaves1, 8, 11, 8)
+		AlfheimAPI.addTreeVariant(irisDirt, irisWood3, irisLeaves1, 12, 15, 8)
+		AlfheimAPI.addTreeVariant(rainbowDirt, rainbowWood, rainbowLeaves)
+		AlfheimAPI.addTreeVariant(auroraDirt, auroraWood, auroraLeaves)
+		AlfheimAPI.addTreeVariant(ModBlocks.altGrass, altWood0, altLeaves, 0, 3)
+		AlfheimAPI.addTreeVariant(ModBlocks.altGrass, altWood1, altLeaves, 4, 5)
 	}
 	
 	fun addSubFlower(clazz: Class<out SubTileEntity>, name: String) {
 		BotaniaAPI.registerSubTile(name, clazz)
-		BotaniaAPI.registerSubTileSignature(clazz, ShadowFoxSignature(name))
+		BotaniaAPI.registerSubTileSignature(clazz, AlfheimSignature(name))
 		BotaniaAPI.addSubTileToCreativeMenu(name)
 		AlfheimTab.subtiles.add(name)
 	}

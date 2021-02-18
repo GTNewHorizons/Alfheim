@@ -34,21 +34,21 @@ object RenderItemFlugelHead {
 			val pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
 			
 			glPushMatrix()
-			glColor4d(1.0,1.0,1.0,1.0)
+			glColor4d(1.0, 1.0, 1.0, 1.0)
 			glRotated(yawOffset.D, 0.0, -1.0, 0.0)
 			glRotated((yaw - 270).D, 0.0, 1.0, 0.0)
 			glRotated(pitch.D, 0.0, 0.0, 1.0)
 			glRotated(-90.0, 0.0, 1.0, 0.0)
 			
 			when (player.getCurrentArmor(3)?.item) {
-				is ItemHeadFlugel	-> {
+				is ItemHeadFlugel -> {
 					mc.renderEngine.bindTexture(LibResourceLocations.jibril)
-					ModelBipedNew.model.head.render(0.0625f)
+					ModelBipedNew.INSTANCE.head.render(0.0625f)
 				}
 				
-				is ItemHeadMiku		-> {
+				is ItemHeadMiku   -> {
 					mc.renderEngine.bindTexture(LibResourceLocations.miku0)
-					ModelBipedNew.model.head.render(0.0625f)
+					ModelBipedNew.INSTANCE.head.render(0.0625f)
 					
 					if (ModelEntityFlugel.model2 != null) {
 						mc.renderEngine.bindTexture(LibResourceLocations.miku2)
@@ -56,7 +56,7 @@ object RenderItemFlugelHead {
 					}
 				}
 				
-				is ItemGaiaHead		-> {
+				is ItemGaiaHead   -> {
 					mc.renderEngine.bindTexture(mc.thePlayer.locationSkin)
 					ShaderHelper.useShader(ShaderHelper.doppleganger, RenderDoppleganger.defaultCallback)
 					RenderTileSkullOverride.modelSkull.render(null, 0f, 0f, 0f, 0f, 0f, 0.0625f)

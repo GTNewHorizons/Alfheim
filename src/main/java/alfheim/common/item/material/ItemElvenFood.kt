@@ -2,7 +2,7 @@ package alfheim.common.item.material
 
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.registry.GameRegistry
@@ -91,6 +91,7 @@ class ItemElvenFood: ItemFood(0, 0f, false) {
 }
 
 object ElvenFoodMetas {
+	
 	var m = -1
 		get() {
 			field++

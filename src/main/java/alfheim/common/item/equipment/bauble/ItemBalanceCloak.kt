@@ -28,15 +28,16 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 	
 	override fun effectOnDamage(event: LivingHurtEvent, player: EntityPlayer, stack: ItemStack?): Boolean {
 		if (!event.source.isMagicDamage) {
+			if (event.source.entity === player) return false
+			
 			event.ammount /= 2f
 			
-			if (event.source.entity != null)
-				event.source.entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), event.ammount)
+			event.source.entity?.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), event.ammount)
 			
 			if (event.ammount > player.health)
 				event.ammount = player.health - 1
 			
-			player.worldObj.playSoundAtEntity(player, "botania:holyCloak", 1f, 1f)
+			player.playSoundAtEntity("botania:holyCloak", 1f, 1f)
 			
 			for (i in 0..29) {
 				val x = player.posX + Math.random() * player.width.D * 2.0 - player.width
@@ -54,7 +55,10 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 	@SideOnly(Side.CLIENT)
 	override fun getRenderTexture() = LibResourceLocations.cloakBalance
 	
+	override fun getIconFromDamage(meta: Int) = itemIcon
+	
 	companion object {
+		
 		lateinit var iconHoly: IIcon
 		lateinit var iconUnholy: IIcon
 	}

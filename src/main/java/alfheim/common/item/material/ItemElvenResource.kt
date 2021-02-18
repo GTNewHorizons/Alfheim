@@ -3,9 +3,9 @@ package alfheim.common.item.material
 import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.client.core.helper.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.rainbow.BlockRainbowGrass
-import alfheim.common.core.helper.*
 import alfheim.common.item.*
 import alfheim.common.item.material.ElvenResourcesMetas.ElvenWeed
 import alfheim.common.item.material.ElvenResourcesMetas.InfusedDreamwoodTwig
@@ -195,7 +195,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	
 	companion object {
 		
-		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed", "Jug", "GrapeLeaf")
+		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed", "Jug", "GrapeLeaf", "FenrirFur", "JormungandScale")
 		
 		lateinit var amulet: IIcon
 		lateinit var candy: IIcon
@@ -238,6 +238,8 @@ object ElvenResourcesMetas {
 	val ElvenWeed: Int
 	val Jug: Int
 	val GrapeLeaf: Int
+	val FenrirFur: Int
+	val JormungandScale: Int
 	
 	val displayBlackList: Array<Int>
 	
@@ -270,6 +272,8 @@ object ElvenResourcesMetas {
 		ElvenWeed = items.indexOf("ElvenWeed")
 		Jug = items.indexOf("Jug")
 		GrapeLeaf = items.indexOf("GrapeLeaf")
+		FenrirFur = items.indexOf("FenrirFur")
+		JormungandScale = items.indexOf("JormungandScale")
 		
 		displayBlackList = arrayOf(ElvenWeed)
 	}

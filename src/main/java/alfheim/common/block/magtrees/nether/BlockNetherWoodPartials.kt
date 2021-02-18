@@ -32,7 +32,7 @@ class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPla
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (field_150004_a) 2000 else 1000 else 0
 }
 
-class BlockNetherWoodStairs(source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodStairs(source), IFuelHandler  {
+class BlockNetherWoodStairs(source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodStairs(source), IFuelHandler {
 	
 	init {
 		setLightLevel(0.5f)

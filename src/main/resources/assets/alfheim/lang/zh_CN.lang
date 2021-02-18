@@ -437,7 +437,7 @@ alfheimmisc.invalidDodge=无效的数据包
 alfheimmisc.skintoggle0=你会用你自己的皮肤
 alfheimmisc.skintoggle1=你的皮肤被设定为对应的精灵种族
 alfheimmisc.teamnotmob=盟友无法被选定为敌意目标
-alfheimmisc.tgtooltip=摁下&b%key%&7以打开旅行者工具栏
+alfheimmisc.tgtooltip=摁下&b%s&7以打开旅行者工具栏
 alfheimmisc.update=看上去你正在使用一个过期的版本(%s). 也许你应该更新到 %s?
 
 alfheimmisc.area=范围: %s x %s x %s

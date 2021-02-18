@@ -23,16 +23,19 @@ open class ItemColoredSlabMod(par1: Block): ItemSlabMod(par1) {
 }
 
 open class ItemSlabMod(val block: Block): ItemSlab(block, (block as BlockSlabMod).getSingleBlock(), block.getFullBlock(), false) {
+	
 	override fun getUnlocalizedName(stack: ItemStack) =
-        field_150939_a.unlocalizedName.replace("tile.".toRegex(), "tile.${ModInfo.MODID}:").replace("\\d+$".toRegex(), "")
+		field_150939_a.unlocalizedName.replace("tile.".toRegex(), "tile.${ModInfo.MODID}:").replace("\\d+$".toRegex(), "")
 }
 
 open class ItemShimmerSlabMod(val block: Block): ItemSlab(block, (block as BlockShimmerQuartzSlab).singleBlock, block.fullBlock, false) {
+	
 	override fun getUnlocalizedName(stack: ItemStack) =
-        field_150939_a.unlocalizedName.replace("tile.".toRegex(), "tile.${ModInfo.MODID}:").replace("\\d+$".toRegex(), "")
+		field_150939_a.unlocalizedName.replace("tile.".toRegex(), "tile.${ModInfo.MODID}:").replace("\\d+$".toRegex(), "")
 }
 
 open class ItemMetaSlabMod(val block: Block): ItemSlab(block, (block as BlockSlabMod).getSingleBlock(), block.getFullBlock(), false) {
+	
 	override fun getUnlocalizedName(stack: ItemStack) =
 		"${field_150939_a.unlocalizedName.replace("tile.".toRegex(), "tile.${ModInfo.MODID}:")}${stack.meta and 0x8.inv()}"
 }

@@ -2,7 +2,7 @@ package alfheim.common.block.colored.rainbow
 
 import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.item.block.ItemIridescentBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -42,10 +42,10 @@ class BlockRainbowWood: BlockModRotatedPillar(Material.wood) {
 	}
 	
 	override fun canSustainLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = true
- 
+	
 	override fun isWood(world: IBlockAccess, x: Int, y: Int, z: Int) = true
 	
 	override fun isInterpolated() = true
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.irisSapling
 }

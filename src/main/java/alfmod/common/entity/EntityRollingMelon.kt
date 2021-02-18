@@ -90,6 +90,7 @@ class EntityRollingMelon(world: World): EntityCreature(world) {
 	}
 	
 	companion object {
+		
 		const val TAG_LAVA = "isLava"
 		const val TAG_ROTATION = "rotation"
 	}

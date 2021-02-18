@@ -30,8 +30,7 @@ class ItemMultibauble: ItemBauble("multibauble"), IManaGivingItem {
 		
 		val baubles = ItemBaubleBox.loadStacks(player.inventory[slot])
 		
-		baubles.forEachIndexed {
-			i, bauble ->
+		baubles.forEachIndexed { i, bauble ->
 			if (i < AlfheimConfigHandler.multibaubleCount && bauble != null) {
 				val item = bauble.item
 				if (item is IBauble && item !is ItemMultibauble && item !is IRelic) {

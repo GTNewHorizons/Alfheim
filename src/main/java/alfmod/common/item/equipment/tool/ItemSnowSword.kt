@@ -1,5 +1,8 @@
 package alfmod.common.item.equipment.tool
 
+import alexsocol.asjlib.meta
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfmod.common.core.helper.IconHelper
 import alfmod.common.core.util.AlfheimModularTab
 import cpw.mods.fml.relauncher.*
@@ -16,6 +19,7 @@ class ItemSnowSword: ItemManasteelSword(snow, "SnowSword") {
 	lateinit var katanaIcon: IIcon
 	
 	companion object {
+		
 		val snow = EnumHelper.addToolMaterial("Snow", 0, 860, 15f, 4f, 16)!!
 		
 		lateinit var snice: IIcon
@@ -24,6 +28,9 @@ class ItemSnowSword: ItemManasteelSword(snow, "SnowSword") {
 	init {
 		creativeTab = AlfheimModularTab
 	}
+	
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack) =
+		material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.NiflheimPowerIngot
 	
 	override fun hitEntity(stack: ItemStack, target: EntityLivingBase, attacker: EntityLivingBase): Boolean {
 		target.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 160, 1, true))

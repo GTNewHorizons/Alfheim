@@ -9,16 +9,13 @@ import net.minecraft.entity.*
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 
-object RenderEntityLolicorn: RenderLiving(ModelEntityLolicorn(), 0.5f) {
-	
-	val lolicorn = mainModel
-	val sleipnir = ModelEntitySleipnir()
+object RenderEntityLolicorn: RenderLiving(ModelEntityLolicorn, 0.5f) {
 	
 	override fun renderModel(entity: EntityLivingBase, f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {
 		val isSleipnir = (entity as? EntityLolicorn)?.type == 1
 		val firstPerson = !isSleipnir && (mc.thePlayer === entity.riddenByEntity && mc.gameSettings?.thirdPersonView == 0)
 		
-		mainModel = if (isSleipnir) sleipnir else lolicorn
+		mainModel = if (isSleipnir) ModelEntitySleipnir else ModelEntityLolicorn
 		
 		if (firstPerson) {
 			glEnable(GL_BLEND)
@@ -39,7 +36,7 @@ object RenderEntityLolicorn: RenderLiving(ModelEntityLolicorn(), 0.5f) {
 		}
 	}
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
+	override fun getEntityTexture(entity: Entity?): ResourceLocation {
 		if (entity is EntityLolicorn) {
 			if (entity.type == 1) return LibResourceLocations.sleipnir
 			if (entity.owner == "KAIIIAK") return LibResourceLocations.roricorn

@@ -28,7 +28,6 @@ import alfheim.common.spell.tech.*
 import alfheim.common.spell.water.*
 import alfheim.common.spell.wind.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheim
-import cpw.mods.fml.common.IWorldGenerator
 import cpw.mods.fml.common.registry.EntityRegistry
 import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.entity.EnumCreatureType
@@ -46,18 +45,14 @@ import vazkii.botania.common.lib.LibBlockNames
 // TODO decentralize
 object AlfheimRegistry {
 	
-	private lateinit var worldGen: IWorldGenerator
-	
 	fun preInit() {
 		registerPotions()
 		registerEntities()
 		registerTileEntities()
-		
-		worldGen = WorldGenAlfheim()
 	}
 	
 	fun init() {
-		registerWorldGenerator(worldGen, 1)
+		registerWorldGenerator(WorldGenAlfheim, 1)
 		registerSpells()
 		loadAllPinkStuff()
 	}
@@ -109,8 +104,10 @@ object AlfheimRegistry {
 		registerEntity(EntityButterfly::class.java, "Butterfly", AlfheimCore.instance, id)
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
 		registerEntity(EntityElf::class.java, "Elf", AlfheimCore.instance, id)
+		registerEntity(EntityFenrir::class.java, "Fenrir", AlfheimCore.instance, id)
 		registerEntity(EntityFireAura::class.java, "FireAura", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
+		registerEntity(EntityFracturedSpaceCollector::class.java, "FracturedSpaceCollector", AlfheimCore.instance, id)
 		registerEntity(EntityItemImmortal::class.java, "ImmortalItem", AlfheimCore.instance, id)
 		registerEntity(EntityItemImmortalRelic::class.java, "ImmortalRelicItem", AlfheimCore.instance, id)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)
@@ -161,6 +158,7 @@ object AlfheimRegistry {
 		registerTile(TileManaInfuser::class.java, "ManaInfuser")
 		registerTile(TilePowerStone::class.java, "PowerStone")
 		registerTile(TileRaceSelector::class.java, "RaceSelector")
+		if (AlfheimCore.ENABLE_RAGNAROK) registerTile(TileRagnarokCore::class.java, "RagnarokCore")
 		registerTile(TileTradePortal::class.java, "TradePortal")
 		
 		registerAnomalies()
@@ -301,7 +299,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModFluffBlocks.lavenderQuartzSlab), 2)
 		addPink(ItemStack(ModFluffBlocks.lavenderQuartzStairs), 4)
 		
-		addPink(ItemStack(ModItems.aesirRing), 6000)
+//		addPink(ItemStack(ModItems.aesirRing), 6000)
 		addPink(ItemStack(ModItems.baubleBox), 5)
 		addPink(ItemStack(ModItems.blackHoleTalisman), 36)
 		addPink(ItemStack(ModItems.corporeaSpark), 9)
@@ -324,8 +322,8 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.elementiumShovel), 9)
 		addPink(ItemStack(ModItems.elementiumSword), 18)
 		addPink(ItemStack(ModItems.lens, 1, 14), 18)
-		addPink(ItemStack(ModItems.lokiRing), 1000)
-		addPink(ItemStack(ModItems.odinRing), 1000)
+//		addPink(ItemStack(ModItems.lokiRing), 1000)
+//		addPink(ItemStack(ModItems.odinRing), 1000)
 		addPink(ItemStack(ModItems.openBucket), 27)
 		addPink(ItemStack(ModItems.petal, 1, 6), 1)
 		addPink(ItemStack(ModItems.pinkinator), 100)
@@ -338,7 +336,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.slimeBottle), 45)
 		addPink(ItemStack(ModItems.starSword), 20)
 		addPink(ItemStack(ModItems.superTravelBelt), 27) // was 38
-		addPink(ItemStack(ModItems.thorRing), 1000)
+//		addPink(ItemStack(ModItems.thorRing), 1000)
 		
 		
 		
@@ -379,9 +377,9 @@ object AlfheimRegistry {
 		addPink(ItemStack(AlfheimItems.multibauble), 18)
 		addPink(ItemStack(AlfheimItems.pixieAttractor), 54)
 		addPink(ItemStack(AlfheimItems.priestEmblem, 1, 3), 18)
-		addPink(ItemStack(AlfheimItems.priestRingHeimdall), 1000)
-		addPink(ItemStack(AlfheimItems.priestRingNjord), 1000)
-		addPink(ItemStack(AlfheimItems.priestRingSif), 1000)
+//		addPink(ItemStack(AlfheimItems.priestRingHeimdall), 1000)
+//		addPink(ItemStack(AlfheimItems.priestRingNjord), 1000)
+//		addPink(ItemStack(AlfheimItems.priestRingSif), 1000)
 		addPink(ItemStack(AlfheimItems.rodClicker), 29)
 		addPink(ItemStack(AlfheimItems.rodColorfulSkyDirt), 27)
 		addPink(ItemStack(AlfheimItems.spatiotemporalRing), 54)

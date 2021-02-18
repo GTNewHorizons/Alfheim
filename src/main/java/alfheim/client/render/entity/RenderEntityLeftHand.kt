@@ -41,21 +41,13 @@ object RenderEntityLeftHand {
 		e.renderer.modelBipedMain.bipedLeftArm.postRender(0.0625f)
 		glTranslatef(-0.0625f, 0.4375f, 0.0625f)
 		
-		val f1 = 0.625f
-		
+		val s = 0.625f
 		glTranslatef(0f, 0.1875f, 0f)
-		glScalef(f1, -f1, f1)
+		glScalef(s, -s, s)
 		glRotatef(-80f, 1f, 0f, 0f)
 		glRotatef(45f, 0f, 1f, 0f)
 		
-		val f2: Float
-		val i = 0xFFFFFF
-		val f5: Float
-		
-		val f4 = (i shr 16 and 255).F / 255f
-		f5 = (i shr 8 and 255).F / 255f
-		f2 = (i and 255).F / 255f
-		glColor4f(f4, f5, f2, 1f)
+		glColor4f(1f, 1f, 1f, 1f)
 		
 		glPushMatrix()
 		render.invoke(e)

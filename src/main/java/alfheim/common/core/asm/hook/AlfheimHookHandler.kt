@@ -1,26 +1,23 @@
 package alfheim.common.core.asm.hook
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.render.ASJRenderHelper
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.boss.*
 import alfheim.api.entity.*
-import alfheim.api.event.*
 import alfheim.api.item.equipment.bauble.IManaDiscountBauble
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.common.block.*
 import alfheim.common.block.alt.BlockAltLeaves
-import alfheim.common.core.asm.AlfheimSyntheticMethods
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.relic.ItemGleipnir
 import alfheim.common.item.rod.ItemRodClicker
 import alfheim.common.potion.PotionSoulburn
 import baubles.common.lib.PlayerHandler
@@ -29,10 +26,8 @@ import gloomyfolken.hooklib.asm.Hook
 import gloomyfolken.hooklib.asm.Hook.ReturnValue
 import gloomyfolken.hooklib.asm.ReturnCondition.*
 import net.minecraft.block.*
-import net.minecraft.block.material.Material
 import net.minecraft.client.gui.*
-import net.minecraft.client.renderer.*
-import net.minecraft.client.renderer.entity.*
+import net.minecraft.client.renderer.ItemRenderer
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
@@ -44,27 +39,25 @@ import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.init.*
-import net.minecraft.inventory.InventoryCrafting
+import net.minecraft.inventory.*
 import net.minecraft.item.*
-import net.minecraft.network.*
 import net.minecraft.potion.*
 import net.minecraft.tileentity.*
 import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraft.world.biome.*
 import net.minecraft.world.chunk.Chunk
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GLContext
-import org.lwjgl.opengl.NVFogDistance.*
 import ru.vamig.worldengine.*
 import travellersgear.api.TravellersGearAPI
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.api.internal.IManaBurst
+import vazkii.botania.api.item.IManaDissolvable
+import vazkii.botania.api.lexicon.*
 import vazkii.botania.api.mana.*
-import vazkii.botania.api.recipe.RecipePureDaisy
+import vazkii.botania.api.recipe.*
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.*
 import vazkii.botania.client.core.helper.IconHelper
@@ -82,18 +75,18 @@ import vazkii.botania.common.block.tile.mana.*
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
-import vazkii.botania.common.crafting.recipe.AesirRingRecipe
+import vazkii.botania.common.crafting.recipe.*
 import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.LensFirework
+import vazkii.botania.common.item.material.ItemManaResource
 import vazkii.botania.common.item.relic.*
 import vazkii.botania.common.item.rod.ItemRainbowRod
 import vazkii.botania.common.lib.LibBlockNames
 import java.awt.Color
-import java.nio.FloatBuffer
 import java.util.*
-import kotlin.math.*
+import kotlin.math.sin
 
 @Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused", "FunctionName")
 object AlfheimHookHandler {
@@ -128,30 +121,6 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true)
-	fun wakeAllPlayers(world: WorldServer) {
-		MinecraftForge.EVENT_BUS.post(ServerWakeUpEvent(world))
-	}
-	
-	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
-	fun onNewPotionEffect(e: EntityLivingBase, pe: PotionEffect) {
-		MinecraftForge.EVENT_BUS.post(LivingPotionEvent.Add.Post(e, pe))
-	}
-	
-	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
-	fun onChangedPotionEffect(e: EntityLivingBase, pe: PotionEffect, was: Boolean) {
-		MinecraftForge.EVENT_BUS.post(LivingPotionEvent.Change.Post(e, pe, was))
-	}
-	
-	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
-	fun onFinishedPotionEffect(e: EntityLivingBase, pe: PotionEffect) {
-		MinecraftForge.EVENT_BUS.post(LivingPotionEvent.Remove.Post(e, pe))
-	}
-	
-	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun isPotionActive(e: EntityLivingBase, p: Potion) =
 		if (p === Potion.resistance) {
@@ -171,68 +140,6 @@ object AlfheimHookHandler {
 		
 		return pe
 	}
-	
-	// #### BlockFence connection fix ####
-	
-	@JvmStatic
-	@Hook(returnCondition = ON_TRUE)
-	fun canConnectFenceTo(fence: BlockFence, world: IBlockAccess, x: Int, y: Int, z: Int) = world.getBlock(x, y, z) is BlockFence
-	
-	// #### BlockWall fix ####
-	
-	@JvmStatic
-	@Hook(returnCondition = ALWAYS, createMethod = true)
-	fun isSideSolid(wall: BlockWall, world: IBlockAccess, x: Int, y: Int, z: Int, side: ForgeDirection) =
-		when (side) {
-			ForgeDirection.DOWN -> true
-			ForgeDirection.UP   -> wall.blockBoundsMaxY == 1.0
-			else                -> false
-		}
-	
-	@JvmStatic
-	@Hook(returnCondition = ALWAYS)
-	fun renderBlockWall(render: RenderBlocks, block: BlockWall, x: Int, y: Int, z: Int): Boolean {
-		val flag = block.canConnectWallTo(render.blockAccess, x - 1, y, z)
-		val flag1 = block.canConnectWallTo(render.blockAccess, x + 1, y, z)
-		val flag2 = block.canConnectWallTo(render.blockAccess, x, y, z - 1)
-		val flag3 = block.canConnectWallTo(render.blockAccess, x, y, z + 1)
-		val flag4 = flag2 && flag3 && !flag && !flag1
-		val flag5 = !flag2 && !flag3 && flag && flag1
-		val doNotRenderPost = render.blockAccess.getBlock(x, y + 1, z) !is BlockWall && render.blockAccess.getBlock(x, y + 1, z) !is BlockSkull && render.blockAccess.getBlock(x, y - 1, z) !is BlockWall
-		
-		if ((flag4 || flag5) && doNotRenderPost) {
-			if (flag4) {
-				render.setRenderBounds(0.3125, 0.0, 0.0, 0.6875, 0.8125, 1.0)
-				render.renderStandardBlock(block, x, y, z)
-			} else {
-				render.setRenderBounds(0.0, 0.0, 0.3125, 1.0, 0.8125, 0.6875)
-				render.renderStandardBlock(block, x, y, z)
-			}
-		} else {
-			render.setRenderBounds(0.25, 0.0, 0.25, 0.75, 1.0, 0.75)
-			render.renderStandardBlock(block, x, y, z)
-			if (flag) {
-				render.setRenderBounds(0.0, 0.0, 0.3125, 0.25, 0.8125, 0.6875)
-				render.renderStandardBlock(block, x, y, z)
-			}
-			if (flag1) {
-				render.setRenderBounds(0.75, 0.0, 0.3125, 1.0, 0.8125, 0.6875)
-				render.renderStandardBlock(block, x, y, z)
-			}
-			if (flag2) {
-				render.setRenderBounds(0.3125, 0.0, 0.0, 0.6875, 0.8125, 0.25)
-				render.renderStandardBlock(block, x, y, z)
-			}
-			if (flag3) {
-				render.setRenderBounds(0.3125, 0.0, 0.75, 0.6875, 0.8125, 1.0)
-				render.renderStandardBlock(block, x, y, z)
-			}
-		}
-		block.setBlockBoundsBasedOnState(render.blockAccess, x, y, z)
-		return true
-	}
-	
-	// #### BlockWall fix end ####
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
@@ -347,10 +254,30 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getColor(tile: TileHourglass, @ReturnValue color: Int): Int {
-		val stack = tile.get(0)
+		val stack = tile[0]
 		return if (stack != null && color == 0) {
 			if (stack.item === AlfheimBlocks.elvenSand.toItem()) 0xf7f5d9 else 0
 		} else color
+	}
+	
+	const val TAG_COCOONED = "Botania-CocoonSpawned"
+	var cocooned = false
+	
+	@JvmStatic
+	@Hook
+	fun hatch(tile: TileCocoon) {
+		cocooned = true
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun spawnEntityInWorld(world: World, entity: Entity?, @ReturnValue result: Boolean): Boolean {
+		if (cocooned && result && entity != null) {
+			entity.entityData.setBoolean(TAG_COCOONED, true)
+			cocooned = false
+		}
+		
+		return result
 	}
 	
 	@JvmStatic
@@ -360,137 +287,6 @@ object AlfheimHookHandler {
 			e.motionZ = 0.0
 			e.motionY = 0.0
 			e.motionX = 0.0
-		}
-	}
-	
-	@JvmStatic
-	@Hook(returnCondition = ON_TRUE)
-	fun clearLeashed(e: EntityLiving, sendPacket: Boolean, dropItem: Boolean): Boolean {
-		if (dropItem && ItemGleipnir.leashes.remove(e.uniqueID)) {
-			e.clearLeashed(sendPacket, false)
-			return true
-		}
-		
-		return false
-	}
-	
-	var hookLeashColor = false
-	
-	@JvmStatic
-	@Hook(targetMethod = "func_110827_b")
-	fun drawLeashPre(render: RenderLiving, entity: EntityLiving, x: Double, y: Double, z: Double, yaw: Float, ticks: Float) {
-		hookLeashColor = entity.uniqueID in ItemGleipnir.leashes
-		
-		if (hookLeashColor)
-			ASJRenderHelper.setGlow()
-	}
-	
-	@JvmStatic
-	@Hook(returnCondition = ALWAYS)
-	fun setColorRGBA_F(tes: Tessellator, r: Float, g: Float, b: Float, a: Float) {
-		if (hookLeashColor) {
-			if (r == 0.5f)
-				tes.setColorRGBA(255, 223, 0, 255)
-			else
-				tes.setColorRGBA(255, 212, 0, 255)
-		} else
-			tes.setColorRGBA((r * 255f).I, (g * 255f).I, (b * 255f).I, (a * 255f).I)
-	}
-	
-	@JvmStatic
-	@Hook(targetMethod = "func_110827_b", injectOnExit = true)
-	fun drawLeashPost(render: RenderLiving, entity: EntityLiving, x: Double, y: Double, z: Double, yaw: Float, ticks: Float) {
-		if (hookLeashColor) {
-			hookLeashColor = false
-			ASJRenderHelper.discard()
-		}
-	}
-	
-	var hookLeashing = false
-	
-	@JvmStatic
-	@Hook
-	fun func_150909_a(static: ItemLead?, player: EntityPlayer?, world: World?, x: Int, y: Int, z: Int): Boolean {
-		hookLeashing = true
-		return false
-	}
-	
-	@JvmStatic
-	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getEntitiesWithinAABB(world: World, clazz: Class<*>?, aabb: AxisAlignedBB?, @ReturnValue list: List<*>?): List<*>? {
-		if (hookLeashing) {
-			hookLeashing = false
-			(list as MutableList).removeAll { it is EntityLiving && it.uniqueID in ItemGleipnir.leashes }
-		}
-		
-		return list
-	}
-	
-	@JvmStatic
-	@Hook(returnCondition = ALWAYS, isMandatory = true)
-	fun updatePotionEffects(e: EntityLivingBase) {
-		try {
-			val iterator = e.activePotionsMap.keys.iterator()
-			
-			while (iterator.hasNext()) {
-				val integer = iterator.next() as Int
-				val potioneffect = e.activePotionsMap[integer] as PotionEffect
-				
-				if (!potioneffect.onUpdate(e)) {
-					//if (!e.worldObj.isRemote) {
-					iterator.remove()
-					AlfheimSyntheticMethods.onFinishedPotionEffect(e, potioneffect)
-					//}
-				} else if (potioneffect.getDuration() % 600 == 0) {
-					AlfheimSyntheticMethods.onChangedPotionEffect(e, potioneffect, false)
-				}
-			}
-			
-			var i: Int
-			
-			if (e.potionsNeedUpdate) {
-				if (!e.worldObj.isRemote) {
-					if (e.activePotionsMap.isEmpty()) {
-						e.dataWatcher.updateObject(8, 0.toByte())
-						e.dataWatcher.updateObject(7, 0)
-						e.isInvisible = false
-					} else {
-						i = PotionHelper.calcPotionLiquidColor(e.activePotionsMap.values)
-						e.dataWatcher.updateObject(8, (if (PotionHelper.func_82817_b(e.activePotionsMap.values)) 1 else 0).toByte())
-						e.dataWatcher.updateObject(7, i)
-						e.isInvisible = e.isPotionActive(Potion.invisibility.id)
-					}
-				}
-				
-				e.potionsNeedUpdate = false
-			}
-			
-			i = e.dataWatcher.getWatchableObjectInt(7)
-			val flag1 = e.dataWatcher.getWatchableObjectByte(8) > 0
-			
-			if (i > 0) {
-				var flag: Boolean
-				
-				flag = if (!e.isInvisible) {
-					e.worldObj.rand.nextBoolean()
-				} else {
-					e.worldObj.rand.nextInt(15) == 0
-				}
-				
-				if (flag1) {
-					flag = flag and (e.worldObj.rand.nextInt(5) == 0)
-				}
-				
-				if (flag) {
-					val d0 = (i shr 16 and 255).D / 255.0
-					val d1 = (i shr 8 and 255).D / 255.0
-					val d2 = (i and 255).D / 255.0
-					e.worldObj.spawnParticle(if (flag1) "mobSpellAmbient" else "mobSpell", e.posX + (e.worldObj.rand.nextDouble() - 0.5) * e.width.D, e.posY + e.worldObj.rand.nextDouble() * e.height.D - e.yOffset.D, e.posZ + (e.worldObj.rand.nextDouble() - 0.5) * e.width.D, d0, d1, d2)
-				}
-			}
-		} catch (ex: ConcurrentModificationException) {
-			ASJUtilities.log("Well, that was expected. Ignore.")
-			ex.printStackTrace()
 		}
 	}
 	
@@ -509,21 +305,47 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
 	fun spawn(gaia: EntityDoppleganger?, player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, hard: Boolean): Boolean {
+		if (world.getTileEntity(x, y, z) !is TileEntityBeacon) return true
+		
 		for (i in -1..1)
 			for (k in -1..1)
 				if (!world.getBlock(x + i, y - 1, z + k).isBeaconBase(world, x + i, y - 1, z + k, x, y, z)) {
 					if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.inactive")
 					return true
 				}
+		
 		return false
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false)
-	fun attackEntityFrom(gaia: EntityDoppleganger, src: DamageSource, dmg: Float): Boolean {
+	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false, targetMethod = "attackEntityFrom")
+	fun disableGod(gaia: EntityDoppleganger, src: DamageSource, dmg: Float): Boolean {
 		val player = src.entity as? EntityPlayer ?: return false
 		return !player.capabilities.isCreativeMode && player.capabilities.disableDamage
 	}
+	
+	var hadPlayer = false
+	
+	@JvmStatic
+	@Hook(targetMethod = "attackEntityFrom")
+	fun noDupePre(gaia: EntityDoppleganger, src: DamageSource, dmg: Float): Boolean {
+		val player = src.entity as? EntityPlayer ?: return false
+		hadPlayer = gaia.playersWhoAttacked.contains(player.commandSenderName)
+		return false
+	}
+	
+	@JvmStatic
+	@Hook(targetMethod = "attackEntityFrom", injectOnExit = true)
+	fun noDupePost(gaia: EntityDoppleganger, src: DamageSource, dmg: Float, @ReturnValue result: Boolean): Boolean {
+		val player = src.entity as? EntityPlayer ?: return false
+		if (!hadPlayer) gaia.playersWhoAttacked.remove(player.commandSenderName)
+		return result
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun getNameColor(gaia: EntityDoppleganger) = AlfheimConfigHandler.gaiaNameColor
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
@@ -535,17 +357,24 @@ object AlfheimHookHandler {
 						1    -> pos.entityHit is EntityPlayer
 						2    -> pos.entityHit != null
 						else -> false
-					} && pos.entityHit?.isSneaking == false
+					} && !entity.worldObj.isRemote && pos.entityHit?.isSneaking == false
 		
-		if (!entity.worldObj.isRemote && allow) {
-			val fireworkStack: ItemStack = lens.generateFirework(burst.color)
-			val rocket = EntityFireworkRocket(entity.worldObj, entity.posX, entity.posY, entity.posZ, fireworkStack)
-			entity.worldObj.spawnEntityInWorld(rocket)
-			pos.entityHit.mountEntity(rocket)
-			return true
-		}
+		if (!allow) return false
+		if (entity.thrower != null && !InteractionSecurity.canDoSomethingWithEntity(entity.thrower, pos.entityHit)) return false
+		
+		val fireworkStack = lens.generateFirework(burst.color)
+		val rocket = EntityFireworkRocket(entity.worldObj, entity.posX, entity.posY, entity.posZ, fireworkStack)
+		entity.worldObj.spawnEntityInWorld(rocket)
+		pos.entityHit.mountEntity(rocket)
 		
 		return false
+	}
+	
+	@JvmStatic
+	@Hook(targetMethod = "<init>", injectOnExit = true)
+	fun `EntityManaBurst$init`(obj: EntityManaBurst, player: EntityPlayer?) {
+		obj.thrower = player
+		obj.throwerName = player?.commandSenderName
 	}
 	
 	@JvmStatic
@@ -580,6 +409,12 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
+	@Hook(returnCondition = ALWAYS, injectOnExit = true)
+	fun getKnowledgeType(entry: LexiconEntry, @ReturnValue type: KnowledgeType): KnowledgeType {
+		return if (type === BotaniaAPI.elvenKnowledge && AlfheimConfigHandler.enableElvenStory) BotaniaAPI.basicKnowledge else type
+	}
+	
+	@JvmStatic
 	@Hook(injectOnExit = true)
 	fun updateTick(grass: BlockGrass, world: World, x: Int, y: Int, z: Int, random: Random) {
 		if (AlfheimCore.winter && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.rand.nextInt(20) == 0 && !world.isRemote && world.canBlockSeeTheSky(x, y + 1, z)) {
@@ -607,7 +442,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
-	fun updateTick(grass: BlockIce, world: World, x: Int, y: Int, z: Int, random: Random) {
+	fun updateTick(ice: BlockIce, world: World, x: Int, y: Int, z: Int, random: Random) {
 		if (!AlfheimCore.winter && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.rand.nextInt(20) == 0 && !world.isRemote)
 			world.setBlock(x, y, z, Blocks.flowing_water)
 	}
@@ -702,6 +537,63 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun collideEntityItem(tile: TilePool, item: EntityItem): Boolean {
+		if (item.isDead) return false
+		
+		var didChange = false
+		val stack = item.entityItem ?: return false
+		
+		if (stack.item is IManaDissolvable) {
+			(stack.item as IManaDissolvable).onDissolveTick(tile, stack, item)
+			if (stack.stackSize == 0)
+				item.setDead()
+		}
+		
+		if (item.age in 101..129 || !tile.catalystsRegistered) return false
+		
+		for (recipe in BotaniaAPI.manaInfusionRecipes) {
+			if (recipe.matches(stack) && (!recipe.isAlchemy || tile.alchemy) && (!recipe.isConjuration || tile.conjuration)) {
+				val mana = recipe.manaToConsume
+				if (tile.currentMana >= mana) {
+					tile.recieveMana(-mana)
+					
+					if (!tile.worldObj.isRemote) {
+						stack.stackSize -= recipe.inputSize
+						if (stack.stackSize == 0) item.setDead()
+						val output = recipe.output.copy()
+						val outputItem = EntityItem(tile.worldObj, tile.xCoord + 0.5, tile.yCoord + 1.5, tile.zCoord + 0.5, output)
+						outputItem.age = 105
+						tile.worldObj.spawnEntityInWorld(outputItem)
+					}
+					
+					tile.craftingFanciness()
+					didChange = true
+				}
+				
+				break
+			}
+		}
+		
+		return didChange
+	}
+	
+	val RecipeManaInfusion.inputSize get() = if (input is ItemStack) (input as ItemStack).stackSize else 1
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE, injectOnExit = true, returnAnotherMethod = "sizeCheck")
+	fun matches(recipe: RecipeManaInfusion, stack: ItemStack, @ReturnValue matches: Boolean): Boolean {
+		if (!matches) return false
+		if (recipe.input !is ItemStack) return false
+		return true
+	}
+	
+	@JvmStatic
+	fun sizeCheck(recipe: RecipeManaInfusion, stack: ItemStack, @ReturnValue matches: Boolean): Boolean {
+		return stack.stackSize >= recipe.inputSize
+	}
+	
+	@JvmStatic
 	@Hook(targetMethod = "updateEntity")
 	fun `TilePylon$updateEntity`(tile: TilePylon) {
 		updatingTile = tile.worldObj.isRemote
@@ -764,25 +656,6 @@ object AlfheimHookHandler {
 	fun getIcon(pylon: BlockPylon, side: Int, meta: Int) =
 		(if (meta == 0 || meta == 1) ModBlocks.storage.getIcon(side, meta) else Blocks.diamond_block.getIcon(side, 0))!!
 	
-	var sendToClient = true
-	
-	@JvmStatic
-	@Hook(returnCondition = ON_TRUE)
-	fun sendPacket(handler: NetHandlerPlayServer, packet: Packet?): Boolean {
-		if (!sendToClient) {
-			sendToClient = true
-			
-			return true
-		}
-		
-		return false
-	}
-	
-	@JvmStatic
-	@Hook(returnCondition = ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
-	fun tryToCreatePortal(portal: BlockPortal, world: World, x: Int, y: Int, z: Int) =
-		MinecraftForge.EVENT_BUS.post(NetherPortalActivationEvent(world, x, y, z))
-	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true, booleanReturnConstant = false)
 	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int) =
@@ -791,26 +664,35 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun matches(recipe: AesirRingRecipe, inv: InventoryCrafting, world: World?): Boolean {
-		var foundThorRing		= false
-		var foundSifRing		= false
-		var foundNjordRing		= false // TODO remove - not AEsir
-		var foundLokiRing		= false
-		var foundHeimdallRing	= false
-		var foundOdinRing		= false
+		var foundThorRing = false
+		var foundSifRing = false
+		var foundNjordRing = false // TODO remove - not AEsir
+		var foundLokiRing = false
+		var foundHeimdallRing = false
+		var foundOdinRing = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.get(i) ?: continue
+			val stack = inv[i] ?: continue
 			
-			if (stack.item === ModItems		.thorRing			&& !foundThorRing)		foundThorRing		= true else
-			if (stack.item === AlfheimItems	.priestRingSif		&& !foundSifRing)		foundSifRing		= true else
-			if (stack.item === AlfheimItems	.priestRingNjord	&& !foundNjordRing)		foundNjordRing		= true else
-			if (stack.item === ModItems		.lokiRing			&& !foundLokiRing)		foundLokiRing		= true else
-			if (stack.item === AlfheimItems	.priestRingHeimdall	&& !foundHeimdallRing)	foundHeimdallRing	= true else
-			if (stack.item === ModItems		.odinRing			&& !foundOdinRing)		foundOdinRing		= true else
-			return false // Found an invalid item, breaking the recipe
+			if (stack.item === ModItems.thorRing && !foundThorRing) foundThorRing = true else
+				if (stack.item === AlfheimItems.priestRingSif && !foundSifRing) foundSifRing = true else
+					if (stack.item === AlfheimItems.priestRingNjord && !foundNjordRing) foundNjordRing = true else
+						if (stack.item === ModItems.lokiRing && !foundLokiRing) foundLokiRing = true else
+							if (stack.item === AlfheimItems.priestRingHeimdall && !foundHeimdallRing) foundHeimdallRing = true else
+								if (stack.item === ModItems.odinRing && !foundOdinRing) foundOdinRing = true else
+									return false // Found an invalid item, breaking the recipe
 		}
 		
 		return foundThorRing && foundSifRing && foundNjordRing && foundLokiRing && foundHeimdallRing && foundOdinRing
+	}
+	
+	val specialHeads = arrayOf("AlexSocol", "Vazkii", "yrsegal", "l0nekitsune", "Tristaric")
+	
+	@JvmStatic
+	@Hook
+	fun getOutput(recipe: HeadRecipe) {
+		if (recipe.name in specialHeads)
+			recipe.name = ""
 	}
 	
 	@JvmStatic
@@ -858,35 +740,6 @@ object AlfheimHookHandler {
 	@Hook(isMandatory = true, returnCondition = ALWAYS)
 	fun getFortuneModifier(h: EnchantmentHelper?, e: EntityLivingBase) =
 		EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimConfigHandler.enableMMO && e.isPotionActive(AlfheimConfigHandler.potionIDGoldRush)) 2 else 0
-	
-	@JvmStatic
-	@Hook(returnCondition = ALWAYS, isMandatory = true)
-	fun extinguishFire(world: World, player: EntityPlayer?, x: Int, y: Int, z: Int, side: Int): Boolean {
-		var x = x
-		var y = y
-		var z = z
-		if (side == 0) --y
-		if (side == 1) ++y
-		if (side == 2) --z
-		if (side == 3) ++z
-		if (side == 4) --x
-		if (side == 5) ++x
-		val block = world.getBlock(x, y, z)
-		
-		val breakable = if (player != null) block.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0f || player.capabilities.isCreativeMode else true
-		
-		if (block.material === Material.fire && breakable) {
-			world.playAuxSFXAtEntity(player, 1004, x, y, z, 0)
-			world.setBlockToAir(x, y, z)
-			return true
-		}
-		return false
-	}
-	
-	@JvmStatic
-	@Hook(returnCondition = ALWAYS)
-	fun getNightVisionBrightness(render: EntityRenderer, player: EntityPlayer, partialTicks: Float) =
-		if (player.getActivePotionEffect(Potion.nightVision.id)?.duration ?: 0 > 0) 1f else 0f
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
@@ -994,17 +847,6 @@ object AlfheimHookHandler {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(returnCondition = ALWAYS)
-	fun getBurnTimeRemainingScaled(furnace: TileEntityFurnace, mod: Int): Int {
-		if (furnace.currentItemBurnTime == 0) {
-			furnace.currentItemBurnTime = 200
-		}
-		
-		return (furnace.furnaceBurnTime.D / furnace.currentItemBurnTime * mod).I
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@JvmStatic
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
 	
@@ -1037,6 +879,13 @@ object AlfheimHookHandler {
 	fun getColorFromItemStack(item: ItemManaMirror, stack: ItemStack, pass: Int): Int {
 		val mana = item.getMana(stack).F
 		return if (pass == 1) Color.HSBtoRGB(0.528f, (mana / TilePool.MAX_MANA).clamp(0f, 1f), 1f) else 0xFFFFFF
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun canFit(item: ItemManaResource, stack: ItemStack, apothecary: IInventory?): Boolean {
+		return stack.meta == 9 ||    // Dragonstone
+			   stack.meta == 15        // Ender Air Bottle
 	}
 	
 	@JvmStatic
@@ -1075,140 +924,12 @@ object AlfheimHookHandler {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(isMandatory = true, returnCondition = ON_TRUE)
-	fun doRenderShadowAndFire(render: Render, entity: Entity, x: Double, y: Double, z: Double, yaw: Float, ticks: Float): Boolean {
-		return MinecraftForge.EVENT_BUS.post(RenderEntityPostEvent(entity, x, y, z, yaw))
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@JvmStatic
 	@Hook(isMandatory = true)
 	fun renderOverlays(renderer: ItemRenderer, partialTicks: Float) {
 		if (mc.thePlayer.isPotionActive(AlfheimConfigHandler.potionIDSoulburn)) {
 			glDisable(GL_ALPHA_TEST)
-			PotionSoulburn.renderFireInFirstPerson(partialTicks)
+			PotionSoulburn.renderFireInFirstPerson()
 			glEnable(GL_ALPHA_TEST)
-		}
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@JvmStatic
-	@Hook(returnCondition = ALWAYS)
-	fun setupFog(renderer: EntityRenderer, fogMode: Int, renderPartialTicks: Float) {
-		val entitylivingbase = renderer.mc.renderViewEntity
-		val creative = if (entitylivingbase is EntityPlayer) entitylivingbase.capabilities.isCreativeMode else false
-		
-		fun setFogColorBuffer(p_78469_1_: Float, p_78469_2_: Float, p_78469_3_: Float, p_78469_4_: Float): FloatBuffer {
-			renderer.fogColorBuffer.clear()
-			renderer.fogColorBuffer.put(p_78469_1_).put(p_78469_2_).put(p_78469_3_).put(p_78469_4_)
-			renderer.fogColorBuffer.flip()
-			return renderer.fogColorBuffer
-		}
-		
-		if (fogMode == 999) {
-			glFog(GL_FOG_COLOR, setFogColorBuffer(0f, 0f, 0f, 1f))
-			glFogi(GL_FOG_MODE, GL_LINEAR)
-			glFogf(GL_FOG_START, 0f)
-			glFogf(GL_FOG_END, 8f)
-			
-			if (GLContext.getCapabilities().GL_NV_fog_distance) {
-				glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
-			}
-			
-			glFogf(GL_FOG_START, 0f)
-		} else {
-			glFog(GL_FOG_COLOR, setFogColorBuffer(renderer.fogColorRed, renderer.fogColorGreen, renderer.fogColorBlue, 1f))
-			glNormal3f(0f, -1f, 0f)
-			glColor4f(1f, 1f, 1f, 1f)
-			val block = ActiveRenderInfo.getBlockAtEntityViewpoint(renderer.mc.theWorld, entitylivingbase, renderPartialTicks)
-			var f1: Float
-			
-			val event = net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity(renderer, entitylivingbase, block, renderPartialTicks.D, 0.1f)
-			
-			if (MinecraftForge.EVENT_BUS.post(event)) {
-				glFogf(GL_FOG_DENSITY, event.density)
-			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !creative) {
-				f1 = 5f
-				val j = entitylivingbase.getActivePotionEffect(Potion.blindness.id)!!.getDuration()
-				
-				if (j < 20) {
-					f1 = 5f + (renderer.farPlaneDistance - 5f) * (1f - j.F / 20f)
-				}
-				
-				glFogi(GL_FOG_MODE, GL_LINEAR)
-				
-				if (fogMode < 0) {
-					glFogf(GL_FOG_START, 0f)
-					glFogf(GL_FOG_END, f1 * 0.8f)
-				} else {
-					glFogf(GL_FOG_START, f1 * 0.25f)
-					glFogf(GL_FOG_END, f1)
-				}
-				
-				if (GLContext.getCapabilities().GL_NV_fog_distance) {
-					glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
-				}
-			} else if (renderer.cloudFog) {
-				glFogi(GL_FOG_MODE, GL_EXP)
-				glFogf(GL_FOG_DENSITY, 0.1f)
-			} else if (block.material === Material.water) {
-				glFogi(GL_FOG_MODE, GL_EXP)
-				
-				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
-					glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.clearWater) 0.01f else 0.05f)
-				} else {
-					glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.clearWater) 0.01f else 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
-				}
-			} else if (block.material === Material.lava) {
-				glFogi(GL_FOG_MODE, GL_EXP)
-				glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2f)
-			} else {
-				f1 = renderer.farPlaneDistance
-				
-				if (renderer.mc.theWorld.provider.worldHasVoidParticles && AlfheimConfigHandler.voidFog && !creative) {
-					var d0 = (entitylivingbase.getBrightnessForRender(renderPartialTicks) and 15728640 shr 20).D / 16.0 + (entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * renderPartialTicks.D + 4.0) / 32.0
-					
-					if (d0 < 1.0) {
-						if (d0 < 0.0) {
-							d0 = 0.0
-						}
-						
-						d0 *= d0
-						var f2 = 100f * d0.F
-						
-						if (f2 < 5f) {
-							f2 = 5f
-						}
-						
-						if (f1 > f2) {
-							f1 = f2
-						}
-					}
-				}
-				
-				glFogi(GL_FOG_MODE, GL_LINEAR)
-				
-				if (fogMode < 0) {
-					glFogf(GL_FOG_START, 0f)
-					glFogf(GL_FOG_END, f1)
-				} else {
-					glFogf(GL_FOG_START, f1 * 0.75f)
-					glFogf(GL_FOG_END, f1)
-				}
-				
-				if (GLContext.getCapabilities().GL_NV_fog_distance) {
-					glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
-				}
-				
-				if (renderer.mc.theWorld.provider.doesXZShowFog(entitylivingbase.posX.I, entitylivingbase.posZ.I)) {
-					glFogf(GL_FOG_START, f1 * 0.05f)
-					glFogf(GL_FOG_END, min(f1, 192f) * 0.5f)
-				}
-				MinecraftForge.EVENT_BUS.post(net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent(renderer, entitylivingbase, block, renderPartialTicks.D, fogMode, f1))
-			}
-			
-			glEnable(GL_COLOR_MATERIAL)
-			glColorMaterial(GL_FRONT, GL_AMBIENT)
 		}
 	}
 	
@@ -1263,11 +984,6 @@ object AlfheimHookHandler {
 		
 		return result
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@JvmStatic
-	@Hook(createMethod = true, returnCondition = ALWAYS)
-	fun getNameColor(gaia: EntityDoppleganger) = AlfheimConfigHandler.gaiaNameColor
 	
 	@JvmStatic
 	@Hook // for blue line above item tooltip

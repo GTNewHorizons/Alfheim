@@ -1,6 +1,6 @@
 package alfheim.common.block.tile.corporea
 
-import alexsocol.asjlib.extendables.ASJTile
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.common.core.helper.CorporeaAdvancedHelper
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory

@@ -1,6 +1,7 @@
 package alfheim.common.block.tile.sub.flower
 
 import alexsocol.asjlib.I
+import alfheim.common.block.tile.sub.flower.AlfheimSignature.Companion.isOnSpecialSoil
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.util.IIcon
 import net.minecraft.world.World

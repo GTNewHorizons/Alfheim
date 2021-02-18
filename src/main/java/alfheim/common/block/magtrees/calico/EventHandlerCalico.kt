@@ -9,6 +9,7 @@ import net.minecraftforge.event.world.ExplosionEvent
 class EventHandlerCalico {
 	
 	companion object {
+		
 		val instance = EventHandlerCalico()
 		
 		fun register() {
@@ -28,7 +29,7 @@ class EventHandlerCalico {
 		
 		if (e.world.getBlock(eX, eY, eZ) is IExplosionDampener) return
 		
-		for (x in (eX-MAXRANGE)..(eX+MAXRANGE)) {
+		for (x in (eX - MAXRANGE)..(eX + MAXRANGE)) {
 			for (y in (eY - MAXRANGE)..(eY + MAXRANGE)) {
 				for (z in (eZ - MAXRANGE)..(eZ + MAXRANGE)) {
 					if (Vector3.pointDistanceSpace(x, y, z, eX, eY, eZ) <= 8) {
@@ -39,7 +40,7 @@ class EventHandlerCalico {
 				}
 			}
 		}
-			
+		
 		if (explosiondampeners.size == 0) return
 		
 		val dampener = explosiondampeners[e.world.rand.nextInt(explosiondampeners.size)]

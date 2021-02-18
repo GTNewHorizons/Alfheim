@@ -23,6 +23,7 @@ import kotlin.math.min
 import alexsocol.asjlib.math.Vector3 as ASJVec3
 
 class SubTileLightning: SubTileAnomalyBase() {
+	
 	internal val vt = Vector3()
 	internal val ve = Vector3()
 	
@@ -178,6 +179,7 @@ class SubTileLightning: SubTileAnomalyBase() {
 	}
 	
 	companion object {
+		
 		const val radius = 12.0
 		
 		const val TAG_TRANSFER = "transfer"

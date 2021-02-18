@@ -94,7 +94,7 @@ object KeyBindingHandlerClient {
 				toggleFlight = false
 			}
 			
-			if (safeKeyDown(ClientProxy.keyESMAbility.keyCode)) {
+			if (safeKeyDown(ClientProxy.keyESMAbility.keyCode) && player.race != EnumRace.HUMAN) {
 				if (!toggleESMAbility) {
 					toggleESMAbility = true
 					if (AlfheimConfigHandler.enableElvenStory) {

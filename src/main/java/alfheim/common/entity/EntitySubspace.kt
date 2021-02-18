@@ -159,6 +159,7 @@ class EntitySubspace: EntityThrowableCopy {
 	}
 	
 	companion object {
+		
 		const val TAG_LIVE_TICKS = "liveTicks"
 		const val TAG_DELAY = "delay"
 		const val TAG_ROTATION = "rotation"

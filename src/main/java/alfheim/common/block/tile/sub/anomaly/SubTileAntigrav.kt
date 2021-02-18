@@ -9,6 +9,7 @@ import net.minecraft.util.AxisAlignedBB
 import vazkii.botania.common.Botania
 
 class SubTileAntigrav: SubTileAnomalyBase() {
+	
 	internal val v = Vector3()
 	
 	override val targets: List<Any>
@@ -41,6 +42,7 @@ class SubTileAntigrav: SubTileAnomalyBase() {
 	override fun typeBits() = MOTION
 	
 	companion object {
+		
 		const val power = 0.7
 		const val radius = 15.0
 	}

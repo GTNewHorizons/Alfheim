@@ -1,8 +1,8 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.client.core.helper.*
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.helper.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
@@ -38,5 +38,7 @@ class BlockDwarfLantern: BlockMod(Material.rock) {
 			iconSide = InterpolatedIconHelper.forBlock(event.map, this, "", "decor")!!
 	}
 	
-	override fun getIcon(side: Int, meta: Int) = (if (meta != 1) { if (side < 2) blockIcon else iconSide } else blockIcon)!!
+	override fun getIcon(side: Int, meta: Int) = (if (meta != 1) {
+		if (side < 2) blockIcon else iconSide
+	} else blockIcon)!!
 }

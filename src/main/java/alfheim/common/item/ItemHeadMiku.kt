@@ -22,75 +22,53 @@ class ItemHeadMiku: ItemMod("MikuHead") {
 		return stack
 	}
 	
-	// > ItemGaiaHead#onItemUse:
-	// I couldn't deal with it. ~Vazkii
-	// :thinking: ~AlexSocol
-	override fun onItemUse(stack: ItemStack?, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, sideX: Float, sideY: Float, sideZ: Float): Boolean {
-		var x = x
-		var y = y
-		var z = z
-		// The side of the wall the head is being used on.
-		var sideDir = ForgeDirection.getOrientation(side)
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, sideX: Float, sideY: Float, sideZ: Float): Boolean {
+		var i = x
+		var j = y
+		var k = z
+		var dir = ForgeDirection.getOrientation(side)
 		
-		// If we can replace the block we're clicking on, then we'll go ahead
-		// and replace it (eg, snow).
-		if (world.getBlock(x, y, z).isReplaceable(world, x, y, z) && sideDir != ForgeDirection.DOWN) {
-			sideDir = ForgeDirection.UP
-			y--
+		if (world.getBlock(i, j, k).isReplaceable(world, i, j, k) && dir != ForgeDirection.DOWN) {
+			dir = ForgeDirection.UP
+			j--
 		}
 		
-		// Skulls can't be placed on the bottom side of a block.
-		if (sideDir == ForgeDirection.DOWN)
+		if (dir == ForgeDirection.DOWN)
 			return false
 		
-		// If the side we're trying to place the skull on isn't solid, then
-		// we can't place it either.
-		if (!world.isSideSolid(x, y, z, sideDir))
+		if (!world.isSideSolid(i, j, k, dir))
 			return false
 		
-		// Figure out where the skull actually goes based on the side we're placing it against.
-		when (sideDir) {
-			ForgeDirection.UP    -> y++
-			ForgeDirection.NORTH -> z--
-			ForgeDirection.SOUTH -> z++
-			ForgeDirection.WEST  -> x--
-			ForgeDirection.EAST  -> x++
-			else                 -> return false // Oops, this shouldn't happen.
-		}// If we're placing it on the top, then the skull goes 1 block above.
-		// Placing it on the north side (Z- axis).
-		// Placing it on the south side (Z+ axis).
-		// Placing it on the west side (X- axis).
-		// Placing it on the east side (X+ axis).
+		when (dir) {
+			ForgeDirection.UP    -> j++
+			ForgeDirection.NORTH -> k--
+			ForgeDirection.SOUTH -> k++
+			ForgeDirection.WEST  -> i--
+			ForgeDirection.EAST  -> i++
+			else                 -> return false
+		}
 		
-		// We can't place blocks as a measly client.
 		if (world.isRemote)
 			return true
 		
-		// If the skull says no, who are we to argue?
-		if (!AlfheimBlocks.flugelHead2Block.canPlaceBlockOnSide(world, x, y, z, side))
+		if (!AlfheimBlocks.flugelHead2Block.canPlaceBlockOnSide(world, i, j, k, side))
 			return false
 		
-		// Miku head, instead of skull
-		world.setBlock(x, y, z, AlfheimBlocks.flugelHead2Block, sideDir.ordinal, 2)
+		world.setBlock(i, j, k, AlfheimBlocks.flugelHead2Block, dir.ordinal, 2)
 		var headAngle = 0
 		
-		// If we place the skull on top of a block, we should also make it
-		// face the player by rotating it.
-		if (sideDir == ForgeDirection.UP)
+		if (dir == ForgeDirection.UP)
 			headAngle = (player!!.rotationYaw * 16f / 360f + 0.5).mfloor() and 15
 		
-		// Update the skull's orientation if it lets us.
-		val tileentity = world.getTileEntity(x, y, z)
+		val tileentity = world.getTileEntity(i, j, k)
 		
 		if (tileentity is TileEntitySkull) {
 			tileentity.func_145903_a(headAngle)
-			(Blocks.skull as BlockSkull).func_149965_a(world, x, y, z, tileentity)
+			(Blocks.skull as BlockSkull).func_149965_a(world, i, j, k, tileentity)
 		}
 		
-		// Remove a head from the stack.
-		--stack!!.stackSize
+		--stack.stackSize
 		
-		// Call it a success and leave.
 		return true
 	}
 	

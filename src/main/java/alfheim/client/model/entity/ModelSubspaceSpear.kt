@@ -5,7 +5,7 @@ import net.minecraft.client.model.*
 /**
  * @author ExtraMeteorP, CKATEPTb
  */
-class ModelSubspaceSpear: ModelBase() {
+object ModelSubspaceSpear: ModelBase() {
 	
 	val Shape1: ModelRenderer
 	val Shape2: ModelRenderer

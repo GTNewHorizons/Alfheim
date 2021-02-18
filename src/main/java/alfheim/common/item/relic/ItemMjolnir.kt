@@ -3,9 +3,9 @@ package alfheim.common.item.relic
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.helper.IconHelper
 import alfheim.common.entity.EntityMjolnir
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
 import alfheim.common.item.equipment.bauble.*
@@ -53,43 +53,43 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 		return super.onEntitySwing(entity, stack)
 	}
 	
-	override fun hitEntity(stack: ItemStack?, entity: EntityLivingBase?, attacker: EntityLivingBase?): Boolean {
-		if (entity != null && attacker != null && isWorthy(attacker)) {
-			val range = 10
-			var dmg = 8f
+	override fun hitEntity(stack: ItemStack?, entity: EntityLivingBase, attacker: EntityLivingBase): Boolean {
+		if (isWorthy(attacker)) return false
+		
+		val range = 10
+		var dmg = 8f
+		
+		val alreadyTargetedEntities = ArrayList<EntityLivingBase>()
+		val selector = IEntitySelector { e -> e is EntityLivingBase && e is IMob && e !is EntityPlayer && !alreadyTargetedEntities.contains(e) }
+		var lightningSource: EntityLivingBase = entity
+		
+		val lightningSeed = getLong(stack, TAG_LIGHTNING_SEED, 0)
+		val rand = Random(lightningSeed)
+		
+		for (i in 0..5) {
+			val entities = entity.worldObj.getEntitiesWithinAABBExcludingEntity(lightningSource, lightningSource.boundingBox(range), selector) as MutableList<EntityLivingBase>
+			if (entities.isEmpty()) break
 			
-			val alreadyTargetedEntities = ArrayList<EntityLivingBase>()
-			val selector = IEntitySelector { e -> e is EntityLivingBase && e is IMob && e !is EntityPlayer && !alreadyTargetedEntities.contains(e) }
-			var lightningSource: EntityLivingBase = entity
+			val target = entities[rand.nextInt(entities.size)]
 			
-			val lightningSeed = getLong(stack, TAG_LIGHTNING_SEED, 0)
-			val rand = Random(lightningSeed)
+			if (attacker is EntityPlayer)
+				target.attackEntityFrom(DamageSource.causePlayerDamage(attacker), dmg)
+			else
+				target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg)
 			
-			for (i in 0..5) {
-				val entities = entity.worldObj.getEntitiesWithinAABBExcludingEntity(lightningSource, lightningSource.boundingBox(range), selector) as MutableList<EntityLivingBase>
-				if (entities.isEmpty()) break
-				
-				val target = entities[rand.nextInt(entities.size)]
-				
-				if (attacker is EntityPlayer)
-					target.attackEntityFrom(DamageSource.causePlayerDamage(attacker), dmg)
-				else
-					target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg)
-				
-				var color = 0x0079C4
-				if (attacker is EntityPlayer) color = ColorOverrideHelper.getColor(attacker, color)
-				
-				Botania.proxy.lightningFX(entity.worldObj, Bector3.fromEntityCenter(lightningSource), Bector3.fromEntityCenter(target), 1f, color, Color(color).brighter().brighter().rgb)
-				alreadyTargetedEntities.add(target)
-				lightningSource = target
-				dmg--
-			}
+			var color = 0x0079C4
+			if (attacker is EntityPlayer) color = ColorOverrideHelper.getColor(attacker, color)
 			
-			if (!entity.worldObj.isRemote)
-				setLong(stack, TAG_LIGHTNING_SEED, entity.worldObj.rand.nextLong())
+			Botania.proxy.lightningFX(entity.worldObj, Bector3.fromEntityCenter(lightningSource), Bector3.fromEntityCenter(target), 1f, color, Color(color).brighter().brighter().rgb)
+			alreadyTargetedEntities.add(target)
+			lightningSource = target
+			dmg--
 		}
 		
-		return super.hitEntity(stack, entity, attacker)
+		if (!entity.worldObj.isRemote)
+			setLong(stack, TAG_LIGHTNING_SEED, entity.worldObj.rand.nextLong())
+		
+		return true
 	}
 	
 	override fun getAttributeModifiers(stack: ItemStack?) = super.getAttributeModifiers(stack).apply {
@@ -112,7 +112,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 		return stack
 	}
 	
-	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, coitemInUseCountunt: Int) {
+	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, itemInUseCountunt: Int) {
 		if (player.worldObj.isRemote) return
 		
 		if (getCharge(stack) < MAX_CHARGE) {
@@ -175,7 +175,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 			for (e in list) {
 				if (e === entity) continue
 				
-				if (Vector3.vecEntityDistance(center, e) in (radius-1)..(radius+1)) {
+				if (Vector3.vecEntityDistance(center, e) in (radius - 1)..(radius + 1)) {
 					if (e.onGround) {
 						e.attackEntityFrom(if (entity is EntityPlayer) DamageSource.causePlayerDamage(entity) else DamageSource.causeMobDamage(entity), 10f)
 						e.hurtResistantTime = 0
@@ -189,7 +189,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.FALLING, world.provider.dimensionId, x.D, y.D, z.D, radius)
 		}
 		
-		if (timer > 0) setInt(stack, TAG_SHAKE_TIMER, timer-1)
+		if (timer > 0) setInt(stack, TAG_SHAKE_TIMER, timer - 1)
 		
 		super.onUpdate(stack, world, entity, slot, inHand)
 	}

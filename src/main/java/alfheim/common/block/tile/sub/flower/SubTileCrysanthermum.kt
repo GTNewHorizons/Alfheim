@@ -2,7 +2,7 @@ package alfheim.common.block.tile.sub.flower
 
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
@@ -24,6 +24,7 @@ import kotlin.math.*
 class SubTileCrysanthermum: SubTileGenerating() {
 	
 	companion object {
+		
 		const val TAG_TEMPERATURE = "flowerHeat"
 		const val RANGE = 1
 		
@@ -68,7 +69,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		
 		val remote = supertile.worldObj.isRemote
 		val biomeStone = ModFluffBlocks.biomeStoneA.toItem()
-		val items = supertile.worldObj.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((supertile.xCoord - RANGE).D, (supertile.yCoord - RANGE).D, (supertile.zCoord - RANGE).D, (supertile.xCoord + RANGE + 1).D, (supertile.yCoord + RANGE + 1).D, (supertile.zCoord + RANGE + 1).D))
+		val items = supertile.worldObj.getEntitiesWithinAABB(EntityItem::class.java, supertile.boundingBox(1))
 		val slowdown = slowdownFactor
 		
 		if (ticksExisted % 600 == 0) {
@@ -116,7 +117,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 	override fun canGeneratePassively() = temp in -7..7
 	override fun getDelayBetweenPassiveGeneration() = 5
 	override fun getColor() = Color.HSBtoRGB(map(temp, -8, 8, 235, 360) / 360f, 1f, 1f)
-	override fun getEntry() = ShadowFoxLexiconData.crysanthermum
+	override fun getEntry() = AlfheimLexiconData.flowerCrysanthermum
 	
 	override fun renderHUD(mc: Minecraft, res: ScaledResolution) {
 		super.renderHUD(mc, res)
@@ -149,8 +150,6 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		for (i in 0..7)
 			lastBlocks[i] = nbt.getInteger("last_$i")
 	}
-	
-	
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("crysanthermum").getIconForStack(null)
 }

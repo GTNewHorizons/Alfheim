@@ -1,5 +1,6 @@
 package alfheim.common.block.schema
 
+import alexsocol.asjlib.SchemaUtils
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -23,7 +24,7 @@ class BlockSchemaGenerator: BlockColoredSapling(name = "schematicOak") {
 					val schemaText = getSchema(l)
 					
 					if (schemaText != null) {
-						SchemaGenerator.generate(world, x, y, z, schemaText)
+						SchemaUtils.generate(world, x, y, z, schemaText)
 					}
 				}
 			}

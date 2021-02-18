@@ -1,6 +1,6 @@
 package alfheim.client.render.tile
 
-import alexsocol.asjlib.mc
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.block.tile.TilePowerStone
@@ -10,7 +10,6 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
-import kotlin.math.*
 
 object RenderTilePowerStone: TileEntitySpecialRenderer() {
 	
@@ -24,12 +23,12 @@ object RenderTilePowerStone: TileEntitySpecialRenderer() {
 		val meta = when {
 			tile.worldObj == null -> forceMeta
 			tile.cooldown > 0     -> 0
-			else                  -> max(0, min(tile.getBlockMetadata(), LibResourceLocations.obelisk.size - 1))
+			else                  -> tile.getBlockMetadata()
 		}
 		
 		glPushMatrix()
 		glTranslated(x + 0.5, y, z + 0.5)
-		mc.renderEngine.bindTexture(LibResourceLocations.obelisk[meta])
+		mc.renderEngine.bindTexture(LibResourceLocations.obelisk.safeGet(meta))
 		if (model == null) {
 			// FIXME cubic model
 		} else model.renderAll()

@@ -7,7 +7,7 @@ import net.minecraft.entity.*
 import net.minecraft.util.MathHelper
 import kotlin.math.max
 
-class ModelEntitySleipnir: ModelBase() {
+object ModelEntitySleipnir: ModelBase() {
 	
 	var horseRightEar: ModelRenderer
 	var horseSaddleBack: ModelRenderer

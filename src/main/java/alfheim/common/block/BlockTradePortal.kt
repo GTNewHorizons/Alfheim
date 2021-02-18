@@ -1,9 +1,9 @@
 package alfheim.common.block
 
 import alfheim.api.ModInfo
+import alfheim.client.core.helper.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileTradePortal
-import alfheim.common.core.helper.*
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.*
@@ -35,6 +35,7 @@ class BlockTradePortal: BlockContainerMod(Material.rock), ILexiconable {
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
 		if (!world.isRemote && player?.heldItem?.item === ModItems.twigWand) (world.getTileEntity(x, y, z) as TileTradePortal).onWanded() else false
+	
 	override fun isInterpolated() = true
 	override fun getIcon(side: Int, meta: Int) = if (meta == 0) blockIcon else textures[0]
 	override fun createNewTileEntity(world: World, meta: Int) = TileTradePortal()
@@ -44,6 +45,7 @@ class BlockTradePortal: BlockContainerMod(Material.rock), ILexiconable {
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.trade
 	
 	companion object {
+		
 		lateinit var textures: Array<IIcon?>
 	}
 }

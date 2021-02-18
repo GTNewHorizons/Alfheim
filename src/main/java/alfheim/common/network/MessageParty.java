@@ -5,7 +5,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import io.netty.buffer.ByteBuf;
 
 public class MessageParty extends ASJPacket {
-
+	
 	public Party party;
 	
 	public MessageParty(Party pt) {
@@ -13,12 +13,12 @@ public class MessageParty extends ASJPacket {
 	}
 	
 	@Override
-	public void toCustomBytes(ByteBuf buf) {
-		party.write(buf);
+	public void fromCustomBytes(ByteBuf buf) {
+		party = Party.Companion.read(buf);
 	}
 	
 	@Override
-	public void fromCustomBytes(ByteBuf buf) {
-		party = Party.Companion.read(buf);
+	public void toCustomBytes(ByteBuf buf) {
+		party.write(buf);
 	}
 }

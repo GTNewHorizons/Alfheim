@@ -2,13 +2,13 @@ package alfheim.common.block.colored.rainbow
 
 import alexsocol.asjlib.*
 import alfheim.api.lib.LibRenderIDs
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.block.colored.BlockAuroraDirt
-import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemRainbowDoubleGrassMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -185,7 +185,7 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, stack: ItemStack?) =
 		when (world.getBlockMetadata(x, y, z)) {
-			GRASS, AURORA -> ShadowFoxLexiconData.pastoralSeeds
+			GRASS, AURORA -> AlfheimLexiconData.pastoralSeeds
 			else          -> null
 		}
 	

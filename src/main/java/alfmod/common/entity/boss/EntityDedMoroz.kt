@@ -87,7 +87,7 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		val item = dropItem
 		val size = 1 + when (item) {
 			AlfheimItems.elvenResource -> looting * 2
-			else -> 0
+			else                       -> 0
 		}
 		
 		val meta = when (item) {
@@ -108,13 +108,13 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 	}
 	
 	override fun onLivingUpdate() {
-		if (!WRATH_OF_THE_WINTER) setDead().also { return }
+//		if (!WRATH_OF_THE_WINTER) setDead().also { return }
 		
 		super.onLivingUpdate()
 		
 		val iter = activePotionEffects.iterator()
 		
-		while(iter.hasNext()) if (Potion.potionTypes[(iter.next() as PotionEffect).potionID].isBadEffect) iter.remove()
+		while (iter.hasNext()) if (Potion.potionTypes[(iter.next() as PotionEffect).potionID].isBadEffect) iter.remove()
 		
 		worldObj.worldInfo.isRaining = true
 		worldObj.worldInfo.rainTime = max(worldObj.worldInfo.rainTime, 3600)

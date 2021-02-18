@@ -45,6 +45,7 @@ class SubTileOrechidEndium: SubTileOrechid() {
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("orechidEndium").getIconForStack(null)
 	
 	companion object {
+		
 		var searched = false
 		var anyOres = false
 	}

@@ -1,8 +1,10 @@
 package alfheim.common.item.rod
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.ItemNBTHelper.getBoolean
+import alexsocol.asjlib.ItemNBTHelper.setBoolean
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.helper.IconHelper
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.ItemMod
 import com.mojang.authlib.GameProfile
@@ -11,7 +13,7 @@ import net.minecraft.entity.*
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.inventory.IInventory
+import net.minecraft.inventory.*
 import net.minecraft.item.ItemStack
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
@@ -21,7 +23,7 @@ import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import vazkii.botania.api.item.*
 import vazkii.botania.common.block.tile.TileAvatar
-import vazkii.botania.common.core.helper.*
+import vazkii.botania.common.core.helper.InventoryHelper
 import java.util.*
 
 class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
@@ -107,7 +109,8 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 		try {
 			// code from Thaumic Tinkerer by Vazkii
 			// TODO add events
-			if (leftClick && entities.isNotEmpty()) {
+			if (leftClick) run {
+				if (entities.isEmpty()) return@run
 				player.getAttributeMap().applyAttributeModifiers(player.heldItem.attributeModifiers)
 				entities.firstOrNull {
 					it !is EntityItem && !it.isDead && (it as? EntityLivingBase)?.isEntityAlive != false
@@ -124,7 +127,7 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 				if (!done) done = block.onBlockActivated(world, xl, yl, zl, player, s, 0f, 0f, 0f)
 				if (!done) done = player.heldItem?.item?.onItemUse(player.heldItem, player, world, xl, yl, zl, s, 0f, 0f, 0f) == true
 				if (!done) player.heldItem?.let {
-					it.item.onItemRightClick(player.heldItem, world, player)
+					player.setCurrentItemOrArmor(0, it.item.onItemRightClick(player.heldItem, world, player))
 					done = true
 				}
 				
@@ -144,7 +147,8 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 			if (i >= inv.sizeInventory) break
 			
 			var stack = inv[i]?.copy()
-			if (stack == null || stack.stackSize <= 0) stack = null
+			if (stack != null && inv is ISidedInventory && !inv.canExtractItem(i, stack, 1))
+				if (stack.stackSize <= 0) stack = null
 			inv[i] = null
 			
 			player.inventory[i] = stack
@@ -172,9 +176,9 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 	
 	override fun getOverlayResource(tile: IAvatarTile?, stack: ItemStack?) = LibResourceLocations.avatarClicker
 	
-	private fun ItemStack.isLeftClick() = ItemNBTHelper.getBoolean(this, TAG_MODE, false)
+	private fun ItemStack.isLeftClick() = getBoolean(this, TAG_MODE, false)
 	
-	private fun ItemStack.setLeftClick(left: Boolean) = ItemNBTHelper.setBoolean(this, TAG_MODE, left)
+	private fun ItemStack.setLeftClick(left: Boolean) = setBoolean(this, TAG_MODE, left)
 	
 	companion object {
 		
@@ -188,7 +192,7 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 		}
 		
 		fun getFake(dim: Int): FakePlayer {
-			return FakePlayerFactory.get(MinecraftServer.getServer().worldServerForDimension(dim), GameProfile(UUID.randomUUID(), "Avatar-Clicker_$dim"))
+			return FakePlayerFactory.get(MinecraftServer.getServer().worldServerForDimension(dim), GameProfile(UUID(dim.toLong(), dim.toLong()), "Avatar-Clicker_$dim"))
 		}
 		
 		fun isFakeNotAvatar(player: EntityPlayer) = player.commandSenderName.startsWith("Avatar-Clicker_") || EntityFlugel.isTruePlayer(player)

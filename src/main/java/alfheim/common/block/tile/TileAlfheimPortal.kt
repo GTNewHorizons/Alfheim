@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.raceID
 import alfheim.common.block.AlfheimBlocks
@@ -26,7 +27,7 @@ import vazkii.botania.common.core.handler.ConfigHandler
 import java.util.*
 import kotlin.math.*
 
-class TileAlfheimPortal: TileMod() {
+class TileAlfheimPortal: ASJTile() {
 	
 	var activated = false
 	var ticksOpen = 0
@@ -209,7 +210,7 @@ class TileAlfheimPortal: TileMod() {
 		for (pp in PYLON_POSITIONS) {
 			var pos = pp
 			converters?.forEach { pos = it?.apply(pos) ?: pos }
-
+			
 			var tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
 			if (tile is TileAlfheimPylon) {
 				
@@ -251,9 +252,9 @@ class TileAlfheimPortal: TileMod() {
 	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, converters: Array<Function<IntArray, IntArray>?>?): Boolean {
 		for (pp in positions) {
 			var pos = pp
-
+			
 			converters?.forEach { pos = it?.apply(pos) ?: pos }
-
+			
 			if (!checkPosition(pos, block, meta))
 				return true
 		}

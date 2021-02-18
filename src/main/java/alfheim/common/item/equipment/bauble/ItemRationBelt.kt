@@ -25,11 +25,9 @@ class ItemRationBelt: ItemBauble("RationBelt"), IBaubleRender {
 		@field:SideOnly(Side.CLIENT)
 		var model: ModelBiped? = null
 			@SideOnly(Side.CLIENT)
-			get() = field
+			get
 			@SideOnly(Side.CLIENT)
-			set(value) {
-				field = value
-			}
+			set
 		
 		var captureSounds = false
 		

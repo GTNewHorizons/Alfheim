@@ -3,8 +3,6 @@ package alfheim.common.item
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.api.entity.*
-import alfheim.client.core.handler.CardinalSystemClient
-import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
@@ -25,12 +23,12 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 		
 		try {
 			if (!player.isSneaking) {
-				if (!world.isRemote) {
-					//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
-					CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
-				}
-				
-				// for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
+//				if (!world.isRemote) {
+//					//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
+//					CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
+//				}
+//
+//				for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
 			} else {
 				player.raceID = (player.race.ordinal + 1) % 11
 				ASJUtilities.chatLog("${player.race.ordinal} - ${player.race}", player)
@@ -47,7 +45,7 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 		if (ModInfo.OBF) return false
 		
 		try {
-			 if (!world.isRemote) world.getBlock(x, y, z).updateTick(world, x, y, z, world.rand)
+//			if (!world.isRemote) world.getBlock(x, y, z).updateTick(world, x, y, z, world.rand)
 			
 			val te = world.getTileEntity(x, y, z)
 			if (te != null) {

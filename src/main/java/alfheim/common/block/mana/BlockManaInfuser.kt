@@ -1,10 +1,10 @@
 package alfheim.common.block.mana
 
 import alexsocol.asjlib.safeGet
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileManaInfuser
-import alfheim.common.core.helper.IconHelper
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
@@ -81,6 +81,7 @@ class BlockManaInfuser: BlockContainerMod(Material.rock), ILexiconable, IWandHUD
 	}
 	
 	companion object {
+		
 		lateinit var textures: Array<Array<IIcon>>
 	}
 }

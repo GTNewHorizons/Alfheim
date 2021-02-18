@@ -3,7 +3,7 @@ package alfheim.common.block.colored
 import alexsocol.asjlib.toItem
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockSlabMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -19,7 +19,7 @@ class BlockColoredWoodSlab(full: Boolean, meta: Int, source: Block = AlfheimBloc
 	BlockSlabMod(full, meta, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + meta), ILexiconable, IFuelHandler {
 	
 	init {
-        setResistance(10f)
+		setResistance(10f)
 		GameRegistry.registerFuelHandler(this)
 	}
 	
@@ -43,7 +43,7 @@ class BlockColoredWoodSlab(full: Boolean, meta: Int, source: Block = AlfheimBloc
 	
 	override fun getSingleBlock() = AlfheimBlocks.irisSlabs[meta] as BlockSlab
 	
-	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.irisSapling
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.irisSapling
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (field_150004_a) 300 else 150 else 0
 }

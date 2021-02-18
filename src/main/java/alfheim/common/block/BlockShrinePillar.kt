@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 class BlockShrinePillar: BlockModRotatedPillar(Material.rock) {
-
+	
 	init {
 		setBlockName("ShrinePillar")
 		setHardness(10f)
@@ -28,6 +28,6 @@ class BlockShrinePillar: BlockModRotatedPillar(Material.rock) {
 		iconTop = reg.registerIcon(ModInfo.MODID + ":decor/ShrinePillarTop")
 		iconSide = reg.registerIcon(ModInfo.MODID + ":decor/ShrinePillar")
 	}
-
+	
 	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, stack: ItemStack?) = null
 }

@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound
 import vazkii.botania.api.mana.ManaItemHandler
 
 class SubTileManaVoid: SubTileAnomalyBase() {
+	
 	var mana: Int = 0
 	internal val v = Vector3()
 	
@@ -64,6 +65,7 @@ class SubTileManaVoid: SubTileAnomalyBase() {
 	}
 	
 	companion object {
+		
 		const val TAG_MANA = "mana"
 		var radius = 10
 	}

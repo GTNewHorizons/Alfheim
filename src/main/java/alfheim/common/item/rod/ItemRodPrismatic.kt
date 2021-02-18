@@ -1,9 +1,9 @@
 package alfheim.common.item.rod
 
 import alexsocol.asjlib.*
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileRainbowManaFlame
-import alfheim.common.core.helper.IconHelper
 import alfheim.common.item.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -35,10 +35,10 @@ class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInka
 	
 	@SideOnly(Side.CLIENT)
 	override fun getIconFromDamageForRenderPass(meta: Int, pass: Int) =
-        if (pass == 1) overlayIcon else super.getIconFromDamageForRenderPass(meta, pass)!!
+		if (pass == 1) overlayIcon else super.getIconFromDamageForRenderPass(meta, pass)!!
 	
 	override fun getColorFromItemStack(par1ItemStack: ItemStack, pass: Int) =
-        if (pass > 0) 0xFFFFFF else ItemIridescent.rainbowColor()
+		if (pass > 0) 0xFFFFFF else ItemIridescent.rainbowColor()
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (world.getBlock(x, y, z) == AlfheimBlocks.rainbowFlame) {
@@ -86,6 +86,7 @@ class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInka
 	override fun isFull3D() = true
 	
 	companion object {
+		
 		val COST = 100
 	}
 }

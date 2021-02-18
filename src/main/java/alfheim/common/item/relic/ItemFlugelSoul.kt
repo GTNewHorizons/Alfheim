@@ -3,13 +3,13 @@ package alfheim.common.item.relic
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.entity.item.*
 import alfheim.common.item.*
-import alfheim.common.security.InteractionSecurity
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -35,7 +35,6 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.Botania
-import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.tile.TileBrewery
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
@@ -60,10 +59,9 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect, IImmortalHandledItem
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		val block = world.getBlock(x, y, z)
-		if (block === ModBlocks.brewery) {
-			val brew = world.getTileEntity(x, y, z) as TileBrewery
-			brew[0] = stack.splitStack(1)
+		val tile = world.getTileEntity(x, y, z)
+		if (tile is TileBrewery) {
+			tile[0] = stack.splitStack(1)
 		} else { // Stupid Et Futurum
 			if (player.isSneaking && getBlocked(stack) < SEGMENTS) {
 				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true, false)
@@ -84,7 +82,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect, IImmortalHandledItem
 			if (pos.isValid) {
 				if (!world.isRemote && player is EntityPlayerMP && ManaItemHandler.requestManaExact(stack, player, pos.mana(player), true)) {
 					if (InteractionSecurity.canDoSomethingHere(player, pos.x, pos.y, pos.z, MinecraftServer.getServer().worldServerForDimension(pos.dim))) {
-						world.playSoundAtEntity(player, "mob.endermen.portal", 1f, 1f)
+						player.playSoundAtEntity("mob.endermen.portal", 1f, 1f)
 						ASJUtilities.sendToDimensionWithoutPortal(player, pos.dim, pos.x, pos.y, pos.z)
 					}
 				}

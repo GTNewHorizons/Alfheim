@@ -5,6 +5,7 @@ import alfheim.common.world.dim.alfheim.biome.BiomeRiver
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
 import ru.vamig.worldengine.*
+import ru.vamig.worldengine.standardcustomgen.StructureBaseClass
 import vazkii.botania.common.block.*
 import java.util.*
 
@@ -20,10 +21,10 @@ class StructureArena: StructureBaseClass() {
 			if (biomes.any { it === BiomeRiver }) return false
 		}
 		
-		return generate01(world, rand, x, y + 1, z)
+		return generate01(world, x, y + 1, z)
 	}
 	
-	fun generate01(world: World, rand: Random, x: Int, y: Int, z: Int): Boolean {
+	fun generate01(world: World, x: Int, y: Int, z: Int): Boolean {
 		world.setBlock(x + 13, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)
 		world.setBlock(x + 14, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)
 		world.setBlock(x + 15, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)

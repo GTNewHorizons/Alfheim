@@ -239,6 +239,7 @@ class GUIParty: Gui() {
 				} else {
 					when (l) {
 						is EntityPlayer     -> col = (l as EntityPlayer).race.rgbColor
+						
 						is INpc             -> {
 							color = -0xff5501
 							col = color
@@ -675,6 +676,7 @@ class GUIParty: Gui() {
 	}
 	
 	companion object {
+		
 		val format = DecimalFormat("0.0#")
 	}
 }

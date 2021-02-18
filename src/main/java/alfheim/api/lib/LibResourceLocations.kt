@@ -36,6 +36,9 @@ object LibResourceLocations {
 	var elvenPylonOld = ResourceLocation("botania:textures/model/pylonOld2.png")
 	val elvoriumArmor = ResourceLocation(ModInfo.MODID, "textures/model/armor/ElvoriumArmor.png")
 	val explosion = ResourceLocation(ModInfo.MODID, "textures/misc/explosion.png")
+	val fenrir = ResourceLocation(ModInfo.MODID, "textures/model/entity/Fenrir.png")
+	val fenrirClaw = ResourceLocation(ModInfo.MODID, "textures/items/FenrirClaws0.png")
+	val fenrirClawOverlay = ResourceLocation(ModInfo.MODID, "textures/items/FenrirClaws1.png")
 	val gaiaPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/GaiaPylon.png")
 	val gaiaPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/GaiaPylonOld.png")
 	val gleipnir0 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Gleipnir0.png")
@@ -61,6 +64,7 @@ object LibResourceLocations {
 	val miku0 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku0.png")
 	val miku1 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku1.png")
 	val miku2 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku2.png")
+	val mimis = ResourceLocation(ModInfo.MODID, "textures/model/entity/mimis.png")
 	val mine1 = ResourceLocation(ModInfo.MODID, "textures/model/entity/1.png")
 	val mine2 = ResourceLocation(ModInfo.MODID, "textures/model/entity/2.png")
 	val mine3 = ResourceLocation(ModInfo.MODID, "textures/model/entity/3.png")
@@ -87,7 +91,7 @@ object LibResourceLocations {
 	val uberSpreaderFrame = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderFrame.png")
 	val uberSpreaderGolden = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderGolden.png")
 	val uberSpreaderHalloween = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderHalloween.png")
-	val uberSpreaderHalloweenGolden = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderHalloweenGolden.png")
+	val uberSpreaderHalloweenGolden = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderGoldenHalloween.png")
 	val wind = ResourceLocation(ModInfo.MODID, "textures/model/entity/wind.png")
 	val yordinPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylon.png")
 	val yordinPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylonOld.png")
@@ -112,15 +116,6 @@ object LibResourceLocations {
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/IMP_wing.png"),
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png")
 	)
-	
-	val auraBird = ResourceLocation(ModInfo.MODID, "textures/model/entity/auras/auraBird.png")
-	val auraDemonic = ResourceLocation(ModInfo.MODID, "textures/model/entity/auras/auraDemonic.png")
-	val auraGreece = ResourceLocation(ModInfo.MODID, "textures/model/entity/auras/auraGreece.png")
-	
-	val wingsButterfly = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/Butterfly.png")
-	val wingsDarkPhoenix = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/DarkPhoenix.png")
-	val wingsHeavenBird = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/HeavenBird.png")
-	val wingsSprite = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/Sprite.png")
 	
 	const val MOB = 11
 	const val NPC = 12

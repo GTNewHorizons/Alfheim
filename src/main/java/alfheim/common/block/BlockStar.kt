@@ -3,9 +3,11 @@ package alfheim.common.block
 import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileEntityStar
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemStarPlacer
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.Optional
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.item.EntityItem
@@ -40,6 +42,11 @@ class BlockStar(name: String = "starBlock"): BlockContainerMod(Material.cloth), 
 	override fun getRenderType(): Int = -1
 	
 	override fun getIcon(side: Int, meta: Int) = Blocks.fire.getIcon(side, meta)!!
+	
+	override fun getItemDropped(meta: Int, rand: Random?, fortune: Int) = AlfheimItems.starPlacer
+	
+	@SideOnly(Side.CLIENT)
+	override fun getItem(world: World?, x: Int, y: Int, z: Int) = AlfheimItems.starPlacer
 	
 	override fun isOpaqueCube(): Boolean = false
 	
@@ -83,7 +90,7 @@ class BlockStar(name: String = "starBlock"): BlockContainerMod(Material.cloth), 
 		return super.getPickBlock(target, world, x, y, z, player)
 	}
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.frozenStar
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.frozenStar
 	
 	override fun createNewTileEntity(world: World?, meta: Int) = TileEntityStar()
 }

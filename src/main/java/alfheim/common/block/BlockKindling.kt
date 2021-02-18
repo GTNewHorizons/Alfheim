@@ -3,7 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.colored.BlockColoredLamp
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -46,7 +46,7 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 		if (lvl == 0) return
 		
 		val fire = if (lvl == 15) Blocks.fire else Blocks.air
-		world.setBlock(x, y+1, z, fire, 0, 1 or 2)
+		world.setBlock(x, y + 1, z, fire, 0, 1 or 2)
 	}
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 1200 else 0
@@ -57,5 +57,5 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, side: ForgeDirection) = side == ForgeDirection.UP
 	
-	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.kindling
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = AlfheimLexiconData.kindling
 }

@@ -15,6 +15,7 @@ import kotlin.math.*
 class EventHandlerSealingOak {
 	
 	companion object {
+		
 		val instance = EventHandlerSealingOak()
 		
 		fun register() {
@@ -58,6 +59,7 @@ class EventHandlerSealingOak {
 	}
 	
 	inner class VolumeModSound(val sound: ISound, val volumeMult: Float): ISound {
+		
 		override fun getPositionedSoundLocation(): ResourceLocation = sound.positionedSoundLocation
 		override fun canRepeat(): Boolean = sound.canRepeat()
 		override fun getRepeatDelay(): Int = sound.repeatDelay

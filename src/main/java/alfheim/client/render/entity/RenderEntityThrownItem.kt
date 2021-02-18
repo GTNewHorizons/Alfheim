@@ -16,19 +16,19 @@ import org.lwjgl.opengl.GL12
 object RenderEntityThrownItem: Render() {
 	
 	override fun doRender(p_76986_1_: Entity, p_76986_2_: Double, p_76986_4_: Double, p_76986_6_: Double, p_76986_8_: Float, p_76986_9_: Float) {
-        //val c = p_76986_1_ as EntityThrowableItem
-        val iicon = AlfheimItems.fireGrenade.getIconFromDamage(0) // c.event.itemStack.item.getIconFromDamage(c.event.itemStack.meta)
-        if (iicon != null) {
-            glPushMatrix()
-            glTranslatef(p_76986_2_.F, p_76986_4_.F, p_76986_6_.F)
-            glEnable(GL12.GL_RESCALE_NORMAL)
+		//val c = p_76986_1_ as EntityThrowableItem
+		val iicon = AlfheimItems.fireGrenade.getIconFromDamage(0) // c.event.itemStack.item.getIconFromDamage(c.event.itemStack.meta)
+		if (iicon != null) {
+			glPushMatrix()
+			glTranslatef(p_76986_2_.F, p_76986_4_.F, p_76986_6_.F)
+			glEnable(GL12.GL_RESCALE_NORMAL)
 			glScaled(0.5)
-            bindEntityTexture(p_76986_1_)
-            val tessellator = Tessellator.instance
-            func_77026_a(tessellator, iicon, -1)
-            glDisable(GL12.GL_RESCALE_NORMAL)
-            glPopMatrix()
-        }
+			bindEntityTexture(p_76986_1_)
+			val tessellator = Tessellator.instance
+			func_77026_a(tessellator, iicon, -1)
+			glDisable(GL12.GL_RESCALE_NORMAL)
+			glPopMatrix()
+		}
 	}
 	
 	override fun getEntityTexture(p_110775_1_: Entity) = TextureMap.locationItemsTexture!!

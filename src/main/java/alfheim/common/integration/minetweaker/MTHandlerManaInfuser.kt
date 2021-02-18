@@ -53,7 +53,8 @@ object MTHandlerManaInfuser {
 	}
 	
 	private class Remove(private val output: ItemStack): IUndoableAction {
-		internal val removed = ArrayList<RecipeManaInfuser>()
+		
+		val removed = ArrayList<RecipeManaInfuser>()
 		
 		override fun apply() {
 			var rec = AlfheimAPI.removeInfusionRecipe(output)

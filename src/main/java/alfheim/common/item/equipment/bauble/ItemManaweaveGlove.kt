@@ -64,21 +64,22 @@ class ItemManaweaveGlove: ItemBauble("ManaweaveGlove" + if (AlfheimCore.Travelle
 			bipedBody.showModel = false
 		}
 		
-		if (entity is EntityPlayer) run {
+		if (entity is EntityPlayer) {
 			val baubles = PlayerHandler.getPlayerBaubles(entity)
-			mod.bipedRightArm.showModel = baubles[1]?.item === this@ItemManaweaveGlove || AlfheimCore.TravellersGearLoaded
-			mod.bipedLeftArm.showModel = baubles[2]?.item === this@ItemManaweaveGlove || AlfheimCore.TravellersGearLoaded
+			mod.bipedRightArm.showModel = baubles[1]?.item === this || AlfheimCore.TravellersGearLoaded
+			mod.bipedLeftArm.showModel = baubles[2]?.item === this || AlfheimCore.TravellersGearLoaded
 		}
 		
 		return mod
 	}
 	
 	companion object {
+		
 		@field:SideOnly(Side.CLIENT)
 		var model: ModelBiped? = null
-		@SideOnly(Side.CLIENT)
-		get() = field
-		@SideOnly(Side.CLIENT)
-		set(value) { field = value }
+			@SideOnly(Side.CLIENT)
+			get
+			@SideOnly(Side.CLIENT)
+			set
 	}
 }

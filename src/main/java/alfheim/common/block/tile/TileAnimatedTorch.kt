@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.common.block.AlfheimBlocks
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -14,10 +15,9 @@ import net.minecraft.util.StatCollector
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.glEnable
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
-import vazkii.botania.common.block.tile.TileMod
 import kotlin.math.*
 
-class TileAnimatedTorch: TileMod() {
+class TileAnimatedTorch: ASJTile() {
 	
 	var side: Int = 0
 	var rotation: Double = 0.D

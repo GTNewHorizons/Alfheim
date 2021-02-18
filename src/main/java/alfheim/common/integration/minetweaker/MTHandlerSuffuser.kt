@@ -30,7 +30,7 @@ object MTHandlerSuffuser {
 	private class Add(private val recipe: RecipeTreeCrafting): IUndoableAction {
 		
 		override fun apply() {
-			ShadowFoxAPI.addTreeRecipe(recipe)
+			AlfheimAPI.addTreeRecipe(recipe)
 		}
 		
 		override fun canUndo(): Boolean {
@@ -38,7 +38,7 @@ object MTHandlerSuffuser {
 		}
 		
 		override fun undo() {
-			ShadowFoxAPI.removeTreeRecipe(recipe.output)
+			AlfheimAPI.removeTreeRecipe(recipe.output)
 		}
 		
 		override fun describe(): String {
@@ -56,13 +56,13 @@ object MTHandlerSuffuser {
 	
 	private class Remove(private val output: ItemStack): IUndoableAction {
 		
-		internal val removed = ArrayList<RecipeTreeCrafting>()
+		val removed = ArrayList<RecipeTreeCrafting>()
 		
 		override fun apply() {
-			var rec = ShadowFoxAPI.removeTreeRecipe(output)
+			var rec = AlfheimAPI.removeTreeRecipe(output)
 			while (rec != null) {
 				removed.add(rec)
-				rec = ShadowFoxAPI.removeTreeRecipe(output)
+				rec = AlfheimAPI.removeTreeRecipe(output)
 			}
 		}
 		
@@ -71,7 +71,7 @@ object MTHandlerSuffuser {
 		}
 		
 		override fun undo() {
-			for (rec in removed) ShadowFoxAPI.addTreeRecipe(rec)
+			for (rec in removed) AlfheimAPI.addTreeRecipe(rec)
 		}
 		
 		override fun describe(): String {

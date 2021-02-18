@@ -1,6 +1,8 @@
 package alfheim.common.item.relic
 
-import alexsocol.asjlib.D
+import alexsocol.asjlib.*
+import alexsocol.asjlib.ItemNBTHelper.getInt
+import alexsocol.asjlib.ItemNBTHelper.setInt
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
@@ -14,11 +16,10 @@ import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.*
-import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.mana.*
-import vazkii.botania.common.core.helper.*
+import vazkii.botania.common.core.helper.Vector3
 import vazkii.botania.common.entity.EntityManaBurst
 import vazkii.botania.common.item.relic.ItemRelic
 import java.util.*
@@ -116,7 +117,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					
 					player.worldObj.spawnEntityInWorld(sub)
 					
-					if (i == 1) player.worldObj.playSoundAtEntity(sub, "${ModInfo.MODID}:spearsubspace", 1f, 1f + player.worldObj.rand.nextFloat() * 3f)
+					if (i == 1) sub.playSoundAtEntity("${ModInfo.MODID}:spearsubspace", 1f, 1f + player.worldObj.rand.nextFloat() * 3f)
 				}
 			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 120, 0))
 			
@@ -126,9 +127,9 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 		super.onPlayerStoppedUsing(stack, world, player, itemInUse)
 	}
 	
-	fun getCooldown(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0)
-	fun isCooledDown(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0) == 0
-	fun setCooldown(stack: ItemStack, cd: Int) = ItemNBTHelper.setInt(stack, TAG_COOLDOWN, cd)
+	fun getCooldown(stack: ItemStack) = getInt(stack, TAG_COOLDOWN, 0)
+	fun isCooledDown(stack: ItemStack) = getInt(stack, TAG_COOLDOWN, 0) == 0
+	fun setCooldown(stack: ItemStack, cd: Int) = setInt(stack, TAG_COOLDOWN, cd)
 	
 	override fun usesMana(arg0: ItemStack) = true
 	
@@ -149,22 +150,21 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	
 	override fun updateBurst(burst: IManaBurst, stack: ItemStack) {
 		val entity = burst as EntityThrowable
-		val attackerName = ItemNBTHelper.getString(burst.sourceLens, TAG_ATTACKER_USERNAME, "")
 		
 		val axis = AxisAlignedBB.getBoundingBox(entity.posX - 2.5f, entity.posY - 2.5f, entity.posZ - 2.5f, entity.lastTickPosX + 2.5f, entity.lastTickPosY + 2.5f, entity.lastTickPosZ + 2.5f)
 		
 		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
 		for (living in entities) {
-			val flag1 = living.commandSenderName == attackerName
+			if (living === burst.thrower) continue
+			
 			val flag2 = FMLCommonHandler.instance().minecraftServerInstance?.isPVPEnabled == false
 			
-			if (living is EntityPlayer && (flag1 || flag2)) continue
+			if (living is EntityPlayer && flag2) continue
 			
 			living.attackEntityFrom(DamageSource.causeIndirectMagicDamage(burst, burst.thrower), 6f)
 		}
 	}
 	
-	val TAG_ATTACKER_USERNAME = "attackerUsername"
 	val TAG_COOLDOWN = "cooldown"
 	
 	fun getBurst(player: EntityPlayer, stack: ItemStack): EntityManaBurst? {
@@ -182,7 +182,6 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 		burst.setMotion(burst.motionX * motionModifier, burst.motionY * motionModifier, burst.motionZ * motionModifier)
 		
 		val lens = stack.copy()
-		ItemNBTHelper.setString(lens, TAG_ATTACKER_USERNAME, player.commandSenderName)
 		burst.sourceLens = lens
 		return burst
 	}

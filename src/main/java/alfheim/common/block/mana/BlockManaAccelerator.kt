@@ -1,6 +1,6 @@
 package alfheim.common.block.mana
 
-import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.extendables.block.TileItemContainer
 import alexsocol.asjlib.mfloor
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
@@ -22,7 +22,7 @@ import vazkii.botania.common.block.mana.BlockPool
 import kotlin.math.*
 
 class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
-
+	
 	init {
 		setBlockBounds(0f, -0.5f, 0f, 1f, -0.125f, 1f)
 		setBlockName("ManaAccelerator")
@@ -94,5 +94,5 @@ class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
 	}
 	
 	override fun createNewTileEntity(world: World, meta: Int) = TileManaAccelerator()
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.manaAcc
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.manaAccelerator
 }

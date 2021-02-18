@@ -1,7 +1,9 @@
 package alfmod.common.item.equipment.armor
 
 import alexsocol.asjlib.*
-import alfheim.common.security.InteractionSecurity
+import alexsocol.asjlib.security.InteractionSecurity
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfmod.AlfheimModularCore
 import alfmod.client.model.armor.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper
@@ -28,6 +30,7 @@ import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
 open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name, snow), IManaDiscountArmor {
 	
 	companion object {
+		
 		private const val MANA_PER_DAMAGE = 70
 		
 		val snow = EnumHelper.addArmorMaterial("snow", 25, intArrayOf(2, 6, 5, 2), 16)!!
@@ -108,7 +111,8 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		itemIcon = IconHelper.forItem(reg, this)
 	}
 	
-	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack?) = false
+	override fun getIsRepairable(stack: ItemStack, material: ItemStack) =
+		stack.item === AlfheimItems.elvenResource && stack.meta == ElvenResourcesMetas.NiflheimPowerIngot
 	
 	var armorSet: Array<ItemStack>? = null
 	
@@ -148,10 +152,10 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		if (model3 == null) model3 = ModelBiped()
 		
 		model = when (slot) {
-			0 -> model2
-			1 -> model1
-			2 -> model2
-			3 -> model3
+			0    -> model2
+			1    -> model1
+			2    -> model2
+			3    -> model3
 			else -> model
 		}
 		

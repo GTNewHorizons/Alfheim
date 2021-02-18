@@ -8,8 +8,9 @@ import cpw.mods.fml.common.event.*
 
 @Mod(modid = AlfheimModularCore.MODID, version = "modular", useMetadata = true)
 class AlfheimModularCore {
-
+	
 	companion object {
+		
 		const val MODID = "alfmod"
 		
 		@Instance(MODID)

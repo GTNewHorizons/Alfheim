@@ -1,6 +1,7 @@
 package alfheim.common.item.lens
 
 import alexsocol.asjlib.expand
+import alexsocol.asjlib.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.item.ItemStack
@@ -16,6 +17,9 @@ class LensPush: Lens() {
 		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(0.5)
 		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as MutableList<EntityLivingBase>
 		val homeID = entity.entityData.getInteger(TAG_HOME_ID)
+		
+		if (!entity.worldObj.isRemote && entity.thrower != null)
+			entities.removeAll { !InteractionSecurity.canDoSomethingWithEntity(entity.thrower, it) }
 		
 		for (living in entities) {
 			entity.entityData.setInteger(TAG_HOME_ID, living.entityId)

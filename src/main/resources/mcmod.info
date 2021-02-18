@@ -1,32 +1,24 @@
-[{
-  "modid": "alfheim",
-  "name": "Alfheim",
-  "description": "Botania addon alowing you to travel to Alfheim",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://discord.gg/dqQXZHq",
-  "updateUrl": "https://discord.gg/dqQXZHq",
-  "authorList": ["AlexSocol", "VamigA"],
-  "credits": "see credits.txt in mod file",
-  "logoFile": "alfheim_logo.png",
-  "useDependencyInformation": true,
-  "requiredMods": ["Botania"],
-  "dependencies": ["Botania", "MineTweaker3", "Thaumcraft"],
-  "dependants": ["elvenstory"]
-},
-{
-  "modid": "alfmod",
-  "name": "Alfheim-Modular",
-  "description": "Alfheim time-limited events",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://discord.gg/dqQXZHq",
-  "updateUrl": "https://discord.gg/dqQXZHq",
-  "authorList": ["AlexSocol"],
-  "credits": "",
-  "logoFile": "",
-  "useDependencyInformation": true,
-  "requiredMods": ["Botania", "alfheim"],
-  "dependencies": ["Botania", "alfheim", "Thaumcraft"],
-  "dependants": []
-}]
+[
+	{
+		"modid": "${modid}",
+		"name": "${name}",
+		"description": "${desc}",
+		"version": "${version}",
+		"mcversion": "${mcversion}",
+		"url": "https://discord.gg/dqQXZHq",
+		"updateUrl": "https://discord.gg/dqQXZHq",
+		"authorList": [
+			"AlexSocol"
+		],
+		"credits": "${cred}",
+		"logoFile": "${logo}",
+		"useDependencyInformation": true,
+		"requiredMods": [
+			${reqM}
+		],
+		"dependencies": [
+			${deps}
+		],
+		"dependants": [ ]
+	}
+]

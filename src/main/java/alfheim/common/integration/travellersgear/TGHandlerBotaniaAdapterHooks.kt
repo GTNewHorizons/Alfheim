@@ -1,13 +1,16 @@
 package alfheim.common.integration.travellersgear
 
 import alfheim.AlfheimCore
+import alfheim.common.item.equipment.bauble.ItemBalanceCloak
 import baubles.api.BaubleType
+import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
+import net.minecraft.util.IIcon
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import travellersgear.api.TravellersGearAPI
-import vazkii.botania.common.item.equipment.bauble.ItemHolyCloak
+import vazkii.botania.common.item.equipment.bauble.*
 
 object TGHandlerBotaniaAdapterHooks {
 	
@@ -59,5 +62,19 @@ object TGHandlerBotaniaAdapterHooks {
 	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true, isMandatory = true)
 	fun addHiddenTooltip(cloak: ItemHolyCloak, stack: ItemStack, player: EntityPlayer, tooltip: MutableList<Any?>, adv: Boolean) {
 		TravellerBaubleTooltipHandler.addHiddenTooltip(cloak, stack, tooltip)
+	}
+	
+	@JvmStatic
+	@SideOnly(Side.CLIENT)
+	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true)
+	fun getIconFromDamage(cloak: ItemHolyCloak, meta: Int): IIcon {
+		return ItemBalanceCloak.iconHoly
+	}
+	
+	@JvmStatic
+	@SideOnly(Side.CLIENT)
+	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true)
+	fun getIconFromDamage(cloak: ItemUnholyCloak, meta: Int): IIcon {
+		return ItemBalanceCloak.iconUnholy
 	}
 }

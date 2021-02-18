@@ -67,7 +67,7 @@ open class EntityBloodFx(world: World, x: Double, y: Double, z: Double, size: Fl
 		glRotatef(180f, 0f, 0f, 1f)
 		if (onGround) {
 			glRotatef(-90f, 1f, 0f, 0f)
-			glTranslatef(0f, 0f, 3/32f)
+			glTranslatef(0f, 0f, 3 / 32f)
 		}
 		
 		glScalef(particleScale)

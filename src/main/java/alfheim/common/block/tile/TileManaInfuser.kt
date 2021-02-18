@@ -1,12 +1,12 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.*
 import net.minecraft.init.Blocks
@@ -21,12 +21,10 @@ import vazkii.botania.api.mana.spark.*
 import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
-import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.block.tile.mana.TilePool
 import kotlin.math.*
 
-@Suppress("ConstantConditionIf")
-class TileManaInfuser: TileMod(), ISparkAttachable {
+class TileManaInfuser: ASJTile(), ISparkAttachable {
 	
 	var mana = 0
 	var manaRequest = 0
@@ -47,7 +45,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	override fun updateEntity() {
 		if (isReadyToKillGaia) {
 			if (--soulParticlesTime > 0) soulParticles()
-			if(--deGaiaingTime > 0) return
+			if (--deGaiaingTime > 0) return
 		}
 		
 		var removeMana = true
@@ -83,7 +81,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 						if (first) {
 							item.setEntityItemStack(ItemStack(result!!.item, max(result!!.stackSize, 1), result!!.meta))
 							item.entityItem.readFromNBT(result!!.writeToNBT(NBTTagCompound()))
-							item.worldObj.playSoundAtEntity(item, "botania:terrasteelCraft", 1f, 1f)
+							item.playSoundAtEntity("botania:terrasteelCraft", 1f, 1f)
 							first = false
 						} else
 							worldObj.removeEntity(item)
@@ -152,7 +150,6 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 				v.set((-c[0]).D, (-c[1]).D, (-c[2]).D).normalize().mul(0.4)
 				Botania.proxy.wispFX(worldObj, xCoord.D + c[0].D + 0.5, yCoord.D + c[1].D + 0.65, zCoord.D + c[2].D + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.F, v.y.F, v.z.F, 0.5f)
 			}
-		
 		else
 			for (c in GAIAS) {
 				v.set(c[0].D, 0.0, c[2].D).normalize().mul(0.3)
@@ -298,7 +295,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	
 	override fun recieveMana(mana: Int) {
 		this.mana = max(0, min(MAX_MANA, this.mana + mana))
-		worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
+		ASJUtilities.dispatchTEToNearbyPlayers(this)
 	}
 	
 	override fun canRecieveManaFromBursts() = hasValidPlatform() && areItemsValid(items)
@@ -308,18 +305,12 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	override fun attachSpark(entity: ISparkEntity) = Unit
 	
 	override fun getAttachedSpark(): ISparkEntity? {
-		val sparks = worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, AxisAlignedBB.getBoundingBox(xCoord.D, (yCoord + 1).D, zCoord.D, (xCoord + 1).D, (yCoord + 2).D, (zCoord + 1).D))
-		if (sparks.size == 1) {
-			val e = sparks[0] as Entity
-			return e as ISparkEntity
-		}
-		
-		return null
+		return worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, boundingBox().offset(0.0, 1.0, 0.0)).safeZeroGet(0) as? ISparkEntity
 	}
 	
 	override fun areIncomingTranfersDone() = !hasValidPlatform() || !areItemsValid(items)
 	
-	override fun getAvailableSpaceForMana() = max(0, MAX_MANA - currentMana)
+	override fun getAvailableSpaceForMana() = max(0, MAX_MANA - mana)
 	
 	fun onWanded(player: EntityPlayer?) {
 		if (player == null)
@@ -334,7 +325,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 				if (player is EntityPlayerMP)
 					player.playerNetServerHandler.sendPacket(S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbt))
 			}
-			worldObj.playSoundAtEntity(player, "botania:ding", 0.1f, 1f)
+			player.playSoundAtEntity("botania:ding", 0.1f, 1f)
 		}
 	}
 	

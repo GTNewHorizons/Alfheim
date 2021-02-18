@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.api.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -10,7 +11,6 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.BotaniaAPI
@@ -18,10 +18,9 @@ import vazkii.botania.api.lexicon.multiblock.*
 import vazkii.botania.api.recipe.RecipeElvenTrade
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
-import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.core.handler.ConfigHandler
 
-class TileTradePortal: TileMod() {
+class TileTradePortal: ASJTile() {
 	
 	internal var tradeRecipe: RecipeElvenTrade? = null
 	internal var recipeMult = 0
@@ -143,9 +142,9 @@ class TileTradePortal: TileMod() {
 		val inputs = tradeRecipe!!.inputs
 		for (`in` in inputs) {
 			val stack = when (`in`) {
-				is String 		-> OreDictionary.getOres(`in`)[0]
-				is ItemStack	-> `in`.copy()
-				else			-> throw IllegalArgumentException("Invalid input")
+				is String    -> OreDictionary.getOres(`in`)[0]
+				is ItemStack -> `in`.copy()
+				else         -> throw IllegalArgumentException("Invalid input")
 			}
 			spawnItem(ItemStack(stack.item, 1, stack.meta))
 		}
@@ -195,10 +194,10 @@ class TileTradePortal: TileMod() {
 			return
 		
 		for (pos in PYLON_POSITIONS) {
-			var pos = pos
-			converters?.forEach { pos = it?.apply(pos) ?: pos }
+			var p = pos
+			converters?.forEach { p = it?.apply(p) ?: p }
 			
-			val tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
+			val tile = worldObj.getTileEntity(xCoord + p[0], yCoord + p[1], zCoord + p[2])
 			if (tile is TileAlfheimPylon) {
 				tile.activated = true
 				tile.centerX = xCoord
@@ -210,11 +209,11 @@ class TileTradePortal: TileMod() {
 	
 	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, converters: Array<Function<IntArray, IntArray>?>?): Boolean {
 		for (pos in positions) {
-			var pos = pos
+			var p = pos
 			
-			converters?.forEach { pos = it?.apply(pos) ?: pos }
+			converters?.forEach { p = it?.apply(p) ?: p }
 			
-			if (!checkPosition(pos, block, meta))
+			if (!checkPosition(p, block, meta))
 				return true
 		}
 		return false
@@ -242,7 +241,7 @@ class TileTradePortal: TileMod() {
 	}
 	
 	override fun getRenderBoundingBox(): AxisAlignedBB {
-		return TileEntity.INFINITE_EXTENT_AABB
+		return INFINITE_EXTENT_AABB
 	}
 	
 	companion object {

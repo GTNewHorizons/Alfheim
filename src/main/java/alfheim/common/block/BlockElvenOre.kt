@@ -30,12 +30,12 @@ class BlockElvenOre: BlockModMeta(Material.rock, 6, ModInfo.MODID, "ElvenOre", A
 	}
 	
 	override fun getItemDropped(meta: Int, rand: Random?, fortune: Int): Item? = when (meta) {
-			0 -> ModItems.manaResource
-			2 -> ModItems.quartz
-			4 -> AlfheimItems.elvenResource
-			5 -> Items.dye
-			else -> this.toItem()
-		}
+		0    -> ModItems.manaResource
+		2    -> ModItems.quartz
+		4    -> AlfheimItems.elvenResource
+		5    -> Items.dye
+		else -> this.toItem()
+	}
 	
 	override fun damageDropped(meta: Int) = metas.safeGet(meta)
 	
@@ -50,7 +50,8 @@ class BlockElvenOre: BlockModMeta(Material.rock, 6, ModInfo.MODID, "ElvenOre", A
 				j
 			} else 1
 		}
-		else -> 1
+		
+		else    -> 1
 	}
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.ores

@@ -35,6 +35,7 @@ class BlockCircuitWoodSlab(full: Boolean, source: Block = AlfheimBlocks.circuitP
 }
 
 class BlockCircuitWoodStairs(source: Block = AlfheimBlocks.circuitPlanks): BlockRainbowWoodStairs(source) {
+	
 	override fun register() {
 		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}

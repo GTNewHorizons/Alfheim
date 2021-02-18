@@ -1,6 +1,6 @@
 package alfheim.common.world.gen
 
-import alfheim.api.ShadowFoxAPI
+import alfheim.api.*
 import net.minecraft.block.Block
 import net.minecraft.world.World
 import net.minecraft.world.gen.feature.WorldGenAbstractTree
@@ -13,7 +13,7 @@ class SimpleTreeGen(val minTreeHeight: Int): WorldGenAbstractTree(true) {
 			val l: Int = random!!.nextInt(3) + minTreeHeight
 			var flag = true
 			
-			val variant = ShadowFoxAPI.getTreeVariant(world.getBlock(x, y - 1, z), world.getBlockMetadata(x, y - 1, z))
+			val variant = AlfheimAPI.getTreeVariant(world.getBlock(x, y - 1, z), world.getBlockMetadata(x, y - 1, z))
 			if (variant != null) {
 				val wood = variant.getWood(world.getBlock(x, y - 1, z), world.getBlockMetadata(x, y - 1, z))
 				val leaves = variant.getLeaves(world.getBlock(x, y - 1, z), world.getBlockMetadata(x, y - 1, z))

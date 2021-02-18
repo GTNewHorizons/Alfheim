@@ -1,11 +1,11 @@
 package alfheim.common.block.colored
 
 import alexsocol.asjlib.*
-import alfheim.api.ShadowFoxAPI
-import alfheim.common.core.helper.IconHelper
+import alfheim.api.AlfheimAPI
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.world.gen.SimpleTreeGen
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -55,7 +55,7 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 	override fun getPlantMetadata(world: IBlockAccess?, x: Int, y: Int, z: Int) = world?.getBlockMetadata(x, y, z) ?: 0
 	
 	override fun canPlaceBlockAt(world: World, x: Int, y: Int, z: Int) =
-        super.canPlaceBlockAt(world, x, y, z) && canBlockStay(world, x, y, z)
+		super.canPlaceBlockAt(world, x, y, z) && canBlockStay(world, x, y, z)
 	
 	/**
 	 * Ticks the block if it's been scheduled
@@ -65,7 +65,7 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 			checkAndDropBlock(world, x, y, z)
 			
 			if (world.getBlockLightValue(x, y + 1, z) >= 9 && random.nextInt(7) == 0) {
-                markOrGrowMarked(world, x, y, z, random)
+				markOrGrowMarked(world, x, y, z, random)
 			}
 		}
 	}
@@ -78,7 +78,7 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 	}
 	
 	override fun canBlockStay(world: World, x: Int, y: Int, z: Int) =
-        world.getBlock(x, y - 1, z).canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this) || canGrowHere(world.getBlock(x, y - 1, z))
+		world.getBlock(x, y - 1, z).canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this) || canGrowHere(world.getBlock(x, y - 1, z))
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {
 		if (list != null && item != null)
@@ -129,7 +129,7 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 	 * fertilize
 	 */
 	override fun func_149853_b(world: World?, random: Random?, x: Int, y: Int, z: Int) {
-        markOrGrowMarked(world, x, y, z, random)
+		markOrGrowMarked(world, x, y, z, random)
 	}
 	
 	/**
@@ -137,9 +137,9 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 	 */
 	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, isRemote: Boolean) = canGrowHere(world!!.getBlock(x, y - 1, z))
 	
-	open fun canGrowHere(block: Block) = ShadowFoxAPI.getIridescentSoils().contains(block)
+	open fun canGrowHere(block: Block) = AlfheimAPI.getIridescentSoils().contains(block)
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.irisSapling
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 100 else 0
 	

@@ -2,9 +2,10 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.AlfheimCore
 import alfheim.api.item.ColorOverrideHelper
-import alfheim.common.item.ItemIridescent
+import alfheim.common.item.*
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler.FaithBauble.*
 import alfheim.common.item.relic.ItemHeimdallRing
@@ -33,7 +34,7 @@ object FaithHandlerHeimdall: IFaithHandler {
 	override fun onWornTick(stack: ItemStack, player: EntityPlayer, type: IFaithHandler.FaithBauble) {
 		when (type) {
 			EMBLEM -> onEmblemWornTick(stack, player)
-			CLOAK  -> onCloakWornTick(stack, player)
+			CLOAK  -> onCloakWornTick(player)
 		}
 	}
 	
@@ -46,7 +47,7 @@ object FaithHandlerHeimdall: IFaithHandler {
 		bifrostPlatform(player, stack)
 	}
 	
-	fun onCloakWornTick(stack: ItemStack, player: EntityPlayer) {
+	fun onCloakWornTick(player: EntityPlayer) {
 		if (player.worldObj.isRemote && player.isSprinting && player.jumpTicks == 10) {
 			val look = player.lookVec
 			val dist = 6.0
@@ -69,9 +70,6 @@ object FaithHandlerHeimdall: IFaithHandler {
 		
 		return Vector3(e.motionX, e.motionY, e.motionZ)
 	}
-
-//	@SubscribeEvent
-//	fun bifrostPlatform(e: LivingUpdateEvent) {
 	
 	fun bifrostPlatform(player: EntityPlayer, emblem: ItemStack) {
 		if (player.capabilities.isFlying) return
@@ -88,6 +86,9 @@ object FaithHandlerHeimdall: IFaithHandler {
 				for (i in -2..2)
 					for (k in -2..2) {
 						if (abs(i) == 2 && abs(k) == 2) continue
+						
+						if (!InteractionSecurity.canDoSomethingHere(player, x + i, y, z + k))
+							continue
 						
 						val block = world.getBlock(x + i, y, z + k)
 						
@@ -124,6 +125,7 @@ object FaithHandlerHeimdall: IFaithHandler {
 	override fun getGodPowerLevel(player: EntityPlayer): Int {
 		var lvl = 0
 		
+		if (player.inventory.hasItemStack(ItemStack(AlfheimItems.gjallarhorn))) lvl += 4
 		if (ItemPriestCloak.getCloak(4, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(4, player) != null) lvl += 2
 		if (ItemHeimdallRing.getHeimdallRing(player) != null) lvl += 1

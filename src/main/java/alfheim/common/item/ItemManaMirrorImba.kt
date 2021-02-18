@@ -1,7 +1,7 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.*
-import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.client.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -78,7 +78,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 			val tile = world.getTileEntity(x, y, z)
 			if (tile is IManaPool) {
 				bindPool(stack, tile)
-				world.playSoundAtEntity(player, "botania:ding", 1f, 1f)
+				player.playSoundAtEntity("botania:ding", 1f, 1f)
 				return true
 			}
 		}
@@ -186,6 +186,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 }
 
 private object DummyPool: IManaPool {
+	
 	override fun isFull() = false
 	override fun recieveMana(mana: Int) = Unit
 	override fun canRecieveManaFromBursts() = false

@@ -1,12 +1,12 @@
 package alfheim.common.spell.illusion
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 
@@ -33,7 +33,7 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SHADOW, it)
 						break
 					}
-				
+			
 		}
 		
 		return res
@@ -79,16 +79,17 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 			entity.setPosition(prevX, prevY, prevZ)
 			false
 		} else {
-			val short1: Short = 128
-			for (l in 0 until short1) {
-				val d6 = l.D / (short1.D - 1.0)
-				val f = (entity.worldObj.rand.nextFloat() - 0.5f) * 0.2f
-				val f1 = (entity.worldObj.rand.nextFloat() - 0.5f) * 0.2f
-				val f2 = (entity.worldObj.rand.nextFloat() - 0.5f) * 0.2f
-				val d7 = prevX + (entity.posX - prevX) * d6 + (entity.worldObj.rand.nextDouble() - 0.5) * entity.width * 2.0
-				val d8 = prevY + (entity.posY - prevY) * d6 + entity.worldObj.rand.nextDouble() * entity.height
-				val d9 = prevZ + (entity.posZ - prevZ) * d6 + (entity.worldObj.rand.nextDouble() - 0.5) * entity.width * 2.0
-				entity.worldObj.spawnParticle("portal", d7, d8, d9, f.D, f1.D, f2.D)
+			for (l in 0 until 128) {
+				val mod = l.D / 127
+				
+				val px = prevX + (entity.posX - prevX) * mod + (entity.worldObj.rand.nextDouble() - 0.5) * entity.width * 2.0
+				val py = prevY + (entity.posY - prevY) * mod + entity.worldObj.rand.nextDouble() * entity.height
+				val pz = prevZ + (entity.posZ - prevZ) * mod + (entity.worldObj.rand.nextDouble() - 0.5) * entity.width * 2.0
+				
+				val mx = (entity.worldObj.rand.nextDouble() - 0.5) * 0.2
+				val my = (entity.worldObj.rand.nextDouble() - 0.5) * 0.2
+				val mz = (entity.worldObj.rand.nextDouble() - 0.5) * 0.2
+				entity.worldObj.spawnParticle("portal", px, py, pz, mx, my, mz)
 			}
 			entity.worldObj.playSoundEffect(prevX, prevY, prevZ, "mob.endermen.portal", 1f, 1f)
 			entity.playSound("mob.endermen.portal", 1f, 1f)

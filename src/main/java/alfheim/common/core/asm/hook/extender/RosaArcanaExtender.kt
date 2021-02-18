@@ -27,7 +27,7 @@ object RosaArcanaExtender {
 			
 			tile.mana = new
 			xp.xpValue = 0
-			xp.worldObj.playSoundAtEntity(xp, "random.orb", 0.1f, 0.5f * ((xp.worldObj.rand.nextFloat() - xp.worldObj.rand.nextFloat()) * 0.7f + 1.8f))
+			xp.playSoundAtEntity("random.orb", 0.1f, 0.5f * ((xp.worldObj.rand.nextFloat() - xp.worldObj.rand.nextFloat()) * 0.7f + 1.8f))
 			xp.setDead()
 			
 			break
@@ -50,7 +50,7 @@ object RosaArcanaExtender {
 			base.equals(AlfheimBlocks.alfStorage, 1) -> 3
 			base.equals(AlfheimBlocks.alfStorage, 0) -> 2
 			base.equals(ModBlocks.storage, 4)        -> 1
-			else -> 0
+			else                                     -> 0
 		}
 	}
 	

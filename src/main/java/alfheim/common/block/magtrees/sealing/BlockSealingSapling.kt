@@ -2,7 +2,7 @@ package alfheim.common.block.magtrees.sealing
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.world.gen.HeartWoodTreeGen
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -47,5 +47,5 @@ class BlockSealingSapling: BlockColoredSapling(name = "sealingSapling"), ISoundS
 	
 	override fun canGrowHere(block: Block) = block.material == Material.ground || block.material == Material.grass
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.silencer
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.silencer
 }

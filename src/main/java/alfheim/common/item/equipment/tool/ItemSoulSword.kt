@@ -1,9 +1,9 @@
 package alfheim.common.item.equipment.tool
 
 import alexsocol.asjlib.*
-import alfheim.api.ModInfo
+import alfheim.api.*
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
@@ -17,14 +17,13 @@ import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.World
-import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import kotlin.math.*
 
-class ItemSoulSword: ItemSword(soul), IManaUsingItem {
+class ItemSoulSword: ItemSword(AlfheimAPI.SOUL), IManaUsingItem {
 	
 	init {
 		creativeTab = AlfheimTab
@@ -53,7 +52,7 @@ class ItemSoulSword: ItemSword(soul), IManaUsingItem {
 		return super.setUnlocalizedName(name)
 	}
 	
-	override fun getUnlocalizedNameInefficiently(stack: ItemStack?): String? {
+	override fun getUnlocalizedNameInefficiently(stack: ItemStack?): String {
 		return super.getUnlocalizedNameInefficiently(stack).replace("item.".toRegex(), "item.${ModInfo.MODID}:")
 	}
 	
@@ -64,19 +63,25 @@ class ItemSoulSword: ItemSword(soul), IManaUsingItem {
 	
 	companion object {
 		
-		private val soul = EnumHelper.addToolMaterial("Soul", -1, -1, -1f, -1f, -1)!!
-		
 		private const val TAG_SOUL_LEVEL = "soulLevel"
 		
 		private var ItemStack.level: Int
 			get() = ItemNBTHelper.getInt(this, TAG_SOUL_LEVEL, 0)
 			set(lvl) = ItemNBTHelper.setInt(this, TAG_SOUL_LEVEL, lvl)
 		
+		fun setLevelP(stack: ItemStack, lvl: Int) {
+			stack.level = lvl
+		}
+		
+		fun getLevelP(stack: ItemStack) = stack.level
+		
 		private fun getDamageFromLevel(stack: ItemStack) = stack.level / 100.0
 		
 		private fun getMaxUsesFromLevel(stack: ItemStack) = max(100, stack.level / 10)
 		
-		private fun repair(stack: ItemStack, amount: Int) = stack.setItemDamage(max(0, stack.getItemDamage() - amount))
+		private fun repair(stack: ItemStack, amount: Int) {
+			stack.meta = max(0, stack.meta - amount)
+		}
 		
 		init {
 			eventForge()
@@ -90,8 +95,10 @@ class ItemSoulSword: ItemSword(soul), IManaUsingItem {
 			val stack = attacker.heldItem ?: return
 			if (stack.item !== AlfheimItems.soulSword) return
 			if (!ManaItemHandler.requestManaExact(stack, attacker, 1, true)) return
-			stack.level = min(AlfheimConfigHandler.soulSwordMaxLvl, stack.level + 1)
 			repair(stack, 1)
+			
+			if (stack.level + 1 < stack.level) return
+			stack.level = min(AlfheimConfigHandler.soulSwordMaxLvl, stack.level + 1)
 		}
 	}
 }

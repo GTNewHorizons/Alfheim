@@ -2,6 +2,7 @@ package alfheim.common.spell.earth
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
@@ -9,7 +10,6 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import net.minecraftforge.common.util.ForgeDirection
@@ -33,7 +33,7 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 		
 		VisualEffectHandler.sendPacket(VisualEffects.TREMORS, caster)
 		
-		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius, radius/5, radius)) as MutableList<EntityLivingBase>
+		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius, radius / 5, radius)) as MutableList<EntityLivingBase>
 		list.remove(caster)
 		
 		for (living in list) {
@@ -56,7 +56,7 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 	
 	override fun render(caster: EntityLivingBase) {
 		glDisable(GL_CULL_FACE)
-		glAlphaFunc(GL_GREATER, 1/255f)
+		glAlphaFunc(GL_GREATER, 1 / 255f)
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		glTranslated(0.0, -1.61, 0.0)

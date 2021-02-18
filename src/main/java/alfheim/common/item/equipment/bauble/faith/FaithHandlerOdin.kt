@@ -2,6 +2,7 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.handler.*
 import alfheim.common.entity.EntityThrownPotion
@@ -49,7 +50,10 @@ object FaithHandlerOdin: IFaithHandler {
 				potions.removeAll { pt.isMember(it.thrower) }
 			}
 			
-			potions.forEach { it.worldObj.removeEntity(it) }
+			potions.forEach {
+				if (InteractionSecurity.canDoSomethingWithEntity(player, it))
+					it.worldObj.removeEntity(it)
+			}
 		}
 	}
 	
@@ -60,7 +64,8 @@ object FaithHandlerOdin: IFaithHandler {
 		if (e.world.playerEntities.any {
 				it as EntityPlayer
 				Vector3.entityDistance(e.entity, it) < 6 &&
-				ItemPriestCloak.getCloak(5, it) != null
+				ItemPriestCloak.getCloak(5, it) != null &&
+				InteractionSecurity.canDoSomethingWithEntity(it, e.entity)
 			})
 			e.isCanceled = true
 	}

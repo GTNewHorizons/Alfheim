@@ -140,20 +140,20 @@ class ItemLensFlashInvisible: ItemMod("lensPhantomLight"), ICompositableLens {
 	}
 	
 	fun getItemShortTermName(stack: ItemStack) =
-        StatCollector.translateToLocal(stack.unlocalizedName.replace("item\\.".toRegex(), "item.botania:") + ".short")!!
+		StatCollector.translateToLocal(stack.unlocalizedName.replace("item\\.".toRegex(), "item.botania:") + ".short")!!
 	
 	override fun getColorFromItemStack(par1ItemStack: ItemStack, par2: Int) =
-        if (par2 != 1) getLensColor(par1ItemStack) else 0xFFFFFF
+		if (par2 != 1) getLensColor(par1ItemStack) else 0xFFFFFF
 	
 	override fun requiresMultipleRenderPasses() = true
- 
+	
 	override fun getIconFromDamageForRenderPass(par1: Int, par2: Int) =
-        (if (par2 == 1) itemIcon else ItemLens.iconGlass)!!
+		(if (par2 == 1) itemIcon else ItemLens.iconGlass)!!
 	
 	override fun getCompositeLens(stack: ItemStack?): ItemStack? {
 		if (stack != null) {
 			val cmp = ItemNBTHelper.getCompound(stack, "compositeLens", false)
-            return ItemStack.loadItemStackFromNBT(cmp)
+			return ItemStack.loadItemStackFromNBT(cmp)
 		}
 		return null
 	}

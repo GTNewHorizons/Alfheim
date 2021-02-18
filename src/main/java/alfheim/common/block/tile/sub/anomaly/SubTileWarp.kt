@@ -13,6 +13,7 @@ import java.util.*
 import kotlin.math.*
 
 class SubTileWarp: SubTileAnomalyBase() {
+	
 	var radius = 20
 	
 	override val targets: List<Any>
@@ -173,6 +174,7 @@ class SubTileWarp: SubTileAnomalyBase() {
 	override fun typeBits() = SPACE
 	
 	private class Vector8i {
+		
 		var x1: Int = 0
 		var y1: Int = 0
 		var z1: Int = 0
@@ -219,6 +221,7 @@ class SubTileWarp: SubTileAnomalyBase() {
 	}
 	
 	private class LivingCoords(val e: EntityLivingBase, posX: Double, posY: Double, posZ: Double, radius: Int) {
+		
 		val x: Double = max(-30000000.0, min(posX + Math.random() * radius.D * 2.0 - radius, 30000000.0))
 		val y: Double = max(1.0, min(posY + Math.random() * radius.D * 2.0 - radius, 255.0))
 		val z: Double = max(-30000000.0, min(posZ + Math.random() * radius.D * 2.0 - radius, 30000000.0))
@@ -227,6 +230,7 @@ class SubTileWarp: SubTileAnomalyBase() {
 	private class LivingPair(val e1: EntityLivingBase, val e2: EntityLivingBase)
 	
 	companion object {
+		
 		// public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
 		// maybe will change warp's behavior to swap only blocks from list above ^
 		const val TAG_RADIUS = "radius"

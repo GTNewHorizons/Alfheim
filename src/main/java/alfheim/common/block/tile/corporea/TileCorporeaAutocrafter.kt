@@ -1,7 +1,7 @@
 package alfheim.common.block.tile.corporea
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.ASJTile
+import alexsocol.asjlib.extendables.block.ASJTile
 import alfheim.common.core.helper.CorporeaAdvancedHelper.getFilters
 import alfheim.common.core.helper.CorporeaAdvancedHelper.putOrDrop
 import alfheim.common.core.helper.CorporeaAdvancedHelper.requestMatches
@@ -69,9 +69,9 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		requestZ = z
 		
 		worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
-
-		ASJUtilities.dispatchTEToNearbyPlayers(this)
 		
+		ASJUtilities.dispatchTEToNearbyPlayers(this)
+
 //		ASJUtilities.chatLog("CAC at ${Vector3.fromTileEntity(this)} got request $count of $req (missing $missing) from $x $y $z. Need to craft $requestMissing times.")
 	}
 	
@@ -304,6 +304,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 	}
 	
 	companion object {
+		
 		const val TAG_CRAFT_RESULT = "craftResult"
 		
 		const val TAG_PENDING_REQUEST = "pendingRequest"

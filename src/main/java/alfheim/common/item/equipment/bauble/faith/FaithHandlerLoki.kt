@@ -2,6 +2,7 @@ package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.AlfheimCore
 import alfheim.api.event.PlayerInteractAdequateEvent
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.entity.*
@@ -35,12 +36,14 @@ object FaithHandlerLoki: IFaithHandler {
 	@SubscribeEvent
 	fun leftClick(e: PlayerInteractAdequateEvent.LeftClick) {
 		if (e.action == PlayerInteractAdequateEvent.LeftClick.Action.LEFT_CLICK_BLOCK) return
-		// FIXME not working close on entities
+		// FIXME not working if close to entity
 		
 		val player = e.player
 		val stack = player.heldItem
 		
-		val emblem = ItemPriestEmblem.getEmblem(3, player) ?: return
+		var emblem = ItemPriestEmblem.getEmblem(3, player)
+		if (emblem == null) if (AlfheimCore.ENABLE_RAGNAROK) emblem = ItemRagnarokEmblem.getEmblem(player, 3) ?: return else return
+		
 		if (!ManaItemHandler.requestManaExact(emblem, player, 300, false)) return
 		if (emblem.cooldown > 0) return
 		
@@ -98,7 +101,10 @@ object FaithHandlerLoki: IFaithHandler {
 	fun onPlayerHurt(e: LivingAttackEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		
-		if (ItemPriestCloak.getCloak(3, player) != null)
+		var emblem = ItemPriestEmblem.getEmblem(3, player)
+		if (emblem == null && AlfheimCore.ENABLE_RAGNAROK) emblem = ItemRagnarokEmblem.getEmblem(player, 3)
+		
+		if (emblem != null)
 			if (e.source.isExplosion || (Math.random() <= 0.1 && e.source.damageType in avoidableDamage)) {
 				e.isCanceled = true
 				

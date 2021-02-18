@@ -51,12 +51,12 @@ object ItemTwigWandExtender {
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun getIcon(wand: ItemTwigWand, stack: ItemStack, pass: Int): IIcon {
-		var pass = pass
-		if (pass == 3 && !getBindMode(stack)) pass = 0
-		if (pass == 4 && !isElven(stack)) pass = 0
-		if (pass == 0 && isElven(stack)) pass = 4
+		var p = pass
+		if (p == 3 && !getBindMode(stack)) p = 0
+		if (p == 4 && !isElven(stack)) p = 0
+		if (p == 0 && isElven(stack)) p = 4
 		
-		return icons[min(icons.size - 1, pass)]
+		return icons[min(icons.size - 1, p)]
 	}
 	
 	@JvmStatic

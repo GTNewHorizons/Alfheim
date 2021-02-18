@@ -1,7 +1,7 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.extendables.block.TileItemContainer
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnyavil
@@ -39,7 +39,7 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
-		blockIcon = reg.registerIcon(getTextureName());
+		blockIcon = reg.registerIcon(getTextureName())
 	}
 	
 	override fun renderAsNormalBlock() = false
@@ -47,7 +47,8 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 	override fun getRenderType() = LibRenderIDs.idAnyavil
 	
 	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, entity: EntityLivingBase, stack: ItemStack?) {
-		val l = (entity.rotationYaw * 4f / 360f + 0.5).I and 3
+		var l = (entity.rotationYaw * 4f / 360f + 0.5).I and 3
+		if (l % 2 == 0) l = (l + 2) % 4
 		world.setBlockMetadataWithNotify(x, y, z, l, 3)
 	}
 	
@@ -127,7 +128,7 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 	}
 	
 	override fun onUsedByWand(player: EntityPlayer?, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
-		return (world.getTileEntity(x, y, z) as? TileAnyavil)?.onWanded(player, stack) == true
+		return (world.getTileEntity(x, y, z) as? TileAnyavil)?.onWanded(player) == true
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -135,5 +136,6 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 		val tile = world.getTileEntity(x, y, z)
 		if (tile is TileAnyavil) tile.renderHUD(res)
 	}
+	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.anyavil
 }

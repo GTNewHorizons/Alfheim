@@ -1,6 +1,7 @@
 package alfheim.common.spell.illusion
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
@@ -8,7 +9,6 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
-import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*

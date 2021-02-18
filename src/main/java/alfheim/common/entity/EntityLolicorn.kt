@@ -92,7 +92,7 @@ class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecifi
 			
 			if (block.material !== Material.air) {
 				val soundtype = block.stepSound
-				worldObj.playSoundAtEntity(this, soundtype.stepResourcePath, soundtype.getVolume() * 0.5f, soundtype.pitch * 0.75f)
+				playSoundAtEntity(soundtype.stepResourcePath, soundtype.getVolume() * 0.5f, soundtype.pitch * 0.75f)
 			}
 		}
 	}
@@ -139,7 +139,9 @@ class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecifi
 	
 	fun doTPorDIE() {
 		val master = MinecraftServer.getServer()?.configurationManager?.func_152612_a(owner) ?: run { setDead(); return }
-		if (master.dimension != dimension) { setDead(); return }
+		if (master.dimension != dimension) {
+			setDead(); return
+		}
 		if (requests.remove(owner))
 			master.also {
 				setPosition(it.posX, it.posY, it.posZ)
@@ -244,6 +246,7 @@ class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecifi
 	}
 	
 	companion object {
+		
 		val requests = mutableSetOf<String>()
 		val timing = mutableMapOf<String, Int>()
 		
@@ -259,9 +262,9 @@ class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecifi
 		
 		fun tick() {
 			val i = requests.iterator()
-			while(i.hasNext()) {
+			while (i.hasNext()) {
 				val cr = i.next()
-				timing[cr] = timing[cr]!!-1
+				timing[cr] = timing[cr]!! - 1
 				if (timing[cr]!! <= 0) {
 					
 					MinecraftServer.getServer()?.configurationManager?.func_152612_a(cr)?.let { player ->

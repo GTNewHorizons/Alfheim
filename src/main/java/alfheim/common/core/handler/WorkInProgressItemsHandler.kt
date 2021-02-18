@@ -12,11 +12,11 @@ object WorkInProgressItemsHandler {
 	val wipList = ArrayList<Item>()
 	
 	init {
-		this.eventForge()
+		eventForge()
 	}
 	
 	fun Block.WIP(): Block {
-		this.toItem()?.let { wipList.add(it) }
+		toItem()?.let { wipList.add(it) }
 		return this
 	}
 	

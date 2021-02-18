@@ -3,7 +3,6 @@ package alfmod.client.gui
 import alexsocol.asjlib.mc
 import alfmod.AlfheimModularCore
 import alfmod.common.core.handler.*
-import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
 import cpw.mods.fml.common.network.FMLNetworkEvent
@@ -11,7 +10,6 @@ import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.RenderGameOverlayEvent
-import net.minecraftforge.common.MinecraftForge
 import org.lwjgl.opengl.GL11.*
 import kotlin.math.*
 
@@ -23,14 +21,9 @@ object GUIBanner: Gui() {
 	val bannerWOTW = ResourceLocation(AlfheimModularCore.MODID, "textures/banner/WrathOfTheWinter.png")
 	
 	val banners = arrayOf(
-						  WRATH_OF_THE_WINTER to bannerWOTW,
-						  HELLISH_VACATION to bannerHV
-						  )
-	
-	init {
-		FMLCommonHandler.instance().bus().register(this)
-		MinecraftForge.EVENT_BUS.register(this)
-	}
+		WRATH_OF_THE_WINTER to bannerWOTW,
+		HELLISH_VACATION to bannerHV
+	)
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {

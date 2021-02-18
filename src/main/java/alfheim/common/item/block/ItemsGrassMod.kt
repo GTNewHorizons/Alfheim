@@ -2,9 +2,9 @@ package alfheim.common.item.block
 
 import alexsocol.asjlib.meta
 import alfheim.api.ModInfo
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.block.colored.rainbow.BlockRainbowGrass
-import alfheim.common.core.helper.IconHelper
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -15,6 +15,7 @@ import net.minecraft.util.*
 import java.awt.Color
 
 class ItemIridescentGrassMod(par2Block: Block): ItemSubtypedBlockMod(par2Block) {
+	
 	override fun getColorFromItemStack(par1ItemStack: ItemStack, pass: Int): Int {
 		if (par1ItemStack.meta >= EntitySheep.fleeceColorTable.size)
 			return 0xFFFFFF
@@ -73,5 +74,6 @@ open class ItemRainbowDoubleGrassMod(par2Block: Block): ItemRainbowGrassMod(par2
 }
 
 open class ItemIridescentTallGrassMod1(par2Block: Block): ItemIridescentTallGrassMod0(par2Block) {
+	
 	override val colorSet = 1
 }

@@ -5,7 +5,6 @@ import alexsocol.asjlib.math.*
 import alfheim.api.spell.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellFenrirStorm
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -53,9 +52,9 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		}
 		if (isDead || ASJUtilities.isClient) return
 		
-		val caster = caster
+		val caster = caster ?: return
 		
-		if (mjolnir && caster != null) {
+		if (mjolnir) {
 			rotationYaw = caster.rotationYaw
 			rotationPitch = caster.rotationPitch
 			
@@ -73,7 +72,8 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		if (ticksExisted == 4 || mjolnir) {
 			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area.toAABB()) as List<EntityLivingBase>
 			for (e in l)
-				if (e !== caster && area.intersectsWith(e.boundingBox) && InteractionSecurity.canHurtEntity(caster ?: continue, e)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.D))
+				if (e !== caster && area.intersectsWith(e.boundingBox))
+					e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.D))
 		}
 	}
 	

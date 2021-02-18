@@ -3,9 +3,10 @@ package alfheim.common.core.asm.hook.extender
 import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.model.block.ModelSpreaderFrame
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.*
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.lexicon.AlfheimLexiconData
 import gloomyfolken.hooklib.asm.*
@@ -182,12 +183,12 @@ object ManaSpreaderExtender {
 						LibResourceLocations.uberSpreaderHalloweenGolden
 					else
 						LibResourceLocations.uberSpreaderGolden
-																											  ) else (
+								) else (
 					if (ClientProxy.dootDoot)
 						LibResourceLocations.uberSpreaderHalloween
 					else
 						LibResourceLocations.uberSpreader
-				)
+									   )
 			)
 			
 			return true

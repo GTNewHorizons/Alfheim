@@ -2,10 +2,12 @@ package alfheim.common.core.handler
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
+import alexsocol.patcher.event.EntityUpdateEvent
 import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.api.entity.*
-import alfheim.api.event.*
+import alfheim.api.event.SpellCastEvent
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
 import alfheim.api.spell.SpellBase.SpellCastResult.*
@@ -13,7 +15,6 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
-import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.tech.SpellTimeStop
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -51,11 +52,10 @@ object CardinalSystem {
 		}
 		
 		try {
-			val fis = FileInputStream(file)
-			val oin = ObjectInputStream(fis)
-			playerSegments = oin.readObject() as HashMap<String, PlayerSegment>
-			TimeStopSystem.tsAreas = oin.readObject() as HashMap<Int, LinkedList<TimeStopSystem.TimeStopArea>>
-			oin.close()
+			ObjectInputStream(FileInputStream(file)).use { oin ->
+				playerSegments = oin.readObject() as HashMap<String, PlayerSegment>
+				TimeStopSystem.tsAreas = oin.readObject() as HashMap<Int, LinkedList<TimeStopSystem.TimeStopArea>>
+			}
 		} catch (e: Throwable) {
 			ASJUtilities.error("Unable to read whole Cardinal System data. Generating default values...")
 			e.printStackTrace()
@@ -82,12 +82,10 @@ object CardinalSystem {
 	
 	fun save(save: String) {
 		try {
-			val fos = FileOutputStream("$save/data/Cardinal.sys")
-			val oos = ObjectOutputStream(fos)
-			oos.writeObject(playerSegments)
-			oos.writeObject(TimeStopSystem.tsAreas)
-			oos.flush()
-			oos.close()
+			ObjectOutputStream(FileOutputStream("$save/data/Cardinal.sys")).use { oos ->
+				oos.writeObject(playerSegments)
+				oos.writeObject(TimeStopSystem.tsAreas)
+			}
 		} catch (e: Throwable) {
 			ASJUtilities.error("Unable to save whole Cardinal System data. Discarding. Sorry :(")
 			e.printStackTrace()
@@ -102,7 +100,9 @@ object CardinalSystem {
 	}
 	
 	fun forPlayer(player: EntityPlayer): PlayerSegment {
-		if (ASJUtilities.isClient) throw RuntimeException("You shouldn't access this from client")
+		if (ASJUtilities.isClient)
+			throw RuntimeException("You shouldn't access this from client")
+		
 		ensureExistance(player)
 		return playerSegments[player.commandSenderName]!!
 	}
@@ -498,7 +498,7 @@ object CardinalSystem {
 					}
 				} else {
 					val e = mc.theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.I
-																						  ?: 0)
+													  ?: 0)
 					return if (e is EntityLivingBase) e else null
 				}
 				return null
@@ -794,6 +794,7 @@ object CardinalSystem {
 					HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV, MOB, NPC, BOSS;
 					
 					companion object {
+						
 						fun typeOf(e: EntityLivingBase) = when (e) {
 							is EntityPlayer     -> values()[e.raceID]
 							is IBossDisplayData -> BOSS
@@ -804,6 +805,7 @@ object CardinalSystem {
 				}
 				
 				companion object {
+					
 					private const val serialVersionUID = 8416468367146381L
 				}
 			}
@@ -929,8 +931,10 @@ object CardinalSystem {
 		}
 		
 		class TimeStopArea(caster: EntityLivingBase): Serializable {
+			
 			val pos = Vector3.fromEntity(caster)
 			val uuid = caster.uniqueID!!
+			
 			@Transient
 			val id: Int
 			var life = SpellTimeStop.duration
@@ -998,8 +1002,7 @@ object CardinalSystem {
 		}
 		
 		fun transfer(player: EntityPlayerMP) {
-			playerSegments.forEach {
-				(name, seg) ->
+			playerSegments.forEach { (name, seg) ->
 				AlfheimCore.network.sendTo(MessageSkinInfo(name, seg.gender, seg.customSkin), player)
 			}
 		}
@@ -1008,19 +1011,25 @@ object CardinalSystem {
 	class PlayerSegment(player: EntityPlayer): Serializable {
 		
 		var party: Party = Party(player)
+		
 		@Transient
 		var target: EntityLivingBase? = null
+		
 		@Transient
 		var isParty = false
+		
 		@Transient
 		var partyIndex = -1
 		
 		var coolDown = HashMap<String, Int>()
 		var hotSpells = IntArray(12)
+		
 		@Transient
 		var castableSpell: SpellBase? = null
+		
 		@Transient
 		var ids: Int = 0
+		
 		@Transient
 		var init: Int = 0
 		
@@ -1040,12 +1049,15 @@ object CardinalSystem {
 		
 		@Transient
 		var quadStage = 0
+		
 		@Transient
 		var standingStill = 0 // POOKA ability
+		
 		@Transient
 		var lastPos = Vector3.fromEntity(player)
 		
 		companion object {
+			
 			private const val serialVersionUID = 6871678638741684L
 		}
 	}

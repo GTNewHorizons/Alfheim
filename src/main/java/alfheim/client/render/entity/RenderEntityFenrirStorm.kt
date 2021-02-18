@@ -62,6 +62,7 @@ object RenderEntityFenrirStorm: Render() {
 	
 	private fun lightning(rand: Random, parts: Int, start: Vector3, dir: Vector3, end: Vector3) {
 		class Fork(s: Vector3, d: Vector3, p: Int) {
+			
 			val parts = max(p, 1)
 			val start = s.copy()
 			val dir = d.copy()

@@ -24,7 +24,7 @@ class BlockBarrier: BlockMod(Material.cake) {
 	
 	override fun isOpaqueCube(): Boolean = false
 	
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) = Unit
+	override fun registerBlockIcons(reg: IIconRegister) = Unit
 	
 	@SideOnly(Side.CLIENT)
 	override fun getAmbientOcclusionLightValue(): Float = 1f

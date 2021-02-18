@@ -1,57 +1,71 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.*
-import cpw.mods.fml.common.FMLCommonHandler
+import alexsocol.asjlib.ItemNBTHelper.getInt
+import alexsocol.asjlib.ItemNBTHelper.getIntArray
+import alexsocol.asjlib.ItemNBTHelper.getNBT
+import alexsocol.asjlib.ItemNBTHelper.setInt
+import alfheim.client.core.helper.IconHelper
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.*
 import net.minecraft.world.World
 import org.apache.commons.lang3.ArrayUtils
 import vazkii.botania.api.mana.*
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import kotlin.math.min
 
 class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDisplay {
-
+	
 	init {
 		maxStackSize = 1
-		FMLCommonHandler.instance().bus().register(this)
 	}
 	
 	override fun onUpdate(stack: ItemStack, world: World?, player: Entity?, inSlot: Int, inHand: Boolean) {
-		if (player is EntityPlayer) {
+		if (player !is EntityPlayer || stack.meta == 0)
+			return
+		
+		val ids = getIDs(stack)
+		val metas = getMetas(stack)
+		
+		for (i in 0 until player.inventory.sizeInventory) {
+			if (i == inSlot) continue
 			
-			var slot: ItemStack?
-			val ids = getIDs(stack)
-			val metas = getMetas(stack)
+			val slot = player.inventory[i] ?: continue
 			
-			for (i in 0 until player.inventory.sizeInventory) {
-				slot = player.inventory.get(i)
-				
-				if (slot != null) {
-					val cid = slot.item.id
-					var pos = -1
-					
-					for (id in ids) {
-						++pos
-						
-						if (id == cid) {
-							if (metas[pos] == slot.meta) {
-								val size = slot.stackSize
-								player.inventory.set(i, null)
-								addMana(stack, PER_ITEM * size)
-							}
-						}
-					}
-				}
-			}
+			val pos = ids.indexOf(slot.item.id)
+			if (pos == -1 || metas[pos] != slot.meta) continue
+			
+			val size = slot.stackSize
+			player.inventory[i] = null
+			addMana(stack, PER_ITEM * size)
 		}
 	}
 	
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		if (!player.isSneaking) return stack
+		
+		stack.meta = stack.meta.inv() and 1
+		world.playSoundAtEntity(player, "random.orb", 0.3f, 0.1f)
+		
+		return stack
+	}
+	
+	override fun addInformation(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, adv: Boolean) {
+		addStringToTooltip(list, StatCollector.translateToLocal("botaniamisc.${if (stack.meta == 0) "in" else ""}active"))
+	}
+	
+	override fun registerIcons(reg: IIconRegister) {
+		super.registerIcons(reg)
+		iconActive = IconHelper.forItem(reg, this, "Active")
+	}
+	
+	override fun getIconFromDamage(meta: Int) = if (meta == 1) iconActive else itemIcon
 	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).F / getMaxMana(stack).F
 	override fun getMana(stack: ItemStack) = getInt(stack, TAG_MANA, 0)
-	override fun getMaxMana(stack: ItemStack) = Int.MAX_VALUE
+	override fun getMaxMana(stack: ItemStack) = 1000000
 	override fun addMana(stack: ItemStack, mana: Int) = setMana(stack, min(getMana(stack) + mana, getMaxMana(stack)))
 	override fun isNoExport(stack: ItemStack) = false
 	override fun canReceiveManaFromPool(stack: ItemStack, pool: TileEntity) = false
@@ -66,6 +80,8 @@ class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDi
 		const val TAG_MANA = "mana"
 		const val PER_ITEM = 5
 		
+		lateinit var iconActive: IIcon
+		
 		fun add(stack: ItemStack, id: Int, meta: Int) {
 			setIDs(stack, ArrayUtils.add(getIDs(stack), id))
 			setMetas(stack, ArrayUtils.add(getMetas(stack), meta))
@@ -76,7 +92,6 @@ class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDi
 		fun setIntArray(stack: ItemStack, tag: String, array: IntArray) = getNBT(stack).setIntArray(tag, array)
 		fun getIDs(stack: ItemStack) = getIntArray(stack, TAG_IDS)
 		fun getMetas(stack: ItemStack) = getIntArray(stack, TAG_METAS)
-		fun getIntArray(stack: ItemStack, tag: String) = getNBT(stack).getIntArray(tag)
 		fun setMana(stack: ItemStack, mana: Int) = setInt(stack, TAG_MANA, mana)
 	}
 }

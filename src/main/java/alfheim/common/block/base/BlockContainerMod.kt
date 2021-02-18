@@ -1,7 +1,7 @@
 package alfheim.common.block.base
 
 import alexsocol.asjlib.*
-import alfheim.common.core.helper.*
+import alfheim.client.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -10,7 +10,6 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.*
-import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 

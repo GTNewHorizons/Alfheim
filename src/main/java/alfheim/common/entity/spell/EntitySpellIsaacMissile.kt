@@ -7,7 +7,7 @@ import alfheim.common.spell.sound.SpellIsaacStorm
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.IMob
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.*
+import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityThrowableCopy
@@ -19,7 +19,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 	
 	var userSelected: Boolean
 		get() = dataWatcher.getWatchableObjectInt(25) != 0
-		set(value) = dataWatcher.updateObject(25, if(value) 1 else 0)
+		set(value) = dataWatcher.updateObject(25, if (value) 1 else 0)
 	
 	var targetEntity: EntityLivingBase?
 		get() {
@@ -35,7 +35,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 		get() {
 			val name = dataWatcher.getWatchableObjectString(27)
 			if (name.isNullOrBlank()) return null
-			val cached =  Class.forName(name) ?: return null
+			val cached = Class.forName(name) ?: return null
 			return if (EntityLivingBase::class.java.isAssignableFrom(cached)) cached else null
 		}
 		set(clazz) {
@@ -123,12 +123,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 			
 			val targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(posX, posY, posZ).expand(0.5))
 			if (targetList.contains(target)) {
-				val thrower = thrower
-				if (thrower != null)
-					target.attackEntityFrom(DamageSourceSpell.missile(this, thrower), SpellIsaacStorm.damage)
-				else
-					target.attackEntityFrom(DamageSource.magic, SpellIsaacStorm.damage)
-				
+				target.attackEntityFrom(DamageSourceSpell.missile(this, thrower), SpellIsaacStorm.damage)
 				target.hurtResistantTime = 0
 				
 				setDead()
@@ -151,6 +146,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 	override fun onImpact(pos: MovingObjectPosition) = Unit
 	
 	companion object {
+		
 		private const val TAG_TIME = "time"
 	}
 }

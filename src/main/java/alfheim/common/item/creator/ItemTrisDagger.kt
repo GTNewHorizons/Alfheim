@@ -2,7 +2,7 @@ package alfheim.common.item.creator
 
 import alexsocol.asjlib.*
 import alfheim.api.*
-import alfheim.common.core.helper.*
+import alfheim.client.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -32,11 +32,12 @@ import vazkii.botania.common.item.equipment.tool.ToolCommons
  * @author WireSegal
  * Created at 10:40 AM on 2/8/16.
  */
-class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: ToolMaterial = ShadowFoxAPI.RUNEAXE): ItemSword(toolMaterial), IManaUsingItem {
+class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: ToolMaterial = AlfheimAPI.RUNEAXE): ItemSword(toolMaterial), IManaUsingItem {
 	
 	var dunIcon: IIcon? = null
 	
 	companion object {
+		
 		const val minBlockLength = 0
 		const val maxBlockLength = 20
 	}
@@ -135,11 +136,10 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 	}
 	
 	override fun getItemEnchantability() = toolMaterial.enchantability
- 
-	override fun getIsRepairable(stack: ItemStack?, materialstack: ItemStack?): Boolean {
+	
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack?): Boolean {
 		val mat = toolMaterial.repairItemStack
-		if (mat != null && OreDictionary.itemMatches(mat, materialstack, false)) return true
-		return super.getIsRepairable(stack, materialstack)
+		return mat != null && OreDictionary.itemMatches(mat, material, false)
 	}
 }
 
@@ -194,7 +194,7 @@ class DaggerEventHandler {
 								enemyEntity.attackEntityFrom(DamageSourceOculus(player), e.ammount * 2f) // dammit cpw, you misspelled amount
 								val xDif = enemyEntity.posX - player.posX
 								val zDif = enemyEntity.posZ - player.posZ
-								player.worldObj.playSoundAtEntity(enemyEntity, "random.anvil_land", 1f, 0.9f + 0.1f * Math.random().F)
+								enemyEntity.playSoundAtEntity("random.anvil_land", 1f, 0.9f + 0.1f * Math.random().F)
 								if (enemyEntity is EntityPlayer && enemyEntity.currentEquippedItem != null)
 									enemyEntity.currentEquippedItem.damageItem(30, enemyEntity)
 								enemyEntity.knockBack(player, 1f, -xDif, -zDif)

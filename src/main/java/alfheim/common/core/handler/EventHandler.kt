@@ -2,9 +2,9 @@ package alfheim.common.core.handler
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.patcher.event.*
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
-import alfheim.api.event.*
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
@@ -48,6 +48,7 @@ import vazkii.botania.api.item.IRelic
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
 import vazkii.botania.common.block.tile.TileAlfPortal
+import vazkii.botania.common.entity.EntityDoppleganger
 import vazkii.botania.common.item.ModItems
 import kotlin.math.max
 
@@ -94,12 +95,22 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityJoinWorld(e: EntityJoinWorldEvent) {
+		if (e.entity is EntityDoppleganger)
+			fixGaiaAbuse(e.entity as EntityDoppleganger)
+		
 		if (e.entity is IMob && e.world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim && e.world.getBiomeGenForCoords(e.entity.posX.mfloor(), e.entity.posZ.mfloor()) is WE_Biome)
 			e.isCanceled = true
 		
 		val player = e.entity as? EntityPlayerMP ?: return
 		val seed = player.worldObj.seed
 		AlfheimCore.network.sendTo(Message1l(Message1l.m1l.SEED, seed), player)
+	}
+	
+	fun fixGaiaAbuse(e: EntityDoppleganger) {
+		e.playersAround.forEach {
+			if (EntityDoppleganger.isTruePlayer(it))
+				e.playersWhoAttacked.add(it.commandSenderName)
+		}
 	}
 	
 	@SubscribeEvent
@@ -168,10 +179,6 @@ object EventHandler {
 				amount *= 4f
 			
 			if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame) == true || target.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
-				e.isCanceled = true
-				return
-			}
-			if ((e.source.damageType.equals(DamageSource.inWall.damageType, ignoreCase = true) || e.source.damageType.equals(DamageSource.drown.damageType, ignoreCase = true)) && target.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) {
 				e.isCanceled = true
 				return
 			}
@@ -291,7 +298,8 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onServerTick(e: ServerTickEvent) {
-		EntityLolicorn.tick()
+		if (e.phase == Phase.START)
+			EntityLolicorn.tick()
 		
 		if (AlfheimConfigHandler.enableMMO) {
 			if (e.phase == Phase.START) {

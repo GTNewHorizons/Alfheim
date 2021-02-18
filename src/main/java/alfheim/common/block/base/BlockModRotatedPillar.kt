@@ -1,7 +1,7 @@
 package alfheim.common.block.base
 
 import alexsocol.asjlib.toItem
-import alfheim.common.core.helper.*
+import alfheim.client.core.helper.*
 import alfheim.common.item.block.ItemIridescentBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry

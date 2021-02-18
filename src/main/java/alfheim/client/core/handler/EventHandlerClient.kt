@@ -3,10 +3,11 @@ package alfheim.client.core.handler
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
+import alexsocol.patcher.PatcherConfigHandler
+import alexsocol.patcher.event.EntityUpdateEvent
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.raceID
-import alfheim.api.event.EntityUpdateEvent
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
@@ -25,11 +26,13 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent
 import cpw.mods.fml.relauncher.*
+import net.minecraft.block.material.Material
 import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.renderer.*
+import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.boss.IBossDisplayData
+import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.*
-import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
@@ -120,8 +123,8 @@ object EventHandlerClient {
 		
 		if (ContributorsPrivacyHelper.isCorrect(name, "AlexSocol"))
 			player.func_152121_a(Type.SKIN, LibResourceLocations.skin)
-			
-		run skin@ {
+		
+		run skin@{
 			val data = CardinalSystemClient.playerSkinsData[name] ?: return@skin
 			
 			if (player.raceID == 0 || player.raceID > 9) return@skin
@@ -129,10 +132,10 @@ object EventHandlerClient {
 			if (data.second) {
 				player.func_152121_a(Type.SKIN,
 									 if (data.first)
-										 LibResourceLocations.oldFemale[player.raceID-1]
+										 LibResourceLocations.oldFemale[player.raceID - 1]
 									 else
-										 LibResourceLocations.oldMale[player.raceID-1]
-									)
+										 LibResourceLocations.oldMale[player.raceID - 1]
+				)
 			}
 		}
 		
@@ -150,7 +153,7 @@ object EventHandlerClient {
 	@SideOnly(Side.CLIENT)
 	fun onPlayerSpecialPostRender(e: RenderPlayerEvent.Specials.Post) {
 		RenderItemFlugelHead.render(e, e.entityPlayer)
-		RenderWings.render(e, e.entityPlayer)
+		RenderWings.render(e.entityPlayer)
 		RenderContributors.render(e, e.entityPlayer)
 	}
 	
@@ -178,12 +181,6 @@ object EventHandlerClient {
 		if (e.phase == Phase.END) {
 			ItemsRemainingRenderHandler.tick()
 		}
-	}
-	
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	fun onBlockOverlay(e: RenderBlockOverlayEvent) {
-		if (AlfheimConfigHandler.enableMMO && e.overlayType != OverlayType.FIRE) e.isCanceled = e.player.isPotionActive(AlfheimConfigHandler.potionIDNoclip)
 	}
 	
 	@SubscribeEvent
@@ -220,7 +217,7 @@ object EventHandlerClient {
 				glPushMatrix()
 				glDisable(GL_CULL_FACE)
 				//glDisable(GL_ALPHA_TEST);
-				glAlphaFunc(GL_GREATER, 1/255f)
+				glAlphaFunc(GL_GREATER, 1 / 255f)
 				glEnable(GL_BLEND)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 				if (target != mc.thePlayer) {
@@ -263,6 +260,29 @@ object EventHandlerClient {
 	@SideOnly(Side.CLIENT)
 	fun onFOV(e: FOVUpdateEvent) {
 		if (AlfheimConfigHandler.enableMMO && e.entity.getActivePotionEffect(AlfheimConfigHandler.potionIDIceLens) != null) e.newfov = 0.1f
+	}
+	
+	@SubscribeEvent(receiveCanceled = true)
+	@SideOnly(Side.CLIENT)
+	fun onFog(e: EntityViewRenderEvent.FogDensity) {
+		val entitylivingbase = e.renderer.mc.renderViewEntity
+		
+		if (e.block.material === Material.water) {
+			glFogi(GL_FOG_MODE, GL_EXP)
+			
+			if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
+				e.density = if (PatcherConfigHandler.clearWater) 0.01f else 0.05f
+			} else {
+				e.density = if (PatcherConfigHandler.clearWater) 0.01f else 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f
+			}
+			
+			e.isCanceled = true
+		} else if (e.block.material === Material.lava) {
+			glFogi(GL_FOG_MODE, GL_EXP)
+			glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2f)
+			
+			e.isCanceled = true
+		}
 	}
 	
 	@SubscribeEvent

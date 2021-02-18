@@ -1,6 +1,6 @@
 package alfmod.client.core.proxy
 
-import alexsocol.asjlib.ASJReflectionHelper
+import alexsocol.asjlib.*
 import alfheim.client.render.entity.RenderEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfmod.client.core.handler.EventHandlerClient
@@ -22,9 +22,9 @@ class ClientProxy: CommonProxy() {
 		super.preInit()
 		
 		if (AlfheimConfigHandler.loadProp(Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "modular", "displayBanner", false, true, "Set this to false to disable banner popup"))
-			GUIBanner
+			GUIBanner.eventForge()
 		
-		EventHandlerClient
+		EventHandlerClient.eventFML().eventForge()
 	}
 	
 	override fun postInit() {

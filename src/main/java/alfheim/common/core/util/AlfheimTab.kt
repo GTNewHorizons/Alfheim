@@ -75,6 +75,7 @@ import alfheim.common.block.AlfheimBlocks.netherSlabs
 import alfheim.common.block.AlfheimBlocks.netherStairs
 import alfheim.common.block.AlfheimBlocks.netherWood
 import alfheim.common.block.AlfheimBlocks.powerStone
+import alfheim.common.block.AlfheimBlocks.ragnarokCore
 import alfheim.common.block.AlfheimBlocks.rainbowDirt
 import alfheim.common.block.AlfheimBlocks.rainbowGrass
 import alfheim.common.block.AlfheimBlocks.rainbowLeaves
@@ -159,6 +160,7 @@ import alfheim.common.item.AlfheimItems.coatOfArms
 import alfheim.common.item.AlfheimItems.colorOverride
 import alfheim.common.item.AlfheimItems.creativeReachPendant
 import alfheim.common.item.AlfheimItems.crescentMoonAmulet
+import alfheim.common.item.AlfheimItems.daolos
 import alfheim.common.item.AlfheimItems.dodgeRing
 import alfheim.common.item.AlfheimItems.elementalBoots
 import alfheim.common.item.AlfheimItems.elementalChestplate
@@ -175,10 +177,17 @@ import alfheim.common.item.AlfheimItems.elvoriumHelmet
 import alfheim.common.item.AlfheimItems.elvoriumLeggings
 import alfheim.common.item.AlfheimItems.enlighter
 import alfheim.common.item.AlfheimItems.excaliber
+import alfheim.common.item.AlfheimItems.fenrirBoots
+import alfheim.common.item.AlfheimItems.fenrirChestplate
+import alfheim.common.item.AlfheimItems.fenrirClaws
+import alfheim.common.item.AlfheimItems.fenrirHelmet
+import alfheim.common.item.AlfheimItems.fenrirLeggings
 import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.flugelDisc
 import alfheim.common.item.AlfheimItems.flugelHead
 import alfheim.common.item.AlfheimItems.flugelSoul
+import alfheim.common.item.AlfheimItems.gaiaSlayer
+import alfheim.common.item.AlfheimItems.gjallarhorn
 import alfheim.common.item.AlfheimItems.gleipnir
 import alfheim.common.item.AlfheimItems.gungnir
 import alfheim.common.item.AlfheimItems.hyperBucket
@@ -207,18 +216,20 @@ import alfheim.common.item.AlfheimItems.priestEmblem
 import alfheim.common.item.AlfheimItems.priestRingHeimdall
 import alfheim.common.item.AlfheimItems.priestRingNjord
 import alfheim.common.item.AlfheimItems.priestRingSif
+import alfheim.common.item.AlfheimItems.ragnarokEmblem
 import alfheim.common.item.AlfheimItems.rationBelt
 import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.ringFeedFlower
 import alfheim.common.item.AlfheimItems.ringSpider
+import alfheim.common.item.AlfheimItems.rodBlackHole
 import alfheim.common.item.AlfheimItems.rodClicker
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
-import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodFlameStar
 import alfheim.common.item.AlfheimItems.rodGrass
-import alfheim.common.item.AlfheimItems.rodIce
 import alfheim.common.item.AlfheimItems.rodInterdiction
 import alfheim.common.item.AlfheimItems.rodLightning
+import alfheim.common.item.AlfheimItems.rodMuspelheim
+import alfheim.common.item.AlfheimItems.rodNiflheim
 import alfheim.common.item.AlfheimItems.rodPortal
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.royalStaff
@@ -267,6 +278,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(enderActuator)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
+		if (AlfheimCore.ENABLE_RAGNAROK) addBlock(ragnarokCore)
 		addBlock(Blocks.furnace, 8)
 		addBlock(ModBlocks.spreader, 4)
 		// addBlock(anomalyHarvester) // BACK
@@ -288,105 +300,116 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 			addBlock(snowLayer)
 		}
 		
-		addItem (elvenResource)
-		addItem (elvenFood)
-		addItem (wiltedLotus)
-		addItem (flugelHead)
-		addItem (flugelDisc)
+		addItem(elvenResource)
+		addItem(elvenFood)
+		addItem(wiltedLotus)
+		addItem(ModItems.ancientWill, 6)
+		addItem(flugelHead)
+		addItem(flugelDisc)
 		
-		addItem (priestCloak)
-		addItem (aesirCloak)
-		addItem (balanceCloak)
-		addItem (invisibilityCloak)
+		addItem(priestCloak)
+		addItem(aesirCloak)
+		addItem(balanceCloak)
+		addItem(invisibilityCloak)
 		//addItem (toolbelt)
-		addItem (manaStone)
-		addItem (manaStoneGreater)
-		addItem (manaRingElven)
-		addItem (auraRingElven)
-		addItem (manaRingGod)
-		addItem (auraRingGod)
-		addItem (manaGlove)
-		addItem (dodgeRing)
-		addItem (ringSpider)
-		addItem (ringFeedFlower)
-		addItem (colorOverride)
-		addItem (multibauble)
-		addItem (spatiotemporalRing)
-		addItem (ModItems.thorRing)
-		addItem (priestRingSif)
-		addItem (priestRingNjord)
-		addItem (ModItems.lokiRing)
-		addItem (priestRingHeimdall)
-		addItem (ModItems.odinRing)
-		addItem (ModItems.aesirRing)
-		addItem (attributionBauble)
-		addItem (priestEmblem)
-		addItem (aesirEmblem)
-		addItem (creativeReachPendant)
-		addItem (elfFirePendant)
-		addItem (elfIcePendant)
-		addItem (crescentMoonAmulet)
-		addItem (pendantSuperIce)
-		addItem (cloudPendant)
-		addItem (cloudPendantSuper)
-		addItem (pixieAttractor)
-		addItem (rationBelt)
+		addItem(manaStone)
+		addItem(manaStoneGreater)
+		addItem(manaRingElven)
+		addItem(auraRingElven)
+		addItem(manaRingGod)
+		addItem(auraRingGod)
+		addItem(manaGlove)
+		addItem(dodgeRing)
+		addItem(ringSpider)
+		addItem(ringFeedFlower)
+		addItem(colorOverride)
+		addItem(multibauble)
+		addItem(spatiotemporalRing)
+		addItem(ModItems.thorRing)
+		addItem(priestRingSif)
+		addItem(priestRingNjord)
+		addItem(ModItems.lokiRing)
+		addItem(priestRingHeimdall)
+		addItem(ModItems.odinRing)
+		addItem(ModItems.aesirRing)
+		addItem(attributionBauble)
+		addItem(priestEmblem)
+		addItem(aesirEmblem)
+		if (AlfheimCore.ENABLE_RAGNAROK) addItem(ragnarokEmblem)
+		addItem(creativeReachPendant)
+		addItem(elfFirePendant)
+		addItem(elfIcePendant)
+		addItem(crescentMoonAmulet)
+		addItem(pendantSuperIce)
+		addItem(cloudPendant)
+		addItem(cloudPendantSuper)
+		addItem(pixieAttractor)
+		addItem(rationBelt)
 		
-		addItem (astrolabe)
-		addItem (triquetrum)
-		addItem (enlighter)
-		addItem (lootInterceptor)
-		addItem (hyperBucket)
-		addItem (manaMirrorImba)
-		addItem (invisibleFlameLens)
+		addItem(astrolabe)
+		addItem(triquetrum)
+		addItem(enlighter)
+		addItem(lootInterceptor)
+		addItem(hyperBucket)
+		addItem(manaMirrorImba)
+		addItem(invisibleFlameLens)
 		
 		(22..27).mapTo(list) {
 			ItemStack(ModItems.lens, 1, it)
 		}
 		
-		addItem (soulHorn)
-		addItem (soulHorn, 1)
+		addItem(soulHorn)
+		addItem(soulHorn, 1)
 		
-		addItem (rodFire)
-		addItem (rodIce)
-		addItem (rodLightning)
-		addItem (rodColorfulSkyDirt)
-		addItem (rodInterdiction)
-		addItem (rodFlameStar)
-		addItem (rodPrismatic)
-		addItem (rodPortal)
-		addItem (rodClicker)
-		addItem (rodGrass)
-		addItem (livingrockPickaxe)
-		addItem (manasteelHoe)
-		addItem (elementiumHoe)
+		addItem(rodMuspelheim)
+		addItem(rodNiflheim)
+		addItem(rodLightning)
+		addItem(rodColorfulSkyDirt)
+		addItem(rodInterdiction)
+		addItem(rodFlameStar)
+		addItem(rodPrismatic)
+		addItem(rodPortal)
+		addItem(rodClicker)
+		addItem(rodBlackHole)
+		addItem(rodGrass)
+		addItem(livingrockPickaxe)
+		addItem(manasteelHoe)
+		addItem(elementiumHoe)
 		
-		addItem (elementalHelmet)
-		addItem (elementalChestplate)
-		addItem (elementalLeggings)
-		addItem (elementalBoots)
+		addItem(elementalHelmet)
+		addItem(elementalChestplate)
+		addItem(elementalLeggings)
+		addItem(elementalBoots)
 		
-		addItem (elvoriumHelmet)
-		addItem (elvoriumChestplate)
-		addItem (elvoriumLeggings)
-		addItem (elvoriumBoots)
+		addItem(fenrirHelmet)
+		addItem(fenrirChestplate)
+		addItem(fenrirLeggings)
+		addItem(fenrirBoots)
+		addItem(fenrirClaws)
 		
-		addItem (soulSword)
-		addItem (realitySword)
+		addItem(elvoriumHelmet)
+		addItem(elvoriumChestplate)
+		addItem(elvoriumLeggings)
+		addItem(elvoriumBoots)
+		addItem(realitySword)
+		
+		addItem(soulSword)
 		
 		//addItem (storyToken)
 		
-		addItem (mjolnir)
-		addItem (excaliber)
-		addItem (subspaceSpear)
-		addItem (gungnir)
-		addItem (gleipnir)
-		addItem (moonlightBow)
-		addItem (mask)
-		addItem (flugelSoul)
-		addItem (akashicRecords)
-		addItem (wireAxe)
-		addItem (trisDagger)
+		addItem(excaliber)
+		addItem(daolos)
+		addItem(mjolnir)
+		addItem(subspaceSpear)
+		addItem(gungnir)
+		addItem(gleipnir)
+		addItem(moonlightBow)
+		addItem(mask)
+		addItem(flugelSoul)
+		addItem(gjallarhorn)
+		addItem(akashicRecords)
+		addItem(wireAxe)
+		addItem(trisDagger)
 		
 		addBlock(lightningWood)
 		addBlock(netherWood)
@@ -438,14 +461,14 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 			ItemBlockSpecialFlower.ofType(it)
 		}
 		
-		if (AlfheimConfigHandler.enableMMO) addItem (paperBreak)
-		if (AlfheimConfigHandler.enableMMO) addItem (peacePipe)
+		if (AlfheimConfigHandler.enableMMO) addItem(paperBreak)
+		if (AlfheimConfigHandler.enableMMO) addItem(peacePipe)
 		
-		addItem (splashPotion)
-		addItem (fireGrenade)
+		addItem(splashPotion)
+		addItem(fireGrenade)
 		
 		addBlock(powerStone)
-		list.removeAt(list.size-5)
+		list.removeAt(list.size - 5)
 		
 		addBlock(dwarfLantern)
 		
@@ -549,7 +572,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem(starPlacer)
 		addItem(starPlacer2)
 		
-		addItem (coatOfArms)
+		addItem(coatOfArms)
 		
 		addBlock(schemaController)
 		addBlock(schemaFiller)
@@ -561,6 +584,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 			if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer?.commandSenderName ?: "null", "AlexSocol"))
 				addItem(royalStaff)
 		}
+		
+		addItem(gaiaSlayer)
 		
 		additionalDisplays.forEach { it.invoke() }
 	}

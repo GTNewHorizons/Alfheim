@@ -1,4 +1,4 @@
-	package alfheim.common.item.equipment.bauble.faith
+package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
@@ -25,7 +25,7 @@ import java.awt.Color
 import java.util.*
 import vazkii.botania.common.core.helper.Vector3 as Bector3
 
-object 	FaithHandlerThor: IFaithHandler {
+object FaithHandlerThor: IFaithHandler {
 	
 	val uuid = UUID.fromString("67d86aaf-e4c5-4f0e-af7e-7e56d1ec9fb0")
 	val mod = AttributeModifier(uuid, "Thor faith modifier", 0.2, 1)
@@ -68,12 +68,16 @@ object 	FaithHandlerThor: IFaithHandler {
 		e.entityLiving.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 20 * lvl, 1))
 		e.ammount *= (lvl * 0.25f / 12) + 1f
 		
+		traceLightning(player, e.entityLiving)
+	}
+	
+	fun traceLightning(from: Entity, to: Entity) {
 		if (ASJUtilities.isServer) {
-			val (x, y, z) = Vector3.fromEntityCenter(player)
-			val (x2, y2, z2) = Vector3.fromEntityCenter(e.entityLiving)
-			val color = ColorOverrideHelper.getColor(player, 0x0079C4)
+			val (x, y, z) = Vector3.fromEntityCenter(from)
+			val (x2, y2, z2) = Vector3.fromEntityCenter(to)
+			val color = if (from is EntityPlayer) ColorOverrideHelper.getColor(from, 0x0079C4) else 0x0079C4
 			val innerColor = Color(color).brighter().brighter().rgb
-			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.LIGHTNING, player.dimension, x, y, z, x2, y2, z2, 1.0, color.D, innerColor.D)
+			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.LIGHTNING, from.dimension, x, y, z, x2, y2, z2, 1.0, color.D, innerColor.D)
 		}
 	}
 	
@@ -84,11 +88,11 @@ object 	FaithHandlerThor: IFaithHandler {
 		val cloak = ItemPriestCloak.getCloak(0, player) ?: return
 		if (getGodPowerLevel(player) < 7) return
 		
-		if (ManaItemHandler.requestManaExact(cloak, player, e.ammount.I, true)) return
+		if (!ManaItemHandler.requestManaExact(cloak, player, e.ammount.I, true)) return
 		
 		val list = player.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(player.posX, player.posY + 1, player.posZ).expand(5.0, 1.5, 5.0)) as MutableList<EntityLivingBase>
 		list.remove(player)
-		val dmg = e.ammount / list.size
+		val dmg = e.ammount / list.count { it.onGround }
 		for (t in list) if (t.onGround) t.attackEntityFrom(e.source, dmg)
 		e.isCanceled = true
 	}
@@ -112,7 +116,8 @@ object 	FaithHandlerThor: IFaithHandler {
 	override fun doParticles(stack: ItemStack, player: EntityPlayer) {
 		if (player.ticksExisted % 10 == 0) {
 			val playerHead = Bector3.fromEntityCenter(player).add(0.0, 0.75, 0.0)
-			val playerShift = playerHead.copy().add(IFaithHandler.getHeadOrientation(player))
+			val (sx, sy, sz) = IFaithHandler.getHeadOrientation(player)
+			val playerShift = playerHead.copy().add(sx, sy, sz)
 			val color = ColorOverrideHelper.getColor(player, 0x0079C4)
 			
 			Botania.proxy.lightningFX(mc.theWorld, playerHead, playerShift, 2f, color, Color(color).brighter().brighter().rgb)

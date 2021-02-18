@@ -430,7 +430,7 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 		
 		bipedHeadwear.showModel = false
 		
-		prepareForRender(entity, f2)
+		prepareForRender(entity)
 		
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity)
 		
@@ -481,7 +481,7 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 		}
 	}
 	
-	fun prepareForRender(entity: Entity?, f: Float) {
+	fun prepareForRender(entity: Entity?) {
 		val living = entity as? EntityLivingBase ?: return
 		
 		isSneak = living.isSneaking

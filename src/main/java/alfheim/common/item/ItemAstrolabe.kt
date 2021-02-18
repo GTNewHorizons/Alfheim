@@ -2,8 +2,8 @@ package alfheim.common.item
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.client.gui.ItemsRemainingRenderHandler
-import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.math.floor
 
 class ItemAstrolabe: ItemMod("Astrolabe") {
-
+	
 	init {
 		maxStackSize = 1
 	}
@@ -50,14 +50,14 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ)
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (player.isSneaking) {
 			val size = getSize(stack)
 			val newSize = if (size == 11) 3 else size + 2
 			setSize(stack, newSize)
 			ItemsRemainingRenderHandler[stack] = "${newSize}x$newSize"
 			
-			world!!.playSoundAtEntity(player, "random.orb", 0.1f, 0.5f * ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1.8f))
+			player.playSoundAtEntity("random.orb", 0.1f, 0.5f * ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1.8f))
 		}
 		
 		return stack
@@ -90,9 +90,13 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		
 		val stacksToCheck = ArrayList<ItemStack>()
 		for (i in 0 until player.inventory.sizeInventory) {
-			val stackInSlot = player.inventory.get(i)
+			val stackInSlot = player.inventory[i]
 			if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === blockToPlace.item && stackInSlot.meta == blockToPlace.meta) {
 				stackInSlot.stackSize--
+				
+				if (stackInSlot.stackSize <= 0)
+					player.inventory[i] = null
+				
 				return
 			}
 			
@@ -153,7 +157,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			var current = 0
 			val stacksToCheck = ArrayList<ItemStack>()
 			for (i in 0 until player.inventory.sizeInventory) {
-				val stackInSlot = player.inventory.get(i)
+				val stackInSlot = player.inventory[i]
 				if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === reqStack.item && stackInSlot.meta == reqStack.meta) {
 					current += stackInSlot.stackSize
 					if (current >= required)

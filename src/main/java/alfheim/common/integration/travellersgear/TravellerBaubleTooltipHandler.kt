@@ -1,5 +1,6 @@
 package alfheim.common.integration.travellersgear
 
+import alexsocol.asjlib.addStringToTooltip
 import alfheim.AlfheimCore
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
@@ -12,29 +13,23 @@ object TravellerBaubleTooltipHandler {
 	fun addHiddenTooltip(bauble: ItemBauble, stack: ItemStack, tooltip: MutableList<Any?>) {
 		if (AlfheimCore.TravellersGearLoaded) {
 			val slot = (bauble as? ITravellersGear)?.getSlot(stack) ?: 0
-			addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.$slot"), tooltip)
+			addStringToTooltip(tooltip, "TG.desc.gearSlot.tg.$slot")
 			val key = RenderHelper.getKeyDisplayString("TG.keybind.openInv")
 			if (key != null)
-				addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replace("%key%".toRegex(), key), tooltip)
+				addStringToTooltip(tooltip, "alfheimmisc.tgtooltip", key)
 		} else {
 			val type = bauble.getBaubleType(stack)
-			addStringToTooltip(StatCollector.translateToLocal("botania.baubletype." + type.name.toLowerCase()), tooltip)
+			addStringToTooltip(tooltip, "botania.baubletype.${type.name.toLowerCase()}")
 			val key = RenderHelper.getKeyDisplayString("Baubles Inventory")
 			if (key != null)
-				addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key), tooltip)
+				addStringToTooltip(tooltip, StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key))
 		}
 		
 		val cosmetic = bauble.getCosmeticItem(stack)
 		if (cosmetic != null)
-			addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.displayName), tooltip)
+			addStringToTooltip(tooltip, String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.displayName))
 		
 		if (bauble.hasPhantomInk(stack))
-			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.hasPhantomInk"), tooltip)
-	}
-	
-	// --------------------------------
-	
-	fun addStringToTooltip(s: String, tooltip: MutableList<Any?>) {
-		tooltip.add(s.replace("&".toRegex(), "\u00a7"))
+			addStringToTooltip(tooltip, StatCollector.translateToLocal("botaniamisc.hasPhantomInk"))
 	}
 }

@@ -17,7 +17,8 @@ object MTHandlerAnyavil {
 	}
 	
 	private class Pinkifier(private val output: ItemStack, private val pinkness: Int): IUndoableAction {
-		internal var old = 0
+		
+		var old = 0
 		
 		override fun apply() {
 			val i = AlfheimAPI.addPink(output, pinkness)

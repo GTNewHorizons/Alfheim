@@ -4,12 +4,12 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
-import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.fire.SpellFireball
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
@@ -57,7 +57,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	override fun attackEntityFrom(source: DamageSource?, damage: Float) = false
 	
 	fun onImpact(mop: MovingObjectPosition?) {
-		if (!worldObj.isRemote) {
+		if (!worldObj.isRemote && !isDead) {
 			if (mop?.entityHit === caster) return
 			
 			if (mop?.entityHit is EntityLivingBase) {
@@ -80,6 +80,8 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onUpdate() {
+		if (isDead) return
+		
 		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead/* || !worldObj.blockExists(posX.I, posY.I, posZ.I)*/)) {
 			setDead()
 		} else {

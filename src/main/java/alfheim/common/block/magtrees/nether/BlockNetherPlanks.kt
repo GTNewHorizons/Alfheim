@@ -3,7 +3,7 @@ package alfheim.common.block.magtrees.nether
 import alexsocol.asjlib.toItem
 import alfheim.common.block.base.BlockMod
 import alfheim.common.item.block.ItemBlockLeavesMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -62,7 +62,7 @@ class BlockNetherPlanks: BlockMod(Material.wood), ILexiconable, IFuelHandler {
 		return ItemStack(this, 1, meta)
 	}
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.netherSapling
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.netherSapling
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 2000 else 0
 }

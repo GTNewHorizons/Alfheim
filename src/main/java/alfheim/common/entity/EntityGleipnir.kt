@@ -1,5 +1,6 @@
 package alfheim.common.entity
 
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.core.handler.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
@@ -16,7 +17,7 @@ class EntityGleipnir: Entity {
 		setSize(10f, 10f)
 	}
 	
-	constructor(world: World, player: EntityPlayer): this (world) {
+	constructor(world: World, player: EntityPlayer): this(world) {
 		thrower = player
 	}
 	
@@ -42,12 +43,14 @@ class EntityGleipnir: Entity {
 		val targets = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>
 		targets.remove(thrower)
 		
+		targets.removeAll { !InteractionSecurity.canDoSomethingWithEntity(thrower, it) }
+		
 		if (AlfheimConfigHandler.enableMMO) {
 			val pt = CardinalSystem.PartySystem.getParty(thrower)
 			targets.removeAll { pt.isMember(it) }
 		}
 		
-		targets.forEach { it.addPotionEffect (PotionEffect(AlfheimConfigHandler.potionIDEternity, 5, 1, true)) }
+		targets.forEach { it.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 5, 1, true)) }
 	}
 	
 	override fun entityInit() = Unit

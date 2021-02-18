@@ -4,9 +4,11 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileCracklingStar
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemStarPlacer2
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.Optional
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.item.EntityItem
@@ -33,11 +35,16 @@ class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexicon
 	override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int) =
 		(world.getTileEntity(x, y, z) as TileCracklingStar).getLightColor()
 	
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) = Unit
+	override fun registerBlockIcons(reg: IIconRegister) = Unit
 	
 	override fun getRenderType(): Int = -1
 	
 	override fun getIcon(side: Int, meta: Int) = Blocks.fire.getIcon(side, meta)!!
+	
+	override fun getItemDropped(meta: Int, rand: Random?, fortune: Int) = AlfheimItems.starPlacer2
+	
+	@SideOnly(Side.CLIENT)
+	override fun getItem(world: World?, x: Int, y: Int, z: Int) = AlfheimItems.starPlacer2
 	
 	override fun isOpaqueCube(): Boolean = false
 	
@@ -71,7 +78,7 @@ class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexicon
 		super.onBlockHarvested(world, x, y, z, meta, player)
 	}
 	
-	override fun getPickBlock(target: MovingObjectPosition, world: World, x: Int, y: Int, z: Int, player: EntityPlayer): ItemStack? {
+	override fun getPickBlock(target: MovingObjectPosition?, world: World, x: Int, y: Int, z: Int, player: EntityPlayer?): ItemStack? {
 		val te = world.getTileEntity(x, y, z)
 		if (te is TileCracklingStar) {
 			return ItemStarPlacer2.colorStack(te.color)
@@ -81,9 +88,10 @@ class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexicon
 	
 	override fun createNewTileEntity(world: World?, meta: Int) = TileCracklingStar()
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.frozenStar
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = AlfheimLexiconData.frozenStar
 	
 	companion object {
+		
 		val playerPositions = mutableMapOf<UUID, DimWithPos>()
 	}
 	
@@ -99,7 +107,7 @@ class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexicon
 			playerPositions.remove(player.uniqueID)
 			if (dwp == here) {
 				val te = world.getTileEntity(x, y, z) as? TileCracklingStar ?: return true
-				te.pos = null
+				te.pos.set(0, -1, 0)
 			} else if (dwp.dim == here.dim) {
 				val otherTe = world.getTileEntity(dwp.x, dwp.y, dwp.z) as? TileCracklingStar ?: return true
 				otherTe.pos = Vector3(x.D, y.D, z.D)
@@ -111,11 +119,12 @@ class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexicon
 	}
 	
 	data class DimWithPos(val dim: Int, val x: Int, val y: Int, val z: Int) {
-		constructor(world: World, x: Int, y: Int, z: Int) : this(world.provider.dimensionId, x, y, z)
+		constructor(world: World, x: Int, y: Int, z: Int): this(world.provider.dimensionId, x, y, z)
 		
 		override fun toString() = "$dim:$x:$y:$z"
 		
 		companion object {
+			
 			@JvmStatic
 			fun fromString(s: String): DimWithPos {
 				val split = s.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()

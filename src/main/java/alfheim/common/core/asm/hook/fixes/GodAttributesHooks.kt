@@ -1,7 +1,9 @@
 package alfheim.common.core.asm.hook.fixes
 
 import alexsocol.asjlib.*
+import alfheim.AlfheimCore
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
+import alfheim.common.item.equipment.bauble.faith.ItemRagnarokEmblem
 import alfheim.common.item.relic.*
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.BlockLiquid
@@ -66,7 +68,7 @@ object GodAttributesHooks {
 	fun addExhaustion(player: EntityPlayer, lvl: Float) {
 		if (!player.capabilities.disableDamage) {
 			if (!player.worldObj.isRemote) {
-				val dec = lvl / if (ItemPriestEmblem.getEmblem(5, player) != null) 4f else 1f
+				val dec = lvl / if (ItemPriestEmblem.getEmblem(5, player) != null) 4f else if (AlfheimCore.ENABLE_RAGNAROK && ItemRagnarokEmblem.getEmblem(player, 5) != null) 8f else 1f
 				player.foodStats.addExhaustion(dec)
 			}
 		}
@@ -132,7 +134,7 @@ object GodAttributesHooks {
 		return if (dontDie) null else boat.entityDropItem(ItemStack(item, count, 0), force)
 	}
 	
-	@JvmStatic // TODO remove - not AEsir
+	@JvmStatic // TODO remove - Njord not AEsir
 	@Hook(injectOnExit = true)
 	fun onUnequipped(ring: ItemAesirRing, stack: ItemStack, player: EntityLivingBase) {
 		player.stepHeight = 0.5f

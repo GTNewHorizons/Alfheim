@@ -62,8 +62,8 @@ object RenderEntityGleipnir: Render() {
 				tes.addVertexWithUV(xs, ys + c, zs - w, 1.0 * f, 0.0)
 				tes.draw()
 				
-				c = (if (i > 32) cos(vec2d.set(xs, ys, 0).sub(xe, ye, 0).angle(Vector3.oX)) else cos(vec2d.set(xe, ye, 0).sub(xs, ys, 0).angle(Vector3.oX)) ) / 10
-
+				c = (if (i > 32) cos(vec2d.set(xs, ys, 0).sub(xe, ye, 0).angle(Vector3.oX)) else cos(vec2d.set(xe, ye, 0).sub(xs, ys, 0).angle(Vector3.oX))) / 10
+				
 				mc.renderEngine.bindTexture(LibResourceLocations.gleipnir2)
 				tes.startDrawingQuads()
 				tes.addVertexWithUV(xs + xc - w, ys + yc + c, zs + zc, 0.0, 0.0)
@@ -79,15 +79,15 @@ object RenderEntityGleipnir: Render() {
 		// circles
 		setBlend()
 		ShaderHelper.useShader(ShaderHelper.halo)
-
+		
 		mc.renderEngine.bindTexture(LibResourceLocations.babylon)
-
+		
 		val charge = min(10f, life)
 		var s = charge / 10f
 		s += min(1f, (life) * 0.2f)
 		s /= 2f
 		glScalef(s)
-
+		
 		for (i in 0..1) {
 			glPushMatrix()
 			glRotatef((charge * 9f + (entity.ticksExisted + ticks) * 0.5f + rand.nextFloat() * 360f) * if (i == 0) 1 else -1, 0f, 1f, 0f)
@@ -99,7 +99,7 @@ object RenderEntityGleipnir: Render() {
 			tes.draw()
 			glPopMatrix()
 		}
-
+		
 		ShaderHelper.releaseShader()
 		discard()
 		glPopMatrix()

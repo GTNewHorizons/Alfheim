@@ -1,6 +1,7 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.security.InteractionSecurity
 import alfheim.common.item.AlfheimItems
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
@@ -41,17 +42,18 @@ class ItemSifRing: ItemRelicBauble("SifRing") {
 		
 		val world = player.worldObj
 		
-		for (i in -8..8)
-			for (j in -3..3)
-				for (k in -8..8)
-					if (world.getBiomeGenForCoords(player.posX.mfloor() + i, player.posZ.mfloor() + k).biomeID in desertIDs)
-						if (world.getBlock(player, i, j, k) === Blocks.deadbush)
-							list.add(ChunkCoordinates(i, j, k))
+		for (x in -8..8)
+			for (y in -3..3)
+				for (z in -8..8)
+					if (world.getBiomeGenForCoords(player.posX.mfloor() + x, player.posZ.mfloor() + z).biomeID in desertIDs)
+						if (world.getBlock(player, x, y, z) === Blocks.deadbush)
+							list.add(ChunkCoordinates(x, y, z))
 		
-		if (list.isEmpty()) return
-		
-		val (i, j, k) = list.random()
-		world.setBlock(player, Blocks.cactus, i, j, k)
+		val (x, y, z) = list.firstOrNull {
+			val (x, y, z) = it
+			InteractionSecurity.canDoSomethingHere(player, x, y, z)
+		} ?: return
+		world.setBlock(player, Blocks.cactus, x, y, z)
 		list.clear()
 	}
 	
@@ -65,6 +67,9 @@ class ItemSifRing: ItemRelicBauble("SifRing") {
 		val list = player.worldObj.getEntitiesWithinAABB(EntityAgeable::class.java, player.boundingBox(8)) as MutableList<EntityAgeable>
 		
 		for (e in list) {
+			if (!InteractionSecurity.canDoSomethingWithEntity(player, e))
+				return
+			
 			if (!ManaItemHandler.requestManaExact(stack, player, 1, true))
 				return
 			

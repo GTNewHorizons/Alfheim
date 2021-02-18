@@ -14,5 +14,4 @@ class BlockManaTuner: BlockContainerMod(Material.iron), IManaTrigger {
 	override fun onBurstCollision(burst: IManaBurst, world: World, x: Int, y: Int, z: Int) {
 		(world.getTileEntity(x, y, z) as TileManaTuner).onBurstCollision(burst)
 	}
-	
 }

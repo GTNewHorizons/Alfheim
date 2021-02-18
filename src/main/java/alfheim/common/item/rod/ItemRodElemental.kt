@@ -27,7 +27,7 @@ class ItemRodElemental(name: String, private val barrier: () -> Block): ItemMod(
 		maxDamage = 1200
 		maxStackSize = 1
 	}
-
+	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
 		itemIcon = reg.registerIcon(ModInfo.MODID + ':'.toString() + unlocalizedName.substring(5))
@@ -37,7 +37,7 @@ class ItemRodElemental(name: String, private val barrier: () -> Block): ItemMod(
 	
 	override fun getIconIndex(par1ItemStack: ItemStack): IIcon? {
 		val name = par1ItemStack.displayName.toLowerCase().trim { it <= ' ' }
-		return if (name == "magical ruby" && this === AlfheimItems.rodFire) rubyIcon else if (name == "magical sapphire" && this === AlfheimItems.rodIce) sapphireIcon else super.getIconIndex(par1ItemStack)
+		return if (name == "magical ruby" && this === AlfheimItems.rodMuspelheim) rubyIcon else if (name == "magical sapphire" && this === AlfheimItems.rodNiflheim) sapphireIcon else super.getIconIndex(par1ItemStack)
 	}
 	
 	override fun getIcon(stack: ItemStack, pass: Int): IIcon? {
@@ -55,7 +55,7 @@ class ItemRodElemental(name: String, private val barrier: () -> Block): ItemMod(
 							val i = player.posX.mfloor() + x
 							val j = player.posY.mfloor() + y
 							val k = player.posZ.mfloor() + z
-							val c = Color(if (this === AlfheimItems.rodFire) 0x880000 else 0x0055AA)
+							val c = Color(if (this === AlfheimItems.rodMuspelheim) 0x880000 else 0x0055AA)
 							if (world.isAirBlock(i, j, k) && barrier().canPlaceBlockAt(world, i, j, k)) {
 								cd = cd or place(stack, player, world, i, j, k, 0, 0.5f, 0.5f, 0.5f, barrier(), if (player.capabilities.isCreativeMode) 0 else 150, c.red.F, c.green.F, c.blue.F)
 							}

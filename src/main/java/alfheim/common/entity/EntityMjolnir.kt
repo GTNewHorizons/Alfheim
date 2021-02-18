@@ -45,7 +45,7 @@ class EntityMjolnir: EntityThrowable {
 		super.onUpdate()
 		
 		Botania.proxy.lightningFX(worldObj, Bector3.fromEntity(this), Bector3.fromEntity(this).sub(Bector3(mx, my, mz).multiply(1.25)), 1f, color, colorB)
-
+		
 		val bounces = timesBounced
 		if (bounces >= MAX_BOUNCES || ticksExisted > 30) {
 			val thrower = thrower
@@ -121,6 +121,7 @@ class EntityMjolnir: EntityThrowable {
 		}
 	
 	companion object {
+		
 		private const val MAX_BOUNCES = 16
 		
 		val color = Color(0x0079C4).rgb

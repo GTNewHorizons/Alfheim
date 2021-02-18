@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
+import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.common.MinecraftForge
@@ -266,7 +266,7 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 					glTranslatef(0f, 0f, -0.125f)
 					if (!verifyExistance(stack, "$TAG_RECORD_PREF${num++}")) continue
 					
-					recordTextures[getString(stack, "$TAG_RECORD_PREF${num-1}", "")]?.also { mc.renderEngine.bindTexture(it) }
+					recordTextures[getString(stack, "$TAG_RECORD_PREF${num - 1}", "")]?.also { mc.renderEngine.bindTexture(it) }
 					bookModel.render(null, 0f, 0f, 0f, 0f, 0f, 1f / 16f)
 					
 					if (getInt(stack, TAG_RECORD_SELECT, 0) == num - 1) {
@@ -295,6 +295,7 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 
 // I hate those SideOnly things -_-
 private object AkashikModels {
+	
 	val boxModel = ModelAkashicBox()
 	val bookModel = ModelBook()
 }

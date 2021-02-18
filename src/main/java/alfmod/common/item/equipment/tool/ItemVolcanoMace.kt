@@ -1,5 +1,8 @@
 package alfmod.common.item.equipment.tool
 
+import alexsocol.asjlib.meta
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfmod.common.core.helper.IconHelper
 import alfmod.common.core.util.AlfheimModularTab
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -23,7 +26,11 @@ class ItemVolcanoMace: ItemManasteelSword(volcano, "VolcanoMace") {
 		return super.hitEntity(stack, target, attacker)
 	}
 	
+	override fun getIsRepairable(par1ItemStack: ItemStack?, stack: ItemStack) =
+		stack.item === AlfheimItems.elvenResource && stack.meta == ElvenResourcesMetas.MuspelheimEssence
+	
 	companion object {
+		
 		val volcano = EnumHelper.addToolMaterial("Volcano", 0, 1200, 6f, 6f, 6)!!
 	}
 }

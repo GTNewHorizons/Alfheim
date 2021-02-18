@@ -7,6 +7,7 @@ import net.minecraft.util.IIcon
  * Created at 9:54 PM on 2/14/16.
  */
 interface IDoublePlant {
-    fun getTopIcon(lowerMeta: Int): IIcon
-    fun getBottomIcon(lowerMeta: Int): IIcon
+	
+	fun getTopIcon(lowerMeta: Int): IIcon
+	fun getBottomIcon(lowerMeta: Int): IIcon
 }

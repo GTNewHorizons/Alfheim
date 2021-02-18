@@ -3,16 +3,16 @@ package alfheim.client.render.entity
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
+import alfheim.api.ModInfo
 import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.renderer.*
+import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.Potion
 import net.minecraft.util.ResourceLocation
-import net.minecraftforge.client.event.RenderPlayerEvent
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.common.Botania
@@ -21,17 +21,15 @@ import kotlin.math.*
 
 object RenderWings {
 	
-	val customWings =		arrayOf("MonoShiki",							"lie4me",								"DemnaGvasalia",						"KAIIIAK"							)
-	val customTextures =	arrayOf(LibResourceLocations.wingsButterfly,	LibResourceLocations.wingsHeavenBird,	LibResourceLocations.wingsDarkPhoenix,	LibResourceLocations.wingsSprite	)
-	val wingMap = customWings.zip(customTextures).toMap()
+	val textures: Map<String, ResourceLocation> by lazy { ContributorsPrivacyHelper.wings.map { (k, v) -> k to ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/$v.png") }.toMap() }
 	
 	@SideOnly(Side.CLIENT)
-	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
+	fun render(player: EntityPlayer) {
 		// player.sendPlayerAbilities()
 		
-		val match = customWings.indexOfFirst { ContributorsPrivacyHelper.isCorrect(player, it) }
+		val match = ContributorsPrivacyHelper.wings.keys.firstOrNull { ContributorsPrivacyHelper.isCorrect(player, it) }
 		
-		if (match == -1) {
+		if (match == null) {
 			if (!AlfheimConfigHandler.enableElvenStory) return
 			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
 			if (player.race == EnumRace.HUMAN) return
@@ -44,21 +42,23 @@ object RenderWings {
 		glDisable(GL_CULL_FACE)
 		
 		//if (match == -1) {
-			glEnable(GL_BLEND)
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			glDepthMask(false)
-			glAlphaFunc(GL_GREATER, 1/255f)
+		glEnable(GL_BLEND)
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		glDepthMask(false)
+		glAlphaFunc(GL_GREATER, 1 / 255f)
 		//}
-		glDisable(GL_LIGHTING)
+
+//		glDisable(GL_LIGHTING)
+//		val lastX = OpenGlHelper.lastBrightnessX
+//		val lastY = OpenGlHelper.lastBrightnessY
+//		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		
-		val lastX = OpenGlHelper.lastBrightnessX
-		val lastY = OpenGlHelper.lastBrightnessY
+		ASJRenderHelper.setGlow()
 		
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
 		
-		if (match != -1) {
-			if (match == 0)
+		if (match != null) {
+			if (ContributorsPrivacyHelper.wings[match] == "Butterfly")
 				ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks % 360 / 360f, 1f, 1f), 255))
 			else
 				glColor4f(1f, 1f, 1f, 1f)
@@ -69,7 +69,7 @@ object RenderWings {
 		glTranslated(0.0, -0.15, 0.0)
 		
 		// Icon
-		if (match == -1 && player.race != EnumRace.HUMAN) {
+		if (match == null && player.race != EnumRace.HUMAN) {
 			glPushMatrix()
 			glTranslated(-0.25, 0.25, 0.15)
 			val si = 0.5
@@ -104,12 +104,13 @@ object RenderWings {
 		glPopMatrix()
 		
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
-		glEnable(GL_LIGHTING)
+//		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
+//		glEnable(GL_LIGHTING)
+		ASJRenderHelper.discard()
 		//if (match == -1) {
-			glAlphaFunc(GL_GREATER, 0.1f)
-			glDepthMask(true)
-			glDisable(GL_BLEND)
+		glAlphaFunc(GL_GREATER, 0.1f)
+		glDepthMask(true)
+		glDisable(GL_BLEND)
 		//}
 		glEnable(GL_CULL_FACE)
 		glPopMatrix()
@@ -132,7 +133,7 @@ object RenderWings {
 		Tessellator.instance.draw()
 	}
 	
-	fun getPlayerWingTexture(player: EntityPlayer) = wingMap[customWings.firstOrNull { ContributorsPrivacyHelper.isCorrect(player, it) } ?: ""] ?: LibResourceLocations.wings[player.raceID]
+	fun getPlayerWingTexture(player: EntityPlayer) = textures[ContributorsPrivacyHelper.wings.keys.firstOrNull { ContributorsPrivacyHelper.isCorrect(player, it) } ?: ""] ?: LibResourceLocations.wings[player.raceID]
 	
 	fun getPlayerIconTexture(player: EntityPlayer) = LibResourceLocations.icons[player.raceID]
 }

@@ -176,7 +176,6 @@ open class ModelBipedNew: ModelBase() {
 	}
 	
 	companion object {
-		
-		val model = ModelBipedNew()
+		val INSTANCE = ModelBipedNew()
 	}
 }

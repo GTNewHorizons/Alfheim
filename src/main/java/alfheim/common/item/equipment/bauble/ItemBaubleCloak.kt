@@ -21,6 +21,7 @@ import vazkii.botania.common.item.equipment.bauble.ItemBauble
 abstract class ItemBaubleCloak(name: String): ItemBauble(name), ITravellersGearSynced, IBaubleRender {
 	
 	companion object {
+		
 		@SideOnly(Side.CLIENT)
 		var model: ModelBiped? = null
 	}

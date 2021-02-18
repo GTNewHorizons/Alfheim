@@ -2,9 +2,9 @@ package alfheim.common.block
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
+import alfheim.client.core.helper.IconHelper
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileRaceSelector
-import alfheim.common.core.helper.IconHelper
 import alfheim.common.network.MessageRaceSelection
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -74,7 +74,7 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 		if (meta == 0) {
 			if (isMid(hitX, hitZ)) {
 				res.custom = !tile.custom
-				ASJUtilities.say(player, "alfheimmisc.skintoggle${ if(res.custom) "1" else "0" }")
+				ASJUtilities.say(player, "alfheimmisc.skintoggle${if (res.custom) "1" else "0"}")
 				return true to res
 			}
 			

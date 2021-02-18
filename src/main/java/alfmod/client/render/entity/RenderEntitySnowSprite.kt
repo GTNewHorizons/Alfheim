@@ -19,7 +19,7 @@ object RenderEntitySnowSprite: RenderLiving(ModelSnowSprite(), 0.25f) {
 		shadowSize = 0f
 	}
 	
-	override fun getEntityTexture(entity: Entity) = texture
+	override fun getEntityTexture(entity: Entity?) = texture
 	
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, pitch: Float) {
 		if (entity.isInvisible) return
@@ -35,7 +35,7 @@ object RenderEntitySnowSprite: RenderLiving(ModelSnowSprite(), 0.25f) {
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 	}
 	
-	private fun setPixieBrightness(pixie: EntitySnowSprite, pass: Int, ticks: Float): Int {
+	private fun setPixieBrightness(pixie: EntitySnowSprite, pass: Int): Int {
 		if (pass != 0) return -1
 		
 		bindTexture(getEntityTexture(pixie))
@@ -57,5 +57,5 @@ object RenderEntitySnowSprite: RenderLiving(ModelSnowSprite(), 0.25f) {
 	}
 	
 	override fun shouldRenderPass(entity: EntityLivingBase, pass: Int, ticks: Float) =
-		setPixieBrightness(entity as EntitySnowSprite, pass, ticks)
+		setPixieBrightness(entity as EntitySnowSprite, pass)
 }

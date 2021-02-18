@@ -5,21 +5,13 @@ import io.netty.buffer.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 
 public class MessageVisualEffect extends ASJPacket {
-
+	
 	public int type;
 	public double[] data;
 	
 	public MessageVisualEffect(int i, double... params) {
 		type = i;
 		data = params;
-	}
-	
-	@Override
-	public void toCustomBytes(@NotNull ByteBuf buf) {
-		super.toCustomBytes(buf);
-		buf.writeInt(data.length);
-		for (double d : data)
-			buf.writeDouble(d);
 	}
 	
 	@Override
@@ -30,5 +22,11 @@ public class MessageVisualEffect extends ASJPacket {
 			data[i] = buf.readDouble();
 	}
 	
-	
+	@Override
+	public void toCustomBytes(@NotNull ByteBuf buf) {
+		super.toCustomBytes(buf);
+		buf.writeInt(data.length);
+		for (double d : data)
+			buf.writeDouble(d);
+	}
 }

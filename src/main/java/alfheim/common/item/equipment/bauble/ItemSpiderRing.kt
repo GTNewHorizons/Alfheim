@@ -44,6 +44,7 @@ class ItemSpiderRing: ItemBauble("SpiderRing"), IManaUsingItem {
 	override fun usesMana(stack: ItemStack?) = true
 	
 	companion object {
+		
 		const val TAG_ACTIVE = "active"
 	}
 }

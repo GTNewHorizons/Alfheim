@@ -14,13 +14,13 @@ class ItemCloudPendant @JvmOverloads constructor(name: String = "CloudPendant", 
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
 		super.onWornTick(stack, player)
-		if (player.worldObj.isRemote) clientWornTick(stack, player)
+		if (player.worldObj.isRemote) clientWornTick(player)
 	}
 	
 	@SideOnly(Side.CLIENT)
-	fun clientWornTick(stack: ItemStack, player: EntityLivingBase) {
+	fun clientWornTick(player: EntityLivingBase) {
 		if (player is EntityPlayerSP && player === mc.thePlayer) {
-
+			
 			if (player.onGround)
 				timesJumped = 0
 			else {
@@ -38,6 +38,7 @@ class ItemCloudPendant @JvmOverloads constructor(name: String = "CloudPendant", 
 	}
 	
 	companion object {
+		
 		private var timesJumped: Int = 0
 		private var jumpDown: Boolean = false
 	}

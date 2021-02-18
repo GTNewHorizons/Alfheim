@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.world.BlockEvent
 
 object EventHandlerSummer {
-
+	
 	@SubscribeEvent
 	fun onPlayerInteracted(e: PlayerInteractEvent) {
 		if (!HELLISH_VACATION || e.world.isRemote) return
@@ -31,7 +31,7 @@ object EventHandlerSummer {
 			if (word in 1..3 && !e.world.isRemote) ASJUtilities.say(e.player, "alfmodmisc.donteat.$word")
 			
 			e.isCanceled = true
-			e.world.setBlockToAir(e.x, e.y, e.z);
+			e.world.setBlockToAir(e.x, e.y, e.z)
 			if (!e.world.isRemote) e.world.spawnEntityInWorld(EntityRollingMelon(e.world).apply { setPosition(e.x + 0.5, e.y + 0.5, e.z + 0.5); onSpawnWithEgg(null) })
 		}
 	}

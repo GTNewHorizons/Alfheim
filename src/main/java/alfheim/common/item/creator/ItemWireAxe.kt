@@ -2,9 +2,9 @@ package alfheim.common.item.creator
 
 import alexsocol.asjlib.*
 import alfheim.api.*
+import alfheim.client.core.helper.IconHelper
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
-import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import cpw.mods.fml.common.registry.GameRegistry
@@ -33,7 +33,7 @@ import kotlin.math.min
 /**
  * seeeeeecrets
  */
-class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMaterial = ShadowFoxAPI.RUNEAXE, val slayerDamage: Double = 6.0): ItemSword(toolMaterial), IManaUsingItem {
+class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMaterial = AlfheimAPI.RUNEAXE, val slayerDamage: Double = 6.0): ItemSword(toolMaterial), IManaUsingItem {
 	
 	companion object {
 		class DamageSourceGodslayer(player: EntityLivingBase, creative: Boolean): EntityDamageSource("player", player) {
@@ -103,7 +103,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		if (!ManaItemHandler.requestManaExact(stack, player, 100, false)) return
 		
 		val range = min(getMaxItemUseDuration(stack) - inUseTicks, 200) / 20 + 1
-		val entities = world.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range))
+		val entities = world.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox(range))
 		if (!player.capabilities.isCreativeMode) stack.damageStack(1, player)
 		
 		var count = 0
@@ -119,7 +119,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		}
 		
 		if (count > 0) {
-			world.playSoundAtEntity(player, "botania:enchanterEnchant", 1f, 1f)
+			player.playSoundAtEntity("botania:enchanterEnchant", 1f, 1f)
 			if (!world.isRemote) player.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
 			stack.damageStack(5, player)
 			if (!world.isRemote) VisualEffectHandler.sendPacket(VisualEffects.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.D, 0.0, 0.0)
@@ -156,14 +156,15 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	
 	override fun onLeftClickEntity(stack: ItemStack, player: EntityPlayer, entity: Entity): Boolean {
 		val godslaying = stack.attributeModifiers[godSlayingDamage.attributeUnlocalizedName]
-		if (godslaying != null) {
-			for (attr in godslaying) {
-				if (attr is AttributeModifier)
-					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.wireoverpowered))
-			}
-		}
 		
-		return super.onLeftClickEntity(stack, player, entity)
+		if (godslaying != null)
+			for (attr in godslaying)
+				if (attr is AttributeModifier) {
+					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.wireoverpowered))
+					entity.hurtResistantTime = 0
+				}
+		
+		return false
 	}
 	
 	fun attackEntity(player: EntityLivingBase, entity: Entity, amount: Double, damageSource: DamageSource) {
@@ -209,10 +210,9 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	
 	fun getEfficiencyOnProperMaterial(): Float = toolMaterial.efficiencyOnProperMaterial
 	
-	override fun getIsRepairable(stack: ItemStack?, materialstack: ItemStack?): Boolean {
+	override fun getIsRepairable(stack: ItemStack?, material: ItemStack?): Boolean {
 		val mat = toolMaterial.repairItemStack
-		if (mat != null && OreDictionary.itemMatches(mat, materialstack, false)) return true
-		return super.getIsRepairable(stack, materialstack)
+		return mat != null && OreDictionary.itemMatches(mat, material, false)
 	}
 	
 	override fun getHarvestLevel(stack: ItemStack?, toolClass: String?): Int {

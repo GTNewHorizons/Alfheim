@@ -392,8 +392,8 @@ class ModelBarrel: ModelBase() {
 	}
 	
 	fun renderCover(f5: Float) {
-		 cover.render(f5)
-		 handle.render(f5)
+		cover.render(f5)
+		handle.render(f5)
 	}
 	
 	override fun render(entity: Entity, f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {

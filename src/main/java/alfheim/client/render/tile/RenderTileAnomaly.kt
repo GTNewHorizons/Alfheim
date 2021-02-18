@@ -21,7 +21,7 @@ object RenderTileAnomaly: TileEntitySpecialRenderer() {
 		mainSTE.bindTexture()
 		
 		glPushMatrix()
-		glAlphaFunc(GL_GREATER, 1/255f)
+		glAlphaFunc(GL_GREATER, 1 / 255f)
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		glDisable(GL_LIGHTING)
