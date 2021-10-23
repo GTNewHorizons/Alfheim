@@ -295,10 +295,7 @@ class Matrix4 {
 	
 	override fun toString(): String {
 		val cont = MathContext(4, RoundingMode.HALF_UP)
-		return "[" + BigDecimal(m00, cont) + "," + BigDecimal(m01, cont) + "," + BigDecimal(m02, cont) + "," + BigDecimal(m03, cont) + "]\n" +
-			   "[" + BigDecimal(m10, cont) + "," + BigDecimal(m11, cont) + "," + BigDecimal(m12, cont) + "," + BigDecimal(m13, cont) + "]\n" +
-			   "[" + BigDecimal(m20, cont) + "," + BigDecimal(m21, cont) + "," + BigDecimal(m22, cont) + "," + BigDecimal(m23, cont) + "]\n" +
-			   "[" + BigDecimal(m30, cont) + "," + BigDecimal(m31, cont) + "," + BigDecimal(m32, cont) + "," + BigDecimal(m33, cont) + "]"
+		return "[" + BigDecimal(m00, cont) + "," + BigDecimal(m01, cont) + "," + BigDecimal(m02, cont) + "," + BigDecimal(m03, cont) + "]\n" + "[" + BigDecimal(m10, cont) + "," + BigDecimal(m11, cont) + "," + BigDecimal(m12, cont) + "," + BigDecimal(m13, cont) + "]\n" + "[" + BigDecimal(m20, cont) + "," + BigDecimal(m21, cont) + "," + BigDecimal(m22, cont) + "," + BigDecimal(m23, cont) + "]\n" + "[" + BigDecimal(m30, cont) + "," + BigDecimal(m31, cont) + "," + BigDecimal(m32, cont) + "," + BigDecimal(m33, cont) + "]"
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -309,6 +306,7 @@ class Matrix4 {
 	}
 	
 	companion object {
+		
 		private val glBuf = ByteBuffer.allocateDirect(16 * 8).order(ByteOrder.nativeOrder()).asDoubleBuffer()
 	}
 }

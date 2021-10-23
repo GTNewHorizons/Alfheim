@@ -14,24 +14,21 @@ object CommandDimTP: CommandBase() {
 	
 	override fun getCommandName() = "tpdim"
 	
-	override fun getCommandUsage(sender: ICommandSender) = "asjcore.commands.tpdim.usage"
+	override fun getCommandUsage(sender: ICommandSender) = "/$commandName <ID>"
 	
 	override fun processCommand(sender: ICommandSender, args: Array<String>) {
 		try {
 			sender as EntityPlayer
 			val id = args[0].toInt()
 			val w = MinecraftServer.getServer().worldServerForDimension(id) ?: throw NoWorldException("Loaded dimension is null")
-			var s: ChunkCoordinates? = sender.getBedLocation(id)
+//			val s: ChunkCoordinates = sender.getBedLocation(id) ?: w.spawnPoint ?: ChunkCoordinates(0, w.getHeightValue(0, 0) + 1, 0)
+			val s: ChunkCoordinates = w.spawnPoint ?: throw NoWorldException("No spawnpoint")
 			// stupid minecraft returns overworld coordinates in ANY dimension
-			if (s == null) s = w.spawnPoint
-			ASJUtilities.sendToDimensionWithoutPortal(sender, id, s!!.posX.D, s.posY.D, s.posZ.D)
-			
-		} catch (e: NumberFormatException) {
-			throw WrongUsageException("asjcore.commands.tpdim.wrongid", e)
+			ASJUtilities.sendToDimensionWithoutPortal(sender, id, s.posX + 0.5, s.posY.D, s.posZ + 0.5)
 		} catch (e: NoWorldException) {
 			throw WrongUsageException("asjcore.commands.tpdim.worlderr", e)
 		} catch (e: Throwable) {
-			throw WrongUsageException("asjcore.commands.tpdim.wrong", e)
+			throw WrongUsageException(getCommandUsage(sender), e)
 		}
 	}
 	

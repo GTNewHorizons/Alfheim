@@ -23,13 +23,13 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 	public static final HookInjectorFactory ON_EXIT_FACTORY = MethodExit.INSTANCE;
 	private String targetClassName; // через точки
 	private String targetMethodName;
-	private final List<Type> targetMethodParameters = new ArrayList<Type>(2);
+	private List<Type> targetMethodParameters = new ArrayList<>(2);
 	private Type targetMethodReturnType; //если не задано, то не проверяется
 	private String hooksClassName; // через точки
 	private String hookMethodName;
 	// -1 - значение return
-	private final List<Integer> transmittableVariableIds = new ArrayList<Integer>(2);
-	private final List<Type> hookMethodParameters = new ArrayList<Type>(2);
+	private List<Integer> transmittableVariableIds = new ArrayList<>(2);
+	private List<Type> hookMethodParameters = new ArrayList<>(2);
 	private Type hookMethodReturnType = Type.VOID_TYPE;
 	private boolean hasReturnValueParameter; // если в хук-метод передается значение из return
 	private ReturnCondition returnCondition = ReturnCondition.NEVER;
@@ -43,7 +43,9 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 	private String returnMethodName;
 	// может быть без возвращаемого типа
 	private String returnMethodDescription;
-	
+    private boolean isAbstract;
+	private boolean isStatic;
+	private String superClass;
 	private boolean createMethod;
 	private boolean isMandatory;
 	
@@ -59,6 +61,18 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 		return (targetMethodReturnType == null && desc.startsWith(targetMethodDescription) ||
 			        desc.equals(targetMethodDescription)) && name.equals(targetMethodName);
 	}
+    
+    protected boolean isAbstract() {
+        return this.isAbstract;
+    }
+	
+	protected boolean isStatic() {
+		return isStatic;
+	}
+	
+	protected String getSuperClass() {
+		return superClass;
+	}
 	
 	protected boolean getCreateMethod() {
 		return createMethod;
@@ -72,28 +86,69 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 		return injectorFactory;
 	}
 	
-	protected void createMethod(HookInjectorClassVisitor classVisitor) {
+	protected void createMethod(HookInjectorClassVisitor classVisitor, boolean isStatic, boolean isAbstract, String superClass) {
+        if (isStatic && isAbstract) throw new IllegalArgumentException("Cannot make static abstract class");
+	    
 		ClassMetadataReader.MethodReference superMethod = classVisitor.transformer.classMetadataReader.findVirtualMethod(getTargetClassInternalName(), targetMethodName, targetMethodDescription);
 		// юзаем название суперметода, потому что findVirtualMethod может вернуть метод с другим названием
-		MethodVisitor mv = classVisitor.visitMethod(Opcodes.ACC_PUBLIC,
-			superMethod == null ? targetMethodName : superMethod.name, targetMethodDescription, null, null);
-		if (mv instanceof HookInjectorMethodVisitor) {
-			HookInjectorMethodVisitor inj = (HookInjectorMethodVisitor) mv;
-			inj.visitCode();
-			inj.visitLabel(new Label());
-			if (superMethod == null) {
-				injectDefaultValue(inj, targetMethodReturnType);
-			} else {
-				injectSuperCall(inj, superMethod);
-			}
-			injectReturn(inj, targetMethodReturnType);
-			inj.visitLabel(new Label());
-			inj.visitMaxs(0, 0);
-			inj.visitEnd();
-		} else {
-			throw new IllegalArgumentException("Hook injector not created");
-		}
-	}
+		MethodVisitor mv;
+        
+        int access = Opcodes.ACC_PUBLIC;
+        if (isStatic) {
+            access += Opcodes.ACC_STATIC;
+        } else if (isAbstract) {
+            access += Opcodes.ACC_ABSTRACT;
+        }
+        
+        mv = classVisitor.visitMethod(access, superMethod == null ? this.targetMethodName : superMethod.name, this.targetMethodDescription, null, null);
+        
+        if (!(mv instanceof HookInjectorMethodVisitor)) {
+            throw new IllegalArgumentException("Hook injector not created");
+        }
+        
+        HookInjectorMethodVisitor inj = (HookInjectorMethodVisitor) mv;
+        
+        if (!isAbstract) {
+            inj.visitCode();
+            if (superClass.length() > 0) {
+                inj.visitVarInsn(ALOAD, 0);
+//			inj.visitMethodInsn(INVOKESPECIAL, superClass, "<init>", "()V", false);
+                // KAIIIAK
+                String[] superClassInfoList = superClass.split("\\.");
+                if (superClassInfoList.length == 1) { // только owner
+                    inj.visitMethodInsn(INVOKESPECIAL, superClass, "<init>", "()V", false);
+                } else if (superClassInfoList.length == 2) { // owner и desc // бесполезно, ибо не подгружает параметры
+                    inj.visitMethodInsn(INVOKESPECIAL, superClassInfoList[0], "<init>", superClassInfoList[1], false);
+                } else if (superClassInfoList.length == 3) {
+                    throw new IllegalArgumentException("superClass arguments count must not be odd"); //не четные
+                } else if (superClassInfoList.length > 3) {
+                    if ((superClassInfoList.length & 1) == 0) {
+                        for (int i = 0; i < superClassInfoList.length - 2; i += 2) {
+                            if (i + 2 != superClassInfoList.length - 1) {
+                                inj.visitVarInsn(Integer.parseInt(superClassInfoList[i + 1]), Integer.parseInt(superClassInfoList[i + 2]));
+                            } else {
+                                throw new IllegalArgumentException("? superClass is not correct ?"); //?никогда не сработает?
+                            }
+                        }
+                        inj.visitMethodInsn(INVOKESPECIAL, superClassInfoList[0], "<init>", superClassInfoList[superClassInfoList.length - 1], false);
+                    } else {
+                        throw new IllegalArgumentException("superClass is not even"); //не четные
+                    }
+                }
+                // KAIIIAK
+            }
+            inj.visitLabel(new Label());
+            if (superMethod == null) {
+                injectDefaultValue(inj, targetMethodReturnType);
+            } else {
+                injectSuperCall(inj, superMethod);
+            }
+            injectReturn(inj, targetMethodReturnType);
+            inj.visitLabel(new Label());
+            inj.visitMaxs(0, 0);
+        }
+        inj.visitEnd();
+    }
 	
 	private String getTargetClassInternalName() {
 		return targetClassName.replace('.', '/');
@@ -283,11 +338,11 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 		sb.append(hooksClassName).append('#').append(hookMethodName);
 		sb.append(hookMethodDescription);
 		
-		sb.append(", ReturnCondition=" + returnCondition);
-		sb.append(", ReturnValue=" + returnValue);
-		if (returnValue == ReturnValue.PRIMITIVE_CONSTANT) sb.append(", Constant=" + primitiveConstant);
-		sb.append(", InjectorFactory: " + injectorFactory.getClass().getName());
-		sb.append(", CreateMethod = " + createMethod);
+		sb.append(", ReturnCondition=").append(returnCondition);
+		sb.append(", ReturnValue=").append(returnValue);
+		if (returnValue == ReturnValue.PRIMITIVE_CONSTANT) sb.append(", Constant=").append(primitiveConstant);
+		sb.append(", InjectorFactory: ").append(injectorFactory.getClass().getName());
+		sb.append(", CreateMethod = ").append(createMethod);
 		
 		return sb.toString();
 	}
@@ -370,9 +425,7 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 		 * @see TypeHelper
 		 */
 		public Builder addTargetMethodParameters(Type... parameterTypes) {
-			for (Type type : parameterTypes) {
-				AsmHook.this.targetMethodParameters.add(type);
-			}
+            AsmHook.this.targetMethodParameters.addAll(Arrays.asList(parameterTypes));
 			return this;
 		}
 		
@@ -635,7 +688,7 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 		/**
 		 * Напрямую указывает тип, возвращаемый хук-методом.
 		 *
-		 * @param type
+		 * @param type тип
 		 */
 		protected void setHookMethodReturnType(Type type) {
 			AsmHook.this.hookMethodReturnType = type;
@@ -710,6 +763,30 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 		}
 		
 		/**
+		 * Задаёт статический модификатор создаваемого метода
+		 */
+		public Builder setIsStatic(boolean isStatic) {
+			AsmHook.this.isStatic = isStatic;
+			return this;
+		}
+        
+        /**
+         * Задаёт абстрактный модификатор создаваемого метода
+         */
+        public AsmHook.Builder setIsAbstract(boolean isAbstract) {
+            AsmHook.this.isAbstract = isAbstract;
+            return this;
+        }
+		
+		/**
+		 * Задает суперкласс для вызова в создаваемом конструкторе
+		 */
+		public Builder setSuperClass(String superClass) {
+			AsmHook.this.superClass = superClass;
+			return this;
+		}
+		
+		/**
 		 * Задает приоритет хука.
 		 * Хуки с большим приоритетом вызаваются раньше.
 		 */
@@ -763,8 +840,7 @@ public class AsmHook implements Cloneable, Comparable<AsmHook> {
 			
 			try {
 				hook = (AsmHook) AsmHook.this.clone();
-			} catch (CloneNotSupportedException impossible) {
-			}
+			} catch (CloneNotSupportedException ignored) {}
 			
 			if (hook.targetClassName == null) {
 				throw new IllegalStateException("Target class name is not specified. " +

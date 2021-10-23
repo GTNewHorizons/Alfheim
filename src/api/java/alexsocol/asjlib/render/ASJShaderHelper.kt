@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.GL_FALSE
 import org.lwjgl.opengl.GL20.*
-import java.io.*
 
 /**
  * Almost all code is by Vazkii - ShaderHelper, I just ported it to GL20 and made lib-style
@@ -63,8 +62,7 @@ object ASJShaderHelper {
 		val fragID: Int
 		val programID = glCreateProgram()
 		
-		if (programID == 0)
-			return 0
+		if (programID == 0) return 0
 		
 		if (vertLocation != null && vertLocation.isNotEmpty()) {
 			vertID = createShader(vertLocation, VERT)
@@ -98,14 +96,12 @@ object ASJShaderHelper {
 		try {
 			shaderID = glCreateShader(shaderType)
 			
-			if (shaderID == 0)
-				return 0
+			if (shaderID == 0) return 0
 			
 			glShaderSource(shaderID, readFileAsString(filename))
 			glCompileShader(shaderID)
 			
-			if (glGetShaderi(shaderID, GL_COMPILE_STATUS) == GL_FALSE)
-				throw RuntimeException("Error Compiling shader [$filename]: " + getShaderLogInfo(shaderID))
+			if (glGetShaderi(shaderID, GL_COMPILE_STATUS) == GL_FALSE) throw RuntimeException("Error Compiling shader [$filename]: " + getShaderLogInfo(shaderID))
 			
 			return shaderID
 		} catch (e: Exception) {
@@ -113,7 +109,6 @@ object ASJShaderHelper {
 			e.printStackTrace()
 			return -1
 		}
-		
 	}
 	
 	private fun getShaderLogInfo(obj: Int): String {
@@ -126,17 +121,11 @@ object ASJShaderHelper {
 	
 	@Throws(Exception::class)
 	private fun readFileAsString(filename: String): String {
-		val `in` = BufferedReader(InputStreamReader(Minecraft.getMinecraft().resourceManager.getResource(ResourceLocation(Loader.instance().activeModContainer().modId, filename)).inputStream, "UTF-8"))
-		val source = StringBuilder()
-		while (`in`.ready()) {
-			source.append(`in`.readLine()).append("\r\n")
-		}
-		return source.toString()
+		return Minecraft.getMinecraft().resourceManager.getResource(ResourceLocation(Loader.instance().activeModContainer().modId, filename)).inputStream.readBytes().decodeToString()
 	}
 	
 	abstract class ShaderCallback {
 		
 		abstract fun call(shaderID: Int)
-		
 	}
 }

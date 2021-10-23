@@ -1,11 +1,8 @@
 package alexsocol.asjlib.asm
 
 import net.minecraft.launchwrapper.IClassTransformer
-import org.apache.commons.io.IOUtils
 import org.objectweb.asm.*
 import org.objectweb.asm.tree.ClassNode
-import java.io.IOException
-import java.util.*
 
 /** Include this to your #getASMTransformerClass to make @HookField's work  */
 class ASJASM: IClassTransformer {
@@ -26,12 +23,11 @@ class ASJASM: IClassTransformer {
 		
 		fun registerFieldHookContainer(className: String) {
 			try {
-				transform(IOUtils.toByteArray(ASJASM::class.java.getResourceAsStream('/'.toString() + className.replace('.', '/') + ".class")))
-			} catch (e: IOException) {
-				println("[ASJASM] <ERROR> Can not parse hooks container $className")
+				transform(ASJASM::class.java.getResourceAsStream("/${className.replace('.', '/')}.class")?.readBytes() ?: throw NullPointerException("Can't read data from ${className}.class"))
+			} catch (e: Exception) {
+				System.err.println("[ASJASM] Can not parse hooks container $className")
 				e.printStackTrace()
 			}
-			
 		}
 		
 		private fun transform(basicClass: ByteArray) {

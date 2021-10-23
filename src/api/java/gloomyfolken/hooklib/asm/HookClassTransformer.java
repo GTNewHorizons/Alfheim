@@ -10,7 +10,7 @@ public class HookClassTransformer {
 	public HookLogger logger = new SystemOutLogger();
 	protected HashMap<String, List<AsmHook>> hooksMap = new HashMap<String, List<AsmHook>>();
 	protected ClassMetadataReader classMetadataReader = new ClassMetadataReader();
-	private final HookContainerParser containerParser = new HookContainerParser(this);
+	private HookContainerParser containerParser = new HookContainerParser(this);
 	
 	public void registerHook(AsmHook hook) {
 		if (hooksMap.containsKey(hook.getTargetClassName())) {
@@ -37,12 +37,12 @@ public class HookClassTransformer {
 			Collections.sort(hooks);
 			logger.debug("Injecting hooks into class " + className);
 			try {
-				/*
-				 Начиная с седьмой версии джавы, сильно изменился процесс верификации байткода.
-				 Ради этого приходится включать автоматическую генерацию stack map frame'ов.
-				 На более старых версиях байткода это лишняя трата времени.
-				 Подробнее здесь: http://stackoverflow.com/questions/25109942
-				*/
+                /*
+                 Начиная с седьмой версии джавы, сильно изменился процесс верификации байткода.
+                 Ради этого приходится включать автоматическую генерацию stack map frame'ов.
+                 На более старых версиях байткода это лишняя трата времени.
+                 Подробнее здесь: http://stackoverflow.com/questions/25109942
+                */
 				int majorVersion = ((bytecode[6] & 0xFF) << 8) | (bytecode[7] & 0xFF);
 				boolean java7 = majorVersion > 50;
 				

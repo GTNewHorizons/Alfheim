@@ -87,6 +87,11 @@ object ASJRenderHelper {
 		glColor4ub((color shr 16 and 0xFF).toByte(), (color shr 8 and 0xFF).toByte(), (color and 0xFF).toByte(), (color shr 24 and 0xFF).toByte())
 	}
 	
+	@JvmStatic
+	fun glColor1u(color: UInt) {
+		glColor1u(color.toInt())
+	}
+	
 	/**
 	 * Interpolates values, e.g. for smoother render
 	 */
@@ -97,15 +102,13 @@ object ASJRenderHelper {
 	 * Translates matrix to follow player (if something is bound to world's zero coords)
 	 */
 	@JvmStatic
-	fun interpolatedTranslation(entity: Entity) =
-		glTranslated(interpolate(entity.lastTickPosX, entity.posX), interpolate(entity.lastTickPosY, entity.posY), interpolate(entity.lastTickPosZ, entity.posZ))
+	fun interpolatedTranslation(entity: Entity) = glTranslated(interpolate(entity.lastTickPosX, entity.posX), interpolate(entity.lastTickPosY, entity.posY), interpolate(entity.lastTickPosZ, entity.posZ))
 	
 	/**
 	 * Translates matrix not to follow player (if something is bound to camera's zero coords)
 	 */
 	@JvmStatic
-	fun interpolatedTranslationReverse(entity: Entity) =
-		glTranslated(-interpolate(entity.lastTickPosX, entity.posX), -interpolate(entity.lastTickPosY, entity.posY), -interpolate(entity.lastTickPosZ, entity.posZ))
+	fun interpolatedTranslationReverse(entity: Entity) = glTranslated(-interpolate(entity.lastTickPosX, entity.posX), -interpolate(entity.lastTickPosY, entity.posY), -interpolate(entity.lastTickPosZ, entity.posZ))
 	
 	/**
 	 * Sets matrix and translation to world's zero coordinates
@@ -199,11 +202,11 @@ object ASJRenderHelper {
 			glow = false
 		}
 		if (cull) {
-			glEnable (GL_CULL_FACE)
+			glEnable(GL_CULL_FACE)
 			cull = false
 		}
 		if (alfa) {
-			glDisable (GL_BLEND)
+			glDisable(GL_BLEND)
 			alfa = false
 		}
 	}
@@ -212,12 +215,7 @@ object ASJRenderHelper {
 	fun interpolateColor(color1: Int, color2: Int, fraction: Double): Color {
 		val c1 = Color(color1, true)
 		val c2 = Color(color2, true)
-		return Color(
-			interpolateChannel(c1.red, c2.red, fraction),
-			interpolateChannel(c1.green, c2.green, fraction),
-			interpolateChannel(c1.blue, c2.blue, fraction),
-			interpolateChannel(c1.alpha, c2.alpha, fraction)
-		)
+		return Color(interpolateChannel(c1.red, c2.red, fraction), interpolateChannel(c1.green, c2.green, fraction), interpolateChannel(c1.blue, c2.blue, fraction), interpolateChannel(c1.alpha, c2.alpha, fraction))
 	}
 	
 	@JvmStatic

@@ -1,0 +1,26 @@
+tile.air.name=Воздух
+tile.brewingStand.name=Варочная стойка
+tile.flowerPot.name=Цветочный горшок
+tile.skull.name=Череп
+tile.pistonHead.name=Головка поршня
+tile.pistonExtension.name=Расширение поршня
+tile.diode.name=Повторитель
+tile.pumpkinStem.name=Стебель тыквы
+tile.comparator.name=Компаратор
+tile.melonStem.name=Стебель арбуза
+tile.endPortal.name=Портал в край
+
+
+
+asjcore.commands.tpdim.worlderr=Ошибка инициализации измерения
+
+asjcore.commands.schema.dumpOk=Схема выгружена в: %s
+asjcore.commands.schema.dumpNo=Ошибка при выгрузке схемы: %s
+asjcore.commands.schema.loadOk=Схема загружена
+asjcore.commands.schema.noFile=Файл %s не найден
+asjcore.commands.schema.noPosN=Установите позицию %s перед сохранением
+asjcore.commands.schema.posSet=Позиция %s установлен на (%s, %s, %s)
+
+commands.summon.usage.new=/summon <имя> ['x'кол-во] [x] [y] [z] [нбт]
+
+explode.usage=/explode [размер] [разрушения] [огонь]

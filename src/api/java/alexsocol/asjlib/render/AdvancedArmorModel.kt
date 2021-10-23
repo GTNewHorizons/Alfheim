@@ -56,10 +56,8 @@ abstract class AdvancedArmorModel: ModelBiped() {
 					if (itemstack != null && player!!.itemInUseCount > 0) {
 						val enumaction = itemstack.itemUseAction
 						
-						if (enumaction == EnumAction.block)
-							heldItemRight = 3
-						else if (enumaction == EnumAction.bow)
-							aimedBow = true
+						if (enumaction == EnumAction.block) heldItemRight = 3
+						else if (enumaction == EnumAction.bow) aimedBow = true
 					}
 				}
 			}
@@ -89,7 +87,6 @@ abstract class AdvancedArmorModel: ModelBiped() {
 //				glScalef(1.2f, 1.2f, 1.2f)
 //			else if (entity is EntityGiantZombie)
 //				glScalef(6f, 6f, 6f)
-			
 		}
 		
 		if (color != -1) {

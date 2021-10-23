@@ -7,20 +7,17 @@ open class TileImmobile: ASJTile() {
 	private var lock = Lock(0, -1, 0, 0)
 	
 	override fun updateEntity() {
-		if (lock.y == -1) return // bruh
-		
-		if (lock != Lock(xCoord, yCoord, zCoord, worldObj.provider.dimensionId))
-			worldObj.setBlockToAir(xCoord, yCoord, zCoord)
+		if (lock != Lock(xCoord, yCoord, zCoord, worldObj.provider.dimensionId)) worldObj.setBlockToAir(xCoord, yCoord, zCoord)
 	}
 	
-	override fun writeToNBT(nbt: NBTTagCompound) {
-		super.writeToNBT(nbt)
+	override fun writeCustomNBT(nbt: NBTTagCompound) {
+		super.writeCustomNBT(nbt)
 		
 		lock.save(nbt)
 	}
 	
-	override fun readFromNBT(nbt: NBTTagCompound) {
-		super.readFromNBT(nbt)
+	override fun readCustomNBT(nbt: NBTTagCompound) {
+		super.readCustomNBT(nbt)
 		
 		lock = Lock.load(nbt)
 	}
@@ -46,6 +43,7 @@ open class TileImmobile: ASJTile() {
 	}
 	
 	companion object {
+		
 		private const val TAG_A = "a"
 		private const val TAG_B = "b"
 		private const val TAG_C = "c"

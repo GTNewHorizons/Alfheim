@@ -8,11 +8,12 @@ import gloomyfolken.hooklib.minecraft.*
 import org.apache.commons.io.FileUtils
 import java.io.File
 
-@IFMLLoadingPlugin.MCVersion(value = "1.7.10")
+@IFMLLoadingPlugin.MCVersion("1.7.10")
 class ASJHookLoader: HookLoader() {
 	
 	companion object {
-		val OBF = !ASJReflectionHelper.getStaticValue<CoreModManager, Boolean>(CoreModManager::class.java, "deobfuscatedEnvironment")
+		
+		val OBF = ASJReflectionHelper.getStaticValue<CoreModManager, Boolean>(CoreModManager::class.java, "deobfuscatedEnvironment") != true
 		
 		init {
 			if (!OBF) {
@@ -26,7 +27,7 @@ class ASJHookLoader: HookLoader() {
 	}
 	
 	override fun getASMTransformerClass(): Array<String> {
-		return arrayOf(PrimaryClassTransformer::class.java.name, ASJASM::class.java.name, ASJClassTransformer::class.java.name, ASJPacketCompleter::class.java.name, ASJSyntheticMethodsInjector::class.java.name)
+		return arrayOf(PrimaryClassTransformer::class.java.name, ASJASM::class.java.name, ASJClassTransformer::class.java.name, ASJPacketCompleter::class.java.name)
 	}
 	
 	override fun registerHooks() {

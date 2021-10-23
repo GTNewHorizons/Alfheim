@@ -21,6 +21,30 @@ import java.lang.annotation.*;
 public @interface Hook {
 	
 	/**
+	 * Суперкласс для вызова в создаваемом конструкторе
+	 * Есть три варианта записи:
+	 * 1 - просто полный путь к суперклассу через слеши: "foo/bar/Baz"
+	 * 2 - полный путь к классу и дескриптор: "foo/bar/Baz.()V" - в принципе бесполезный вариант
+	 * 3 - полный путь к классу и дескриптор с параметрами загрузки передаваемых переменных:
+	 * "foo/bar/Baz.{@link org.objectweb.asm.Opcodes#ALOAD}.1.{@link org.objectweb.asm.Opcodes#ILOAD}.3.{@link org.objectweb.asm.Opcodes#ALOAD}.2.(Lfoo/bar/Qux;ILjava/lang/String;)V"
+	 * В результате конструктор должен будет иметь дескриптор вида (Qux qux, int i, String s)
+	 * @author KAIIIAK
+	 */
+	String superClass() default "";
+	
+	/**
+	 * Делает создаваемый метод абстрактным
+	 * @author KAIIIAK
+	 */
+	boolean isAbstract() default false;
+	
+	/**
+	 * Делает создаваемый метод статическим - теоретически бесполезный параметр
+	 * @author KAIIIAK
+	 */
+	boolean isStatic() default false;
+	
+	/**
 	 * Задает условие, по которому после вызова хука будет вызван return.
 	 * Если целевой метод возвращает не void, то по умолчанию будет возвращено то, что вернул хук-метод.
 	 * Это можно переопредилить несколькими элементами аннотации:

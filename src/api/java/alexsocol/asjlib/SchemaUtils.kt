@@ -17,8 +17,10 @@ object SchemaUtils {
 		world.setBlock(x, y, z, Blocks.air, 0, 4)
 		
 		for (ele in arr) {
+			val block = Block.getBlockFromName(ele.block) ?: continue
+			
 			for (loc in ele.location) {
-				world.setBlock(x + loc.x, y + loc.y, z + loc.z, Block.getBlockFromName(ele.block), loc.meta, 3)
+				world.setBlock(x + loc.x, y + loc.y, z + loc.z, block, loc.meta, 3)
 				
 				if (loc.nbt != null) {
 					val tile = TileEntity.createAndLoadEntity(JsonToNBT.func_150315_a(loc.nbt) as NBTTagCompound) ?: return
@@ -43,8 +45,7 @@ object SchemaUtils {
 				val k = z + loc.z
 				
 				fun check(): Boolean {
-					if (world.getBlock(i, j, k) != Block.getBlockFromName(ele.block) || world.getBlockMetadata(i, j, k) != loc.meta)
-						return false
+					if (world.getBlock(i, j, k) != Block.getBlockFromName(ele.block) || world.getBlockMetadata(i, j, k) != loc.meta) return false
 					
 					loc.nbt ?: return true
 					val locNBT = JsonToNBT.func_150315_a(loc.nbt) as NBTTagCompound
@@ -53,8 +54,7 @@ object SchemaUtils {
 					val landNBT = NBTTagCompound()
 					tile.writeToNBT(landNBT)
 					
-					for (entry in locNBT.tagMap)
-						if (entry.value != landNBT.tagMap[entry.key]) return false
+					for (entry in locNBT.tagMap) if (entry.value != landNBT.tagMap[entry.key]) return false
 					
 					return true
 				}
@@ -70,8 +70,8 @@ object SchemaUtils {
 	}
 	
 	fun loadStructure(path: String): String {
-		return javaClass.getResourceAsStream("/assets/$path").use {
-			it.readBytes().toString(Charsets.UTF_8)
+		return javaClass.getResourceAsStream("/assets/$path")!!.use {
+			it.readBytes().decodeToString()
 		}
 	}
 }

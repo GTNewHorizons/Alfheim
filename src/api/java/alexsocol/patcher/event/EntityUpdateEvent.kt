@@ -12,11 +12,10 @@ class EntityUpdateEvent(val entity: Entity): Event() {
 		
 		/** Used in ASM */
 		@JvmStatic
-		fun instantiate(e: Entity) =
-			EntityUpdateEvent(e)
+		fun instantiate(e: Entity) = EntityUpdateEvent(e)
 		
 		/** Used in ASM because I'm dumb */
 		@JvmStatic
-		fun stub() {}
+		fun stub() = Unit
 	}
 }

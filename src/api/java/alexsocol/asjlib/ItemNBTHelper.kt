@@ -84,68 +84,66 @@ object ItemNBTHelper {
 	
 	// GETTERS ///////////////////////////////////////////////////////////////////
 	fun verifyExistance(stack: ItemStack?, tag: String): Boolean {
-		return stack != null && getNBT(stack).hasKey(tag)
+		return stack != null && stack.tagCompound?.hasKey(tag) == true
 	}
 	
 	fun getBoolean(stack: ItemStack?, tag: String, defaultExpected: Boolean): Boolean {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getBoolean(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getBoolean(tag) else defaultExpected
 	}
 	
 	fun getByte(stack: ItemStack?, tag: String, defaultExpected: Byte): Byte {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getByte(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getByte(tag) else defaultExpected
 	}
 	
 	fun getByteArray(stack: ItemStack?, tag: String, defaultExpected: ByteArray = ByteArray(0)): ByteArray {
-		if (stack == null) return defaultExpected
-		return if (verifyExistance(stack, tag)) getNBT(stack).getByteArray(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getByteArray(tag) else defaultExpected
 	}
 	
 	fun getShort(stack: ItemStack?, tag: String, defaultExpected: Short): Short {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getShort(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getShort(tag) else defaultExpected
 	}
 	
 	fun getInt(stack: ItemStack?, tag: String, defaultExpected: Int): Int {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getInteger(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getInteger(tag) else defaultExpected
 	}
 	
 	fun getIntArray(stack: ItemStack?, tag: String, defaultExpected: IntArray = IntArray(0)): IntArray {
-		if (stack == null) return defaultExpected
-		return if (verifyExistance(stack, tag)) getNBT(stack).getIntArray(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getIntArray(tag) else defaultExpected
 	}
 	
 	fun getLong(stack: ItemStack?, tag: String, defaultExpected: Long): Long {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getLong(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getLong(tag) else defaultExpected
 	}
 	
 	fun getFloat(stack: ItemStack?, tag: String, defaultExpected: Float): Float {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getFloat(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getFloat(tag) else defaultExpected
 	}
 	
 	fun getDouble(stack: ItemStack?, tag: String, defaultExpected: Double): Double {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getDouble(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getDouble(tag) else defaultExpected
 	}
 	
 	fun getCompound(stack: ItemStack?, tag: String): NBTTagCompound {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getCompoundTag(tag) else NBTTagCompound()
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getCompoundTag(tag) else NBTTagCompound()
 	}
 	
 	/** If nullifyOnFail is true it'll return null if it doesn't find any
 	 * compounds, otherwise it'll return a new one.  */
 	fun getCompound(stack: ItemStack?, tag: String, nullifyOnFail: Boolean): NBTTagCompound? {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getCompoundTag(tag) else if (nullifyOnFail) null else NBTTagCompound()
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getCompoundTag(tag) else if (nullifyOnFail) null else NBTTagCompound()
 	}
 	
 	fun getString(stack: ItemStack?, tag: String, defaultExpected: String): String {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getString(tag) else defaultExpected
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getString(tag) else defaultExpected
 	}
 	
 	fun getList(stack: ItemStack?, tag: String, objtype: Int): NBTTagList {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getTagList(tag, objtype) else NBTTagList()
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getTagList(tag, objtype) else NBTTagList()
 	}
 	
 	/** If nullifyOnFail is true it'll return null if it doesn't find any
 	 * compounds, otherwise it'll return a new one.  */
 	fun getList(stack: ItemStack?, tag: String, objtype: Int, nullifyOnFail: Boolean): NBTTagList? {
-		return if (verifyExistance(stack, tag)) getNBT(stack!!).getTagList(tag, objtype) else if (nullifyOnFail) null else NBTTagList()
+		return if (verifyExistance(stack, tag)) stack!!.tagCompound.getTagList(tag, objtype) else if (nullifyOnFail) null else NBTTagList()
 	}
 }

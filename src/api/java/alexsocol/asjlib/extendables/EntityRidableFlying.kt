@@ -61,7 +61,7 @@ abstract class EntityRidableFlying(world: World): EntityRidable(world) {
 		prevLimbSwingAmount = limbSwingAmount
 		val var10 = posX - prevPosX
 		val var9 = posZ - prevPosZ
-		var var7 = MathHelper.sqrt_double(var10 * var10 + var9 * var9) * 4f
+		var var7 = sqrt(var10 * var10 + var9 * var9).F * 4f
 		if (var7 > 1f) {
 			var7 = 1f
 		}

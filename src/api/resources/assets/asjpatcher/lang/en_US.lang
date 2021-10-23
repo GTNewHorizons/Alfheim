@@ -1,0 +1,26 @@
+tile.air.name=Air
+tile.brewingStand.name=Brewing Stand
+tile.flowerPot.name=Flower Pot
+tile.skull.name=Skull
+tile.pistonHead.name=Piston Head
+tile.pistonExtension.name=Piston Extension
+tile.diode.name=Redstone Repeater
+tile.pumpkinStem.name=Pumpkin Stem
+tile.comparator.name=Redstone Comparator
+tile.melonStem.name=Melon Stem
+tile.endPortal.name=End Portal
+
+
+
+asjcore.commands.tpdim.worlderr=Dimension Initialization Error
+
+asjcore.commands.schema.dumpOk=Schema dumped to: %s
+asjcore.commands.schema.dumpNo=Error dumping schema: %s
+asjcore.commands.schema.loadOk=Schema loaded
+asjcore.commands.schema.noFile=File %s not found
+asjcore.commands.schema.noPosN=Set pos %s before saving
+asjcore.commands.schema.posSet=Pos %s set to (%s, %s, %s)
+
+commands.summon.usage.new=/summon <EntityName> ['x'count] [x] [y] [z] [dataTag]
+
+explode.usage=/explode [size] [breakBlocks] [doFlame]

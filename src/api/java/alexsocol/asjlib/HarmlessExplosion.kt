@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*
 import net.minecraft.world.World
+import kotlin.math.sqrt
 
 class HarmlessExplosion(worldObj: World, exploder: EntityPlayer?, explosionX: Double, explosionY: Double, explosionZ: Double, explosionSize: Float) {
 	
@@ -28,7 +29,7 @@ class HarmlessExplosion(worldObj: World, exploder: EntityPlayer?, explosionX: Do
 				d5 = entity.posX - explosionX
 				d6 = entity.posY + entity.eyeHeight - explosionY
 				d7 = entity.posZ - explosionZ
-				val d9 = MathHelper.sqrt_double(d5 * d5 + d6 * d6 + d7 * d7).D
+				val d9 = sqrt(d5 * d5 + d6 * d6 + d7 * d7)
 				
 				if (d9 != 0.0) {
 					d5 /= d9

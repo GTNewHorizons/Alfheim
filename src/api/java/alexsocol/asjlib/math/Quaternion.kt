@@ -1,6 +1,5 @@
 package alexsocol.asjlib.math
 
-import java.util.*
 import kotlin.math.*
 
 /**
@@ -12,14 +11,7 @@ class Quaternion {
 	var x = 0.0
 	var y = 0.0
 	var z = 0.0
-	var s = 0.0
-	
-	constructor() {
-		s = 1.0
-		x = 0.0
-		y = 0.0
-		z = 0.0
-	}
+	var s = 1.0
 	
 	constructor(quat: Quaternion) {
 		x = quat.x
@@ -87,14 +79,7 @@ class Quaternion {
 		vec.z = d3 * s - d * z - d1 * y + d2 * x
 	}
 	
-	override fun toString(): String {
-		val stringbuilder = StringBuilder()
-		val formatter = Formatter(stringbuilder, Locale.US)
-		formatter.format("Quaternion:\n")
-		formatter.format("  < %f %f %f %f >\n", s, x, y, z)
-		formatter.close()
-		return "$stringbuilder"
-	}
+	override fun toString() = "Quaternion: <$s $x $y $z>"
 	
 	companion object {
 		

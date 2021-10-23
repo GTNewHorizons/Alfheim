@@ -3,8 +3,6 @@
 
 package ru.vamig.worldengine;
 
-import org.apache.commons.lang3.builder.*;
-
 public class WE_PerlinNoise {
 	
 	public static double PerlinNoise2D(long seed, double x, double y, double persistence, int number_of_octaves) {
@@ -26,15 +24,19 @@ public class WE_PerlinNoise {
 			fx = Math.abs(x) - Math.abs(lx),
 			fy = Math.abs(y) - Math.abs(ly);
 		
+		long x1 = Math.abs(x) == x ? lx + 1L : lx - 1L;
+		long y1 = Math.abs(y) == y ? ly + 1L : ly - 1L;
+		
 		double
 			v1 = SmoothNoise2D(seed, lx, ly),
-			v2 = SmoothNoise2D(seed, Math.abs(x) == x ? lx + 1L : lx - 1L, ly),
-			v3 = SmoothNoise2D(seed, lx, Math.abs(y) == y ? ly + 1L : ly - 1L),
-			v4 = SmoothNoise2D(seed, Math.abs(x) == x ? lx + 1L : lx - 1L, Math.abs(y) == y ? ly + 1L : ly - 1L);
+			v2 = SmoothNoise2D(seed, x1, ly),
+			v3 = SmoothNoise2D(seed, lx, y1),
+			v4 = SmoothNoise2D(seed, x1, y1);
 		
 		double
 			i1 = CosineInterpolate(v1, v2, fx),
 			i2 = CosineInterpolate(v3, v4, fx);
+		
 		return CosineInterpolate(i1, i2, fy);
 	}
 	

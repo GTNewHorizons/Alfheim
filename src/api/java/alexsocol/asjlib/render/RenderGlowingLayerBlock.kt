@@ -16,7 +16,7 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 		
 		Tessellator.instance.setColorOpaque_I(0xFFFFFF)
 		Tessellator.instance.setBrightness(240)
-		renderAllSides(world, x, y, z, block, renderer, false) { s, m -> (block as IGlowingLayerBlock).getGlowIcon(s, m)}
+		renderAllSides(world, x, y, z, block, renderer, false) { s, m -> (block as IGlowingLayerBlock).getGlowIcon(s, m) }
 		
 		return true
 	}
@@ -55,9 +55,7 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 		val renderers = arrayOf(RenderBlocks::renderFaceYNeg, RenderBlocks::renderFaceYPos, RenderBlocks::renderFaceZNeg, RenderBlocks::renderFaceZPos, RenderBlocks::renderFaceXNeg, RenderBlocks::renderFaceXPos)
 		
 		fun renderAllSides(world: IBlockAccess, x: Int, y: Int, z: Int, block: Block, renderer: RenderBlocks, allsides: Boolean, getIcon: (Int, Int) -> IIcon?) {
-			for ((i, d) in ForgeDirection.VALID_DIRECTIONS.withIndex())
-				if (allsides || block.shouldSideBeRendered(world, x + d.offsetX, y + d.offsetY, z + d.offsetZ, i))
-					getIcon.invoke(i, world.getBlockMetadata(x, y, z))?.let { renderers[i].invoke(renderer, block, x.D, y.D, z.D, it) }
+			for ((i, d) in ForgeDirection.VALID_DIRECTIONS.withIndex()) if (allsides || block.shouldSideBeRendered(world, x + d.offsetX, y + d.offsetY, z + d.offsetZ, i)) getIcon.invoke(i, world.getBlockMetadata(x, y, z))?.let { renderers[i].invoke(renderer, block, x.D, y.D, z.D, it) }
 		}
 		
 		fun drawFaces(renderblocks: RenderBlocks, block: Block, getIcon: (Int) -> IIcon?) {

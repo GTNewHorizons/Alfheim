@@ -49,6 +49,10 @@ class Vector3: Serializable {
 		set(vec)
 	}
 	
+	constructor(chunk: ChunkCoordinates) {
+		set(chunk)
+	}
+	
 	fun toVec3() = Vec3.createVectorHelper(x, y, z)!!
 	
 	fun copy() = Vector3(this)
@@ -90,6 +94,13 @@ class Vector3: Serializable {
 		return this
 	}
 	
+	fun set(chunk: ChunkCoordinates): Vector3 {
+		x = chunk.posX.D
+		y = chunk.posY.D
+		z = chunk.posZ.D
+		return this
+	}
+	
 	fun rand(): Vector3 {
 		x = Math.random()
 		y = Math.random()
@@ -100,10 +111,8 @@ class Vector3: Serializable {
 	fun dotProduct(vec: Vector3): Double {
 		var d = vec.x * x + vec.y * y + vec.z * z
 		
-		if (d > 1 && d < 1.00001)
-			d = 1.0
-		else if (d < -1 && d > -1.00001)
-			d = -1.0
+		if (d > 1 && d < 1.00001) d = 1.0
+		else if (d < -1 && d > -1.00001) d = -1.0
 		return d
 	}
 	
@@ -202,8 +211,7 @@ class Vector3: Serializable {
 	
 	fun normalize(): Vector3 {
 		val d = length()
-		if (d != 0.0)
-			mul(1 / d)
+		if (d != 0.0) mul(1 / d)
 		
 		return this
 	}
@@ -308,16 +316,22 @@ class Vector3: Serializable {
 		
 		@Transient
 		val fallback = Vector3(-1, -1, -1)
+		
 		@Transient
 		val zero = Vector3()
+		
 		@Transient
 		val one = Vector3(1, 1, 1)
+		
 		@Transient
 		val center = Vector3(0.5, 0.5, 0.5)
+		
 		@Transient
 		val oX = Vector3(1, 0, 0)
+		
 		@Transient
 		val oY = Vector3(0, 1, 0)
+		
 		@Transient
 		val oZ = Vector3(0, 0, 1)
 		
@@ -345,6 +359,6 @@ class Vector3: Serializable {
 		
 		fun pointDistanceSpace(x1: Number, y1: Number, z1: Number, x2: Number, y2: Number, z2: Number) = sqrt((x1.D - x2.D).pow(2) + (y1.D - y2.D).pow(2) + (z1.D - z2.D).pow(2))
 		
-		private val Entity.posYp get() = posY - if (ASJUtilities.isClient && mc.thePlayer === this) 1.62 else 0.0
+		private val Entity.posYp get() = posY - if (worldObj.isRemote && mc.thePlayer === this) 1.62 else 0.0
 	}
 }

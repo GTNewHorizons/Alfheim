@@ -86,12 +86,7 @@ class ResourceLocationAnimated: ResourceLocation {
 	private fun interpolateColor(color1: Int, color2: Int, fraction: Double): Int {
 		val c1 = Color(color1, true)
 		val c2 = Color(color2, true)
-		return Color(
-			interpolateChannel(c1.red, c2.red, fraction),
-			interpolateChannel(c1.green, c2.green, fraction),
-			interpolateChannel(c1.blue, c2.blue, fraction),
-			interpolateChannel(c1.alpha, c2.alpha, fraction)
-		).rgb
+		return Color(interpolateChannel(c1.red, c2.red, fraction), interpolateChannel(c1.green, c2.green, fraction), interpolateChannel(c1.blue, c2.blue, fraction), interpolateChannel(c1.alpha, c2.alpha, fraction)).rgb
 	}
 	
 	private fun interpolateChannel(channel1: Int, channel2: Int, fraction: Double) = ((channel2 - channel1) * fraction + channel1).I

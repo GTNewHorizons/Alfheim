@@ -15,4 +15,4 @@ val mc: Minecraft get() = Minecraft.getMinecraft()
 
 val renderBlocks = RenderBlocks()
 
-fun EntityClientPlayerMP.hasAchievement(a: Achievement?) = if(a == null) false else statFileWriter.hasAchievementUnlocked(a)
+fun EntityClientPlayerMP.hasAchievement(a: Achievement?) = if (a == null) false else statFileWriter.hasAchievementUnlocked(a)

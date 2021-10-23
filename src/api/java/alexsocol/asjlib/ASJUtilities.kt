@@ -2,14 +2,12 @@ package alexsocol.asjlib
 
 import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.common.*
-import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.registry.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.Material.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
 import net.minecraft.command.ICommandSender
 import net.minecraft.entity.*
 import net.minecraft.entity.player.*
@@ -25,9 +23,8 @@ import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraft.world.gen.feature.WorldGenMinable
-import net.minecraftforge.common.*
+import net.minecraftforge.common.DimensionManager
 import net.minecraftforge.event.entity.living.*
-import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.oredict.*
 import org.apache.logging.log4j.Level
 import java.text.DecimalFormat
@@ -40,25 +37,6 @@ import kotlin.math.*
  */
 @Suppress("unused", "MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 object ASJUtilities {
-	
-	init {
-		MinecraftForge.EVENT_BUS.register(object {
-			
-			@SideOnly(Side.CLIENT)
-			@SubscribeEvent(priority = EventPriority.LOWEST)
-			fun onItemTooltip(e: ItemTooltipEvent) {
-				if (GuiScreen.isShiftKeyDown()) {
-					val stack = e.itemStack
-					
-					if (stack.hasTagCompound() && e.showAdvancedItemTooltips) {
-						e.toolTip.add("")
-						e.toolTip.add("NBT Data:")
-						e.toolTip.addAll(listOf(*toString(stack.tagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
-					}
-				}
-			}
-		})
-	}
 	
 	/**
 	 * Returns the name of the block
@@ -108,20 +86,51 @@ object ASJUtilities {
 	
 	/**
 	 * Sends entity to dimension without portal frames
-	 * @param player The player to send
+	 * @param target Entity to send
 	 * @param dimTo ID of the dimension the entity should be sent to
 	 */
 	@JvmStatic
-	fun sendToDimensionWithoutPortal(player: EntityPlayer, dimTo: Int, x: Double, y: Double, z: Double) {
-		player.ridingEntity?.riddenByEntity = null
-		player.ridingEntity = null
+	fun sendToDimensionWithoutPortal(target: Entity, dimTo: Int, x: Double, y: Double, z: Double) {
+		if (target.worldObj.isRemote || target.isDead) return
 		
-		if (dimTo == player.dimension) {
-			player.setPositionAndUpdate(x, y, z)
-		} else if (player is EntityPlayerMP) {
-			val worldTo = player.mcServer.worldServerForDimension(dimTo)
-			player.mcServer.configurationManager.transferPlayerToDimension(player, dimTo, FreeTeleporter(worldTo, x, y, z))
+		val server = MinecraftServer.getServer()
+		
+		target.ridingEntity?.riddenByEntity = null
+		target.ridingEntity = null
+		
+		if (dimTo == target.dimension)
+			return target.setLocationAndAngles(x, y, z, target.rotationYaw, target.rotationPitch)
+		
+		val worldTo = server.worldServerForDimension(dimTo)
+		
+		if (target is EntityPlayerMP)
+			return server.configurationManager.transferPlayerToDimension(target, dimTo, FreeTeleporter(worldTo, x, y, z))
+		
+		val dimFrom = target.dimension
+		val worldFrom = server.worldServerForDimension(dimFrom)
+		
+		target.worldObj.theProfiler.startSection("changeDimension")
+		
+		worldTo.getBlock(x.mfloor(), y.mfloor(), z.mfloor()) // explicit world load ._.
+		
+		target.dimension = dimTo
+		target.worldObj.removeEntity(target)
+		target.isDead = false
+		
+		target.worldObj.theProfiler.startSection("reposition")
+		server.configurationManager.transferEntityToWorld(target, dimFrom, worldFrom, worldTo, FreeTeleporter(worldTo, x, y, z))
+		target.worldObj.theProfiler.endStartSection("reloading")
+		
+		EntityList.createEntityByName(EntityList.getEntityString(target), worldTo)?.also { new ->
+			new.copyDataFrom(target, true)
+			new.spawn(worldTo)
 		}
+		
+		target.isDead = true
+		target.worldObj.theProfiler.endSection()
+		worldFrom.resetUpdateEntityTick()
+		worldTo.resetUpdateEntityTick()
+		target.worldObj.theProfiler.endSection()
 	}
 	
 	/**
@@ -132,10 +141,8 @@ object ASJUtilities {
 		val world = tile.worldObj
 		val players = world.playerEntities
 		for (player in players)
-			if (player is EntityPlayerMP) {
-				if (Vector3.pointDistancePlane(player.posX, player.posZ, tile.xCoord + 0.5, tile.zCoord + 0.5) < 64)
-					tile.descriptionPacket?.let { player.playerNetServerHandler.sendPacket(it) }
-			}
+			if (player is EntityPlayerMP && Vector3.pointDistancePlane(player.posX, player.posZ, tile.xCoord + 0.5, tile.zCoord + 0.5) < 64)
+				tile.descriptionPacket?.let { player.playerNetServerHandler.sendPacket(it) }
 	}
 	
 	/**
@@ -147,8 +154,7 @@ object ASJUtilities {
 	}
 	
 	@JvmStatic
-	fun willEntityDie(event: LivingHurtEvent) =
-		willEntityDie(LivingAttackEvent(event.entityLiving, event.source, event.ammount))
+	fun willEntityDie(event: LivingHurtEvent) = willEntityDie(LivingAttackEvent(event.entityLiving, event.source, event.ammount))
 	
 	/**
 	 * Determines whether entity will die from next hit
@@ -178,8 +184,7 @@ object ASJUtilities {
 	 * @param inventory The inventory to scan
 	 */
 	@JvmStatic
-	fun getSlotWithItem(item: Item, inventory: IInventory) =
-		(0 until inventory.sizeInventory).firstOrNull { inventory[it]?.item === item } ?: -1
+	fun getSlotWithItem(item: Item, inventory: IInventory) = (0 until inventory.sizeInventory).firstOrNull { inventory[it]?.item === item } ?: -1
 	
 	/**
 	 * Checks if two itemstacks has same ID, metadata and NBT
@@ -202,33 +207,39 @@ object ASJUtilities {
 	const val TAG_ASJONLYNBT = "ASJONLYNBT"
 	
 	/**
-	 * Checks if two itemstacks has same ID, metadata and NBT]
+	 * Checks if two itemstacks has same ID, metadata and NBT
 	 *
 	 * @param ingredient stack from recipe
 	 * @param input stack from crafting input
 	 * @see [TAG_ASJIGNORENBT]
 	 * @see [TAG_ASJONLYNBT]
 	 */
+	// WHAT THE HELL IS WRONG WITH THE COMPILER?!
 	@JvmStatic
 	fun isItemStackEqualCrafting(ingredient: ItemStack, input: ItemStack): Boolean {
-		return ingredient.isItemEqual(input) && when {
-			ingredient.tagCompound?.getBoolean(TAG_ASJIGNORENBT) == true -> true
+		if (!ingredient.isItemEqual(input))
+			return false
+		
+		if (ItemNBTHelper.getBoolean(ingredient, TAG_ASJIGNORENBT, false))
+			return true
+		
+		if (ItemNBTHelper.getBoolean(ingredient, TAG_ASJONLYNBT, false)) {
+			val tags = input.tagCompound ?: return false
+			val itags = ingredient.tagCompound.copy() as NBTTagCompound
+			itags.removeTag(TAG_ASJONLYNBT)
 			
-			ingredient.tagCompound?.getBoolean(TAG_ASJONLYNBT) == true   -> {
-				val tags = input.tagCompound ?: return false
-				val itags = ingredient.tagCompound.copy() as NBTTagCompound
-				itags.removeTag(TAG_ASJONLYNBT)
+			for (key in itags.func_150296_c()) {
+				if (!tags.hasKey(key as String))
+					return false
 				
-				for (key in itags.func_150296_c()) {
-					if (!tags.hasKey(key as String)) return false
-					if (itags.getTag(key) != tags.getTag(key)) return false
-				}
-				
-				true
+				if (itags.getTag(key) != tags.getTag(key))
+					return false
 			}
 			
-			else                                                         -> ingredient.areItemStackTagsEqual(input)
+			return true
 		}
+		
+		return ingredient.areItemStackTagsEqual(input)
 	}
 	
 	/**
@@ -242,8 +253,7 @@ object ASJUtilities {
 		var amount = 0
 		for (i in 0 until inventory.sizeInventory) {
 			val slot = inventory[i] ?: continue
-			if (stack.isItemEqual(slot))
-				amount += slot.stackSize
+			if (stack.isItemEqual(slot)) amount += slot.stackSize
 		}
 		return amount
 	}
@@ -259,8 +269,7 @@ object ASJUtilities {
 		var amount = 0
 		for (i in 0 until inventory.sizeInventory) {
 			val slot = inventory[i] ?: continue
-			if (isItemStackEqualData(slot, stack))
-				amount += slot.stackSize
+			if (isItemStackEqualData(slot, stack)) amount += slot.stackSize
 		}
 		return amount
 	}
@@ -376,17 +385,16 @@ object ASJUtilities {
 	 * @param resultItem Stack to remove recipe
 	 */
 	@JvmStatic
-	fun removeRecipe(resultItem: ItemStack) =
-		(CraftingManager.getInstance().recipeList as ArrayList<IRecipe>).removeAll {
-			ItemStack.areItemStacksEqual(resultItem, it.recipeOutput)
-		}
+	fun removeRecipe(resultItem: ItemStack) = (CraftingManager.getInstance().recipeList as ArrayList<IRecipe>).removeAll {
+		ItemStack.areItemStacksEqual(resultItem, it.recipeOutput)
+	}
 	
 	/**
 	 * Checks whether [target] is NOT in FOV of [observer]
 	 * @author a_dizzle (minecraftforum.net)
 	 */
 	@JvmStatic
-	fun isNotInFieldOfVision(target: EntityLivingBase, observer: EntityLivingBase): Boolean {
+	fun isNotInFieldOfVision(target: Entity, observer: EntityLivingBase): Boolean {
 		//save Entity 2's original rotation variables
 		var rotationYawPrime = observer.rotationYaw
 		var rotationPitchPrime = observer.rotationPitch
@@ -423,7 +431,7 @@ object ASJUtilities {
 			(e2.boundingBox.minY + e2.boundingBox.maxY) / 2.0 - (e1.posY + e1.eyeHeight.D)
 		}
 		
-		val d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2).D
+		val d3 = sqrt(d0 * d0 + d2 * d2)
 		val f2 = (atan2(d2, d0) * 180.0 / Math.PI).F - 90f
 		val f3 = (-(atan2(d1, d3) * 180.0 / Math.PI)).F
 		e1.rotationPitch = updateRotation(e1.rotationPitch, f3, pitch)
@@ -503,10 +511,10 @@ object ASJUtilities {
 	}
 	
 	/**
-	 * Raytracer for 'getMouseOver' method.<br></br>
-	 * Don't use it. Use [getMouseOver][.getSelectedBlock] instead
+	 * Raytracer for 'getMouseOver' method.
 	 */
 	private fun rayTrace(entity: EntityLivingBase, dist: Double): MovingObjectPosition? {
+		// NO THAT CANNOT BE REPLACED BY Vector3#fromEntity
 		val vec3 = Vec3.createVectorHelper(entity.posX, if (isServer) entity.posY + entity.eyeHeight else entity.posY, entity.posZ)
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
@@ -521,27 +529,29 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun getSelectedBlock(entity: EntityLivingBase, dist: Double, stopOnWater: Boolean): MovingObjectPosition? {
-		val vec3 = getPosition(entity, 1f)
-		vec3.yCoord += entity.eyeHeight.D
-		val vec31 = entity.lookVec
-		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
-		return entity.worldObj.rayTraceBlocks(vec3, vec32, stopOnWater)
+		// NO THAT CANNOT BE REPLACED BY Vector3#fromEntity
+		val pos = getPosition(entity)
+		val look = entity.getLook(0f)
+		val combined = pos.addVector(look.xCoord * dist, look.yCoord * dist, look.zCoord * dist)
+		return entity.worldObj.rayTraceBlocks(pos, combined, stopOnWater)
 	}
 	
 	/**
-	 * Interpolated position vector
+	 * Corrected position vector
+	 * @author Azanor
 	 */
 	@JvmStatic
-	fun getPosition(living: EntityLivingBase, par1: Float): Vec3 {
-		val i = (living as? EntityPlayer)?.defaultEyeHeight ?: 0f
-		return if (par1 == 1f) {
-			Vec3.createVectorHelper(living.posX, living.posY + (living.eyeHeight - i), living.posZ)
+	fun getPosition(target: EntityLivingBase): Vec3 {
+		val v = Vec3.createVectorHelper(target.posX, target.posY, target.posZ)
+		if (target.worldObj.isRemote) {
+			v.yCoord += (target.eyeHeight - if (target is EntityPlayer) target.defaultEyeHeight else 0f)
 		} else {
-			val d0 = living.prevPosX + (living.posX - living.prevPosX) * par1.D
-			val d1 = living.prevPosY + (living.posY - living.prevPosY) * par1.D + (living.eyeHeight - i).D
-			val d2 = living.prevPosZ + (living.posZ - living.prevPosZ) * par1.D
-			Vec3.createVectorHelper(d0, d1, d2)
+			v.yCoord += target.eyeHeight
+			if (target.isSneaking)
+				v.yCoord -= 0.08
 		}
+		
+		return v
 	}
 	
 	@JvmStatic
@@ -559,8 +569,7 @@ object ASJUtilities {
 	 * Can be null if none is found
 	 */
 	@JvmStatic
-	fun getClosestVulnerablePlayerToEntity(entity: Entity, distance: Double) =
-		getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance)
+	fun getClosestVulnerablePlayerToEntity(entity: Entity, distance: Double) = getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance)
 	
 	/**
 	 * @return Closest vulnerable player to coords within the given radius,
@@ -592,11 +601,11 @@ object ASJUtilities {
 	 * Registers new entity
 	 * @param entityClass Entity's class file
 	 * @param name The name of this entity
+	 * @param id Mod-specific entity id
 	 */
 	@JvmStatic
-	fun registerEntity(entityClass: Class<out Entity>, name: String, instance: Any, id: Int) {
-		//val modid = FMLCommonHandler.instance().findContainerFor(instance).modId
-		EntityRegistry.registerModEntity(entityClass, name, id, instance, 128, 1, true)
+	fun registerEntity(entityClass: Class<out Entity>, name: String, id: Int) {
+		EntityRegistry.registerModEntity(entityClass, name, id, Loader.instance().activeModContainer().mod, 128, 1, true)
 	}
 	
 	/**
@@ -648,15 +657,13 @@ object ASJUtilities {
 	 * @return String which tolds you to hold shift-key
 	 */
 	@JvmStatic
-	fun holdShift() =
-		StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " SHIFT " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.shift")
+	fun holdShift() = StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " SHIFT " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.shift")
 	
 	/**
 	 * @return String which tolds you to hold control-key
 	 */
 	@JvmStatic
-	fun holdCtrl() =
-		StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " CTRL " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.ctrl")
+	fun holdCtrl() = StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " CTRL " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.ctrl")
 	
 	/**
 	 * @return String which tolds you that this block/item/stuff is only for creative use
@@ -683,8 +690,7 @@ object ASJUtilities {
 	}
 	
 	@JvmStatic
-	fun <T: Comparable<T>> indexOfComparableArray(array: Array<T>, key: T) =
-		array.indices.firstOrNull { array[it].compareTo(key) == 0 } ?: -1
+	fun <T: Comparable<T>> indexOfComparableArray(array: Array<T>, key: T) = array.indices.firstOrNull { array[it].compareTo(key) == 0 } ?: -1
 	
 	@JvmStatic
 	fun <T: Comparable<T>> indexOfComparableColl(coll: Collection<T?>, key: T): Int {
@@ -692,8 +698,7 @@ object ASJUtilities {
 		for (t in coll) {
 			++id
 			
-			if (t?.let { key.compareTo(it) } ?: continue == 0)
-				return id
+			if (t?.let { key.compareTo(it) } ?: continue == 0) return id
 		}
 		return id
 	}
@@ -754,9 +759,7 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun isBlockReplaceable(block: Block): Boolean {
-		return block === Blocks.air ||
-			   block === Blocks.snow_layer ||
-			   block.material in replaceableMaterials
+		return block === Blocks.air || block === Blocks.snow_layer || block.material in replaceableMaterials
 	}
 	
 	@JvmStatic
@@ -767,20 +770,19 @@ object ASJUtilities {
 	}
 	
 	@JvmStatic
-	fun soundFromMaterial(mat: Material) =
-		when (mat) {
-			anvil                                      -> Block.soundTypeAnvil
-			air, cake, carpet, cloth, sponge, tnt, web -> Block.soundTypeCloth
-			glass, ice, packedIce, portal              -> Block.soundTypeGlass
-			cactus, coral, grass, leaves, plants, vine -> Block.soundTypeGrass
-			ground, clay                               -> Block.soundTypeGravel
-			iron                                       -> Block.soundTypeMetal
-			sand                                       -> Block.soundTypeSand
-			craftedSnow, snow                          -> Block.soundTypeSnow
-			circuits, dragonEgg, redstoneLight, rock   -> Block.soundTypeStone
-			gourd, wood                                -> Block.soundTypeWood
-			else                                       -> null
-		}
+	fun soundFromMaterial(mat: Material) = when (mat) {
+		anvil                                      -> Block.soundTypeAnvil
+		air, cake, carpet, cloth, sponge, tnt, web -> Block.soundTypeCloth
+		glass, ice, packedIce, portal              -> Block.soundTypeGlass
+		cactus, coral, grass, leaves, plants, vine -> Block.soundTypeGrass
+		ground, clay                               -> Block.soundTypeGravel
+		iron                                       -> Block.soundTypeMetal
+		sand                                       -> Block.soundTypeSand
+		craftedSnow, snow                          -> Block.soundTypeSnow
+		circuits, dragonEgg, redstoneLight, rock   -> Block.soundTypeStone
+		gourd, wood                                -> Block.soundTypeWood
+		else                                       -> null
+	}
 	
 	private val format = DecimalFormat("000")
 	private fun time(world: World?) = "[${format.format(world?.let { it.totalWorldTime % 1000 } ?: 0)}]"
@@ -789,19 +791,15 @@ object ASJUtilities {
 	fun chatLog(message: String) {
 		val world = if (isServer) MinecraftServer.getServer()?.entityWorld else Minecraft.getMinecraft()?.theWorld
 		val msg = "${worldInfoForLog(world)} $message"
-		if (isServer)
-			sayToAllOnline(msg)
-		else
-			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))
+		if (isServer) sayToAllOnline(msg)
+		else Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))
 	}
 	
 	@JvmStatic
 	fun chatLog(message: String, world: World?) {
 		val msg = "${worldInfoForLog(world)} $message"
-		if (isServer)
-			sayToAllOnline(msg)
-		else
-			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))
+		if (isServer) sayToAllOnline(msg)
+		else Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))
 	}
 	
 	@JvmStatic
@@ -832,7 +830,13 @@ object ASJUtilities {
 		FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, message)
 	}
 	
-	private fun trace(message: String) {
+	@JvmStatic
+	fun fatal(message: String) {
+		FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.FATAL, message)
+	}
+	
+	@JvmStatic
+	fun trace(message: String) {
 		FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.TRACE, message)
 	}
 	
@@ -847,26 +851,23 @@ object ASJUtilities {
 	fun say(sender: ICommandSender?, message: String, vararg format: Any) {
 		sender ?: return
 		
-		val text = StatCollector.translateToLocalFormatted(message, *format).replace('&', '\u00a7')
-		sender.addChatMessage(ChatComponentText(text))
-		log("[${sender.commandSenderName}!] $text")
+		sender.addChatMessage(ChatComponentTranslation(message, *format))
+		log("[${sender.commandSenderName}!] ${StatCollector.translateToLocalFormatted(message, *format)}")
 	}
 	
 	@JvmStatic
-	fun sayToAllOnline(message: String) {
+	fun sayToAllOnline(message: String, vararg format: Any) {
 		if (isClient) return
 		
-		val list = MinecraftServer.getServer().configurationManager.playerEntityList
-		for (online in list) say(online as EntityPlayer, message)
-		log(message)
+		MinecraftServer.getServer().configurationManager.sendChatMsg(ChatComponentTranslation(message, *format))
+		log("[SYSTEM!] ${StatCollector.translateToLocalFormatted(message, *format)}")
 	}
 	
 	@JvmStatic
 	@Deprecated("Untested")
 	fun sayToAllOPs(message: String) {
-		MinecraftServer.getServer().configurationManager.func_152606_n()
-			.mapNotNull { MinecraftServer.getServer().configurationManager.func_152612_a(it) }
-			.forEach { say(it, message) }
+		val ops = MinecraftServer.getServer().configurationManager.func_152606_n()
+		MinecraftServer.getServer().configurationManager.playerEntityList.forEach { if ((it as EntityPlayer).commandSenderName in ops)  say(it, message) }
 		log(message)
 	}
 	
@@ -875,7 +876,8 @@ object ASJUtilities {
 		get() = FMLCommonHandler.instance().effectiveSide == Side.SERVER
 	
 	@JvmStatic
-	val isClient get() = !isServer
+	val isClient
+		get() = FMLCommonHandler.instance().effectiveSide == Side.CLIENT
 	
 	@JvmStatic
 	fun toString(nbt: NBTTagCompound): String {
@@ -884,14 +886,11 @@ object ASJUtilities {
 			val e = o as Map.Entry<String, NBTBase>
 			val v = e.value
 			if (v is NBTTagList || v is NBTTagCompound) {
-				val arr = if (v is NBTTagList)
-					toString(v).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-				else
-					toString(v as NBTTagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+				val arr = if (v is NBTTagList) toString(v).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+				else toString(v as NBTTagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 				sb.append("    ").append(e.key).append(" = ").append(arr[0]).append("\n")
 				for (i in 1 until arr.size) sb.append("    ").append(arr[i]).append("\n")
-			} else
-				sb.append("    ").append(e.key).append(" = ").append(e.value).append("\n")
+			} else sb.append("    ").append(e.key).append(" = ").append(e.value).append("\n")
 		}
 		sb.append("}")
 		return "$sb"
@@ -900,16 +899,44 @@ object ASJUtilities {
 	@JvmStatic
 	fun toString(nbt: NBTTagList): String {
 		val sb = StringBuilder("list [\n")
-		for (obj in nbt.tagList)
-			if (obj is NBTTagList || obj is NBTTagCompound) {
-				val ts = if (obj is NBTTagList)
-					toString(obj)
-				else
-					toString(obj as NBTTagCompound)
-				for (s in ts.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) sb.append("    ").append(s).append("\n")
-			} else
-				sb.append(obj).append("\n")
+		for (obj in nbt.tagList) if (obj is NBTTagList || obj is NBTTagCompound) {
+			val ts = if (obj is NBTTagList) toString(obj)
+			else toString(obj as NBTTagCompound)
+			for (s in ts.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) sb.append("    ").append(s).append("\n")
+		} else sb.append(obj).append("\n")
 		sb.append("]")
 		return "$sb"
 	}
+	
+	// backward compatibility
+	/**
+	 * Registers new entity
+	 * @param entityClass Entity's class file
+	 * @param name The name of this entity
+	 * @param instance Mod instance
+	 * @param id Mod-specific entity id
+	 */
+	@JvmStatic
+	fun registerEntity(entityClass: Class<out Entity>, name: String, instance: Any, id: Int) {
+		//val modid = FMLCommonHandler.instance().findContainerFor(instance).modId
+		EntityRegistry.registerModEntity(entityClass, name, id, instance, 128, 1, true)
+	}
+	
+	/**
+	 * Sends entity to dimension without portal frames
+	 * @param player player to send
+	 * @param dimTo ID of the dimension the entity should be sent to
+	 */
+	@JvmStatic
+	fun sendToDimensionWithoutPortal(player: EntityPlayer, dimTo: Int, x: Double, y: Double, z: Double) = sendToDimensionWithoutPortal(player as Entity, dimTo, x, y, z)
+	
+	/**
+	 * Checks whether [target] is NOT in FOV of [observer]
+	 * @author a_dizzle (minecraftforum.net)
+	 */
+	@JvmStatic
+	fun isNotInFieldOfVision(target: EntityLivingBase, observer: EntityLivingBase) = isNotInFieldOfVision(target as Entity, observer)
+	
+	@JvmStatic
+	fun sayToAllOnline(message: String) = sayToAllOnline(message, *emptyArray())
 }

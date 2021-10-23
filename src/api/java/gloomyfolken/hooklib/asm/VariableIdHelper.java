@@ -7,7 +7,7 @@ import java.util.*;
 
 public class VariableIdHelper {
 	
-	private static final ClassMetadataReader classMetadataReader = new ClassMetadataReader();
+	private static ClassMetadataReader classMetadataReader = new ClassMetadataReader();
 	
 	public static List<String> listLocalVariables(String className, final String methodName, Type... argTypes) throws IOException {
 		return listLocalVariables(classMetadataReader.getClassData(className), methodName, argTypes);

@@ -1,11 +1,10 @@
 package alexsocol.asjlib.render
 
+import alexsocol.asjlib.eventForge
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraftforge.client.event.RenderWorldLastEvent
-import net.minecraftforge.common.MinecraftForge
-import java.util.*
 
 object RenderPostShaders {
 	
@@ -18,11 +17,17 @@ object RenderPostShaders {
 		get() = renderObjectMaterialID++
 	
 	init {
-		MinecraftForge.EVENT_BUS.register(RendererPostShaders())
+		eventForge()
 	}
 	
 	fun registerShadedObject(renobj: ShadedObject) {
 		shaders.add(renobj)
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	fun onWorldLastRender(e: RenderWorldLastEvent) {
+		dispatchObjects()
 	}
 	
 	fun dispatchObjects() {
@@ -54,14 +59,5 @@ object RenderPostShaders {
 		if (post) prevObj.postRender()
 		
 		if (allowShaders) ASJShaderHelper.releaseShader()
-	}
-	
-	class RendererPostShaders {
-		
-		@SubscribeEvent
-		@SideOnly(Side.CLIENT)
-		fun onWorldLastRender(e: RenderWorldLastEvent) {
-			dispatchObjects()
-		}
 	}
 }

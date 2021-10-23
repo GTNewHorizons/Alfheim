@@ -1,6 +1,6 @@
 package alexsocol.asjlib.command
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.patcher.asm.ASJHookLoader
 import net.minecraft.command.*
 import org.apache.commons.io.FileUtils
@@ -21,6 +21,7 @@ object CommandResources: CommandBase() {
 			FileUtils.deleteDirectory(File("../build/classes/main/assets/"))
 			ASJUtilities.say(sender, "Copying resources...")
 			FileUtils.copyDirectory(File("../src/main/resources/assets/"), File("../build/classes/main/assets/"))
+			try_ { FileUtils.copyDirectory(File("../src/api/resources/assets/"), File("../build/classes/main/assets/")) }
 			ASJUtilities.say(sender, "Success.")
 		} else {
 			ASJUtilities.say(sender, "Not in DEV env")

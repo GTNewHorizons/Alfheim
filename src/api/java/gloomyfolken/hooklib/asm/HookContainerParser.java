@@ -13,7 +13,7 @@ public class HookContainerParser {
 	private static final String HOOK_DESC = Type.getDescriptor(Hook.class);
 	private static final String LOCAL_DESC = Type.getDescriptor(LocalVariable.class);
 	private static final String RETURN_DESC = Type.getDescriptor(ReturnValue.class);
-	private final HookClassTransformer transformer;
+	private HookClassTransformer transformer;
 	private String currentClassName;
 	private String currentMethodName;
 	private String currentMethodDesc;
@@ -26,7 +26,7 @@ public class HookContainerParser {
 	Ключ - номер параметра, значение - номер локальной переменной для перехвата
 	или -1 для перехвата значения наверху стека.
 	 */
-	private final HashMap<Integer, Integer> parameterAnnotations = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Integer> parameterAnnotations = new HashMap<Integer, Integer>();
 	private boolean inHookAnnotation;
 	
 	public HookContainerParser(HookClassTransformer transformer) {
@@ -74,6 +74,12 @@ public class HookContainerParser {
 			builder.setTargetMethod((String) annotationValues.get("targetMethod"));
 		} else {
 			builder.setTargetMethod(currentMethodName);
+		}
+		
+		if (annotationValues.containsKey("superClass")) {
+			builder.setSuperClass((String) annotationValues.get("superClass"));
+		} else {
+			builder.setSuperClass("");
 		}
 		
 		builder.setHookClass(currentClassName);
@@ -145,7 +151,12 @@ public class HookContainerParser {
 			invalidHook("Hook method must return object if returnCodition is ON_NULL or ON_NOT_NULL.");
 			return;
 		}
-		
+		if (this.annotationValues.containsKey("isAbstract")) {
+			builder.setIsAbstract(Boolean.TRUE.equals(this.annotationValues.get("isAbstract")));
+		}
+		if (annotationValues.containsKey("isStatic")) {
+			builder.setIsStatic(Boolean.TRUE.equals(annotationValues.get("isStatic")));
+		}
 		if (annotationValues.containsKey("priority")) {
 			builder.setPriority(HookPriority.valueOf((String) annotationValues.get("priority")));
 		}

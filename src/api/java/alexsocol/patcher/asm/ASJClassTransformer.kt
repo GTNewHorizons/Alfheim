@@ -11,75 +11,122 @@ class ASJClassTransformer: IClassTransformer {
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		
+		var returnClass = basicClass
+		
+		try {
+			val cr = ClassReader(returnClass)
+			val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+			val cv = ClassVisitorPotionMethodPublicizer(cw, "$name ($transformedName)")
+			cr.accept(cv, ClassReader.EXPAND_FRAMES)
+			returnClass = cw.toByteArray()
+		} catch (e: Throwable) {
+			System.err.println("Something went wrong while transforming class $transformedName. Ignore if everything is OK (this is NOT ASJLib error).")
+			e.printStackTrace()
+		}
+		
 		return when (transformedName) {
-			"codechicken.nei.api.ItemInfo"                       -> {
+			"codechicken.nei.api.ItemInfo"                             -> {
 				println("Transforming $transformedName")
-				val cr = ClassReader(basicClass)
+				val cr = ClassReader(returnClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemInfo$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.client.network.NetHandlerPlayClient"  -> {
+			"io.netty.channel.DefaultChannelPipeline"                  -> {
 				println("Transforming $transformedName")
-				val cr = ClassReader(basicClass)
+				val cr = ClassReader(returnClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `DefaultChannelPipeline$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
+				cw.toByteArray()
+			}
+			
+			"net.minecraft.client.network.NetHandlerPlayClient"        -> {
+				println("Transforming $transformedName")
+				val cr = ClassReader(returnClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `NetHandlerPlayClient$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.client.particle.EffectRenderer"       -> {
+			"net.minecraft.client.particle.EffectRenderer"             -> {
 				println("Transforming $transformedName")
-				val cr = ClassReader(basicClass)
+				val cr = ClassReader(returnClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EffectRenderer$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.server.management.ItemInWorldManager" -> {
+			"net.minecraft.network.play.client.C17PacketCustomPayload" -> {
 				println("Transforming $transformedName")
-				val cr = ClassReader(basicClass)
+				val cr = ClassReader(returnClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `C17PacketCustomPayload$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
+				cw.toByteArray()
+			}
+			
+			"net.minecraft.server.management.ItemInWorldManager"       -> {
+				println("Transforming $transformedName")
+				val cr = ClassReader(returnClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemInWorldManager$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.tileentity.TileEntityFurnace"         -> {
+			"net.minecraft.tileentity.TileEntityFurnace"               -> {
 				println("Transforming $transformedName")
-				val cr = ClassReader(basicClass)
+				val cr = ClassReader(returnClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `TileEntityFurnace$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.world.World"                          -> {
+			"net.minecraft.world.World"                                -> {
 				println("Transforming $transformedName")
-				val cr = ClassReader(basicClass)
+				val cr = ClassReader(returnClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `World$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
 			
-			"thaumcraft.common.blocks.BlockCustomOre"            -> {
+			"thaumcraft.common.blocks.BlockCustomOre"                  -> {
 				println("Transforming $transformedName")
-				val cr = ClassReader(basicClass)
+				val cr = ClassReader(returnClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BlockCustomOre$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
 			
-			else                                                 -> basicClass
+			else                                                       -> returnClass
 		}
 	}
 	
-	// crash when adding eggs
+	internal class ClassVisitorPotionMethodPublicizer(cv: ClassVisitor, val className: String): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(acc: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			var access = acc
+			if (name == (if (OBF) "b" else "onFinishedPotionEffect") && desc == (if (OBF) "(Lrw;)V" else "(Lnet/minecraft/potion/PotionEffect;)V")) {
+				println("Publicizing onFinishedPotionEffect: $name$desc for $className")
+				access = ACC_PUBLIC
+			}
+			if (name == (if (OBF) "a" else "onChangedPotionEffect") && desc == (if (OBF) "(Lrw;Z)V" else "(Lnet/minecraft/potion/PotionEffect;Z)V")) {
+				println("Publicizing onChangedPotionEffect: $name$desc for $className")
+				access = ACC_PUBLIC
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+	}
+	
+	// fixes crash when adding eggs
 	internal class `ItemInfo$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
@@ -99,6 +146,28 @@ class ASJClassTransformer: IClassTransformer {
 		}
 	}
 	
+	internal class `DefaultChannelPipeline$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			val mv = super.visitMethod(access, name, desc, signature, exceptions)
+			
+			if (name == "checkDuplicateName") {
+				mv.visitCode()
+				val l0 = Label()
+				mv.visitLabel(l0)
+				mv.visitInsn(RETURN)
+				val l1 = Label()
+				mv.visitLabel(l1)
+				mv.visitLocalVariable("this", "Lio/netty/channel/DefaultChannelPipeline;", null, l0, l1, 0)
+				mv.visitLocalVariable("name", "Ljava/lang/String;", null, l0, l1, 1)
+				mv.visitMaxs(0, 2)
+				mv.visitEnd()
+			}
+			
+			return mv
+		}
+	}
+	
 	// wrong RangedAttribute#minimumValue fix
 	internal class `NetHandlerPlayClient$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
@@ -107,16 +176,15 @@ class ASJClassTransformer: IClassTransformer {
 				println("Visiting NetHandlerPlayClient#handleEntityProperties: $name$desc")
 				return `NetHandlerPlayClient$handleEntityProperties$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
+			
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
 		internal class `NetHandlerPlayClient$handleEntityProperties$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitLdcInsn(cst: Any?) {
-				if (cst == java.lang.Double.MIN_NORMAL)
-					super.visitLdcInsn(-java.lang.Double.MAX_VALUE)
-				else
-					super.visitLdcInsn(cst)
+				if (cst == java.lang.Double.MIN_NORMAL) super.visitLdcInsn(-java.lang.Double.MAX_VALUE)
+				else super.visitLdcInsn(cst)
 			}
 		}
 	}
@@ -129,6 +197,7 @@ class ASJClassTransformer: IClassTransformer {
 				println("Visiting EffectRenderer#addEffect: $name$desc")
 				return `EffectRenderer$addEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
+			
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
@@ -141,8 +210,49 @@ class ASJClassTransformer: IClassTransformer {
 						in Short.MIN_VALUE..Short.MAX_VALUE -> super.visitIntInsn(SIPUSH, PatcherConfigHandler.maxParticles)
 						else                                -> super.visitLdcInsn(Integer(PatcherConfigHandler.maxParticles))
 					}
-				} else
-					super.visitIntInsn(opcode, operand)
+				} else super.visitIntInsn(opcode, operand)
+			}
+		}
+	}
+	
+	// Payload fix
+	internal class `C17PacketCustomPayload$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if ((name == "<init>" && desc == "(Ljava/lang/String;[B)V") || (name == "readPacketData" || name == "a" && desc == "(Let;)V") || (name == "writePacketData" || name == "b" && desc == "(Let;)V")) {
+				println("Visiting C17PacketCustomPayload methods: $name$desc")
+				return `C17PacketCustomPayload$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `C17PacketCustomPayload$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitIntInsn(opcode: Int, operand: Int) {
+				if (opcode == SIPUSH && operand == 32767) {
+					super.visitLdcInsn(Int.MAX_VALUE)
+				} else if (opcode == LDC) {
+					super.visitLdcInsn("Sorry hook not worked :(")
+				} else super.visitIntInsn(opcode, operand)
+			}
+			
+			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
+				var newName = name
+				var newDesc = desc
+				
+				if (name == "readShort") {
+					newName = "readInt"
+					newDesc = "()I"
+				} else if (name == "writeShort") {
+					newName = "writeInt"
+				}
+				
+				super.visitMethodInsn(opcode, owner, newName, newDesc, itf)
+			}
+			
+			override fun visitInsn(opcode: Int) {
+				if (opcode != I2S) super.visitInsn(opcode)
 			}
 		}
 	}
@@ -155,6 +265,7 @@ class ASJClassTransformer: IClassTransformer {
 				println("Visiting ItemInWorldManager#onBlockClicked: $name$desc")
 				return `ItemRelic$onBlockClicked$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
+			
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
@@ -197,8 +308,7 @@ class ASJClassTransformer: IClassTransformer {
 			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
 				if (name == "getShort" || (name == "e" && desc == "(Ljava/lang/String;)S")) {
 					super.visitMethodInsn(opcode, owner, if (OBF) "f" else "getInteger", "(Ljava/lang/String;)I", itf)
-				} else
-					super.visitMethodInsn(opcode, owner, name, desc, itf)
+				} else super.visitMethodInsn(opcode, owner, name, desc, itf)
 			}
 		}
 		
@@ -207,8 +317,7 @@ class ASJClassTransformer: IClassTransformer {
 			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
 				if (name == "setShort" || (name == "a" && desc == "(Ljava/lang/String;S)V")) {
 					super.visitMethodInsn(opcode, owner, if (OBF) "a" else "setInteger", "(Ljava/lang/String;I)V", itf)
-				} else
-					super.visitMethodInsn(opcode, owner, name, desc, itf)
+				} else super.visitMethodInsn(opcode, owner, name, desc, itf)
 			}
 			
 			override fun visitInsn(opcode: Int) {
@@ -225,6 +334,7 @@ class ASJClassTransformer: IClassTransformer {
 				println("Visiting World#updateEntityWithOptionalForce: $name$desc")
 				return `World$updateEntityWithOptionalForce$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
+			
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
@@ -244,8 +354,7 @@ class ASJClassTransformer: IClassTransformer {
 					mv.visitLabel(label)
 					mv.visitFrame(F_APPEND, 1, arrayOf<Any>("alexsocol/patcher/event/EntityUpdateEvent"), 0, null)
 					mv.visitMethodInsn(INVOKESTATIC, "alexsocol/patcher/event/EntityUpdateEvent", "stub", "()V", false)
-				} else
-					super.visitMethodInsn(opcode, owner, name, desc, itf)
+				} else super.visitMethodInsn(opcode, owner, name, desc, itf)
 			}
 		}
 	}

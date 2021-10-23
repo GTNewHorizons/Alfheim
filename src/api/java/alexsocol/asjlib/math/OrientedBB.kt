@@ -1,5 +1,6 @@
 package alexsocol.asjlib.math
 
+import alexsocol.asjlib.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11.*
@@ -10,16 +11,16 @@ import kotlin.math.*
  * Collision calculations by [@gszauer](https://github.com/gszauer/GamePhysicsCookbook)
  * Useful scheme:
  *
- * h----g
- * /|   /|
+ *   h----g
+ *  /|   /|
  * e----f |
  * | d--|-c
  * |/   |/
  * a----b
  *
  * Y
- * |  Z
- * | /
+ * |    Z
+ * |  /
  * |/_____X
  *
  * @author AlexSocol
@@ -27,9 +28,9 @@ import kotlin.math.*
 @Suppress("unused")
 open class OrientedBB() {
 	
-	val pos: Vector3 = Vector3(0.5, 0.5, 0.5)	// center
-	val size: Vector3 = Vector3(0.5, 0.5, 0.5)	// half size
-	val orient: Matrix4 = Matrix4()				// rotation (orientation) matrix
+	val pos: Vector3 = Vector3(0.5, 0.5, 0.5)    // center
+	val size: Vector3 = Vector3(0.5, 0.5, 0.5)    // half size
+	val orient: Matrix4 = Matrix4()                // rotation (orientation) matrix
 	
 	val a: Vector3 = Vector3(0.0, 0.0, 0.0)
 	val b: Vector3 = Vector3(1.0, 0.0, 0.0)
@@ -44,12 +45,12 @@ open class OrientedBB() {
 		fromAABB(aabb)
 	}
 	
-	constructor(length: Double, width: Double, height: Double): this(AxisAlignedBB.getBoundingBox(length/-2, width/-2, height/-2, length/2, width/2, height/2))
+	constructor(length: Number, height: Number, width: Number): this(getBoundingBox(length.D / -2, height.D / -2, width.D / -2, length.D / 2, height.D / 2, width.D / 2))
 	
 	/** Returns array of vertices for this BB  */
 	fun vertices() = arrayOf(a, b, c, d, e, f, g, h)
 	
-	fun fromParams(length: Double, width: Double, height: Double) = fromAABB(AxisAlignedBB.getBoundingBox(length/-2, width/-2, height/-2, length/2, width/2, height/2))
+	fun fromParams(length: Number, height: Number, width: Number) = fromAABB(getBoundingBox(length.D / -2, height.D / -2, width.D / -2, length.D / 2, height.D / 2, width.D / 2))
 	
 	fun fromAABB(aabb: AxisAlignedBB): OrientedBB {
 		pos.set(getAABBPosition(aabb))
@@ -72,11 +73,11 @@ open class OrientedBB() {
 		val xs = listOf(a.x, b.x, c.x, d.x, e.x, f.x, g.x, h.x)
 		val ys = listOf(a.y, b.y, c.y, d.y, e.y, f.y, g.y, h.y)
 		val zs = listOf(a.z, b.z, c.z, d.z, e.z, f.z, g.z, h.z)
-		return AxisAlignedBB.getBoundingBox(xs.minOrNull()!!, ys.minOrNull()!!, zs.minOrNull()!!, xs.maxOrNull()!!, ys.maxOrNull()!!, zs.maxOrNull()!!)
+		return getBoundingBox(xs.minOrNull()!!, ys.minOrNull()!!, zs.minOrNull()!!, xs.maxOrNull()!!, ys.maxOrNull()!!, zs.maxOrNull()!!)
 	}
 	
 	/** Sets BB's center to this coords  */
-	fun setPosition(x: Double, y: Double, z: Double): OrientedBB {
+	fun setPosition(x: Number, y: Number, z: Number): OrientedBB {
 		pos.set(x, y, z)
 		
 		a.set(pos).add(-size.x, -size.y, -size.z)
@@ -92,7 +93,7 @@ open class OrientedBB() {
 	}
 	
 	/** Moves BB on given distance  */
-	fun translate(x: Double, y: Double, z: Double): OrientedBB {
+	fun translate(x: Number, y: Number, z: Number): OrientedBB {
 		pos.add(x, y, z)
 		
 		a.add(x, y, z)
@@ -108,7 +109,7 @@ open class OrientedBB() {
 	}
 	
 	/** Rescales BB in both directions from middle  */
-	fun scale(x: Double, y: Double, z: Double): OrientedBB {
+	fun scale(x: Number, y: Number, z: Number): OrientedBB {
 		size.mul(x, y, z)
 		
 		val i = pos.x
@@ -129,8 +130,8 @@ open class OrientedBB() {
 	}
 	
 	/** Rotates BB on given angle in DEG around given axis (axis coords are global)  */
-	fun rotate(angle: Double, axis: Vector3): OrientedBB {
-		orient.rotate(Math.toRadians(angle), axis)
+	fun rotate(angle: Number, axis: Vector3): OrientedBB {
+		orient.rotate(Math.toRadians(angle.D), axis)
 		pos.rotate(angle, axis)
 		
 		a.rotate(angle, axis)
@@ -146,7 +147,7 @@ open class OrientedBB() {
 	}
 	
 	/** Rotates BB on given angle in DEG around given axis (axis coords are local, starting at pos[0, 0, 0])  */
-	fun rotateLocal(angle: Double, axis: Vector3): OrientedBB {
+	fun rotateLocal(angle: Number, axis: Vector3): OrientedBB {
 		val x = pos.x
 		val y = pos.y
 		val z = pos.z
@@ -157,7 +158,7 @@ open class OrientedBB() {
 	}
 	
 	/** Rotates BB on given angle in DEG around middle point of ADHE (BCGF) face  */
-	fun rotateOX(angle: Double): OrientedBB {
+	fun rotateOX(angle: Number): OrientedBB {
 		val x = pos.x
 		val y = pos.y
 		val z = pos.z
@@ -168,7 +169,7 @@ open class OrientedBB() {
 	}
 	
 	/** Rotates BB on given angle in DEG around middle point of ABCD (EFGH) face  */
-	fun rotateOY(angle: Double): OrientedBB {
+	fun rotateOY(angle: Number): OrientedBB {
 		val x = pos.x
 		val y = pos.y
 		val z = pos.z
@@ -179,7 +180,7 @@ open class OrientedBB() {
 	}
 	
 	/** Rotates BB on given angle in DEG around middle point of ABFE (DCGH) face  */
-	fun rotateOZ(angle: Double): OrientedBB {
+	fun rotateOZ(angle: Number): OrientedBB {
 		val x = pos.x
 		val y = pos.y
 		val z = pos.z
@@ -202,6 +203,7 @@ open class OrientedBB() {
 	fun intersectsWith(obb: OrientedBB) = intersectsWith(this, obb)
 	
 	class Interval {
+		
 		var min = 0.0
 		var max = 0.0
 	}
@@ -393,7 +395,7 @@ open class OrientedBB() {
 			val o = doubleArrayOf(obb.orient.m00, obb.orient.m01, obb.orient.m02, obb.orient.m10, obb.orient.m11, obb.orient.m12, obb.orient.m20, obb.orient.m21, obb.orient.m22)
 			
 			val a = arrayOf(// OBB Axis
-				Vector3(o[0], o[1], o[2]), Vector3(o[3], o[4], o[5]), Vector3(o[6], o[7], o[8]))
+					Vector3(o[0], o[1], o[2]), Vector3(o[3], o[4], o[5]), Vector3(o[6], o[7], o[8]))
 			
 			vertex[0] = c.copy().add(a[0].copy().mul(e.x)).add(a[1].copy().mul(e.y)).add(a[2].copy().mul(e.z))
 			vertex[1] = c.copy().sub(a[0].copy().mul(e.x)).add(a[1].copy().mul(e.y)).add(a[2].copy().mul(e.z))
@@ -450,10 +452,20 @@ open class OrientedBB() {
 			return Vector3(max(p1.x, p2.x), max(p1.y, p2.y), max(p1.z, p2.z))
 		}
 		
-		fun getAABBPosition(aabb: AxisAlignedBB) =
-			Vector3((aabb.minX + aabb.maxX) / 2.0, (aabb.minY + aabb.maxY) / 2.0, (aabb.minZ + aabb.maxZ) / 2.0)
+		fun getAABBPosition(aabb: AxisAlignedBB) = Vector3((aabb.minX + aabb.maxX) / 2.0, (aabb.minY + aabb.maxY) / 2.0, (aabb.minZ + aabb.maxZ) / 2.0)
 		
-		fun getAABBSize(aabb: AxisAlignedBB) =
-			Vector3(sqrt((aabb.minX - aabb.maxX).pow(2.0)) / 2.0, sqrt((aabb.minY - aabb.maxY).pow(2.0)) / 2.0, sqrt((aabb.minZ - aabb.maxZ).pow(2.0)) / 2.0)
+		fun getAABBSize(aabb: AxisAlignedBB) = Vector3(sqrt((aabb.minX - aabb.maxX).pow(2.0)) / 2.0, sqrt((aabb.minY - aabb.maxY).pow(2.0)) / 2.0, sqrt((aabb.minZ - aabb.maxZ).pow(2.0)) / 2.0)
 	}
+	
+	// backward compatibility
+	constructor(length: Double, width: Double, height: Double): this(AxisAlignedBB.getBoundingBox(length/-2, width/-2, height/-2, length/2, width/2, height/2))
+	fun fromParams(length: Double, width: Double, height: Double) = fromAABB(AxisAlignedBB.getBoundingBox(length/-2, width/-2, height/-2, length/2, width/2, height/2))
+	fun setPosition(x: Double, y: Double, z: Double) = setPosition(x as Number, y, z)
+	fun translate(x: Double, y: Double, z: Double) = translate(x as Number, y, z)
+	fun scale(x: Double, y: Double, z: Double) = scale(x as Number, y, z)
+	fun rotate(angle: Double, axis: Vector3) = rotate(angle as Number, axis)
+	fun rotateLocal(angle: Double, axis: Vector3) = rotateLocal(angle as Number, axis)
+	fun rotateOX(angle: Double) = rotateOX(angle as Number)
+	fun rotateOY(angle: Double) = rotateOY(angle as Number)
+	fun rotateOZ(angle: Double) = rotateOZ(angle as Number)
 }

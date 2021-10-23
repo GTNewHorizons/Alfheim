@@ -24,8 +24,10 @@ open class TileItemContainer: ASJTile() {
 		}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
+		if (item == null) return
+		
 		val compound = NBTTagCompound()
-		if (item != null) item!!.writeToNBT(compound)
+		item!!.writeToNBT(compound)
 		nbt.setTag("item", compound)
 	}
 	

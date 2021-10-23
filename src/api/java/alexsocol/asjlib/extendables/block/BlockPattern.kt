@@ -1,6 +1,6 @@
 package alexsocol.asjlib.extendables.block
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import net.minecraft.block.BlockFalling
 import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
@@ -39,9 +39,9 @@ class BlockPattern(modid: String, material: Material, name: String, tab: Creativ
 			
 			if (!fallInstantly && world.checkChunksExist(x - b0, y - b0, z - b0, x + b0, y + b0, z + b0)) {
 				if (!world.isRemote) {
-					val entityfallingblock = EntityFallingBlock(world, x + 0.5, y + 0.5, z + 0.5, this, world.getBlockMetadata(x, y, z))
-					func_149829_a(entityfallingblock)
-					world.spawnEntityInWorld(entityfallingblock)
+					val efb = EntityFallingBlock(world, x + 0.5, y + 0.5, z + 0.5, this, world.getBlockMetadata(x, y, z))
+					func_149829_a(efb)
+					efb.spawn()
 				}
 			} else {
 				world.setBlockToAir(x, y, z)

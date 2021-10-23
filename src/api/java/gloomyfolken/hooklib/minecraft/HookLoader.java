@@ -14,7 +14,7 @@ public abstract class HookLoader implements IFMLLoadingPlugin {
 	
 	private static DeobfuscationTransformer deobfuscationTransformer;
 	
-	private static final ClassMetadataReader deobfuscationMetadataReader;
+	private static ClassMetadataReader deobfuscationMetadataReader;
 	
 	static {
 		deobfuscationMetadataReader = new DeobfuscationMetadataReader();
@@ -43,7 +43,7 @@ public abstract class HookLoader implements IFMLLoadingPlugin {
 		return deobfuscationMetadataReader;
 	}
 	
-	static DeobfuscationTransformer getDeobfuscationTransformer() {
+	public static DeobfuscationTransformer getDeobfuscationTransformer() {
 		if (HookLibPlugin.getObfuscated() && deobfuscationTransformer == null) {
 			deobfuscationTransformer = new DeobfuscationTransformer();
 		}

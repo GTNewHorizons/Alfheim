@@ -44,9 +44,11 @@ abstract class ShadedObject(val shaderID: Int, val materialID: Int, val texture:
 		//if (texture != ro.texture) return -1;
 	}
 	
-	override fun equals(other: Any?): Boolean {
-		return if (other is ShadedObject) compareTo((other as ShadedObject?)!!) == 0 else super.equals(other)
-	}
+	override fun equals(other: Any?) =
+		if (other is ShadedObject) compareTo((other as ShadedObject?)!!) == 0 else super.equals(other)
+	
+	override fun hashCode() =
+		Objects.hash(shaderID, materialID, texture)
 	
 	companion object {
 		private val usableBuffer = BufferUtils.createFloatBuffer(32)
